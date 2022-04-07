@@ -1,18 +1,25 @@
 /**
  *
- *  Copyright 2004-2010 Fabrizio Giustina.
+ * Copyright (C) 2004-2014 Fabrizio Giustina
  *
- *  Licensed under the Artistic License; you may not use this file
- *  except in compliance with the License.
- *  You may obtain a copy of the License at
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- *       http://maven-taglib.sourceforge.net/license.html
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- *  THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
- *  IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
- *  WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
-
 package net.sf.maventaglib;
 
 import java.io.StringReader;
@@ -99,7 +106,7 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
             sink.listItem();
             sink.link("#" + tlds[j].getFilename()); //$NON-NLS-1$
             sink.text(MessageFormat.format(Messages.getString("Tagreference.listitem.tld"), new Object[]{ //$NON-NLS-1$
-                StringUtils.defaultIfEmpty(tlds[j].getName(), tlds[j].getShortname()), tlds[j].getFilename() }));
+                StringUtils.defaultIfEmpty(tlds[j].getName(), tlds[j].getShortname()), tlds[j].getFilename()}));
             sink.link_();
             sink.text(Messages.getString("Tagreference.listitem.uri") + tlds[j].getUri()); //$NON-NLS-1$
             sink.listItem_();
@@ -137,7 +144,7 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
 
         startSection(StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname())
             + " - "
-            + MessageFormat.format(Messages.getString("Tagreference.tldversion"), new Object[]{tld.getTlibversion() }));
+            + MessageFormat.format(Messages.getString("Tagreference.tldversion"), new Object[]{tld.getTlibversion()}));
 
         sink.paragraph();
         if (parseHtml)
@@ -188,14 +195,14 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
         {
             for (int j = 0; j < functions.length; j++)
             {
-                doFunction(tld.getShortname(), (ELFunction) functions[j]);
+                doFunction(tld.getShortname(), functions[j]);
             }
         }
         if (tagfiles != null)
         {
             for (int j = 0; j < tagfiles.length; j++)
             {
-                doTagFile(tld.getShortname(), (TagFile) tagfiles[j]);
+                doTagFile(tld.getShortname(), tagfiles[j]);
             }
         }
 
@@ -348,7 +355,7 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
 
             startTable();
             tableHeader(new String[]{
-                Messages.getString("Tagreference.attribute.name"), Messages.getString("Tagreference.attribute.description"), Messages.getString("Tagreference.attribute.type") }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                Messages.getString("Tagreference.attribute.name"), Messages.getString("Tagreference.attribute.description"), Messages.getString("Tagreference.attribute.type")}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
             for (int i = 0; i < attributes.length; i++)
             {
@@ -426,7 +433,7 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
 
             startTable();
             tableHeader(new String[]{
-                Messages.getString("Tagreference.variable.name"), Messages.getString("Tagreference.variable.type"), Messages.getString("Tagreference.variable.scope"), Messages.getString("Tagreference.variable.description") }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                Messages.getString("Tagreference.variable.name"), Messages.getString("Tagreference.variable.type"), Messages.getString("Tagreference.variable.scope"), Messages.getString("Tagreference.variable.description")}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
             for (int i = 0; i < variables.length; i++)
             {

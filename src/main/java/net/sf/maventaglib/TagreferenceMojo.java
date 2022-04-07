@@ -1,18 +1,25 @@
 /**
  *
- *  Copyright 2004-2010 Fabrizio Giustina.
+ * Copyright (C) 2004-2014 Fabrizio Giustina
  *
- *  Licensed under the Artistic License; you may not use this file
- *  except in compliance with the License.
- *  You may obtain a copy of the License at
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- *       http://maven-taglib.sourceforge.net/license.html
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- *  THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
- *  IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
- *  WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
-
 package net.sf.maventaglib;
 
 import java.io.File;
@@ -32,21 +39,21 @@ import net.sf.maventaglib.util.XmlHelper;
 import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
-import org.apache.maven.reporting.AbstractMavenMultiPageReport;
+import org.apache.maven.reporting.AbstractMavenReport;
+import org.apache.maven.reporting.MavenMultiPageReport;
 import org.apache.maven.reporting.MavenReport;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.plexus.util.FileUtils;
 import org.w3c.dom.Document;
 
+
 /**
  * Generates a tag reference xdoc that can be integrated in a maven generated site.
  * @goal tagreference
  * @author Fabrizio Giustina
- * @version $Id: TagreferenceMojo.java 206 2010-01-31 09:37:21Z fgiust $
+ * @version $Id: TagreferenceMojo.java 217 2014-08-15 20:50:32Z fgiust $
  */
-public class TagreferenceMojo
-    extends AbstractMavenMultiPageReport
-    implements MavenReport
+public class TagreferenceMojo extends AbstractMavenReport implements MavenReport, MavenMultiPageReport
 {
 
     /**
@@ -57,21 +64,19 @@ public class TagreferenceMojo
 
     /**
      * Output directory for generated docs.
-     * @parameter expression="${project.reporting.outputDirectory}"
+     * @parameter property="project.reporting.outputDirectory"
      */
     private File outputDirectory;
 
     /**
-     * Whether to parse html in the description of tld info, tags and attributes. The
-     * default value is false.
-     *
+     * Whether to parse html in the description of tld info, tags and attributes. The default value is false.
      * @parameter default-value="false"
      */
     private boolean parseHtml;
 
     /**
      * Maven project
-     * @parameter expression="${project}"
+     * @parameter property="project"
      * @readonly
      */
     private MavenProject project;
@@ -120,24 +125,24 @@ public class TagreferenceMojo
     /**
      * @see org.apache.maven.reporting.MavenReport#getName(java.util.Locale)
      */
-    public String getName( Locale locale )
+    public String getName(Locale locale)
     {
-        return Messages.getString( "Tagreference.name" ); //$NON-NLS-1$
+        return Messages.getString("Tagreference.name"); //$NON-NLS-1$
     }
 
     /**
      * @see org.apache.maven.reporting.MavenReport#getDescription(java.util.Locale)
      */
-    public String getDescription( Locale locale )
+    public String getDescription(Locale locale)
     {
-        return Messages.getString( "Tagreference.description" ); //$NON-NLS-1$
+        return Messages.getString("Tagreference.description"); //$NON-NLS-1$
     }
 
     /**
      * Setter for <code>srcDir</code>.
      * @param srcDir The srcDir to set.
      */
-    public void setSrcDir( File srcDir )
+    public void setSrcDir(File srcDir)
     {
         this.srcDir = srcDir;
     }
@@ -146,7 +151,7 @@ public class TagreferenceMojo
      * Setter for <code>outputDirectory</code>.
      * @param outputDirectory The outputDirectory to set.
      */
-    public void setOutputDirectory( File outputDirectory )
+    public void setOutputDirectory(File outputDirectory)
     {
         this.outputDirectory = outputDirectory;
     }
@@ -155,7 +160,7 @@ public class TagreferenceMojo
      * Setter for <code>project</code>.
      * @param project The project to set.
      */
-    public void setProject( MavenProject project )
+    public void setProject(MavenProject project)
     {
         this.project = project;
     }
@@ -164,20 +169,17 @@ public class TagreferenceMojo
      * @see org.apache.maven.reporting.AbstractMavenReport#executeReport(java.util.Locale)
      */
     @Override
-    protected void executeReport( Locale locale )
-        throws MavenReportException
+    protected void executeReport(Locale locale) throws MavenReportException
     {
-        if ( !srcDir.isDirectory() )
+        if (!srcDir.isDirectory())
         {
-            throw new MavenReportException( MessageFormat
-                .format( Messages.getString( "Taglib.notadir" ), new Object[] { srcDir //$NON-NLS-1$
-                    .getAbsolutePath() } ) );
+            throw new MavenReportException(MessageFormat.format(
+                Messages.getString("Taglib.notadir"), new Object[]{srcDir //$NON-NLS-1$
+                    .getAbsolutePath()}));
         }
 
-        getLog()
-            .debug(
-                    MessageFormat
-                        .format( Messages.getString( "Taglib.validating" ), new Object[] { srcDir.getAbsolutePath() } ) ); //$NON-NLS-1$
+        getLog().debug(
+            MessageFormat.format(Messages.getString("Taglib.validating"), new Object[]{srcDir.getAbsolutePath()})); //$NON-NLS-1$
 
         DocumentBuilder builder;
 
@@ -185,55 +187,56 @@ public class TagreferenceMojo
         {
             builder = XmlHelper.getDocumentBuilder();
         }
-        catch ( MojoExecutionException e )
+        catch (MojoExecutionException e)
         {
-            throw new MavenReportException( e.getMessage(), e );
+            throw new MavenReportException(e.getMessage(), e);
         }
         List tlds;
         try
         {
-            tlds = FileUtils.getFiles( srcDir, "**/*.tld", null );
+            tlds = FileUtils.getFiles(srcDir, "**/*.tld", null);
         }
-        catch ( IOException e )
+        catch (IOException e)
         {
-            throw new MavenReportException( e.getMessage(), e );
+            throw new MavenReportException(e.getMessage(), e);
         }
         List tldList = new ArrayList();
-        for ( Iterator i = tlds.iterator(); i.hasNext(); )
+        for (Iterator i = tlds.iterator(); i.hasNext();)
         {
             File current = (File) i.next();
 
             Document tldDoc;
             try
             {
-                tldDoc = builder.parse( current );
+                tldDoc = builder.parse(current);
             }
-            catch ( Exception e )
+            catch (Exception e)
             {
-                throw new MavenReportException( MessageFormat.format( Messages.getString( "Taglib.errorwhileparsing" ), //$NON-NLS-1$
-                                                                      new Object[] { current.getAbsolutePath() } ), e );
+                throw new MavenReportException(MessageFormat.format(Messages.getString("Taglib.errorwhileparsing"), //$NON-NLS-1$
+                    new Object[]{current.getAbsolutePath()}), e);
 
             }
 
-            Tld tld = TldParser.parse( tldDoc, current.getName() );
-            tldList.add( tld );
+            Tld tld = TldParser.parse(tldDoc, current.getName());
+            tldList.add(tld);
 
         }
 
         closeReport();
 
-        if ( tldList.size() == 0 )
+        if (tldList.size() == 0)
         {
-            getLog()
-                .info(
-                       MessageFormat
-                           .format(
-                                    Messages.getString( "Taglib.notldfound" ), new Object[] { srcDir.getAbsolutePath() } ) ); //$NON-NLS-1$
+            getLog().info(
+                MessageFormat.format(Messages.getString("Taglib.notldfound"), new Object[]{srcDir.getAbsolutePath()})); //$NON-NLS-1$
             return;
         }
 
-        new TagreferenceRenderer( getSink(), locale, (Tld[]) tldList.toArray( new Tld[tldList.size()] ), parseHtml, getLog() )
-            .render();
+        new TagreferenceRenderer(
+            getSink(),
+            locale,
+            (Tld[]) tldList.toArray(new Tld[tldList.size()]),
+            parseHtml,
+            getLog()).render();
 
     }
 
@@ -243,30 +246,21 @@ public class TagreferenceMojo
     @Override
     public boolean canGenerateReport()
     {
-        if ( !srcDir.isDirectory() )
+        if (!srcDir.isDirectory())
         {
             return false;
         }
 
         try
         {
-            return FileUtils.getFiles( srcDir, "**/*.tld", null ).size() > 0;
+            return FileUtils.getFiles(srcDir, "**/*.tld", null).size() > 0;
         }
-        catch ( IOException e )
+        catch (IOException e)
         {
-            getLog().error( e.getMessage(), e );
+            getLog().error(e.getMessage(), e);
         }
         return false;
 
-    }
-
-    /**
-     * @see org.apache.maven.reporting.AbstractMavenMultiPageReport#usePageLinkBar()
-     */
-    @Override
-    public boolean usePageLinkBar()
-    {
-        return true;
     }
 
 }

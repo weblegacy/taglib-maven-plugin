@@ -1,0 +1,7 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>Introduction</title><meta name="author" content="Fabrizio Giustina" /><meta name="date" content="30-10-2005" /><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/></head><body><div class="section"><h2>Maven taglib Plug-in</h2><p>The Taglib Plug-in is a maven 2 plugin for jsp tag libraries developers. It eases the generation, documentation and testing of jsp tag libraries.</p><div class="source"><pre> Current release: 2.4</pre></div></div><div class="section"><h2>Basic configuration</h2><p>Adds the following to your pom.xml to enable generation of taglib reports:</p><div class="source"><pre>  &lt;reporting&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;net.sourceforge.maven-taglib&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-taglib-plugin&lt;/artifactId&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/reporting&gt;</pre></div><p>This will trigger the generation of:</p><ul><li>tldDoc documentation</li><li>a tag library validation report</li><li>a tag reference page</li></ul><p>For advanced usage see the <a href="#usage.html">usage</a> section.</p></div></body></html>

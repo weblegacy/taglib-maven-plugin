@@ -1,36 +1,34 @@
 /**
  *
- *  Copyright 2004-2010 Fabrizio Giustina.
+ * Copyright (C) 2004-2014 Fabrizio Giustina
  *
- *  Licensed under the Artistic License; you may not use this file
- *  except in compliance with the License.
- *  You may obtain a copy of the License at
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- *       http://maven-taglib.sourceforge.net/license.html
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- *  THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
- *  IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
- *  WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
-
 package net.sf.maventaglib;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Properties;
-
-import org.apache.maven.cli.ConsoleDownloadMonitor;
-import org.apache.maven.embedder.MavenEmbedderConsoleLogger;
-import org.apache.maven.embedder.PlexusLoggerAdapter;
-import org.apache.maven.monitor.event.DefaultEventMonitor;
-import org.apache.maven.monitor.event.EventMonitor;
-import org.apache.maven.project.MavenProject;
 
 
 /**
  * Test for taglibdoc generation.
  * @author Fabrizio Giustina
- * @version $Revision: 211 $ ($Author: fgiust $)
+ * @version $Revision: 217 $ ($Author: fgiust $)
  */
 public class TaglibdocMojoTest extends TaglibPluginTestBase
 {
@@ -50,17 +48,14 @@ public class TaglibdocMojoTest extends TaglibPluginTestBase
      */
     public final void testGoalTagreference() throws Exception
     {
-        File basedir = new File(getTestDirectory(), "project2");
-        MavenProject project = maven.readProjectWithDependencies(new File(basedir, "pom.xml"));
-        EventMonitor eventMonitor = new DefaultEventMonitor(new PlexusLoggerAdapter(new MavenEmbedderConsoleLogger()));
 
-        this.maven.execute(
-            project,
-            Arrays.asList(new String[]{"net.sourceforge.maven-taglib:maven-taglib-plugin:taglibdoc" }),
-            eventMonitor,
-            new ConsoleDownloadMonitor(),
-            new Properties(),
-            basedir);
+        File pom = getTestFile("src/test/resources/project2/pom.xml");
+        assertNotNull(pom);
+        assertTrue(pom.exists());
+
+        TaglibdocMojo myMojo = (TaglibdocMojo) lookupMojo("taglib:taglibdoc", pom);
+        assertNotNull(myMojo);
+        myMojo.execute();
 
         assertFileExists(new File(basedir, "target/site/tlddoc/project2/ul.html"));
         assertFileExists(new File(basedir, "target/site/tlddoc/project2/url.html"));
@@ -72,17 +67,13 @@ public class TaglibdocMojoTest extends TaglibPluginTestBase
      */
     public final void testGoalTaglibDoc() throws Exception
     {
-        File basedir = new File(getTestDirectory(), "project1");
-        MavenProject project = maven.readProjectWithDependencies(new File(basedir, "pom.xml"));
-        EventMonitor eventMonitor = new DefaultEventMonitor(new PlexusLoggerAdapter(new MavenEmbedderConsoleLogger()));
+        File pom = getTestFile("src/test/resources/project1/pom.xml");
+        assertNotNull(pom);
+        assertTrue(pom.exists());
 
-        this.maven.execute(
-            project,
-            Arrays.asList(new String[]{"net.sourceforge.maven-taglib:maven-taglib-plugin:taglibdoc" }),
-            eventMonitor,
-            new ConsoleDownloadMonitor(),
-            new Properties(),
-            basedir);
+        TaglibdocMojo myMojo = (TaglibdocMojo) lookupMojo("taglib:taglibdoc", pom);
+        assertNotNull(myMojo);
+        myMojo.execute();
 
         assertFileExists(new File(basedir, "target/site/tlddoc/test-12-tld-a/jsp12tldtag1.html"));
     }
