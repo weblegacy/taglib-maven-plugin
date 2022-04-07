@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>net.sourceforge.maven-taglib</groupId>
+  <artifactId>maven-taglib-plugin-test-project2</artifactId>
+  <packaging>jar</packaging>
+  <name>Maven Taglib Plugin test project2</name>
+  <version>1.0</version>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>net.sourceforge.maven-taglib</groupId>
+        <artifactId>maven-taglib-plugin</artifactId>
+        <configuration>
+          <taglibs>
+            <taglib>
+              <description>A test tld that contains functions</description>
+              <shortName>test</shortName>
+              <uri>testuri</uri>
+              <outputname>testtaglib</outputname>
+              <functionClasses>
+                <functionClass>org.apache.commons.lang.StringUtils</functionClass>
+              </functionClasses>
+              <tagdir>src/tagfiles</tagdir>
+            </taglib>
+          </taglibs>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

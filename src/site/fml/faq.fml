@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<faqs id="FAQ" title="Frequently Asked Questions">
+  <part id="General">
+    <faq id="tldversion">
+      <question>Which tld version / tag specification version does the plugin supports?</question>
+      <answer>
+        <p>At the moment the plugin supports the tld 1.1, 1.2 and 2.0 versions.</p>
+      </answer>
+    </faq>
+    <faq id="multipletld">
+      <question>Does the plugin support more than one tld for each project?</question>
+      <answer>
+        <p>
+          Yes, it does: the tagreference/tag validation reports will list multiple taglib in a single page, tlddoc
+          documentation will be generated for all the taglibraries.
+        </p>
+      </answer>
+    </faq>
+  </part>
+</faqs>

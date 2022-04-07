@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Maven 2 taglib plugin">
+  <bannerRight>
+    <name>Maven 2 taglib plugin</name>
+    <href>http://maven-taglib.sourceforge.net/m2/</href>
+  </bannerRight>
+  <bannerLeft>
+    <name>Sourceforge</name>
+    <src>http://sourceforge.net/sflogo.php?group_id=93991&amp;amp;type=2</src>
+    <href>http://www.sourceforge.net/projects/maven-taglib</href>
+  </bannerLeft>
+  <body>
+    <menu name="Overview">
+      <item name="Introduction" href="index.html" />
+      <item name="Usage" href="usage.html" />
+      <item name="Goals" href="plugin-info.html" />
+      <item name="FAQ" href="faq.html" />
+    </menu>
+    <menu name="Configuration">
+      <item name="taglib:taglibdoc" href="taglibdoc-mojo.html" />
+      <item name="taglib:validate" href="validate-mojo.html" />
+      <item name="taglib:tagreference" href="tagreference-mojo.html" />
+      <item name="taglib:taglibdocjar" href="taglibdocjar-mojo.html" />
+      <item name="taglib:tldgenerate" href="tldgenerate-mojo.html" />
+    </menu>
+    ${reports}
+  </body>
+</project>
