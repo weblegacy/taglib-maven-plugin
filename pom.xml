@@ -49,7 +49,7 @@
   <licenses>
     <license>
       <name>MIT</name>
-      <url>https://svn.code.sf.net/p/maven-taglib/code/m2-taglib-plugin/trunk/LICENSE.txt</url>
+      <url>https://spdx.org/licenses/MIT.html</url>
     </license>
   </licenses>
   <scm>
@@ -115,16 +115,20 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>com.mycila.maven-license-plugin</groupId>
-        <artifactId>maven-license-plugin</artifactId>
-        <version>1.9.0</version>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <version>4.1</version>
         <configuration>
-          <header>src/main/etc/header.txt</header>
-          <includes>
-            <include>src/**/*.java</include>
-          </includes>
+          <licenseSets>
+            <licenseSet>
+              <header>com/mycila/maven/plugin/license/templates/MIT.txt</header>
+              <includes>
+                <include>src/**/*.java</include>
+              </includes>
+            </licenseSet>
+          </licenseSets>
           <properties>
-            <year>${project.inceptionYear}-2010</year>
+            <year>${project.inceptionYear}-2014</year>
             <name>${project.name}</name>
             <description>${project.description}</description>
             <url>${project.url}</url>
