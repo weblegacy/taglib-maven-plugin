@@ -1,5 +1,6 @@
 # 2.5 / YYYY-MM-DD
 
+* Remove unused imports
 * Resolve deprecated methods
 * Add generics
 * Upgrade to JDK 8

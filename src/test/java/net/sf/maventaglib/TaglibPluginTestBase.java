@@ -25,10 +25,7 @@ package net.sf.maventaglib;
 import java.io.File;
 import java.net.URL;
 
-import org.apache.maven.cli.MavenCli;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
-
-import junit.framework.TestCase;
 
 
 /**
