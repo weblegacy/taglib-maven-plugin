@@ -1,5 +1,6 @@
 # 2.5 / YYYY-MM-DD
 
+* Upgrade to JDK 8
 * Upgrade MAVEN-Plugins
 * Upgrade `license-maven-plugin` and upgrade license-text (no license-change)
 * Remove retired `maven-eclipse-plugin`

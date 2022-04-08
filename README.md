@@ -9,7 +9,7 @@ Full [CHANGELOG](CHANGELOG.md)
 ## Prerequesits
 
 * Apache Maven 3\+
-* JDK 1.4 - 1.8
+* JDK 8\+
 
 ## Building-Steps
 
