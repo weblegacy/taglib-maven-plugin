@@ -1,5 +1,6 @@
 # 2.5 / YYYY-MM-DD
 
+* Set scope of maven-plugin-builder dependencies to provided
 * Upgrade dependencies
 * Resolve java-warnings
 * Remove unused imports
