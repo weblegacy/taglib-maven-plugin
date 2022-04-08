@@ -32,7 +32,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * @version $Revision: 217 $ ($Author: fgiust $)
  */
 public class TagAttribute
-    implements Comparable
+    implements Comparable<TagAttribute>
 {
 
     private String name;
@@ -110,10 +110,9 @@ public class TagAttribute
     /**
      * @see java.lang.Comparable#compareTo(Object)
      */
-    public int compareTo( Object object )
+    public int compareTo( TagAttribute object )
     {
-        TagAttribute myClass = (TagAttribute) object;
-        return new CompareToBuilder().append( this.deprecated, myClass.deprecated ).append( this.name, myClass.name )
+        return new CompareToBuilder().append( this.deprecated, object.deprecated ).append( this.name, object.name )
             .toComparison();
     }
 

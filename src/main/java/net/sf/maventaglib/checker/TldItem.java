@@ -29,7 +29,7 @@ import org.apache.commons.lang.builder.CompareToBuilder;
  * @author fgiust
  * @version $Id: TldItem.java 217 2014-08-15 20:50:32Z fgiust $
  */
-public class TldItem implements Comparable
+public class TldItem implements Comparable<TldItem>
 {
 
     private String name;
@@ -83,12 +83,11 @@ public class TldItem implements Comparable
     /**
      * @see java.lang.Comparable#compareTo(Object)
      */
-    public int compareTo(Object object)
+    public int compareTo(TldItem object)
     {
-        TldItem myClass = (TldItem) object;
         return new CompareToBuilder()
-            .append(this.deprecated, myClass.deprecated)
-            .append(this.name, myClass.name)
+            .append(this.deprecated, object.deprecated)
+            .append(this.name, object.name)
             .toComparison();
     }
 }

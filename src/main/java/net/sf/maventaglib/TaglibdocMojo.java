@@ -117,26 +117,26 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport
         try
         {
             // handle tlds
-            List tlds = FileUtils.getFiles(srcDir, searchprefix + "*.tld", null); //$NON-NLS-1$
-            for (Iterator it = tlds.iterator(); it.hasNext();)
+            List<File> tlds = FileUtils.getFiles(srcDir, searchprefix + "*.tld", null); //$NON-NLS-1$
+            for (Iterator<File> it = tlds.iterator(); it.hasNext();)
             {
-                generator.addTLD((File) it.next());
+                generator.addTLD(it.next());
             }
 
             // handle tag files. Add any directory containing .tag or .tagx files
-            List tags = FileUtils.getFiles(srcDir, searchprefix + "*.tag", null); //$NON-NLS-1$
+            List<File> tags = FileUtils.getFiles(srcDir, searchprefix + "*.tag", null); //$NON-NLS-1$
             tags.addAll(FileUtils.getFiles(srcDir, searchprefix + "*.tagx", null)); //$NON-NLS-1$
 
             if (!tags.isEmpty())
             {
-                Set directories = new HashSet();
-                for (Iterator it = tags.iterator(); it.hasNext();)
+                Set<File> directories = new HashSet<>();
+                for (Iterator<File> it = tags.iterator(); it.hasNext();)
                 {
-                    directories.add(((File) it.next()).getParentFile());
+                    directories.add((it.next()).getParentFile());
                 }
-                for (Iterator it = directories.iterator(); it.hasNext();)
+                for (Iterator<File> it = directories.iterator(); it.hasNext();)
                 {
-                    generator.addTagDir((File) it.next());
+                    generator.addTagDir(it.next());
                 }
             }
 

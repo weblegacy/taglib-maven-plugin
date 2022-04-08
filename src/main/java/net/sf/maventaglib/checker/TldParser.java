@@ -60,9 +60,9 @@ public final class TldParser
 
         Tld tld = new Tld();
         tld.setFilename(tldName);
-        Set tags = new TreeSet();
-        Set functions = new TreeSet();
-        Set tagfiles = new TreeSet();
+        Set<Tag> tags = new TreeSet<>();
+        Set<ELFunction> functions = new TreeSet<>();
+        Set<TagFile> tagfiles = new TreeSet<>();
 
         NodeList tagList = tldDoc.getElementsByTagName("taglib").item(0).getChildNodes(); //$NON-NLS-1$
 
@@ -122,9 +122,9 @@ public final class TldParser
                 tagfiles.add(tag);
             }
 
-            tld.setTags((Tag[]) tags.toArray(new Tag[tags.size()]));
-            tld.setFunctions((ELFunction[]) functions.toArray(new ELFunction[functions.size()]));
-            tld.setTagfiles((TagFile[]) tagfiles.toArray(new TagFile[tagfiles.size()]));
+            tld.setTags(tags.toArray(new Tag[tags.size()]));
+            tld.setFunctions(functions.toArray(new ELFunction[functions.size()]));
+            tld.setTagfiles(tagfiles.toArray(new TagFile[tagfiles.size()]));
         }
 
         return tld;
@@ -221,8 +221,8 @@ public final class TldParser
     private static Tag parseTag(Node tagNode)
     {
         Tag tag = new Tag();
-        Set attributes = new TreeSet();
-        Set variables = new TreeSet();
+        Set<TagAttribute> attributes = new TreeSet<>();
+        Set<TagVariable> variables = new TreeSet<>();
         NodeList tagAttributes = tagNode.getChildNodes();
 
         for (int k = 0; k < tagAttributes.getLength(); k++)
@@ -266,8 +266,8 @@ public final class TldParser
                 TagVariable variable = parseTagVariable(tagAttribute);
                 variables.add(variable);
             }
-            tag.setAttributes((TagAttribute[]) attributes.toArray(new TagAttribute[attributes.size()]));
-            tag.setVariables((TagVariable[]) variables.toArray(new TagVariable[variables.size()]));
+            tag.setAttributes(attributes.toArray(new TagAttribute[attributes.size()]));
+            tag.setVariables(variables.toArray(new TagVariable[variables.size()]));
         }
 
         tag.setDeprecated(StringUtils.contains(tag.getDescription(), "@deprecated")); //$NON-NLS-1$

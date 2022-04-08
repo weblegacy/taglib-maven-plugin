@@ -177,7 +177,7 @@ public class ValidateMojo
             throw new MavenReportException( e.getMessage(), e );
         }
 
-        List tlds;
+        List<File> tlds;
         try
         {
             tlds = FileUtils.getFiles( srcDir, "**/*.tld", null ); //$NON-NLS-1$
@@ -187,10 +187,10 @@ public class ValidateMojo
             throw new MavenReportException( e.getMessage(), e );
         }
 
-        List tldList = new ArrayList();
-        for ( Iterator i = tlds.iterator(); i.hasNext(); )
+        List<Tld> tldList = new ArrayList<>();
+        for ( Iterator<File> i = tlds.iterator(); i.hasNext(); )
         {
-            File current = (File) i.next();
+            File current = i.next();
 
             Document tldDoc;
             try
@@ -217,7 +217,7 @@ public class ValidateMojo
             return;
         }
 
-        List classPathStrings;
+        List<String> classPathStrings;
         try
         {
             classPathStrings = this.project.getCompileClasspathElements();
@@ -227,9 +227,9 @@ public class ValidateMojo
             throw new MavenReportException( e.getMessage(), e );
         }
 
-        List URLs = new ArrayList( classPathStrings.size() );
+        List<URL> URLs = new ArrayList<>( classPathStrings.size() );
 
-        Iterator iter = classPathStrings.iterator();
+        Iterator<String> iter = classPathStrings.iterator();
         while ( iter.hasNext() )
         {
             try
@@ -242,7 +242,7 @@ public class ValidateMojo
             }
         }
 
-        URLClassLoader projectClassLoader = new URLClassLoader( (URL[]) URLs.toArray( new URL[URLs.size()] ), null );
+        URLClassLoader projectClassLoader = new URLClassLoader( URLs.toArray( new URL[URLs.size()] ), null );
 
         ValidateRenderer r = new ValidateRenderer( getSink(), locale,
                                                    (Tld[]) tldList.toArray( new Tld[tldList.size()] ), getLog(),

@@ -80,17 +80,17 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
     /**
      * javax.servlet.jsp.tagext.TagSupport class loaded using the project classloader.
      */
-    private Class tagSupportClass;
+    private Class<?> tagSupportClass;
 
     /**
      * javax.servlet.jsp.tagext.TagExtraInfo class loaded using the project classloader.
      */
-    private Class tagExtraInfoClass;
+    private Class<?> tagExtraInfoClass;
 
     /**
      * javax.servlet.jsp.tagext.SimpleTag class loaded using the project classloader.
      */
-    private Class simpleTagClass;
+    private Class<?> simpleTagClass;
 
     /**
      * @param sink
@@ -255,7 +255,7 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
 
         try
         {
-            Class functionClass = Class.forName(className, true, this.projectClassLoader);
+            Class<?> functionClass = Class.forName(className, true, this.projectClassLoader);
 
             String fullSignature = tag.getFunctionSignature();
             String paramsString = tag.getParameters();
@@ -270,7 +270,7 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
 
             String[] params = StringUtils.split(paramsString, ",");
 
-            List<Class> parClasses = new ArrayList<Class>();
+            List<Class<?>> parClasses = new ArrayList<>();
 
             for (String stringClass : params)
             {
@@ -337,7 +337,7 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
 
         try
         {
-            Class tagClass = Class.forName(className, true, this.projectClassLoader);
+            Class<?> tagClass = Class.forName(className, true, this.projectClassLoader);
 
             // extend only true, if tagClass derives from TagSupport or derives from SimpleTag
             extend = tagSupportClass.isAssignableFrom(tagClass)
@@ -424,7 +424,7 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
         boolean loadable = true;
         boolean extend = true;
 
-        Class teiClass = null;
+        Class<?> teiClass = null;
         try
         {
             teiClass = Class.forName(className, true, this.projectClassLoader);
@@ -488,10 +488,10 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
 
         String tldType = attribute.getType();
         String tldName = attribute.getName();
-        Class tagType = null;
+        Class<?> tagType = null;
         String tagTypeName = null;
 
-        List validationErrors = new ArrayList(3);
+        List<ValidationError> validationErrors = new ArrayList<>(3);
 
         if (!PropertyUtils.isWriteable(tag, tldName))
         {
@@ -515,7 +515,7 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
 
             if (tldType != null && tagType != null)
             {
-                Class tldTypeClass = getClassFromName(tldType);
+                Class<?> tldTypeClass = getClassFromName(tldType);
 
                 if (!tagType.isAssignableFrom(tldTypeClass))
                 {
@@ -550,9 +550,9 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
 
         int figure = ICO_SUCCESS;
 
-        for (Iterator iter = validationErrors.iterator(); iter.hasNext();)
+        for (Iterator<ValidationError> iter = validationErrors.iterator(); iter.hasNext();)
         {
-            ValidationError error = (ValidationError) iter.next();
+            ValidationError error = iter.next();
             if (error.getLevel() == ValidationError.LEVEL_ERROR)
             {
                 figure = ICO_ERROR;
@@ -570,10 +570,10 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
         sink.tableCell();
         sink.text(tldName);
 
-        Iterator iterator = validationErrors.iterator();
+        Iterator<ValidationError> iterator = validationErrors.iterator();
         while (iterator.hasNext())
         {
-            ValidationError error = (ValidationError) iterator.next();
+            ValidationError error = iterator.next();
             sink.lineBreak();
             if (error.getLevel() == ValidationError.LEVEL_ERROR)
             {
@@ -640,10 +640,10 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
      * @param className clss name
      * @return Class istantiated using Class.forName or the matching primitive.
      */
-    private Class getClassFromName(String className)
+    private Class<?> getClassFromName(String className)
     {
 
-        Class tldTypeClass = tryGettingPrimitiveClass(className);
+        Class<?> tldTypeClass = tryGettingPrimitiveClass(className);
 
         if (tldTypeClass == null)
         {
@@ -668,7 +668,7 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
         return tldTypeClass;
     }
 
-    private Class tryGettingPrimitiveClass(String className)
+    private Class<?> tryGettingPrimitiveClass(String className)
     {
         if ("int".equals(className)) //$NON-NLS-1$
         {
@@ -703,10 +703,10 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
         return className.endsWith("[]");
     }
 
-    private Class getArrayClass(String className) throws ClassNotFoundException
+    private Class<?> getArrayClass(String className) throws ClassNotFoundException
     {
         String elementClassName = StringUtils.replace(className, "[]", "");
-        Class elementClass = tryGettingPrimitiveClass(elementClassName);
+        Class<?> elementClass = tryGettingPrimitiveClass(elementClassName);
         if (elementClass == null)
         {
             elementClass = Class.forName(elementClassName);

@@ -191,7 +191,7 @@ public class TagreferenceMojo extends AbstractMavenReport implements MavenReport
         {
             throw new MavenReportException(e.getMessage(), e);
         }
-        List tlds;
+        List<File> tlds;
         try
         {
             tlds = FileUtils.getFiles(srcDir, "**/*.tld", null);
@@ -200,10 +200,10 @@ public class TagreferenceMojo extends AbstractMavenReport implements MavenReport
         {
             throw new MavenReportException(e.getMessage(), e);
         }
-        List tldList = new ArrayList();
-        for (Iterator i = tlds.iterator(); i.hasNext();)
+        List<Tld> tldList = new ArrayList<>();
+        for (Iterator<File> i = tlds.iterator(); i.hasNext();)
         {
-            File current = (File) i.next();
+            File current = i.next();
 
             Document tldDoc;
             try
@@ -234,7 +234,7 @@ public class TagreferenceMojo extends AbstractMavenReport implements MavenReport
         new TagreferenceRenderer(
             getSink(),
             locale,
-            (Tld[]) tldList.toArray(new Tld[tldList.size()]),
+            tldList.toArray(new Tld[tldList.size()]),
             parseHtml,
             getLog()).render();
 

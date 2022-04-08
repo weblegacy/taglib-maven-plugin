@@ -145,9 +145,9 @@ public class TldGenerateMojo extends AbstractMojo
 
         if (taglibs != null)
         {
-            for (Iterator iterator = taglibs.iterator(); iterator.hasNext();)
+            for (Iterator<Taglib> iterator = taglibs.iterator(); iterator.hasNext();)
             {
-                Object taglib = (Object) iterator.next();
+                Taglib taglib = iterator.next();
 
                 // a trink to make the old style embedder tests work,
                 // I should migrate to the new IT test infras
@@ -336,12 +336,12 @@ public class TldGenerateMojo extends AbstractMojo
                     {
                         TagFile tagFile = TagFile.parse(is);
 
-                        for (Iterator iter = tagFile.getDirectives().iterator(); iter.hasNext();)
+                        for (Iterator<?> iter = tagFile.getDirectives().iterator(); iter.hasNext();)
                         {
                             Directive directive = (Directive) iter.next();
                             if ("tag".equals(directive.getDirectiveName()))
                             {
-                                for (Iterator iterator = directive.getAttributes(); iterator.hasNext();)
+                                for (Iterator<?> iterator = directive.getAttributes(); iterator.hasNext();)
                                 {
                                     Attribute attribute = (Attribute) iterator.next();
                                     if ("description".equals(attribute.getName())
@@ -383,7 +383,7 @@ public class TldGenerateMojo extends AbstractMojo
             {
                 String functionClassString = taglib.getFunctionClasses()[j];
 
-                Class functionClass = null;
+                Class<?> functionClass = null;
                 try
                 {
                     functionClass = Class.forName(functionClassString);
