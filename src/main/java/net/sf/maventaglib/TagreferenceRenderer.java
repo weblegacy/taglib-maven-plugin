@@ -55,7 +55,7 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
 
     private static final String CLOSE_DIV = "</div>";
 
-    private Locale locale;
+    //private Locale locale;
 
     /**
      * list of Tld to check.
@@ -73,7 +73,7 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
     {
         super(sink);
 
-        this.locale = locale;
+        //this.locale = locale;
         this.tlds = tlds;
         this.parseHtml = parseHtml;
         this.log = log;

@@ -66,7 +66,7 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
 
     private static final String IMAGE_SUCCESS_SRC = Messages.getString("Validate.image.success"); //$NON-NLS-1$
 
-    private Locale locale;
+    //private Locale locale;
 
     /**
      * list of Tld to check.
@@ -98,7 +98,7 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
     public ValidateRenderer(Sink sink, Locale locale, Tld[] tlds, Log log, ClassLoader projectClassLoader)
     {
         super(sink);
-        this.locale = locale;
+        //this.locale = locale;
         this.tlds = tlds;
         this.log = log;
         this.projectClassLoader = projectClassLoader;

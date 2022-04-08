@@ -1,5 +1,6 @@
 # 2.5 / YYYY-MM-DD
 
+* Resolve java-warnings
 * Remove unused imports
 * Resolve deprecated methods
 * Add generics

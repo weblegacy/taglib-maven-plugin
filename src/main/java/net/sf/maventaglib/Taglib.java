@@ -35,6 +35,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
  */
 public class Taglib implements Serializable
 {
+    private static final long serialVersionUID = -1130286008090091787L;
 
     /**
      * Function classes for generating EL functions

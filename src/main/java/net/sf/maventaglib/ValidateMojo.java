@@ -88,12 +88,12 @@ public class ValidateMojo
      */
     private MavenProject project;
 
-    /**
+    /*
      * The directory containing generated test classes of the project being tested.
      * @parameter expression="${project.build.outputDirectory}"
      * @required
      */
-    private File buildOutputDirectory;
+    //private File buildOutputDirectory;
 
     /**
      * @see org.apache.maven.reporting.AbstractMavenReport#getOutputDirectory()
