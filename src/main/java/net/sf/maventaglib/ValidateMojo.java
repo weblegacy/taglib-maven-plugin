@@ -234,7 +234,7 @@ public class ValidateMojo
         {
             try
             {
-                URLs.add( new File( ( (String) iter.next() ) ).toURL() );
+                URLs.add( new File( iter.next() ).toURI().toURL() );
             }
             catch ( MalformedURLException e )
             {

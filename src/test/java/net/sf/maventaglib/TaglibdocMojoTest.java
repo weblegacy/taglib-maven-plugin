@@ -57,8 +57,8 @@ public class TaglibdocMojoTest extends TaglibPluginTestBase
         assertNotNull(myMojo);
         myMojo.execute();
 
-        assertFileExists(new File(basedir, "target/site/tlddoc/project2/ul.html"));
-        assertFileExists(new File(basedir, "target/site/tlddoc/project2/url.html"));
+        assertFileExists(new File(getBasedir(), "target/site/tlddoc/project2/ul.html"));
+        assertFileExists(new File(getBasedir(), "target/site/tlddoc/project2/url.html"));
     }
 
     /**
@@ -75,7 +75,7 @@ public class TaglibdocMojoTest extends TaglibPluginTestBase
         assertNotNull(myMojo);
         myMojo.execute();
 
-        assertFileExists(new File(basedir, "target/site/tlddoc/test-12-tld-a/jsp12tldtag1.html"));
+        assertFileExists(new File(getBasedir(), "target/site/tlddoc/test-12-tld-a/jsp12tldtag1.html"));
     }
 
 }

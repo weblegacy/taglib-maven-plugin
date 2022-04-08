@@ -57,7 +57,7 @@ public class TldGenerateMojoTest extends TaglibPluginTestBase
         assertNotNull(myMojo);
         myMojo.execute();
 
-        assertFileExists(new File(basedir, "target/classes/META-INF/testtag.tld"));
+        assertFileExists(new File(getBasedir(), "target/classes/META-INF/testtag.tld"));
 
     }
 
@@ -72,7 +72,7 @@ public class TldGenerateMojoTest extends TaglibPluginTestBase
         assertNotNull(myMojo);
         myMojo.execute();
 
-        assertFileExists(new File(basedir, "target/classes/META-INF/testtaglib.tld"));
+        assertFileExists(new File(getBasedir(), "target/classes/META-INF/testtaglib.tld"));
 
     }
 

@@ -1,5 +1,6 @@
 # 2.5 / YYYY-MM-DD
 
+* Resolve deprecated methods
 * Add generics
 * Upgrade to JDK 8
 * Upgrade MAVEN-Plugins
