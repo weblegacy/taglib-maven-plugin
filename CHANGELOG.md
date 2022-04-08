@@ -1,5 +1,6 @@
 # 2.5 / YYYY-MM-DD
 
+* Upgrade dependencies
 * Resolve java-warnings
 * Remove unused imports
 * Resolve deprecated methods

@@ -48,10 +48,9 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.codehaus.plexus.util.FileUtils;
-import org.codehaus.plexus.util.IOUtil;
-import org.jdom.input.DOMBuilder;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
+import org.jdom2.input.DOMBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -246,15 +245,10 @@ public class TldGenerateMojo extends AbstractMojo
         getLog().info(MessageFormat.format(Messages.getString("Taglib.generating.file"), //$NON-NLS-1$
             new Object[]{tldName, taglib.getShortName() }));
 
-        FileOutputStream fos = new FileOutputStream(outputFile);
-        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-        try
+        try (FileOutputStream fos = new FileOutputStream(outputFile)) 
         {
+            XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
             outputter.output(new DOMBuilder().build(doc), fos);
-        }
-        finally
-        {
-            IOUtil.close(fos);
         }
     }
 
@@ -321,18 +315,7 @@ public class TldGenerateMojo extends AbstractMojo
                     // example (optional) Informal description of an example use of the tag.
                     // tag-extension (optional) Extensions that provide extra information about the tag for tools.
 
-                    InputStream is = null;
-                    try
-                    {
-                        is = new FileInputStream(tag);
-                    }
-                    catch (FileNotFoundException e)
-                    {
-                        // @todo Auto-generated catch block
-                        e.printStackTrace();
-                    }
-
-                    try
+                    try (InputStream is = new FileInputStream(tag))
                     {
                         TagFile tagFile = TagFile.parse(is);
 
@@ -360,14 +343,15 @@ public class TldGenerateMojo extends AbstractMojo
                         }
 
                     }
-                    catch (ParseException e)
+                    catch (IOException e)
                     {
                         // @todo Auto-generated catch block
                         e.printStackTrace();
                     }
-                    finally
+                    catch (ParseException e)
                     {
-                        IOUtil.close(is);
+                        // @todo Auto-generated catch block
+                        e.printStackTrace();
                     }
 
                 }
