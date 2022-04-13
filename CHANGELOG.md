@@ -1,5 +1,6 @@
-# 2.5 / YYYY-MM-DD
+# 2.5 / 2022-04-13
 
+* Set version to 2.5
 * Generate bin- and src-assemblies
 * Generate javadoc- and source-jar
 * Bump maven-shared-utils from 3.2.0 to 3.3.4
