@@ -1,5 +1,6 @@
 # 2.5 / YYYY-MM-DD
 
+* Generate javadoc- and source-jar
 * Bump maven-shared-utils from 3.2.0 to 3.3.4
 * Remove unnecessary cast
 * Set plugin-extractors to only java-annotations
