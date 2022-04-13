@@ -193,7 +193,7 @@ public class ValidateMojo
         URLClassLoader projectClassLoader = new URLClassLoader( URLs.toArray( new URL[URLs.size()] ), null );
 
         ValidateRenderer r = new ValidateRenderer( getSink(), locale,
-                                                   (Tld[]) tldList.toArray( new Tld[tldList.size()] ), getLog(),
+                                                   tldList.toArray( new Tld[tldList.size()] ), getLog(),
                                                    projectClassLoader );
 
         r.render();
