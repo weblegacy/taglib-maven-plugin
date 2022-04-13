@@ -1,5 +1,6 @@
 # 2.5 / YYYY-MM-DD
 
+* Upgrade deprecated plexus-plugins
 * maven-plugin-dependencies-version thru property
 * Remove uncommented dependencies
 * Correct JUnit-tests
