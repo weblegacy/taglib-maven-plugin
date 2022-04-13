@@ -147,6 +147,9 @@
           <version>3.6.4</version>
           <configuration>
             <goalPrefix>taglib</goalPrefix>
+            <extractors>
+              <extractor>java-annotations</extractor>
+            </extractors>
           </configuration>
         </plugin>
         <plugin>

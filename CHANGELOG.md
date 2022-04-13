@@ -1,5 +1,6 @@
 # 2.5 / YYYY-MM-DD
 
+* Set plugin-extractors to only java-annotations
 * Add test-dependencies slf4j-simple
 * Generate mojo-descriptor
 * Upgrade deprecated plexus-plugins
