@@ -38,6 +38,9 @@ import net.sf.maventaglib.util.XmlHelper;
 
 import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Component;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenMultiPageReport;
@@ -49,42 +52,41 @@ import org.w3c.dom.Document;
 
 /**
  * Generates a tag reference xdoc that can be integrated in a maven generated site.
- * @goal tagreference
  * @author Fabrizio Giustina
  * @version $Id: TagreferenceMojo.java 217 2014-08-15 20:50:32Z fgiust $
  */
+@Mojo(name="tagreference")
 public class TagreferenceMojo extends AbstractMavenReport implements MavenReport, MavenMultiPageReport
 {
 
     /**
      * Directory containing tld files. Subdirectories are also processed.
-     * @parameter alias="taglib.src.dir" expression="src/main/resources/META-INF"
      */
+    @Parameter(alias="taglib.src.dir", defaultValue="src/main/resources/META-INF")
     private File srcDir;
 
     /**
      * Output directory for generated docs.
-     * @parameter property="project.reporting.outputDirectory"
      */
+    @Parameter(property="project.reporting.outputDirectory")
     private File outputDirectory;
 
     /**
      * Whether to parse html in the description of tld info, tags and attributes. The default value is false.
-     * @parameter default-value="false"
      */
+    @Parameter(defaultValue="false")
     private boolean parseHtml;
 
     /**
      * Maven project
-     * @parameter property="project"
-     * @readonly
      */
+    @Parameter(property="project", readonly=true)
     private MavenProject project;
 
     /**
      * Site renderer component.
-     * @component
      */
+    @Component
     private Renderer siteRenderer;
 
     /**

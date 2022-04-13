@@ -42,6 +42,9 @@ import net.sf.maventaglib.util.XmlHelper;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Component;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReport;
@@ -51,10 +54,10 @@ import org.w3c.dom.Document;
 
 /**
  * Generates a tag library validation report.
- * @goal validate
  * @author Fabrizio Giustina
  * @version $Id: ValidateMojo.java 217 2014-08-15 20:50:32Z fgiust $
  */
+@Mojo(name="validate")
 public class ValidateMojo
     extends AbstractMavenReport
     implements MavenReport
@@ -62,37 +65,32 @@ public class ValidateMojo
 
     /**
      * Directory containing tld files. Subdirectories are also processed.
-     * @parameter alias="taglib.src.dir" expression="src/main/resources/META-INF"
      */
+    @Parameter(alias="taglib.src.dir", defaultValue="src/main/resources/META-INF")
     private File srcDir;
 
     /**
      * Output directory for generated docs.
-     * @parameter expression="${project.reporting.outputDirectory}"
      */
+    @Parameter(property="project.reporting.outputDirectory")
     private File outputDirectory;
 
     /**
      * Site renderer component.
-     * @component
-     * @required
-     * @readonly
      */
+    @Component
     private Renderer siteRenderer;
 
     /**
      * Maven project
-     * @parameter expression="${project}"
-     * @required
-     * @readonly
      */
+    @Parameter(property="project", required=true, readonly=true)
     private MavenProject project;
 
     /*
      * The directory containing generated test classes of the project being tested.
-     * @parameter expression="${project.build.outputDirectory}"
-     * @required
      */
+    //@Parameter(property="project.build.outputDirectory", required=true)
     //private File buildOutputDirectory;
 
     /**

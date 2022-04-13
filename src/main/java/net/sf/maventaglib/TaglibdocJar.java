@@ -28,6 +28,11 @@ import java.io.IOException;
 import org.apache.maven.artifact.handler.ArtifactHandler;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Component;
+import org.apache.maven.plugins.annotations.Execute;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectHelper;
 import org.codehaus.plexus.archiver.ArchiverException;
@@ -36,46 +41,42 @@ import org.codehaus.plexus.archiver.jar.JarArchiver;
 /**
  * Generates a jar containing the tlddoc generated documentation. The generated jar is installed/deployed to the
  * repository if install/deploy is executed after this goal.
- * @goal taglibdocjar
- * @phase package
- * @execute goal="taglibdoc"
  */
+@Mojo(name="taglibdocjar", defaultPhase=LifecyclePhase.PACKAGE)
+@Execute(goal="taglibdoc")
 public class TaglibdocJar
     extends AbstractMojo
 {
 
     /**
      * TldDoc output dir.
-     * @parameter expression="${project.reporting.outputDirectory}/tlddoc"
      */
+    @Parameter(defaultValue="${project.reporting.outputDirectory}/tlddoc")
     private File tldDocDir;
 
     /**
      * Maven project.
-     * @parameter expression="${project}"
-     * @readonly
-     * @required
      */
+    @Parameter(property="project", readonly=true, required=true)
     private MavenProject project;
 
     /**
      * Maven Project Helper.
-     * @component
      */
+    @Component
     private MavenProjectHelper projectHelper;
 
     /**
      * Generated jar name/location.
-     * @parameter expression="${project.build.directory}/${project.build.finalName}-tlddoc.jar"
-     * @required
      */
+    @Parameter(defaultValue="${project.build.directory}/${project.build.finalName}-tlddoc.jar", required=true)
     private File tlddocJar;
 
     /**
      * Attach the generated jar to the main artifact. Set this to false if you don't want the taglibdoc jar deployed to
      * the repository.
-     * @parameter expression="${attach}" default-value="true"
      */
+    @Parameter(property="attach", defaultValue="true")
     private boolean attach = true;
 
     public void execute()

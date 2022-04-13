@@ -33,6 +33,9 @@ import java.util.Set;
 
 import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Component;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReport;
@@ -44,48 +47,48 @@ import com.sun.tlddoc.TLDDocGenerator;
 
 /**
  * Generates taglibdoc documentation.
- * @goal taglibdoc
  * @author Fabrizio Giustina
  * @version $Id: TaglibdocMojo.java 217 2014-08-15 20:50:32Z fgiust $
  */
+@Mojo(name="taglibdoc")
 public class TaglibdocMojo extends AbstractMavenReport implements MavenReport
 {
 
     /**
      * title for tlddoc generated documentation.
-     * @parameter expression="${project.name} Tag library documentation"
      */
+    @Parameter(defaultValue="${project.name} Tag library documentation")
     private String title;
 
     /**
      * TldDoc output dir.
-     * @parameter expression="${project.reporting.outputDirectory}/tlddoc"
      */
+    @Parameter(defaultValue="${project.reporting.outputDirectory}/tlddoc")
     private File tldDocDir;
 
     /**
      * Directory containing tld or tag files. Subdirectories are also processed, unless the "dontRecurseIntoSubdirs"
      * parameter is set.
-     * @parameter alias="taglib.src.dir" expression="src/main/resources/META-INF"
      */
+    @Parameter(alias="taglib.src.dir", defaultValue="src/main/resources/META-INF")
     private File srcDir;
 
     /**
      * If set, only file contained directly in the specified directory are used.
-     * @parameter
      */
+    @Parameter
     private boolean dontRecurseIntoSubdirs;
 
     /**
      * Site renderer component.
-     * @component
      */
+    @Component
     private Renderer siteRenderer;
 
     /**
      * Directory containing custom xsl files (equivalent to the "-xslt" parameter to tlddoc).
-     * @parameter
      */
+    @Parameter
     private File xsltDir;
 
     /**

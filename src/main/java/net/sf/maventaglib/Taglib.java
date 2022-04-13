@@ -27,6 +27,7 @@ import java.io.Serializable;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.maven.plugins.annotations.Parameter;
 
 
 /**
@@ -39,38 +40,38 @@ public class Taglib implements Serializable
 
     /**
      * Function classes for generating EL functions
-     * @parameter
      */
+    @Parameter
     private String[] functionClasses;
 
     /**
      * Directories containing tag files
-     * @parameter
      */
+    @Parameter
     private File tagdir;
 
     /**
      * Taglib description
-     * @parameter
      */
+    @Parameter
     private String description;
 
     /**
      * Taglib shortName
-     * @parameter
      */
+    @Parameter
     private String shortName;
 
     /**
      * Taglib uri
-     * @parameter
      */
+    @Parameter
     private String uri;
 
     /**
      * File name
-     * @parameter
      */
+    @Parameter
     private String outputname;
 
     /**

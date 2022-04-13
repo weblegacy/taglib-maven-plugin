@@ -47,6 +47,9 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.codehaus.plexus.util.FileUtils;
 import org.jdom2.input.DOMBuilder;
 import org.jdom2.output.Format;
@@ -62,32 +65,29 @@ import com.sun.tlddoc.tagfileparser.TagFile;
 
 /**
  * Generates tld files from directories of jsp 2.0 tag files.
- * @goal tldgenerate
- * @phase generate-resources
  * @author Fabrizio Giustina
  * @version $Id: TldGenerateMojo.java 217 2014-08-15 20:50:32Z fgiust $
  */
+@Mojo(name="tldgenerate", defaultPhase=LifecyclePhase.GENERATE_RESOURCES)
 public class TldGenerateMojo extends AbstractMojo
 {
 
     /**
      * Directory containing tag files. Subdirectories are also processed.
-     * @parameter expression="src/main/resources/META-INF/tags/"
      */
+    @Parameter(defaultValue="src/main/resources/META-INF/tags/")
     private File tagDir;
 
     /**
      * Output dir for tld files.
-     * @parameter expression="${project.build.outputDirectory}/META-INF"
-     * @required
      */
+    @Parameter(defaultValue="${project.build.outputDirectory}/META-INF", required=true)
     private File outputDir;
 
     /**
      * Version added to tld files, defaults to project version.
-     * @parameter property="project.version"
-     * @required
      */
+    @Parameter(property="project.version", required=true)
     private String version;
 
     /**
@@ -110,8 +110,8 @@ public class TldGenerateMojo extends AbstractMojo
      *      &lt;/taglib>
      *    &lt;/taglibs>
      * </pre>
-     * @parameter
      */
+    @Parameter
     private List<Taglib> taglibs;
 
     /**
