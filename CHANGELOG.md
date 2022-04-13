@@ -1,5 +1,6 @@
 # 2.5 / YYYY-MM-DD
 
+* Add test-dependencies slf4j-simple
 * Generate mojo-descriptor
 * Upgrade deprecated plexus-plugins
 * maven-plugin-dependencies-version thru property
