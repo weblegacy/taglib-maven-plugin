@@ -1,5 +1,11 @@
-<?xml version="1.0"?>
-<faqs id="FAQ" title="Frequently Asked Questions">
+<?xml version="1.0" encoding="UTF-8"?>
+<faqs xmlns="http://maven.apache.org/FML/1.0.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/FML/1.0.1 http://maven.apache.org/xsd/fml-1.0.1.xsd"
+  id="FAQ"
+  title="Frequently Asked Questions"
+  toplink="false">
+
   <part id="General">
     <faq id="tldversion">
       <question>Which tld version / tag specification version does the plugin supports?</question>
@@ -10,10 +16,8 @@
     <faq id="multipletld">
       <question>Does the plugin support more than one tld for each project?</question>
       <answer>
-        <p>
-          Yes, it does: the tagreference/tag validation reports will list multiple taglib in a single page, tlddoc
-          documentation will be generated for all the taglibraries.
-        </p>
+        <p>Yes, it does: the tagreference/tag validation reports will list multiple taglib in a single page, tlddoc
+          documentation will be generated for all the taglibraries.</p>
       </answer>
     </faq>
   </part>

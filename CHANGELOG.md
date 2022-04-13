@@ -1,5 +1,6 @@
 # 2.5 / YYYY-MM-DD
 
+* Upgrade site-documentation
 * Migrate from Plugin-JavaDoc to Plugin-Annotations
 * Set scope of maven-plugin-builder dependencies to provided
 * Upgrade dependencies

@@ -1,10 +1,11 @@
+${project.name}
+===============
 
 The Taglib Plug-in is a Maven plugin for jsp tag libraries developers.
 It eases the generation, documentation and testing of jsp tag libraries.
 
-
-## Basic configuration
-
+Basic configuration
+-------------------
 
 Adds the following to your pom.xml to enable generation of taglib
 reports:
@@ -12,9 +13,9 @@ reports:
 ```xml
   <reporting>
       <plugin>
-        <groupId>net.sourceforge.maven-taglib</groupId>
-        <artifactId>maven-taglib-plugin</artifactId>
-        <version>2.5</version>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
       </plugin>
     </plugins>
   </reporting>
@@ -27,4 +28,3 @@ This will trigger the generation of:
 -   a tag reference page
 
 For advanced usage see the [usage](usage.html) section.
-
