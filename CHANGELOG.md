@@ -1,5 +1,6 @@
 # 2.5 / YYYY-MM-DD
 
+* maven-plugin-dependencies-version thru property
 * Remove uncommented dependencies
 * Correct JUnit-tests
 * Remove duplicate code
