@@ -1,5 +1,6 @@
 # 2.5 / YYYY-MM-DD
 
+* Generate mojo-descriptor
 * Upgrade deprecated plexus-plugins
 * maven-plugin-dependencies-version thru property
 * Remove uncommented dependencies

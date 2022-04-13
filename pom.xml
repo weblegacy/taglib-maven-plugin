@@ -207,7 +207,13 @@
         <artifactId>maven-plugin-plugin</artifactId>
         <executions>
           <execution>
-            <id>generated-helpmojo</id>
+            <id>mojo-descriptor</id>
+            <goals>
+              <goal>descriptor</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>help-goal</id>
             <goals>
               <goal>helpmojo</goal>
             </goals>
