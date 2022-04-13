@@ -22,7 +22,12 @@
  */
 package net.sf.maventaglib;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
+
+import org.junit.Test;
 
 
 /**
@@ -34,45 +39,38 @@ public class TldGenerateMojoTest extends TaglibPluginTestBase
 {
 
     /**
-     * @see junit.framework.TestCase#setUp()
-     */
-    @Override
-    protected void setUp() throws Exception
-    {
-        super.setUp();
-    }
-
-    /**
      * test for the tag reference goal.
      * @throws Exception any exception thrown during test
      */
+    @Test
     public final void testTldGenerateWithTags() throws Exception
     {
 
-        File pom = getTestFile("src/test/resources/project2/pom.xml");
-        assertNotNull(pom);
-        assertTrue(pom.exists());
+        File basedir = new File("target/test-classes/project2/");
+        assertNotNull(basedir);
+        assertTrue(basedir.exists());
 
-        TldGenerateMojo myMojo = (TldGenerateMojo) lookupMojo("taglib:generate", pom);
+        TldGenerateMojo myMojo = (TldGenerateMojo) rule.lookupConfiguredMojo(basedir, "tldgenerate");
         assertNotNull(myMojo);
         myMojo.execute();
 
-        assertFileExists(new File(getBasedir(), "target/classes/META-INF/testtag.tld"));
+        assertFileExists(new File(basedir, "target/classes/META-INF/testtag.tld"));
 
     }
 
+    @Test
     public final void testTldGenerateWithFunctions() throws Exception
     {
 
-        File pom = getTestFile("src/test/resources/project3/pom.xml");
-        assertNotNull(pom);
-        assertTrue(pom.exists());
+        File basedir = new File("target/test-classes/project3/");
+        assertNotNull(basedir);
+        assertTrue(basedir.exists());
 
-        TldGenerateMojo myMojo = (TldGenerateMojo) lookupMojo("taglib:generate", pom);
+        TldGenerateMojo myMojo = (TldGenerateMojo) rule.lookupConfiguredMojo(basedir, "tldgenerate");
         assertNotNull(myMojo);
         myMojo.execute();
 
-        assertFileExists(new File(getBasedir(), "target/classes/META-INF/testtaglib.tld"));
+        assertFileExists(new File(basedir,"target/classes/META-INF/testtaglib.tld"));
 
     }
 

@@ -22,7 +22,12 @@
  */
 package net.sf.maventaglib;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
+
+import org.junit.Test;
 
 
 /**
@@ -34,31 +39,22 @@ public class TagreferenceMojoTest extends TaglibPluginTestBase
 {
 
     /**
-     * @see junit.framework.TestCase#setUp()
-     */
-    @Override
-    protected void setUp() throws Exception
-    {
-        super.setUp();
-    }
-
-    /**
      * test for the tag reference goal.
      * @throws Exception any exception thrown during test
      */
+    @Test
     public final void testGoalTagreference() throws Exception
     {
-        File pom = getTestFile("src/test/resources/project1/pom.xml");
-        assertNotNull(pom);
-        assertTrue(pom.exists());
+        File basedir = new File("target/test-classes/project1/");
+        assertNotNull(basedir);
+        assertTrue(basedir.exists());
 
-        TagreferenceMojo myMojo = (TagreferenceMojo) lookupMojo("taglib:tagreference", pom);
+        TagreferenceMojo myMojo = (TagreferenceMojo) rule.lookupConfiguredMojo(basedir, "tagreference");
         assertNotNull(myMojo);
         myMojo.execute();
 
-        // disabled: looks like the file is not create when the site lifecycle is not executed?
-        // File outputFile = new File( basedir, "target/site/tagreference.html" );
-        // assertFileExists( outputFile );
+        File outputFile = new File( basedir, "target/site/tagreference.html" );
+        assertFileExists( outputFile );
     }
 
 }

@@ -22,36 +22,25 @@
  */
 package net.sf.maventaglib;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.net.URL;
 
-import org.apache.maven.plugin.testing.AbstractMojoTestCase;
+import org.apache.maven.plugin.testing.MojoRule;
+import org.junit.Rule;
 
 
 /**
  * Base class for plugin tests.
  * @author Fabrizio Giustina
  */
-public abstract class TaglibPluginTestBase extends AbstractMojoTestCase
+public abstract class TaglibPluginTestBase
 {
 
-    /**
-     * @see junit.framework.TestCase#setUp()
-     */
-    @Override
-    protected void setUp() throws Exception
-    {
-        super.setUp();
-    }
-
-    /**
-     * @see junit.framework.TestCase#tearDown()
-     */
-    @Override
-    protected void tearDown() throws Exception
-    {
-        super.tearDown();
-    }
+    @Rule
+    public MojoRule rule = new MojoRule();
 
     /**
      * returns the path for the test directory.

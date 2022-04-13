@@ -1,5 +1,6 @@
 # 2.5 / YYYY-MM-DD
 
+* Correct JUnit-tests
 * Remove duplicate code
 * Upgrade site-documentation
 * Migrate from Plugin-JavaDoc to Plugin-Annotations
