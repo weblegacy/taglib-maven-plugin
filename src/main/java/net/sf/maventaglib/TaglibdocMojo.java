@@ -31,12 +31,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReport;
 import org.apache.maven.reporting.MavenReportException;
@@ -78,12 +75,6 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport
      */
     @Parameter
     private boolean dontRecurseIntoSubdirs;
-
-    /**
-     * Site renderer component.
-     */
-    @Component
-    private Renderer siteRenderer;
 
     /**
      * Directory containing custom xsl files (equivalent to the "-xslt" parameter to tlddoc).
@@ -161,24 +152,6 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport
     }
 
     /**
-     * @see org.apache.maven.reporting.AbstractMavenReport#getOutputDirectory()
-     */
-    @Override
-    protected String getOutputDirectory()
-    {
-        return null;
-    }
-
-    /**
-     * @see org.apache.maven.reporting.AbstractMavenReport#getProject()
-     */
-    @Override
-    protected MavenProject getProject()
-    {
-        return null;
-    }
-
-    /**
      * @see org.apache.maven.reporting.AbstractMavenReport#executeReport(java.util.Locale)
      */
     @Override
@@ -252,15 +225,6 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport
         }
         return false;
 
-    }
-
-    /**
-     * @see org.apache.maven.reporting.AbstractMavenReport#getSiteRenderer()
-     */
-    @Override
-    protected Renderer getSiteRenderer()
-    {
-        return siteRenderer;
     }
 
 }

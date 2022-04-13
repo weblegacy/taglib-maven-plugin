@@ -1,5 +1,6 @@
 # 2.5 / YYYY-MM-DD
 
+* Remove duplicate code
 * Upgrade site-documentation
 * Migrate from Plugin-JavaDoc to Plugin-Annotations
 * Set scope of maven-plugin-builder dependencies to provided

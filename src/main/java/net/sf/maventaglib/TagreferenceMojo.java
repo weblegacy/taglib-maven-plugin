@@ -36,15 +36,11 @@ import net.sf.maventaglib.checker.Tld;
 import net.sf.maventaglib.checker.TldParser;
 import net.sf.maventaglib.util.XmlHelper;
 
-import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
-import org.apache.maven.reporting.MavenMultiPageReport;
-import org.apache.maven.reporting.MavenReport;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.plexus.util.FileUtils;
 import org.w3c.dom.Document;
@@ -56,7 +52,7 @@ import org.w3c.dom.Document;
  * @version $Id: TagreferenceMojo.java 217 2014-08-15 20:50:32Z fgiust $
  */
 @Mojo(name="tagreference")
-public class TagreferenceMojo extends AbstractMavenReport implements MavenReport, MavenMultiPageReport
+public class TagreferenceMojo extends AbstractMavenReport
 {
 
     /**
@@ -66,55 +62,10 @@ public class TagreferenceMojo extends AbstractMavenReport implements MavenReport
     private File srcDir;
 
     /**
-     * Output directory for generated docs.
-     */
-    @Parameter(property="project.reporting.outputDirectory")
-    private File outputDirectory;
-
-    /**
      * Whether to parse html in the description of tld info, tags and attributes. The default value is false.
      */
     @Parameter(defaultValue="false")
     private boolean parseHtml;
-
-    /**
-     * Maven project
-     */
-    @Parameter(property="project", readonly=true)
-    private MavenProject project;
-
-    /**
-     * Site renderer component.
-     */
-    @Component
-    private Renderer siteRenderer;
-
-    /**
-     * @see org.apache.maven.reporting.AbstractMavenReport#getOutputDirectory()
-     */
-    @Override
-    protected String getOutputDirectory()
-    {
-        return this.outputDirectory.getAbsolutePath();
-    }
-
-    /**
-     * @see org.apache.maven.reporting.AbstractMavenReport#getProject()
-     */
-    @Override
-    protected MavenProject getProject()
-    {
-        return this.project;
-    }
-
-    /**
-     * @see org.apache.maven.reporting.AbstractMavenReport#getSiteRenderer()
-     */
-    @Override
-    protected Renderer getSiteRenderer()
-    {
-        return this.siteRenderer;
-    }
 
     /**
      * @see org.apache.maven.reporting.MavenReport#getOutputName()

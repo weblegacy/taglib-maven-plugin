@@ -40,14 +40,10 @@ import net.sf.maventaglib.checker.TldParser;
 import net.sf.maventaglib.util.XmlHelper;
 
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
-import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
-import org.apache.maven.reporting.MavenReport;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.plexus.util.FileUtils;
 import org.w3c.dom.Document;
@@ -60,7 +56,6 @@ import org.w3c.dom.Document;
 @Mojo(name="validate")
 public class ValidateMojo
     extends AbstractMavenReport
-    implements MavenReport
 {
 
     /**
@@ -69,56 +64,11 @@ public class ValidateMojo
     @Parameter(alias="taglib.src.dir", defaultValue="src/main/resources/META-INF")
     private File srcDir;
 
-    /**
-     * Output directory for generated docs.
-     */
-    @Parameter(property="project.reporting.outputDirectory")
-    private File outputDirectory;
-
-    /**
-     * Site renderer component.
-     */
-    @Component
-    private Renderer siteRenderer;
-
-    /**
-     * Maven project
-     */
-    @Parameter(property="project", required=true, readonly=true)
-    private MavenProject project;
-
     /*
      * The directory containing generated test classes of the project being tested.
      */
     //@Parameter(property="project.build.outputDirectory", required=true)
     //private File buildOutputDirectory;
-
-    /**
-     * @see org.apache.maven.reporting.AbstractMavenReport#getOutputDirectory()
-     */
-    @Override
-    protected String getOutputDirectory()
-    {
-        return outputDirectory.getAbsolutePath();
-    }
-
-    /**
-     * @see org.apache.maven.reporting.AbstractMavenReport#getProject()
-     */
-    @Override
-    protected MavenProject getProject()
-    {
-        return project;
-    }
-
-    /**
-     * @see org.apache.maven.reporting.AbstractMavenReport#getSiteRenderer()
-     */
-    @Override
-    protected Renderer getSiteRenderer()
-    {
-        return siteRenderer;
-    }
 
     /**
      * @see org.apache.maven.reporting.MavenReport#getName(java.util.Locale)
