@@ -1,5 +1,6 @@
 # 2.5 / YYYY-MM-DD
 
+* Remove uncommented dependencies
 * Correct JUnit-tests
 * Remove duplicate code
 * Upgrade site-documentation
