@@ -1,10 +1,12 @@
-# maven-taglib-plugin
+# taglib-maven-plugin
 
 Clone of [maven-taglib-plugin](https://sourceforge.net/projects/maven-taglib/) from SourceForge.
 
+Renamed from `maven-taglib-plugin` to `taglib-maven-plugin`
+
 Full [CHANGELOG](CHANGELOG.md)
 
-# Building `maven-taglib-plugin`
+# Building `taglib-maven-plugin`
 
 ## Prerequesits
 

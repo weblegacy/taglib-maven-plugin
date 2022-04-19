@@ -1,5 +1,6 @@
-# 2.5 / 2022-04-13
+# 2.5 / 2022-04-19
 
+* Rename from `maven-taglib-plugin` to `taglib-maven-plugin`
 * Set version to 2.5
 * Generate bin- and src-assemblies
 * Generate javadoc- and source-jar

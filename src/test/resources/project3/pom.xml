@@ -3,7 +3,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.sourceforge.maven-taglib</groupId>
-  <artifactId>maven-taglib-plugin-test-project2</artifactId>
+  <artifactId>taglib-maven-plugin-test-project2</artifactId>
   <packaging>jar</packaging>
   <name>Maven Taglib Plugin test project2</name>
   <version>1.0</version>
@@ -11,7 +11,7 @@
     <plugins>
       <plugin>
         <groupId>net.sourceforge.maven-taglib</groupId>
-        <artifactId>maven-taglib-plugin</artifactId>
+        <artifactId>taglib-maven-plugin</artifactId>
         <configuration>
           <taglibs>
             <taglib>
