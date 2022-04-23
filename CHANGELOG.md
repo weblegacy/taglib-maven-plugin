@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Some Code-optimization in `TagreferenceRenderer`
 * Set version to 2.6-SNAPSHOT
 
 # 2.5 / 2022-04-19
