@@ -52,7 +52,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 /**
@@ -64,79 +63,85 @@ public class XmlHelper
 
     /**
      * Returns a DocumentBuilder instance.
+     *
      * @return DocumentBuilder instance
-     * @throws FactoryConfigurationError if the parser is not configured
-     * @throws ParserConfigurationException if the parser is not configured
+     *
+     * @throws MojoExecutionException in case of an XML-Parser-Error
      */
     public static DocumentBuilder getDocumentBuilder()
         throws MojoExecutionException
     {
         DocumentBuilder builder;
+        DocumentBuilderFactory factory;
         try
         {
             builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            factory = DocumentBuilderFactory.newInstance();
+            factory.setValidating( false );
+            factory.setNamespaceAware( false );
+            factory.setExpandEntityReferences( false );
+            builder.setEntityResolver( new EntityResolver()
+            {
+
+                public InputSource resolveEntity( String publicId, String systemId )
+                {
+                    return new InputSource( new CharArrayReader( new char[0] ) );
+                }
+            } );
+
+            return builder;
         }
-        catch ( ParserConfigurationException e )
+        catch ( FactoryConfigurationError | ParserConfigurationException e )
         {
             throw new MojoExecutionException( "Unable to obtain a new xml parser", e );
         }
 
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setValidating( false );
-        factory.setNamespaceAware( false );
-        factory.setExpandEntityReferences( false );
-        builder.setEntityResolver( new EntityResolver()
-        {
-
-            public InputSource resolveEntity( String publicId, String systemId )
-            {
-                return new InputSource( new CharArrayReader( new char[0] ) );
-            }
-        } );
-
-        return builder;
     }
 
     /**
      * Returns a XMLReader instance.
+     *
      * @return XMLReader instance
-     * @throws SAXException for errors on building the sax parser
-     * @throws ParserConfigurationException if a SAX parser is not configured
+     *
+     * @throws MojoExecutionException in case of an SAX-Parser-Error
      */
     protected static XMLReader getReader()
         throws MojoExecutionException
     {
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        factory.setNamespaceAware( true );
-        factory.setValidating( false );
-        XMLReader reader;
         try
         {
-            reader = factory.newSAXParser().getXMLReader();
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            factory.setNamespaceAware( true );
+            factory.setValidating( false );
+            XMLReader reader = factory.newSAXParser().getXMLReader();
+
+            reader.setEntityResolver( new EntityResolver()
+            {
+
+                public InputSource resolveEntity( String publicId, String systemId )
+                {
+                    return new InputSource( new CharArrayReader( new char[0] ) );
+                }
+            } );
+            return reader;
         }
-        catch ( Exception e )
+        catch ( FactoryConfigurationError | Exception e )
         {
             throw new MojoExecutionException( "Unable to obtain a new xml parser", e );
         }
 
-        reader.setEntityResolver( new EntityResolver()
-        {
-
-            public InputSource resolveEntity( String publicId, String systemId )
-            {
-                return new InputSource( new CharArrayReader( new char[0] ) );
-            }
-        } );
-        return reader;
     }
 
     /**
      * Apply an xsl stylesheet to a java.xml.tranform.Source.
+     *
      * @param src Source
      * @param stylesheet xslt used for transformation
      * @param outputFile output file
-     * @throws TransformerException
-     * @throws Exception xml parsing/transforming exceptions
+     *
+     * @throws MojoExecutionException xml parsing/transforming exceptions
+     * @throws TransformerException If an unrecoverable error occurs
+     *   during the course of the transformation.
      */
     protected static void applyXslt( Source src, String stylesheet, File outputFile )
         throws MojoExecutionException, TransformerException
@@ -192,7 +197,7 @@ public class XmlHelper
      * @param inputFile input file
      * @param stylesheet xslt used for transformation
      * @param outputFile output file
-     * @throws Exception xml parsing/transforming exceptions
+     * @throws MojoExecutionException xml parsing/transforming exceptions
      */
     protected static void applyXslt( File inputFile, String stylesheet, File outputFile )
         throws MojoExecutionException

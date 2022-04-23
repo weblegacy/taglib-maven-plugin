@@ -39,7 +39,7 @@ public class TldGenerateMojoTest extends TaglibPluginTestBase
 {
 
     /**
-     * test for the tag reference goal.
+     * test for the tag generate goal (tag-files)
      * @throws Exception any exception thrown during test
      */
     @Test
@@ -58,6 +58,10 @@ public class TldGenerateMojoTest extends TaglibPluginTestBase
 
     }
 
+    /**
+     * test for the tag generate goal (function-class).
+     * @throws Exception any exception thrown during test
+     */
     @Test
     public final void testTldGenerateWithFunctions() throws Exception
     {

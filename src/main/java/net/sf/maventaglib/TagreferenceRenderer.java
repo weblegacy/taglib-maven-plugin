@@ -43,7 +43,8 @@ import org.apache.maven.reporting.AbstractMavenReportRenderer;
 
 
 /**
- * Validates tag handler classes fount in tlds.
+ * Generates a tag reference xdoc that can be integrated in a maven generated site.
+ *
  * @author Fabrizio Giustina
  * @version $Revision $ ($Author $)
  */
@@ -61,12 +62,24 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
      */
     private Tld[] tlds;
 
+    /**
+     * {@code true} to parse html in the description of tld info, tags and attributes.
+     */
     private boolean parseHtml = true;
 
+    /**
+     * the logger that has been injected into this mojo.
+     */
     private Log log;
 
     /**
-     * @param sink
+     * Class-Constructor
+     *
+     * @param sink the sink to use.
+     * @param locale the wanted locale to return the report's description, could be <code>null</code>.
+     * @param tlds list of TLDs to check.
+     * @param parseHtml {@code true} to parse html in the description of tld info, tags and attributes.
+     * @param log the logger that has been injected into this mojo.
      */
     public TagreferenceRenderer(Sink sink, Locale locale, Tld[] tlds, boolean parseHtml, Log log)
     {
@@ -80,7 +93,7 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
     }
 
     /**
-     * @see org.apache.maven.reporting.AbstractMavenReportRenderer#getTitle()
+     * @see AbstractMavenReportRenderer#getTitle()
      */
     @Override
     public String getTitle()
@@ -89,7 +102,7 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
     }
 
     /**
-     * @see org.apache.maven.reporting.AbstractMavenReportRenderer#renderBody()
+     * @see AbstractMavenReportRenderer#renderBody()
      */
     @Override
     protected void renderBody()

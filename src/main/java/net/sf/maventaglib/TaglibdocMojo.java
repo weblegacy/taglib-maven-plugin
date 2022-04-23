@@ -83,7 +83,7 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport
     private File xsltDir;
 
     /**
-     * @see net.sf.maventaglib.AbstractTaglibMojo#execute()
+     * @see AbstractMavenReport#execute()
      */
     @Override
     public void execute() throws MojoExecutionException

@@ -93,7 +93,13 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
     private Class<?> simpleTagClass;
 
     /**
-     * @param sink
+     * Class-Constructor
+     *
+     * @param sink the sink to use.
+     * @param locale the wanted locale to return the report's description, could be <code>null</code>.
+     * @param tlds list of TLDs to check.
+     * @param log the logger that has been injected into this mojo.
+     * @param projectClassLoader ClassLoader for all compile-classpaths
      */
     public ValidateRenderer(Sink sink, Locale locale, Tld[] tlds, Log log, ClassLoader projectClassLoader)
     {

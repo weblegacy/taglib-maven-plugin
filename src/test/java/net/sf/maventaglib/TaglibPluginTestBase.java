@@ -39,6 +39,12 @@ import org.junit.Rule;
 public abstract class TaglibPluginTestBase
 {
 
+    /**
+     * {@link org.junit.rules.TestRule} for usage with Junit-4.10ff. This is just a
+     * wrapper for an embedded {@link org.apache.maven.plugin.testing.AbstractMojoTestCase},
+     * so all {@code protected} methods of the TestCase are exhibited as {@code public}
+     * in the rule.
+     */
     @Rule
     public MojoRule rule = new MojoRule();
 
