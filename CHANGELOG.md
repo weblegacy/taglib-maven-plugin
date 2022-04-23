@@ -1,3 +1,7 @@
+# 2.6 / YYYY-MM-DD
+
+* Set version to 2.6-SNAPSHOT
+
 # 2.5 / 2022-04-19
 
 * Rename from `maven-taglib-plugin` to `taglib-maven-plugin`
