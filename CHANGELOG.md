@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Corr: Remove `closeReport` in `TagreferenceMojo`
 * Some Code-optimization in `TagreferenceRenderer`
 * Set version to 2.6-SNAPSHOT
 

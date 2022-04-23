@@ -175,8 +175,6 @@ public class TagreferenceMojo extends AbstractMavenReport
 
         }
 
-        closeReport();
-
         if (tldList.size() == 0)
         {
             getLog().info(
