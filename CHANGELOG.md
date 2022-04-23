@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Bump `maven-javadoc-plugin` from 3.3.2 to 3.4.0
 * Corr: Remove `closeReport` in `TagreferenceMojo`
 * Some Code-optimization in `TagreferenceRenderer`
 * Set version to 2.6-SNAPSHOT
