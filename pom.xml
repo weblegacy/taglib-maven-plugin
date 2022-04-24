@@ -170,7 +170,28 @@
           <configuration>
             <failOnError>false</failOnError>
             <quiet>true</quiet>
-            <aggregate>true</aggregate>
+            <source>${javaVersion}</source>
+            <detectLinks>true</detectLinks>
+            <dependencyLinks>
+              <dependencyLink>
+                <groupId>org.jdom</groupId>
+                <artifactId>jdom</artifactId>
+                <url>http://www.jdom.org/docs/apidocs</url>
+              </dependencyLink>
+              <dependencyLink>
+                <groupId>org.eclipse.sisu</groupId>
+                <artifactId>org.eclipse.sisu.plexus</artifactId>
+                <url>https://www.eclipse.org/sisu/docs/api/org.eclipse.sisu.plexus/reference</url>
+              </dependencyLink>
+              <dependencyLink>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <url>https://junit.org/junit4/javadoc/${junitVersion}</url>
+              </dependencyLink>
+            </dependencyLinks>
+            <links>
+              <link>https://docs.oracle.com/javaee/6/api</link>
+            </links>
           </configuration>
         </plugin>
         <plugin>
