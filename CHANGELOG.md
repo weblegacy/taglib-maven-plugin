@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Workaround Test-JavaDoc-Report missing dependencies
 * Workaround MJAVADOC-700
 * Generate JavaDoc/JXR-Report without duplicate execution
 * Add/Correct JavaDocs to remove JavaDoc-Generation-Errors and Warnings

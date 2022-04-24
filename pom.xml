@@ -68,6 +68,8 @@
     <mavenVersion>[3.5.4,4)</mavenVersion>
     <javaVersion>8</javaVersion>
     <mavenPluginVersion>3.8.5</mavenPluginVersion>
+    <junitVersion>4.13.2</junitVersion>
+    <mavenPluginTestingHarnessVersion>3.3.0</mavenPluginTestingHarnessVersion>
   </properties>
 
   <build>
@@ -322,7 +324,7 @@
     <dependency>
       <groupId>org.apache.maven.plugin-testing</groupId>
       <artifactId>maven-plugin-testing-harness</artifactId>
-      <version>3.3.0</version>
+      <version>${mavenPluginTestingHarnessVersion}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -349,7 +351,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.13.2</version>
+      <version>${junitVersion}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -414,6 +416,18 @@
             <configuration>
               <!-- Add config sourcepath because https://issues.apache.org/jira/browse/MJAVADOC-700 -->
               <sourcepath>${basedir}/src/test/java</sourcepath>
+              <additionalDependencies>
+                <additionalDependency>
+                  <groupId>junit</groupId>
+                  <artifactId>junit</artifactId>
+                  <version>${junitVersion}</version>
+                </additionalDependency>
+                <additionalDependency>
+                  <groupId>org.apache.maven.plugin-testing</groupId>
+                  <artifactId>maven-plugin-testing-harness</artifactId>
+                  <version>${mavenPluginTestingHarnessVersion}</version>
+                </additionalDependency>
+              </additionalDependencies>
             </configuration>
           </reportSet>
         </reportSets>
