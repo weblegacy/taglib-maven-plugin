@@ -387,9 +387,24 @@
   </dependencies>
 
   <reporting>
+    <excludeDefaults>true</excludeDefaults>
     <plugins>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <id>generate-source</id>
+            <reports>
+              <report>javadoc-no-fork</report>
+            </reports>
+          </reportSet>
+          <reportSet>
+             <id>generate-test-source</id>
+             <reports>
+              <report>test-javadoc-no-fork</report>
+            </reports>
+          </reportSet>
+        </reportSets>
       </plugin>
       <plugin>
         <artifactId>maven-plugin-plugin</artifactId>
@@ -406,6 +421,14 @@
       </plugin>
       <plugin>
         <artifactId>maven-jxr-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>jxr-no-fork</report>
+              <report>test-jxr-no-fork</report>
+            </reports>
+          </reportSet>
+        </reportSets>
       </plugin>
       <plugin>
         <artifactId>maven-project-info-reports-plugin</artifactId>
