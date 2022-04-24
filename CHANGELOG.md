@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Workaround MJAVADOC-700
 * Generate JavaDoc/JXR-Report without duplicate execution
 * Add/Correct JavaDocs to remove JavaDoc-Generation-Errors and Warnings
 * Bump `maven-site-plugin` from 3.11.0 to 3.12.0

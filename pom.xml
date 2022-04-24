@@ -251,6 +251,10 @@
       </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
+        <!-- Add config sourcepath because https://issues.apache.org/jira/browse/MJAVADOC-700 -->
+        <configuration>
+          <sourcepath>${basedir}/src/main/java</sourcepath>
+        </configuration>
         <executions>
           <execution>
             <id>attach-javadoc</id>
@@ -397,12 +401,20 @@
             <reports>
               <report>javadoc-no-fork</report>
             </reports>
+            <configuration>
+              <!-- Add config sourcepath because https://issues.apache.org/jira/browse/MJAVADOC-700 -->
+              <sourcepath>${basedir}/src/main/java</sourcepath>
+            </configuration>
           </reportSet>
           <reportSet>
              <id>generate-test-source</id>
              <reports>
               <report>test-javadoc-no-fork</report>
             </reports>
+            <configuration>
+              <!-- Add config sourcepath because https://issues.apache.org/jira/browse/MJAVADOC-700 -->
+              <sourcepath>${basedir}/src/test/java</sourcepath>
+            </configuration>
           </reportSet>
         </reportSets>
       </plugin>
