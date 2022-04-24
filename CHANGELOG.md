@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Adaption for JDK 9+
 * Add links for JavaDoc
 * Workaround Test-JavaDoc-Report missing dependencies
 * Workaround MJAVADOC-700

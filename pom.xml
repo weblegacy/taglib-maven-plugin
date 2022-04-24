@@ -72,6 +72,18 @@
     <mavenPluginTestingHarnessVersion>3.3.0</mavenPluginTestingHarnessVersion>
   </properties>
 
+  <profiles>
+    <profile>
+      <id>java-8-api</id>
+      <activation>
+        <jdk>[9,)</jdk>
+      </activation>
+      <properties>
+        <maven.compiler.release>${javaVersion}</maven.compiler.release>
+      </properties>
+    </profile>
+  </profiles>
+
   <build>
     <pluginManagement>
       <plugins>
@@ -107,6 +119,8 @@
           <configuration>
             <source>${javaVersion}</source>
             <target>${javaVersion}</target>
+            <showDeprecation>true</showDeprecation>
+            <showWarnings>true</showWarnings>
           </configuration>
         </plugin>
         <plugin>

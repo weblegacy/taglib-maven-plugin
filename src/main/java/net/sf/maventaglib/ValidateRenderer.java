@@ -351,7 +351,7 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
 
             try
             {
-                tagObject = tagClass.newInstance();
+                tagObject = tagClass.getDeclaredConstructor().newInstance();
             }
             catch (Throwable e)
             {
@@ -442,7 +442,7 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
 
             try
             {
-                teiClass.newInstance();
+                teiClass.getDeclaredConstructor().newInstance();
             }
             catch (Throwable e)
             {
