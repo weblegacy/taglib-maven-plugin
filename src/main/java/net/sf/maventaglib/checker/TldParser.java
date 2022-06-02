@@ -25,12 +25,12 @@ package net.sf.maventaglib.checker;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sf.maventaglib.util.XmlHelper;
-
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import net.sf.maventaglib.util.XmlHelper;
 
 
 /**

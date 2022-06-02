@@ -22,7 +22,7 @@
  */
 package net.sf.maventaglib.checker;
 
-import org.apache.commons.lang.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.CompareToBuilder;
 
 
 /**

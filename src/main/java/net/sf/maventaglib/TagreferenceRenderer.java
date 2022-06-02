@@ -26,6 +26,13 @@ import java.io.StringReader;
 import java.text.MessageFormat;
 import java.util.Locale;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.maven.doxia.module.xhtml.XhtmlParser;
+import org.apache.maven.doxia.parser.ParseException;
+import org.apache.maven.doxia.sink.Sink;
+import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.reporting.AbstractMavenReportRenderer;
+
 import net.sf.maventaglib.checker.ELFunction;
 import net.sf.maventaglib.checker.Tag;
 import net.sf.maventaglib.checker.TagAttribute;
@@ -33,13 +40,6 @@ import net.sf.maventaglib.checker.TagFile;
 import net.sf.maventaglib.checker.TagVariable;
 import net.sf.maventaglib.checker.Tld;
 import net.sf.maventaglib.checker.TldItem;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.maven.doxia.module.xhtml.XhtmlParser;
-import org.apache.maven.doxia.parser.ParseException;
-import org.apache.maven.doxia.sink.Sink;
-import org.apache.maven.plugin.logging.Log;
-import org.apache.maven.reporting.AbstractMavenReportRenderer;
 
 
 /**

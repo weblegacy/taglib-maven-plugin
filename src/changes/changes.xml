@@ -9,6 +9,7 @@
   </properties>
   <body>
     <release version="2.6" date="YYYY-MM-DD" description="">
+      <action type="update" dev="ste-gr">Upgrade from commons-lang to commons-lang3</action>
       <action type="update" dev="ste-gr">Update site.xml</action>
       <action type="fix" dev="ste-gr">Remove double used template info at tld1_1-tld1_2.xsl</action>
       <action type="fix" dev="ste-gr">Small POM-changes: license-name, remove property, configurations for javadoc- and compiler-plugin</action>
