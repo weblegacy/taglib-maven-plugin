@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Set new home-url
 * Bump `tlddoc` from 1.3 to 1.4-SNAPSHOT
 * Bump `maven-reporting-impl` from 3.1.0 to 4.0.0-M1
 * Bump `maven-project-info-reports-plugin` from 3.2.2 to 3.3.0

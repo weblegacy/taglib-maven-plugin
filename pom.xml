@@ -12,7 +12,7 @@
     <description>
         M2 plugin for jsp tag libraries developers for the generation, documentation and testing of jsp tag libraries.
     </description>
-    <url>http://maven-taglib.sf.net/m2</url>
+    <url>https://github.com/weblegacy/taglib-maven-plugin</url>
     <inceptionYear>2004</inceptionYear>
 
     <licenses>
@@ -23,17 +23,28 @@
     </licenses>
 
     <organization>
-        <name>Fabrizio Giustina</name>
-        <url>http://maven-taglib.sourceforge.net</url>
+        <name>Web-Legacy</name>
+        <url>https://github.com/weblegacy</url>
     </organization>
 
     <scm>
-        <connection>scm:svn:https://svn.code.sf.net/p/maven-taglib/code/m2-taglib-plugin/trunk</connection>
-        <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/maven-taglib/code/m2-taglib-plugin/trunk</developerConnection>
-        <url>https://sourceforge.net/p/maven-taglib/code/HEAD/tree/m2-taglib-plugin/trunk</url>
+        <connection>scm:git:https://github.com/weblegacy/taglib-maven-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:weblegacy/taglib-maven-plugin.git</developerConnection>
+        <url>https://github.com/weblegacy/taglib-maven-plugin</url>
     </scm>
 
     <developers>
+        <developer>
+            <id>ste-gr</id>
+            <name>Stefan Graff</name>
+            <email>stefan.graff@gmx.at</email>
+            <url>https://github.com/ste-gr</url>
+            <roles>
+                <role>architect (since 2022)</role>
+                <role>developer (since 2022)</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
         <developer>
             <id>fgiust</id>
             <name>Fabrizio Giustina</name>
@@ -41,8 +52,8 @@
             <url>http://www.openmindonline.it</url>
             <organization>openmind</organization>
             <roles>
-                <role>Project admin</role>
-                <role>Developer</role>
+                <role>Project admin (till 2021)</role>
+                <role>Developer (till 2021)</role>
             </roles>
             <timezone>+1</timezone>
         </developer>
@@ -51,24 +62,15 @@
     <contributors>
         <contributor>
             <name>Bernd Bohmann</name>
+            <url>https://github.com/bohmber</url>
+            <timezone>+1</timezone>
         </contributor>
     </contributors>
 
     <issueManagement>
-        <system>jira</system>
-        <url>http://jira.openmindlab.com/browse/MAVENTAGLIB</url>
+        <system>GitHub</system>
+        <url>https://github.com/weblegacy/taglib-maven-plugin/issues/</url>
     </issueManagement>
-
-    <ciManagement>
-        <system>continuum</system>
-        <notifiers>
-            <notifier>
-                <configuration>
-                    <address>maven-taglib-continuum@lists.sourceforge.net</address>
-                </configuration>
-            </notifier>
-        </notifiers>
-    </ciManagement>
 
     <properties>
         <encoding>UTF-8</encoding>
@@ -491,18 +493,14 @@
 
     <distributionManagement>
         <repository>
-            <id>sourceforge</id>
-            <url>scp://shell.sourceforge.net/home/groups/m/ma/maven-taglib/htdocs/m2repo</url>
+            <id>github</id>
+            <name>GitHub Web-Legacy Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/weblegacy/taglib-maven-plugin</url>
         </repository>
-        <snapshotRepository>
-            <id>sourceforge-snapshots</id>
-            <url>scp://shell.sourceforge.net/home/groups/m/ma/maven-taglib/htdocs/m2repo-snapshots</url>
-        </snapshotRepository>
         <site>
-            <id>default</id>
-            <name>Default Site</name>
-            <url>scp://shell.sourceforge.net/home/groups/m/ma/maven-taglib/htdocs/m2</url>
+            <id>github</id>
+            <url>scm:git:git@github.com:weblegacy/tagltlddoc</url>
         </site>
-        <downloadUrl>http://prdownloads.sourceforge.net/93991</downloadUrl>
+        <downloadUrl>https://github.com/weblegacy/taglib-maven-plugin/releases</downloadUrl>
     </distributionManagement>
 </project>
