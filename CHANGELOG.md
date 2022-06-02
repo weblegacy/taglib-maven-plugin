@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Bump `maven-site-plugin` from 3.12.0 to 4.0.0-M1
 * Bump `license-maven-plugin` from 4.1 to 4.2.rc3
 * Reformat POM
 * Use current `web-jsptaglibrary*.dtd` from jboss-project
