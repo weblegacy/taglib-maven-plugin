@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Bump `license-maven-plugin` from 4.1 to 4.2.rc3
 * Reformat POM
 * Use current `web-jsptaglibrary*.dtd` from jboss-project
 * Correct description- and example-output with HTML-Tags
