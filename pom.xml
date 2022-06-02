@@ -108,20 +108,29 @@
                     </configuration>
                 </plugin>
                 <plugin>
+                    <artifactId>maven-changes-plugin</artifactId>
+                    <version>2.12.1</version>
+                    <configuration>
+                        <githubAPIScheme>https</githubAPIScheme>
+                        <githubAPIPort>443</githubAPIPort>
+                        <teamlist>team.html</teamlist>
+                        <onlyMilestoneIssues>false</onlyMilestoneIssues>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.1.2</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>9.3</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>3.2.0</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>3.0.0-M2</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-install-plugin</artifactId>
-                    <version>3.0.0-M1</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.2.2</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -134,59 +143,28 @@
                     </configuration>
                 </plugin>
                 <plugin>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>3.0.0-M5</version>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.3.0</version>
                 </plugin>
                 <plugin>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.0.0-M6</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <version>3.2.0</version>
-                    <configuration>
-                        <encoding>${encoding}</encoding>
-                        <propertiesEncoding>${encoding}</propertiesEncoding>
-                    </configuration>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>3.0.0-M2</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>3.0.0</version>
                 </plugin>
                 <plugin>
-                    <groupId>com.mycila</groupId>
-                    <artifactId>license-maven-plugin</artifactId>
-                    <version>4.2.rc3</version>
-                    <configuration>
-                        <licenseSets>
-                            <licenseSet>
-                                <header>com/mycila/maven/plugin/license/templates/MIT.txt</header>
-                                <includes>
-                                    <include>src/**/*.java</include>
-                                </includes>
-                            </licenseSet>
-                        </licenseSets>
-                        <properties>
-                            <year>${project.inceptionYear}-2014</year>
-                            <name>${project.name}</name>
-                            <description>${project.description}</description>
-                            <url>${project.url}</url>
-                        </properties>
-                    </configuration>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>3.0.1</version>
                 </plugin>
                 <plugin>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>4.0.0-M1</version>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>3.0.0-M1</version>
                 </plugin>
                 <plugin>
-                    <artifactId>maven-plugin-plugin</artifactId>
-                    <version>3.6.4</version>
-                    <configuration>
-                        <goalPrefix>taglib</goalPrefix>
-                        <extractors>
-                            <extractor>java-annotations</extractor>
-                        </extractors>
-                    </configuration>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.2.2</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-javadoc-plugin</artifactId>
@@ -219,20 +197,83 @@
                     </configuration>
                 </plugin>
                 <plugin>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>3.2.1</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-changes-plugin</artifactId>
-                    <version>2.12.1</version>
-                </plugin>
-                <plugin>
                     <artifactId>maven-jxr-plugin</artifactId>
                     <version>3.2.0</version>
                 </plugin>
                 <plugin>
+                    <artifactId>maven-plugin-plugin</artifactId>
+                    <version>3.6.4</version>
+                    <configuration>
+                        <goalPrefix>taglib</goalPrefix>
+                        <extractors>
+                            <extractor>java-annotations</extractor>
+                        </extractors>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>3.16.0</version>
+                </plugin>
+                <plugin>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>3.3.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>3.0.0-M5</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <configuration>
+                        <encoding>${encoding}</encoding>
+                        <propertiesEncoding>${encoding}</propertiesEncoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-scm-publish-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>4.0.0-M1</version>
+                    <configuration>
+                        <skipDeploy>true</skipDeploy>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.2.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M6</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>4.7.0.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.mycila</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>4.2.rc3</version>
+                    <configuration>
+                        <licenseSets>
+                            <licenseSet>
+                                <header>com/mycila/maven/plugin/license/templates/MIT.txt</header>
+                                <includes>
+                                    <include>src/**/*.java</include>
+                                </includes>
+                            </licenseSet>
+                        </licenseSets>
+                        <properties>
+                            <year>${project.inceptionYear}-2014</year>
+                            <name>${project.name}</name>
+                            <description>${project.description}</description>
+                            <url>${project.url}</url>
+                        </properties>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -251,6 +292,31 @@
                 </executions>
             </plugin>
             <plugin>
+                <artifactId>maven-changes-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>check-changes</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>changes-check</goal>
+                        </goals>
+                        <configuration>
+                            <skipSnapshots>true</skipSnapshots>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>validate-changes</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>changes-validate</goal>
+                        </goals>
+                        <configuration>
+                            <failOnError>true</failOnError>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <executions>
                     <execution>
@@ -265,6 +331,61 @@
                                 </requireMavenVersion>
                             </rules>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <!-- Add config sourcepath because https://issues.apache.org/jira/browse/MJAVADOC-700 -->
+                <configuration>
+                    <sourcepath>${basedir}/src/main/java</sourcepath>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadoc</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-scm-publish-plugin</artifactId>
+                <configuration>
+                    <scmBranch>gh-pages</scmBranch>
+                    <tryUpdate>true</tryUpdate>
+                    <content>${project.reporting.outputDirectory}</content>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>scm-publish</id>
+                        <phase>site-deploy</phase>
+                        <goals>
+                            <goal>publish-scm</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-source</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -292,32 +413,6 @@
                         <id>help-goal</id>
                         <goals>
                             <goal>helpmojo</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <!-- Add config sourcepath because https://issues.apache.org/jira/browse/MJAVADOC-700 -->
-                <configuration>
-                    <sourcepath>${basedir}/src/main/java</sourcepath>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-javadoc</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-source</id>
-                        <goals>
-                            <goal>jar</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -425,10 +520,51 @@
         <excludeDefaults>true</excludeDefaults>
         <plugins>
             <plugin>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>jxr-no-fork</report>
+                            <report>test-jxr-no-fork</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <artifactId>maven-changes-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>changes-report</report>
+                            <report>github-report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                    <configLocation>google_checks.xml</configLocation>
+                    <sourceDirectories>
+                        <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+                        <sourceDirectory>${project.build.testSourceDirectory}</sourceDirectory>
+                    </sourceDirectories>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <configuration>
+                    <ignoreNonCompile>true</ignoreNonCompile>
+                </configuration>
+            </plugin>
+            <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <reportSets>
                     <reportSet>
-                        <id>generate-source</id>
+                        <id>generate-javadoc-source</id>
                         <reports>
                             <report>javadoc-no-fork</report>
                         </reports>
@@ -438,7 +574,7 @@
                         </configuration>
                     </reportSet>
                     <reportSet>
-                        <id>generate-test-source</id>
+                        <id>generate-javadoc-test-source</id>
                         <reports>
                             <report>test-javadoc-no-fork</report>
                         </reports>
@@ -462,31 +598,15 @@
                 </reportSets>
             </plugin>
             <plugin>
-                <artifactId>maven-plugin-plugin</artifactId>
+                <artifactId>maven-pmd-plugin</artifactId>
             </plugin>
             <plugin>
-                <artifactId>maven-changes-plugin</artifactId>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>jira-report</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-            <plugin>
-                <artifactId>maven-jxr-plugin</artifactId>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>jxr-no-fork</report>
-                            <report>test-jxr-no-fork</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-            <plugin>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <configuration>
+                    <xmlOutput>true</xmlOutput>
+                    <xmlOutputDirectory>target/site</xmlOutputDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </reporting>
