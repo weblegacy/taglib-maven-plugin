@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Reformat POM
 * Use current `web-jsptaglibrary*.dtd` from jboss-project
 * Correct description- and example-output with HTML-Tags
 * Adaption for JDK 9+
