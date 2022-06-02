@@ -59,8 +59,8 @@ import org.w3c.dom.Element;
 
 import com.sun.tlddoc.tagfileparser.Attribute;
 import com.sun.tlddoc.tagfileparser.Directive;
-import com.sun.tlddoc.tagfileparser.ParseException;
-import com.sun.tlddoc.tagfileparser.TagFile;
+import com.sun.tlddoc.tagfileparser.javacc.ParseException;
+import com.sun.tlddoc.tagfileparser.javacc.TagFile;
 
 
 /**
@@ -319,9 +319,8 @@ public class TldGenerateMojo extends AbstractMojo
                     {
                         TagFile tagFile = TagFile.parse(is);
 
-                        for (Iterator<?> iter = tagFile.getDirectives().iterator(); iter.hasNext();)
+                        for (Directive directive : tagFile.getDirectives().getDirectives())
                         {
-                            Directive directive = (Directive) iter.next();
                             if ("tag".equals(directive.getDirectiveName()))
                             {
                                 for (Iterator<?> iterator = directive.getAttributes(); iterator.hasNext();)
