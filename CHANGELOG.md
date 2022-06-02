@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Remove double used template `info` at `tld1_1-tld1_2.xsl`
 * Small POM-changes: license-name, remove property, configurations for javadoc- and compiler-plugin
 * Add plugins/reports: checkstyle, dependency, gpg, pmd, release, scm-publish, spotbugs
 * Set new home-url

@@ -96,7 +96,7 @@
   <!-- Rename to description -->
   <xsl:template match="info">
     <description>
-      <xsl:apply-templates />
+      <xsl:apply-templates/>
     </description>
   </xsl:template>
   <xsl:template match="tag">
@@ -132,12 +132,6 @@
     <body-content>
       <xsl:apply-templates />
     </body-content>
-  </xsl:template>
-  <!-- Rename to description -->
-  <xsl:template match="info">
-    <description>
-      <xsl:apply-templates />
-    </description>
   </xsl:template>
   <!-- Preserve attribute -->
   <xsl:template match="attribute">
