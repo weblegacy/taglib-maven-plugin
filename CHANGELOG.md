@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Update `changes.xml`
 * Update `site.xml`
 * Add `maven-plugin-plugin` to reporting-section
 * Reformat `xsl`-files
