@@ -283,12 +283,9 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
 
             Class< ? > returnType = method.getReturnType();
 
-            if (returnvalue != null)
+            if (!(returnvalue == null || returnType.getCanonicalName().equals(returnvalue)))
             {
-                if (!returnType.getCanonicalName().equals(returnvalue))
-                {
-                    found = false;
-                }
+                found = false;
             }
         }
         catch (Throwable e)
@@ -343,7 +340,7 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
 
             // extend only true, if tagClass derives from TagSupport or derives from SimpleTag
             extend = tagSupportClass.isAssignableFrom(tagClass)
-                || (simpleTagClass != null && simpleTagClass.isAssignableFrom(tagClass));
+                || simpleTagClass != null && simpleTagClass.isAssignableFrom(tagClass);
 
             try
             {
@@ -512,6 +509,7 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
             catch (Throwable e)
             {
                 // should never happen, since we already checked the writable property
+                log.warn(e);
             }
             tagTypeName = tagType == null ? StringUtils.EMPTY : tagType.getName();
 
@@ -539,7 +537,7 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
                     getMessageString("Validate.error.attributetypeinexactmatch"), new Object[]{ //$NON-NLS-1$
                     tldType, tagType.getName() })));
             }
-            else if (tldType == null && !java.lang.String.class.equals(tagType))
+            else if (tldType == null && !String.class.equals(tagType))
             {
                 validationErrors.add(new ValidationError(ValidationError.LEVEL_INFO,
                     getMessageString("Validate.error.attributetype"))); //$NON-NLS-1$

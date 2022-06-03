@@ -126,7 +126,7 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport
                 Set<File> directories = new HashSet<>();
                 for (Iterator<File> it = tags.iterator(); it.hasNext();)
                 {
-                    directories.add((it.next()).getParentFile());
+                    directories.add(it.next().getParentFile());
                 }
                 for (Iterator<File> it = directories.iterator(); it.hasNext();)
                 {

@@ -279,7 +279,7 @@ public class TldGenerateMojo extends AbstractMojo
             }
 
             File[] files = taglib.getTagdir().listFiles();
-            for (int j = 0; (files != null) && (j < files.length); j++)
+            for (int j = 0; files != null && j < files.length; j++)
             {
                 File tag = files[j];
 
@@ -456,23 +456,23 @@ public class TldGenerateMojo extends AbstractMojo
     {
         if ("int".equals(string))
         {
-            return java.lang.Integer.class.getName();
+            return Integer.class.getName();
         }
         else if ("boolean".equals(string))
         {
-            return java.lang.Boolean.class.getName();
+            return Boolean.class.getName();
         }
         else if ("double".equals(string))
         {
-            return java.lang.Double.class.getName();
+            return Double.class.getName();
         }
         else if ("long".equals(string))
         {
-            return java.lang.Long.class.getName();
+            return Long.class.getName();
         }
         else if ("char".equals(string))
         {
-            return java.lang.Character.class.getName();
+            return Character.class.getName();
         }
 
         return string;
