@@ -9,6 +9,7 @@
   </properties>
   <body>
     <release version="2.6" date="YYYY-MM-DD" description="">
+      <action type="fix" dev="ste-gr">Remove all compiler-warnings</action>
       <action type="fix" dev="ste-gr">Remove unnecessary setters in TagreferenceMojo</action>
       <action type="fix" dev="ste-gr">Remove PMD-Warnings and exclude generated classes form PMD-report</action>
       <action type="add" dev="ste-gr">Use parameter locale for generating localized reports</action>

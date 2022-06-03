@@ -177,9 +177,9 @@ public class TldGenerateMojo extends AbstractMojo
                 if (!tags.isEmpty())
                 {
                     Set<File> directories = new HashSet<File>();
-                    for (Iterator<File> it = tags.iterator(); it.hasNext();)
+                    for (File tag : tags)
                     {
-                        directories.add(((File) it.next()).getParentFile());
+                        directories.add(tag.getParentFile());
                     }
 
                     for (File dir : directories)
@@ -203,7 +203,7 @@ public class TldGenerateMojo extends AbstractMojo
 
         try
         {
-            for (Taglib taglib : (List<Taglib>) taglibsList)
+            for (Taglib taglib : taglibsList)
             {
                 doTaglib(taglib);
             }

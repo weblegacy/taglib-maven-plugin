@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Remove all compiler-warnings
 * Remove unnecessary setters in `TagreferenceMojo`
 * Remove `PMD`-Warnings and exclude generated classes form PMD-report
 * Use parameter `locale` for generating localized reports

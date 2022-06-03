@@ -272,14 +272,14 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
 
             String[] params = StringUtils.split(paramsString, ",");
 
-            List<Class<?>> parClasses = new ArrayList<>();
+            List<Class<?>> parClasses = new ArrayList<>(params.length);
 
             for (String stringClass : params)
             {
                 parClasses.add(Class.forName(StringUtils.trim(stringClass), true, this.projectClassLoader));
             }
 
-            Method method = functionClass.getMethod(methodName, parClasses.toArray(new Class[parClasses.size()]));
+            Method method = functionClass.getMethod(methodName, parClasses.toArray(new Class<?>[0]));
 
             Class< ? > returnType = method.getReturnType();
 
