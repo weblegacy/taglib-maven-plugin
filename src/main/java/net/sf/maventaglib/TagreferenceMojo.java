@@ -32,18 +32,17 @@ import java.util.Locale;
 
 import javax.xml.parsers.DocumentBuilder;
 
-import net.sf.maventaglib.checker.Tld;
-import net.sf.maventaglib.checker.TldParser;
-import net.sf.maventaglib.util.XmlHelper;
-
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.plexus.util.FileUtils;
 import org.w3c.dom.Document;
+
+import net.sf.maventaglib.checker.Tld;
+import net.sf.maventaglib.checker.TldParser;
+import net.sf.maventaglib.util.XmlHelper;
 
 
 /**
@@ -89,33 +88,6 @@ public class TagreferenceMojo extends AbstractMavenReport
     public String getDescription(Locale locale)
     {
         return Messages.getString(locale, "Tagreference.description"); //$NON-NLS-1$
-    }
-
-    /**
-     * Setter for <code>srcDir</code>.
-     * @param srcDir The srcDir to set.
-     */
-    public void setSrcDir(File srcDir)
-    {
-        this.srcDir = srcDir;
-    }
-
-    /**
-     * Setter for <code>outputDirectory</code>.
-     * @param outputDirectory The outputDirectory to set.
-     */
-    public void setOutputDirectory(File outputDirectory)
-    {
-        this.outputDirectory = outputDirectory;
-    }
-
-    /**
-     * Setter for <code>project</code>.
-     * @param project The project to set.
-     */
-    public void setProject(MavenProject project)
-    {
-        this.project = project;
     }
 
     /**
