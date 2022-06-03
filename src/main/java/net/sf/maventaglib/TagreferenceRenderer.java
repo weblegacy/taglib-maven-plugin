@@ -48,14 +48,12 @@ import net.sf.maventaglib.checker.TldItem;
  * @author Fabrizio Giustina
  * @version $Revision $ ($Author $)
  */
-public class TagreferenceRenderer extends AbstractMavenReportRenderer
+public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
 {
 
     private static final String OPEN_DIV = "<div>";
 
     private static final String CLOSE_DIV = "</div>";
-
-    //private Locale locale;
 
     /**
      * list of Tld to check.
@@ -83,9 +81,8 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
      */
     public TagreferenceRenderer(Sink sink, Locale locale, Tld[] tlds, boolean parseHtml, Log log)
     {
-        super(sink);
+        super(sink, locale);
 
-        //this.locale = locale;
         this.tlds = tlds;
         this.parseHtml = parseHtml;
         this.log = log;
@@ -98,7 +95,7 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
     @Override
     public String getTitle()
     {
-        return Messages.getString("Tagreference.title"); //$NON-NLS-1$
+        return getMessageString("Tagreference.title"); //$NON-NLS-1$
     }
 
     /**
@@ -109,8 +106,8 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
     {
         sink.body();
 
-        startSection(Messages.getString("Tagreference.h1")); //$NON-NLS-1$
-        paragraph(Messages.getString("Tagreference.intro")); //$NON-NLS-1$
+        startSection(getMessageString("Tagreference.h1")); //$NON-NLS-1$
+        paragraph(getMessageString("Tagreference.intro")); //$NON-NLS-1$
 
         sink.list();
         for (int j = 0; j < tlds.length; j++)
@@ -118,10 +115,10 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
             log.debug("Rendering " + tlds[j].getFilename());
             sink.listItem();
             sink.link("#" + tlds[j].getFilename()); //$NON-NLS-1$
-            sink.text(MessageFormat.format(Messages.getString("Tagreference.listitem.tld"), new Object[]{ //$NON-NLS-1$
+            sink.text(MessageFormat.format(getMessageString("Tagreference.listitem.tld"), new Object[]{ //$NON-NLS-1$
                 StringUtils.defaultIfEmpty(tlds[j].getName(), tlds[j].getShortname()), tlds[j].getFilename()}));
             sink.link_();
-            sink.text(Messages.getString("Tagreference.listitem.uri") + tlds[j].getUri()); //$NON-NLS-1$
+            sink.text(getMessageString("Tagreference.listitem.uri") + tlds[j].getUri()); //$NON-NLS-1$
             sink.listItem_();
         }
         sink.list_();
@@ -157,7 +154,7 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
 
         startSection(StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname())
             + " - "
-            + MessageFormat.format(Messages.getString("Tagreference.tldversion"), new Object[]{tld.getTlibversion()}));
+            + MessageFormat.format(getMessageString("Tagreference.tldversion"), new Object[]{tld.getTlibversion()}));
 
         sink.paragraph();
         if (parseHtml)
@@ -190,9 +187,9 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
         printList(tld, tagfiles, "Tagfiles");
 
         sink.paragraph();
-        sink.text(Messages.getString("Tagreference.intro.required")); //$NON-NLS-1$
+        sink.text(getMessageString("Tagreference.intro.required")); //$NON-NLS-1$
         sink.bold();
-        sink.text(Messages.getString("Tagreference.required.marker")); //$NON-NLS-1$
+        sink.text(getMessageString("Tagreference.required.marker")); //$NON-NLS-1$
         sink.bold_();
         sink.paragraph_();
 
@@ -261,7 +258,7 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
 
         if (StringUtils.isNotEmpty(tag.getExample()))
         {
-            startSection(Messages.getString("Tagreference.example")); //$NON-NLS-1$
+            startSection(getMessageString("Tagreference.example")); //$NON-NLS-1$
             verbatimText(tag.getExample());
             endSection();
         }
@@ -342,13 +339,13 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
         }
 
         sink.paragraph();
-        sink.text(Messages.getString("Tagreference.cancontain")); //$NON-NLS-1$
+        sink.text(getMessageString("Tagreference.cancontain")); //$NON-NLS-1$
         sink.text(tag.getBodycontent());
         sink.paragraph_();
 
         if (StringUtils.isNotEmpty(tag.getExample()))
         {
-            startSection(Messages.getString("Tagreference.example")); //$NON-NLS-1$
+            startSection(getMessageString("Tagreference.example")); //$NON-NLS-1$
             verbatimText(tag.getExample());
             endSection();
         }
@@ -360,11 +357,11 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
 
         if (attributes != null && attributes.length > 0)
         {
-            startSection(Messages.getString("Tagreference.attributes")); //$NON-NLS-1$
+            startSection(getMessageString("Tagreference.attributes")); //$NON-NLS-1$
 
             startTable();
             tableHeader(new String[]{
-                Messages.getString("Tagreference.attribute.name"), Messages.getString("Tagreference.attribute.description"), Messages.getString("Tagreference.attribute.type")}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                  getMessageString("Tagreference.attribute.name"), getMessageString("Tagreference.attribute.description"), getMessageString("Tagreference.attribute.type")}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
             for (int i = 0; i < attributes.length; i++)
             {
@@ -384,7 +381,7 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
                 sink.text(attribute.getName());
                 if (attribute.isRequired())
                 {
-                    sink.text(Messages.getString("Tagreference.required.marker")); //$NON-NLS-1$
+                    sink.text(getMessageString("Tagreference.required.marker")); //$NON-NLS-1$
                     sink.bold_();
                 }
                 if (attribute.isDeprecated())
@@ -401,7 +398,7 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
 
                 if (StringUtils.isBlank(attribute.getDescription()))
                 {
-                    sink.text(Messages.getString("Tagreference.required.marker"));
+                    sink.text(getMessageString("Tagreference.required.marker"));
                 }
                 else if (parseHtml)
                 {
@@ -430,7 +427,7 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
         }
         else
         {
-            paragraph(Messages.getString("Tagreference.noattributes")); //$NON-NLS-1$
+            paragraph(getMessageString("Tagreference.noattributes")); //$NON-NLS-1$
         }
 
         // attributes
@@ -438,11 +435,11 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
 
         if (variables != null && variables.length > 0)
         {
-            startSection(Messages.getString("Tagreference.variables")); //$NON-NLS-1$
+            startSection(getMessageString("Tagreference.variables")); //$NON-NLS-1$
 
             startTable();
             tableHeader(new String[]{
-                Messages.getString("Tagreference.variable.name"), Messages.getString("Tagreference.variable.type"), Messages.getString("Tagreference.variable.scope"), Messages.getString("Tagreference.variable.description")}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                getMessageString("Tagreference.variable.name"), getMessageString("Tagreference.variable.type"), getMessageString("Tagreference.variable.scope"), getMessageString("Tagreference.variable.description")}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
             for (int i = 0; i < variables.length; i++)
             {
@@ -458,11 +455,11 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
                 if (variable.getNameGiven() != null)
                 {
                     sink.text(variable.getNameGiven());
-                    sink.text(Messages.getString("Tagreference.variable.constant")); //$NON-NLS-1$
+                    sink.text(getMessageString("Tagreference.variable.constant")); //$NON-NLS-1$
                 }
                 else
                 {
-                    sink.text(Messages.getString("Tagreference.variable.specifiedvia")); //$NON-NLS-1$
+                    sink.text(getMessageString("Tagreference.variable.specifiedvia")); //$NON-NLS-1$
                     sink.text(variable.getNameFromAttribute());
                 }
 
@@ -533,7 +530,7 @@ public class TagreferenceRenderer extends AbstractMavenReportRenderer
 
         if (StringUtils.isNotEmpty(tag.getExample()))
         {
-            startSection(Messages.getString("Tagreference.example")); //$NON-NLS-1$
+            startSection(getMessageString("Tagreference.example")); //$NON-NLS-1$
             verbatimText(tag.getExample());
             endSection();
         }

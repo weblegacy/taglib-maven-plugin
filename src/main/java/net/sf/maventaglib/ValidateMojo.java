@@ -75,7 +75,7 @@ public class ValidateMojo
      */
     public String getName( Locale locale )
     {
-        return Messages.getString( "Validate.name" ); //$NON-NLS-1$
+        return Messages.getString( locale, "Validate.name" ); //$NON-NLS-1$
     }
 
     /**
@@ -83,7 +83,7 @@ public class ValidateMojo
      */
     public String getDescription( Locale locale )
     {
-        return Messages.getString( "Validate.description" ); //$NON-NLS-1$
+        return Messages.getString( locale, "Validate.description" ); //$NON-NLS-1$
     }
 
     /**

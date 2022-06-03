@@ -34,7 +34,6 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.plugin.logging.Log;
-import org.apache.maven.reporting.AbstractMavenReportRenderer;
 
 import net.sf.maventaglib.checker.ELFunction;
 import net.sf.maventaglib.checker.Tag;
@@ -47,7 +46,7 @@ import net.sf.maventaglib.checker.Tld;
  * @author Fabrizio Giustina
  * @version $Revision $ ($Author $)
  */
-public class ValidateRenderer extends AbstractMavenReportRenderer
+public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
 {
 
     private static final int ICO_SUCCESS = 0;
@@ -65,8 +64,6 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
     private static final String IMAGE_INFO_SRC = Messages.getString("Validate.image.info"); //$NON-NLS-1$
 
     private static final String IMAGE_SUCCESS_SRC = Messages.getString("Validate.image.success"); //$NON-NLS-1$
-
-    //private Locale locale;
 
     /**
      * list of Tld to check.
@@ -103,8 +100,7 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
      */
     public ValidateRenderer(Sink sink, Locale locale, Tld[] tlds, Log log, ClassLoader projectClassLoader)
     {
-        super(sink);
-        //this.locale = locale;
+        super(sink, locale);
         this.tlds = tlds;
         this.log = log;
         this.projectClassLoader = projectClassLoader;
@@ -142,7 +138,7 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
     @Override
     public String getTitle()
     {
-        return Messages.getString("Validate.title"); //$NON-NLS-1$
+        return getMessageString("Validate.title"); //$NON-NLS-1$
     }
 
     /**
@@ -158,9 +154,9 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
     protected void renderBody()
     {
         sink.body();
-        startSection(Messages.getString("Validate.h1")); //$NON-NLS-1$
-        paragraph(Messages.getString("Validate.into1")); //$NON-NLS-1$
-        paragraph(Messages.getString("Validate.intro2")); //$NON-NLS-1$
+        startSection(getMessageString("Validate.h1")); //$NON-NLS-1$
+        paragraph(getMessageString("Validate.into1")); //$NON-NLS-1$
+        paragraph(getMessageString("Validate.intro2")); //$NON-NLS-1$
 
         sink.list();
         for (int j = 0; j < tlds.length; j++)
@@ -168,10 +164,10 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
 
             sink.listItem();
             sink.link("#" + tlds[j].getFilename()); //$NON-NLS-1$
-            sink.text(MessageFormat.format(Messages.getString("Validate.listitem.tld"), new Object[]{ //$NON-NLS-1$
+            sink.text(MessageFormat.format(getMessageString("Validate.listitem.tld"), new Object[]{ //$NON-NLS-1$
                 StringUtils.defaultIfEmpty(tlds[j].getName(), tlds[j].getShortname()), tlds[j].getFilename() }));
             sink.link_();
-            sink.text(Messages.getString("Validate.listitem.uri") + tlds[j].getUri()); //$NON-NLS-1$
+            sink.text(getMessageString("Validate.listitem.uri") + tlds[j].getUri()); //$NON-NLS-1$
 
             sink.listItem_();
         }
@@ -230,7 +226,7 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
             startTable();
 
             tableHeader(new String[]{
-                Messages.getString("Validate.header.validated"), "function", Messages.getString("Validate.header.class"), Messages.getString("Validate.header.signature") }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                getMessageString("Validate.header.validated"), "function", getMessageString("Validate.header.class"), getMessageString("Validate.header.signature") }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
             for (int j = 0; j < tags.length; j++)
             {
@@ -331,7 +327,7 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
         startTable();
 
         tableHeader(new String[]{
-            Messages.getString("Validate.header.found"), Messages.getString("Validate.header.loadable"), Messages.getString("Validate.header.extends"), Messages.getString("Validate.header.class") }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            getMessageString("Validate.header.found"), getMessageString("Validate.header.loadable"), getMessageString("Validate.header.extends"), getMessageString("Validate.header.class") }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
         boolean found = true;
         boolean loadable = true;
@@ -407,7 +403,7 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
             startTable();
             tableHeader(new String[]{
                 StringUtils.EMPTY,
-                Messages.getString("Validate.header.attributename"), Messages.getString("Validate.header.tlddeclares"), Messages.getString("Validate.header.tagdeclares") }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                getMessageString("Validate.header.attributename"), getMessageString("Validate.header.tlddeclares"), getMessageString("Validate.header.tagdeclares") }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
             for (int j = 0; j < attributes.length; j++)
             {
@@ -501,8 +497,8 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
 
         if (!PropertyUtils.isWriteable(tag, tldName))
         {
-            validationErrors.add(new ValidationError(ValidationError.LEVEL_ERROR, Messages
-                .getString("Validate.error.setternotfound"))); //$NON-NLS-1$
+            validationErrors.add(new ValidationError(ValidationError.LEVEL_ERROR,
+                getMessageString("Validate.error.setternotfound"))); //$NON-NLS-1$
         }
 
         // don't check if setter is missing
@@ -526,8 +522,8 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
                 if (!tagType.isAssignableFrom(tldTypeClass))
                 {
 
-                    validationErrors.add(new ValidationError(ValidationError.LEVEL_ERROR, MessageFormat.format(Messages
-                        .getString("Validate.error.attributetypemismatch"), new Object[]{ //$NON-NLS-1$
+                    validationErrors.add(new ValidationError(ValidationError.LEVEL_ERROR, MessageFormat.format(
+                        getMessageString("Validate.error.attributetypemismatch"), new Object[]{ //$NON-NLS-1$
                         tldType, tagType.getName() })));
                 }
             }
@@ -539,14 +535,14 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
 
             if (tldType != null && !tldType.equals(tagType.getName()))
             {
-                validationErrors.add(new ValidationError(ValidationError.LEVEL_WARNING, MessageFormat.format(Messages
-                    .getString("Validate.error.attributetypeinexactmatch"), new Object[]{ //$NON-NLS-1$
+                validationErrors.add(new ValidationError(ValidationError.LEVEL_WARNING, MessageFormat.format(
+                    getMessageString("Validate.error.attributetypeinexactmatch"), new Object[]{ //$NON-NLS-1$
                     tldType, tagType.getName() })));
             }
             else if (tldType == null && !java.lang.String.class.equals(tagType))
             {
-                validationErrors.add(new ValidationError(ValidationError.LEVEL_INFO, Messages
-                    .getString("Validate.error.attributetype"))); //$NON-NLS-1$
+                validationErrors.add(new ValidationError(ValidationError.LEVEL_INFO,
+                    getMessageString("Validate.error.attributetype"))); //$NON-NLS-1$
             }
         }
 
@@ -616,19 +612,19 @@ public class ValidateRenderer extends AbstractMavenReportRenderer
         switch (type)
         {
             case ICO_ERROR :
-                text = Messages.getString("Validate.level.error"); //$NON-NLS-1$
+                text = getMessageString("Validate.level.error"); //$NON-NLS-1$
                 src = IMAGE_ERROR_SRC;
                 break;
             case ICO_WARNING :
-                text = Messages.getString("Validate.level.warning"); //$NON-NLS-1$
+                text = getMessageString("Validate.level.warning"); //$NON-NLS-1$
                 src = IMAGE_WARNING_SRC;
                 break;
             case ICO_INFO :
-                text = Messages.getString("Validate.level.info"); //$NON-NLS-1$
+                text = getMessageString("Validate.level.info"); //$NON-NLS-1$
                 src = IMAGE_INFO_SRC;
                 break;
             default :
-                text = Messages.getString("Validate.level.success"); //$NON-NLS-1$
+                text = getMessageString("Validate.level.success"); //$NON-NLS-1$
                 src = IMAGE_SUCCESS_SRC;
                 break;
         }

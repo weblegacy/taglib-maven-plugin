@@ -9,6 +9,7 @@
   </properties>
   <body>
     <release version="2.6" date="YYYY-MM-DD" description="">
+      <action type="add" dev="ste-gr">Use parameter locale for generating localized reports</action>
       <action type="fix" dev="ste-gr">Add/remove dependencies because Dependency Analysis</action>
       <action type="update" dev="ste-gr">Upgrade from commons-lang to commons-lang3</action>
       <action type="update" dev="ste-gr">Update site.xml</action>

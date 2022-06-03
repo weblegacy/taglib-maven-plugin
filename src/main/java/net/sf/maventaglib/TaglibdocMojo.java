@@ -181,7 +181,7 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport
      */
     public String getName(Locale locale)
     {
-        return Messages.getString("Taglibdoc.name"); //$NON-NLS-1$
+        return Messages.getString(locale, "Taglibdoc.name"); //$NON-NLS-1$
     }
 
     /**
@@ -189,7 +189,7 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport
      */
     public String getDescription(Locale locale)
     {
-        return Messages.getString("Taglibdoc.description"); //$NON-NLS-1$
+        return Messages.getString(locale, "Taglibdoc.description"); //$NON-NLS-1$
     }
 
     /**

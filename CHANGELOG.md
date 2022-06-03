@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Use parameter `locale` for generating localized reports
 * Add/remove dependencies because `Dependency Analysis`
 * Upgrade from `commons-lang` to `commons-lang3`
 * Update `changes.xml`

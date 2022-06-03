@@ -80,7 +80,7 @@ public class TagreferenceMojo extends AbstractMavenReport
      */
     public String getName(Locale locale)
     {
-        return Messages.getString("Tagreference.name"); //$NON-NLS-1$
+        return Messages.getString(locale, "Tagreference.name"); //$NON-NLS-1$
     }
 
     /**
@@ -88,7 +88,7 @@ public class TagreferenceMojo extends AbstractMavenReport
      */
     public String getDescription(Locale locale)
     {
-        return Messages.getString("Tagreference.description"); //$NON-NLS-1$
+        return Messages.getString(locale, "Tagreference.description"); //$NON-NLS-1$
     }
 
     /**
