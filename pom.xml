@@ -91,22 +91,50 @@
         <maven.compiler.release>${javaVersion}</maven.compiler.release>
       </properties>
     </profile>
+    <profile>
+      <id>assembly</id>
+      <activation>
+        <property>
+          <name>assembly</name>
+        </property>
+      </activation>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <artifactId>maven-assembly-plugin</artifactId>
+              <version>3.3.0</version>
+              <configuration>
+                <descriptors>
+                  <descriptor>src/assemblies/bin.xml</descriptor>
+                  <descriptor>src/assemblies/src.xml</descriptor>
+                </descriptors>
+                <outputDirectory>${project.build.directory}/assembly</outputDirectory>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+        <plugins>
+          <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>make-assembly</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 
   <build>
     <pluginManagement>
       <plugins>
-        <plugin>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>3.3.0</version>
-          <configuration>
-            <descriptors>
-              <descriptor>src/assemblies/bin.xml</descriptor>
-              <descriptor>src/assemblies/src.xml</descriptor>
-            </descriptors>
-            <outputDirectory>${project.build.directory}/assembly</outputDirectory>
-          </configuration>
-        </plugin>
         <plugin>
           <artifactId>maven-changes-plugin</artifactId>
           <version>2.12.1</version>
@@ -284,18 +312,6 @@
 
     <plugins>
       <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>make-assembly</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <artifactId>maven-changes-plugin</artifactId>
         <executions>
           <execution>
@@ -420,6 +436,15 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <useReleaseProfile>false</useReleaseProfile>
+          <releaseProfiles>release</releaseProfiles>
+          <goals>deploy</goals>
+        </configuration>
       </plugin>
     </plugins>
   </build>
