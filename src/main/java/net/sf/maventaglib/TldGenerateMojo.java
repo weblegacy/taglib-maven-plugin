@@ -319,7 +319,7 @@ public class TldGenerateMojo extends AbstractMojo
                     {
                         TagFile tagFile = TagFile.parse(is);
 
-                        for (Directive directive : tagFile.getDirectives().getDirectives())
+                        for (Directive directive : tagFile.getDirectives())
                         {
                             if ("tag".equals(directive.getDirectiveName()))
                             {

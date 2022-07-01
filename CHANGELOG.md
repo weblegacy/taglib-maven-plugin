@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Use new `io.github.weblegacy:tlddoc` dependency
 * Reformat POM
 * Remove all compiler-warnings
 * Remove unnecessary setters in `TagreferenceMojo`
