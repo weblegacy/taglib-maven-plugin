@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Reformat POM
 * Remove all compiler-warnings
 * Remove unnecessary setters in `TagreferenceMojo`
 * Remove `PMD`-Warnings and exclude generated classes form PMD-report
