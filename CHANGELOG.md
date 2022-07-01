@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Add encoding-property
 * Add new profile `assembly` to generate assemblies
 * Suppress timestamp at javadoc-files
 * Change group-id from `net.sourceforge.maven-taglib` to `io.github.weblegacy`
