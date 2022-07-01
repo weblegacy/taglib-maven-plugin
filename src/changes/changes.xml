@@ -9,6 +9,7 @@
   </properties>
   <body>
     <release version="2.6" date="YYYY-MM-DD" description="">
+      <action type="update" dev="ste-gr">Change group-id from &quot;net.sourceforge.maven-taglib&quot; to &quot;io.github.weblegacy&quot;</action>
       <action type="update" dev="ste-gr">Use new &quot;io.github.weblegacy:tlddoc&quot; dependency</action>
       <action type="fix" dev="ste-gr">Remove all compiler-warnings</action>
       <action type="fix" dev="ste-gr">Remove unnecessary setters in TagreferenceMojo</action>

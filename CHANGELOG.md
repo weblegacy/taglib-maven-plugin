@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Change group-id from `net.sourceforge.maven-taglib` to `io.github.weblegacy`
 * Use new `io.github.weblegacy:tlddoc` dependency
 * Reformat POM
 * Remove all compiler-warnings
