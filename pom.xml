@@ -175,6 +175,7 @@
             <quiet>true</quiet>
             <failOnError>false</failOnError>
             <doclint>all,-missing</doclint>
+            <notimestamp>true</notimestamp>
             <source>${javaVersion}</source>
             <detectLinks>true</detectLinks>
             <dependencyLinks>
