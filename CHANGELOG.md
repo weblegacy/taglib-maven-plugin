@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Update configs for `license-maven-plugin` and add `build-helper-maven-plugin` to get current year
 * Add encoding-property
 * Add new profile `assembly` to generate assemblies
 * Suppress timestamp at javadoc-files

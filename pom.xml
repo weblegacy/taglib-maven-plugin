@@ -289,25 +289,14 @@
           <version>4.7.0.0</version>
         </plugin>
         <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>3.3.0</version>
+        </plugin>
+        <plugin>
           <groupId>com.mycila</groupId>
           <artifactId>license-maven-plugin</artifactId>
           <version>4.2.rc3</version>
-          <configuration>
-            <licenseSets>
-              <licenseSet>
-                <header>com/mycila/maven/plugin/license/templates/MIT.txt</header>
-                <includes>
-                  <include>src/**/*.java</include>
-                </includes>
-              </licenseSet>
-            </licenseSets>
-            <properties>
-              <year>${project.inceptionYear}-2014</year>
-              <name>${project.name}</name>
-              <description>${project.description}</description>
-              <url>${project.url}</url>
-            </properties>
-          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -412,13 +401,46 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>com.mycila</groupId>
-        <artifactId>license-maven-plugin</artifactId>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
         <executions>
           <execution>
+            <id>get-current-year-property</id>
             <goals>
-              <goal>check</goal>
+              <goal>timestamp-property</goal>
             </goals>
+            <phase>validate</phase>
+            <configuration>
+              <name>currentYear</name>
+              <locale>en,US</locale>
+              <pattern>yyyy</pattern>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <configuration>
+          <licenseSets>
+            <licenseSet>
+              <header>src/license/MIT.txt</header>
+              <includes>
+                <include>src/main/**</include>
+              </includes>
+            </licenseSet>
+          </licenseSets>
+          <properties>
+            <currentYear>${currentYear}</currentYear>
+          </properties>
+        </configuration>
+        <executions>
+          <execution>
+            <id>update-license</id>
+            <goals>
+              <goal>format</goal>
+            </goals>
+            <phase>process-sources</phase>
           </execution>
         </executions>
       </plugin>
