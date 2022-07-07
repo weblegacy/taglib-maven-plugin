@@ -37,7 +37,7 @@
       <action type="fix" dev="ste-gr">Workaround MJAVADOC-700</action>
       <action type="fix" dev="ste-gr">Generate JavaDoc/JXR-Report without duplicate execution</action>
       <action type="fix" dev="ste-gr">Add/Correct JavaDocs to remove JavaDoc-Generation-Errors and Warnings</action>
-      <action type="update" dev="ste-gr">Bump maven-site-plugin from 3.11.0 to 4.0.0-M1</action>
+      <action type="update" dev="ste-gr">Bump maven-site-plugin from 3.11.0 to 3.12.0</action>
       <action type="update" dev="ste-gr">Bump maven-javadoc-plugin from 3.3.2 to 3.4.0</action>
       <action type="fix" dev="ste-gr">Remove closeReport in TagreferenceMojo</action>
       <action type="update" dev="ste-gr">Some Code-optimization in TagreferenceRenderer</action>
