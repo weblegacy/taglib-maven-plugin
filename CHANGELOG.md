@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Add new profile `release` to deploy to central-repo
 * Update copyright
 * Update configs for `license-maven-plugin` and add `build-helper-maven-plugin` to get current year
 * Add encoding-property

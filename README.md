@@ -17,6 +17,10 @@ Full [CHANGELOG](CHANGELOG.md)
 
 * *assembly*
   * Create assemblies for distribution
+* *release*
+  * Signs all of the project's attached artifacts with GnuPG
+  * Add JavaDoc-artifact for deployment to central-repo
+  * Add Source-artifact for deployment to central-repo
 
 ## Building-Steps
 
@@ -30,6 +34,9 @@ Full [CHANGELOG](CHANGELOG.md)
    `mvn package`
 5. Generate assemblies  
    `mvn -Passembly package`
+6. Deploy all artifacts to `Central-Repo`  
+   * `mvn clean deploy` for SNAPSHOTs
+   * `mvn -Prelease clean deploy` for releases
 
 ## Support runs
 
@@ -37,4 +44,4 @@ Full [CHANGELOG](CHANGELOG.md)
   `mvn versions:set -DnewVersion=...`
 
 * Dependency Report
-  `mvn -Passembly versions:display-dependency-updates versions:display-plugin-updates versions:display-property-updates`
+  `mvn -Passembly,release versions:display-dependency-updates versions:display-plugin-updates versions:display-property-updates`
