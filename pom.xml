@@ -719,7 +719,7 @@
     </repository>
     <site>
       <id>github</id>
-      <url>scm:git:git@github.com:weblegacy/tagltlddoc</url>
+      <url>scm:git:git@github.com:weblegacy/taglib-maven-plugin</url>
     </site>
     <downloadUrl>https://github.com/weblegacy/taglib-maven-plugin/releases</downloadUrl>
   </distributionManagement>
