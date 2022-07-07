@@ -2,16 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>net.sourceforge.maven-taglib</groupId>
-  <artifactId>taglib-maven-plugin-test-project</artifactId>
+  <groupId>io.github.weblegacy</groupId>
+  <artifactId>taglib-maven-plugin-test-project1</artifactId>
   <packaging>jar</packaging>
-  <name>Maven Taglib Plugin test project</name>
+  <name>Maven Taglib Plugin test project 1</name>
   <version>1.0</version>
   <reporting>
     <excludeDefaults>true</excludeDefaults>
     <plugins>
       <plugin>
-        <groupId>net.sourceforge.maven-taglib</groupId>
+        <groupId>io.github.weblegacy</groupId>
         <artifactId>taglib-maven-plugin</artifactId>
       </plugin>
     </plugins>
