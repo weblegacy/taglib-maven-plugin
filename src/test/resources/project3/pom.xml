@@ -20,7 +20,7 @@
               <uri>testuri</uri>
               <outputname>testtaglib</outputname>
               <functionClasses>
-                <functionClass>org.apache.commons.lang.StringUtils</functionClass>
+                <functionClass>org.apache.commons.lang3.StringUtils</functionClass>
               </functionClasses>
               <tagdir>src/tagfiles</tagdir>
             </taglib>

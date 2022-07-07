@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Correct function-class in `taglib-maven-plugin-test-project3`
 * Correct group-id to `io.github.weblegacy` in tests
 * Add new profile `release` to deploy to central-repo
 * Update copyright
