@@ -9,6 +9,7 @@
   </properties>
   <body>
     <release version="2.6" date="YYYY-MM-DD" description="">
+      <action type="update" dev="ste-gr">Change distribution to central-repo</action>
       <action type="add" dev="ste-gr">Add new profile &quot;release&quot; to deploy to central-repo</action>
       <action type="update" dev="ste-gr">Update copyright</action>
       <action type="add" dev="ste-gr">Update configs for &quot;license-maven-plugin&quot; and add &quot;build-helper-maven-plugin&quot; to get current year</action>
