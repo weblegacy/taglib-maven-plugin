@@ -31,7 +31,6 @@
       <action type="add" dev="ste-gr">Add plugins/reports: checkstyle, dependency, gpg, pmd, release, scm-publish, spotbugs</action>
       <action type="update" dev="ste-gr">Set new home-url</action>
       <action type="update" dev="ste-gr">Bump tlddoc from 1.3 to 1.4-SNAPSHOT</action>
-      <action type="update" dev="ste-gr">Bump maven-reporting-impl from 3.1.0 to 4.0.0-M1</action>
       <action type="update" dev="ste-gr">Bump maven-project-info-reports-plugin from 3.2.2 to 3.3.0</action>
       <action type="update" dev="ste-gr">Bump license-maven-plugin from 4.1 to 4.2.rc3</action>
       <action type="update" dev="ste-gr">Use current web-jsptaglibrary*.dtd from jboss-project</action>
