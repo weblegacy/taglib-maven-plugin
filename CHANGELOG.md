@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Bump `jdom` (new `jdom2`) from 2.0.2 to 2.0.6.1
 * Bump `plexus-archiver` from 4.2.7 to 4.4.0
 * Bump `spotbugs-maven-plugin` from 4.7.0.0 to 4.7.1.0
 * Bump `maven-surefire-plugin` from 3.0.0-M6 to 3.0.0-M7
