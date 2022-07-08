@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Add more infos to `README.md`
 * Add `lifecycle-mapping` for eclipse
 * Correct `sourcepath` of `maven-javadoc-plugin`
 * Normalize all the line endings

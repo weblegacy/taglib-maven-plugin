@@ -30,11 +30,13 @@ Full [CHANGELOG](CHANGELOG.md)
    `mvn verify`
 3. Generate documentation  
    `mvn site`
-4. Generate source- and javadoc-artifacts and assemblies  
+4. Publish site-documentation  
+   `mvn site-deploy`
+5. Generate source- and javadoc-artifacts  
    `mvn package`
-5. Generate assemblies  
+6. Generate assemblies  
    `mvn -Passembly package`
-6. Deploy all artifacts to `Central-Repo`  
+7. Deploy all artifacts to `Central-Repo`  
    * `mvn clean deploy` for SNAPSHOTs
    * `mvn -Prelease clean deploy` for releases
 
