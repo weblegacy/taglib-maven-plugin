@@ -23,7 +23,9 @@
  */
 package net.sf.maventaglib.checker;
 
-
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author fgiust
@@ -51,5 +53,52 @@ public class TagFile extends TldItem
     {
         this.path = path;
     }
+
+    /**
+     * @see java.lang.Comparable#compareTo(Object)
+     */
+    @Override
+    public int compareTo(TldItem object)
+    {
+        int ret = super.compareTo(object);
+        if (ret != 0) {
+            return ret;
+        }
+
+        TagFile rhs = (TagFile) object;
+        return new CompareToBuilder()
+            .appendSuper(super.compareTo(object))
+            .append(this.path, rhs.path)
+            .toComparison();
+    }
+
+    /**
+     * @see java.lang.Object#equals(Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if(obj == null || !super.equals(obj))
+        {
+            return false;
+        }
+
+        TagFile rhs = (TagFile) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.path, rhs.path)
+                .isEquals();
+      }
+
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(this.path)
+                .toHashCode();
+      }
 
 }

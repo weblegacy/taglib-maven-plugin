@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Add `compareTo`, `equals` and `hashCode` to checker-classes
 * Downgrade `maven-site-plugin` from 4.0.0-M1 to 3.12.0 because MPLUGIN-403
 * Correct site-distribution
 * Change distribution to central-repo

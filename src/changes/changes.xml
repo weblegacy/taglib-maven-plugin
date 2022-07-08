@@ -9,6 +9,7 @@
   </properties>
   <body>
     <release version="2.6" date="YYYY-MM-DD" description="">
+      <action type="add" dev="ste-gr">Add &quot;compareTo&quot;, &quot;equals&quot; and &quot;hashCode&quot; to checker-classes</action>
       <action type="update" dev="ste-gr">Change distribution to central-repo</action>
       <action type="add" dev="ste-gr">Add new profile &quot;release&quot; to deploy to central-repo</action>
       <action type="update" dev="ste-gr">Update copyright</action>

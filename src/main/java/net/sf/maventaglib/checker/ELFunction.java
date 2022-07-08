@@ -23,6 +23,10 @@
  */
 package net.sf.maventaglib.checker;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  * Contains information about an EL function.
  * @author Fabrizio Giustina
@@ -90,5 +94,56 @@ public class ELFunction extends TldItem
     {
         this.parameters = parameters;
     }
+
+    /**
+     * @see java.lang.Comparable#compareTo(Object)
+     */
+    @Override
+    public int compareTo(TldItem object)
+    {
+        int ret = super.compareTo(object);
+        if (ret != 0) {
+            return ret;
+        }
+
+        ELFunction rhs = (ELFunction) object;
+        return new CompareToBuilder()
+            .append(this.functionClass, rhs.functionClass)
+            .append(this.functionSignature, rhs.functionSignature)
+            .append(this.parameters, rhs.parameters)
+            .toComparison();
+    }
+
+    /**
+     * @see java.lang.Object#equals(Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if(obj == null || !super.equals(obj))
+        {
+            return false;
+        }
+
+        ELFunction rhs = (ELFunction) obj;
+        return new EqualsBuilder()
+                .append(this.functionClass, rhs.functionClass)
+                .append(this.functionSignature, rhs.functionSignature)
+                .append(this.parameters, rhs.parameters)
+                .isEquals();
+      }
+
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(this.functionClass)
+                .append(this.functionSignature)
+                .append(this.parameters)
+                .toHashCode();
+      }
 
 }

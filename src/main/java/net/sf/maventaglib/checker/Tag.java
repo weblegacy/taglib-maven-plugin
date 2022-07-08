@@ -23,6 +23,9 @@
  */
 package net.sf.maventaglib.checker;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -94,6 +97,57 @@ public class Tag extends TldItem
     {
         this.variables = variables;
     }
+
+    /**
+     * @see java.lang.Comparable#compareTo(Object)
+     */
+    @Override
+    public int compareTo(TldItem object)
+    {
+        int ret = super.compareTo(object);
+        if (ret != 0) {
+            return ret;
+        }
+
+        Tag rhs = (Tag) object;
+        return new CompareToBuilder()
+            .append(this.tagClass, rhs.tagClass)
+            .append(this.teiClass, rhs.teiClass)
+            .append(this.attributes, rhs.attributes)
+            .toComparison();
+    }
+
+    /**
+     * @see java.lang.Object#equals(Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if(obj == null || !super.equals(obj))
+        {
+            return false;
+        }
+
+        Tag rhs = (Tag) obj;
+        return new EqualsBuilder()
+                .append(this.tagClass, rhs.tagClass)
+                .append(this.teiClass, rhs.teiClass)
+                .append(this.attributes, rhs.attributes)
+                .isEquals();
+      }
+
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(this.tagClass)
+                .append(this.teiClass)
+                .append(this.attributes)
+                .toHashCode();
+      }
 
     /**
      * @see java.lang.Object#toString()

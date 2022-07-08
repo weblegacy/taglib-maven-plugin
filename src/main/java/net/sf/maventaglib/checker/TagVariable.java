@@ -24,6 +24,8 @@
 package net.sf.maventaglib.checker;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -128,5 +130,41 @@ public class TagVariable
                                                                                            object.nameGiven )
             .append( this.nameFromAttribute, object.nameFromAttribute ).toComparison();
     }
+
+    /**
+     * @see java.lang.Object#equals(Object)
+     */
+    @Override
+    public boolean equals( Object obj )
+    {
+        if( obj == null )
+        {
+            return false;
+        }
+
+        if( obj == this )
+        {
+            return true;
+        }
+
+        if( obj.getClass() != getClass() )
+        {
+            return false;
+        }
+
+        TagVariable rhs = (TagVariable) obj;
+        return new EqualsBuilder().append( this.deprecated, rhs.deprecated ).append( this.nameGiven,
+                                                                                     rhs.nameGiven )
+            .append( this.nameFromAttribute, rhs.nameFromAttribute ).isEquals();
+      }
+
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append( this.deprecated ).append( this.nameGiven )
+            .append( this.nameFromAttribute ).toHashCode();
+      }
 
 }
