@@ -6,6 +6,8 @@ Renamed from `maven-taglib-plugin` to `taglib-maven-plugin`
 
 Full [CHANGELOG](CHANGELOG.md)
 
+For documentation see [https://weblegacy.github.io/taglib-maven-plugin](https://weblegacy.github.io/taglib-maven-plugin)
+
 # Building `taglib-maven-plugin`
 
 ## Prerequesits
