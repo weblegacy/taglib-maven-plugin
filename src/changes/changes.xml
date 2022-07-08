@@ -9,6 +9,7 @@
   </properties>
   <body>
     <release version="2.6" date="YYYY-MM-DD" description="">
+      <action type="update" dev="ste-gr">Bump &quot;maven-plugins&quot; from 3.8.5 to 3.8.6</action>
       <action type="fix" dev="ste-gr">Set reporting-output-encoding to UTF-8</action>
       <action type="update" dev="ste-gr">Upgrade to &quot;doxia.xhtml5&quot;</action>
       <action type="fix" dev="ste-gr">Correct FAQs</action>

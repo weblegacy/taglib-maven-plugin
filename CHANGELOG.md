@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Bump `maven-plugins` from 3.8.5 to 3.8.6
 * Set reporting-output-encoding to UTF-8
 * Upgrade to `doxia.xhtml5`
 * Correct FAQs
