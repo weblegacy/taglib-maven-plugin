@@ -9,6 +9,7 @@
   </properties>
   <body>
     <release version="2.6" date="YYYY-MM-DD" description="">
+      <action type="update" dev="ste-gr">Bump &quot;maven-surefire-plugin&quot; from 3.0.0-M6 to 3.0.0-M7</action>
       <action type="update" dev="ste-gr">Bump &quot;maven-release-plugin&quot; from 3.0.0-M5 to 3.0.0-M6</action>
       <action type="update" dev="ste-gr">Bump &quot;maven-pmd-plugin&quot; from 3.16.0 to 3.17.0</action>
       <action type="update" dev="ste-gr">Bump &quot;maven-enforcer-plugin&quot; from 3.0.0 to 3.1.0</action>
