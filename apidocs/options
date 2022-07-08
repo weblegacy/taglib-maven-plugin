@@ -7,14 +7,14 @@
 --release
 8
 -sourcepath
-'/home/stefan/eclipse-workspace/x/taglib-maven-plugin/src/main/java:/home/stefan/eclipse-workspace/x/taglib-maven-plugin/target/generated-sources/plugin'
+'/home/stefan/eclipse-workspace/taglib-maven-plugin/src/main/java:/home/stefan/eclipse-workspace/taglib-maven-plugin/target/generated-sources/plugin'
 -author
 -bottom
 'Copyright &#169; 2004&#x2013;2022 <a href="https://github.com/weblegacy">Web-Legacy</a>. All rights reserved.'
 -charset
 'UTF-8'
 -d
-'/home/stefan/eclipse-workspace/x/taglib-maven-plugin/target/site/apidocs'
+'/home/stefan/eclipse-workspace/taglib-maven-plugin/target/site/apidocs'
 -docencoding
 'UTF-8'
 -Xdoclint:all,-missing
@@ -61,7 +61,7 @@
 -link
 'https://maven.apache.org/plugin-tools/maven-plugin-annotations/apidocs'
 -linkoffline
-'https://docs.oracle.com/javase/8/docs/api' '/home/stefan/eclipse-workspace/x/taglib-maven-plugin/target/javadoc-bundle-options'
+'https://docs.oracle.com/javase/8/docs/api' '/home/stefan/eclipse-workspace/taglib-maven-plugin/target/javadoc-bundle-options'
 -notimestamp
 -use
 -version
