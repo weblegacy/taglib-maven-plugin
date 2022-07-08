@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -191,7 +193,10 @@ public class ValidateMojo
             }
         }
 
-        URLClassLoader projectClassLoader = new URLClassLoader( URLs.toArray( new URL[URLs.size()] ), null );
+        URLClassLoader projectClassLoader = AccessController.doPrivileged(
+                (PrivilegedAction<URLClassLoader>) () ->
+                        new URLClassLoader( URLs.toArray( new URL[0] ), null )
+        );
 
         ValidateRenderer r = new ValidateRenderer( getSink(), locale,
                                                    tldList.toArray( new Tld[tldList.size()] ), getLog(),

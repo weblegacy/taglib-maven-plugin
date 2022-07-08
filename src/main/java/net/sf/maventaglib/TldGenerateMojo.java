@@ -35,7 +35,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -145,12 +144,10 @@ public class TldGenerateMojo extends AbstractMojo
 
         if (taglibs != null)
         {
-            for (Iterator<Taglib> iterator = taglibs.iterator(); iterator.hasNext();)
+            for (Taglib taglib : taglibs)
             {
-                Taglib taglib = iterator.next();
-
-                // a trink to make the old style embedder tests work,
-                // I should migrate to the new IT test infras
+                // a drink to get the old-style embedding tests work,
+                // I should migrate to the new IT test infrastructure
                 Taglib tlib = new Taglib();
                 try
                 {
@@ -241,7 +238,9 @@ public class TldGenerateMojo extends AbstractMojo
         }
 
         File outputFile = new File(outputDir, tldName);
-        outputDir.mkdirs();
+        if (!(outputDir.mkdirs() || outputDir.isDirectory())) {
+            throw new IOException("Unable to create output directory " + outputDir.getAbsolutePath());
+        }
 
         getLog().info(MessageFormat.format(Messages.getString("Taglib.generating.file"), //$NON-NLS-1$
             new Object[]{tldName, taglib.getShortName() }));
@@ -298,7 +297,6 @@ public class TldGenerateMojo extends AbstractMojo
                     pathElement.appendChild(result.createTextNode(tagPath));
                     tagFileElement.appendChild(pathElement);
                     taglibElement.appendChild(tagFileElement);
-                    tag.getName();
 
                     // tag-file Subelements
                     //
@@ -324,9 +322,8 @@ public class TldGenerateMojo extends AbstractMojo
                         {
                             if ("tag".equals(directive.getDirectiveName()))
                             {
-                                for (Iterator<?> iterator = directive.getAttributes(); iterator.hasNext();)
+                                for (Attribute attribute : directive.getAttributes())
                                 {
-                                    Attribute attribute = (Attribute) iterator.next();
                                     if ("description".equals(attribute.getName())
                                         || "display-name".equals(attribute.getName())
                                         || "example".equals(attribute.getName()))

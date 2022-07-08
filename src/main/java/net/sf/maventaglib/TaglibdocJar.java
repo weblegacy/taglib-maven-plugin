@@ -122,9 +122,9 @@ public class TaglibdocJar
             throw new MojoExecutionException( "tlddoc files not found." );
         }
 
-        if ( tlddocJar.exists() )
+        if ( tlddocJar.exists() && !tlddocJar.delete())
         {
-            tlddocJar.delete();
+            throw new MojoExecutionException( "tlddocJar could not deleted." );
         }
 
         JarArchiver archiver = new JarArchiver();

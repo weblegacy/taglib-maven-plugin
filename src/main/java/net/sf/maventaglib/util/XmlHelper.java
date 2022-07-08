@@ -143,12 +143,16 @@ public class XmlHelper
      * @throws MojoExecutionException xml parsing/transforming exceptions
      * @throws TransformerException If an unrecoverable error occurs
      *   during the course of the transformation.
+     * @throws IOException if output directory could not created
      */
     protected static void applyXslt( Source src, String stylesheet, File outputFile )
-        throws MojoExecutionException, TransformerException
+        throws MojoExecutionException, TransformerException, IOException
     {
         OutputStream fos = null;
-        outputFile.getParentFile().mkdirs();
+        File outputDir = outputFile.getParentFile();
+        if (!(outputDir.mkdirs() || outputDir.isDirectory())) {
+            throw new IOException("Unable to create output directory " + outputDir.getAbsolutePath());
+        }
 
         try
         {
@@ -252,7 +256,7 @@ public class XmlHelper
         {
             Node k = nodeList.item( j );
             buf.append( k.getNodeValue() );
-            getTextContent( k );
+            //getTextContent( k );
         }
 
         return buf.toString();

@@ -715,7 +715,7 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
         return Array.newInstance(elementClass, 0).getClass();
     }
 
-    class ValidationError
+    static class ValidationError
     {
 
         public static final int LEVEL_INFO = 1;
