@@ -583,7 +583,7 @@
     </dependency>
     <dependency>
       <groupId>org.apache.maven.doxia</groupId>
-      <artifactId>doxia-module-xhtml</artifactId>
+      <artifactId>doxia-module-xhtml5</artifactId>
       <version>${doxiaVersion}</version>
     </dependency>
     <dependency>

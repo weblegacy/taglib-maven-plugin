@@ -28,7 +28,7 @@ import java.text.MessageFormat;
 import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.maven.doxia.module.xhtml.XhtmlParser;
+import org.apache.maven.doxia.module.xhtml5.Xhtml5Parser;
 import org.apache.maven.doxia.parser.ParseException;
 import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.plugin.logging.Log;
@@ -544,7 +544,7 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
     {
         try
         {
-            new XhtmlParser().parse(new StringReader(OPEN_DIV + description + CLOSE_DIV), sink);
+            new Xhtml5Parser().parse(new StringReader(OPEN_DIV + description + CLOSE_DIV), sink);
         }
         catch (ParseException e)
         {
