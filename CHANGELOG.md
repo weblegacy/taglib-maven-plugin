@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Downgrade `doxia` dependencies from 2.0.0-M2 to 1.11.1 because MPLUGIN-403
 * Add more infos to `README.md`
 * Add `lifecycle-mapping` for eclipse
 * Correct `sourcepath` of `maven-javadoc-plugin`
