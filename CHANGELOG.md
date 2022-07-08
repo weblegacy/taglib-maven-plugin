@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Set reporting-output-encoding to UTF-8
 * Upgrade to `doxia.xhtml5`
 * Correct FAQs
 * Bump `maven-assembly-plugin` from 3.3.0 to 3.4.1

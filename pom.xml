@@ -76,6 +76,7 @@
     <encoding>UTF-8</encoding>
     <propertiesEncoding>${encoding}</propertiesEncoding>
     <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
     <mavenVersion>[3.5.4,4)</mavenVersion>
     <javaVersion>8</javaVersion>
     <mavenPluginVersion>3.8.5</mavenPluginVersion>
