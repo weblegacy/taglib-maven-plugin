@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Correct `sourcepath` of `maven-javadoc-plugin`
 * Normalize all the line endings
 * Correct some SpotBugs
 * Remove unused resources
