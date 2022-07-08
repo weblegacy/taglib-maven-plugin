@@ -10,7 +10,7 @@
     <faq id="tldversion">
       <question>Which tld version / tag specification version does the plugin supports?</question>
       <answer>
-        <p>At the moment the plugin supports the tld 1.1, 1.2 and 2.0 versions.</p>
+        <p>At the moment the plugin supports the tld 1.1, 1.2, 2.0 and 2.1 versions.</p>
       </answer>
     </faq>
     <faq id="multipletld">
