@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Bump `maven-assembly-plugin` from 3.3.0 to 3.4.1
 * Downgrade `maven-reporting-api` and `maven-reporting-impl` from 4.0.0-M1 to 3.1.0
 * Downgrade `doxia` dependencies from 2.0.0-M2 to 1.11.1 because MPLUGIN-403
 * Add more infos to `README.md`
