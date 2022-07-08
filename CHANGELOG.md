@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Revert downgrade `maven-reporting-api` and `maven-reporting-impl` from 4.0.0-M1 to 3.1.0
 * Bump `maven-enforcer-plugin` from 3.0.0 to 3.1.0
 * Bump `maven-plugins` from 3.8.5 to 3.8.6
 * Set reporting-output-encoding to UTF-8
