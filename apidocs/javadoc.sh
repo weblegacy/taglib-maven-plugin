@@ -1,0 +1,1 @@
+/usr/lib/jvm/java-18-openjdk/bin/javadoc @options @argfile

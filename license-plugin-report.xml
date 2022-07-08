@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<licensePluginReport goal="FORMAT" timestamp="1657299995282">
+    <module artifactId="taglib-maven-plugin" groupId="io.github.weblegacy" version="2.6-SNAPSHOT"/>
+    <files>
+        <file path="src/main/java/net/sf/maventaglib/AbstractMavenTaglibReportRenderer.java" result="NOOP"/>
+        <file path="src/main/java/net/sf/maventaglib/Messages.java" result="NOOP"/>
+        <file path="src/main/java/net/sf/maventaglib/Taglib.java" result="NOOP"/>
+        <file path="src/main/java/net/sf/maventaglib/TaglibdocJar.java" result="NOOP"/>
+        <file path="src/main/java/net/sf/maventaglib/TaglibdocMojo.java" result="NOOP"/>
+        <file path="src/main/java/net/sf/maventaglib/TagreferenceMojo.java" result="NOOP"/>
+        <file path="src/main/java/net/sf/maventaglib/TagreferenceRenderer.java" result="NOOP"/>
+        <file path="src/main/java/net/sf/maventaglib/TldGenerateMojo.java" result="NOOP"/>
+        <file path="src/main/java/net/sf/maventaglib/ValidateMojo.java" result="NOOP"/>
+        <file path="src/main/java/net/sf/maventaglib/ValidateRenderer.java" result="NOOP"/>
+        <file path="src/main/java/net/sf/maventaglib/checker/ELFunction.java" result="NOOP"/>
+        <file path="src/main/java/net/sf/maventaglib/checker/Tag.java" result="NOOP"/>
+        <file path="src/main/java/net/sf/maventaglib/checker/TagAttribute.java" result="NOOP"/>
+        <file path="src/main/java/net/sf/maventaglib/checker/TagFile.java" result="NOOP"/>
+        <file path="src/main/java/net/sf/maventaglib/checker/TagVariable.java" result="NOOP"/>
+        <file path="src/main/java/net/sf/maventaglib/checker/Tld.java" result="NOOP"/>
+        <file path="src/main/java/net/sf/maventaglib/checker/TldItem.java" result="NOOP"/>
+        <file path="src/main/java/net/sf/maventaglib/checker/TldParser.java" result="NOOP"/>
+        <file path="src/main/java/net/sf/maventaglib/util/XmlHelper.java" result="NOOP"/>
+        <file path="src/main/resources/m2-taglib.properties" result="NOOP"/>
+    </files>
+</licensePluginReport>

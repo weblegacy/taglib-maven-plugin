@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<rss version="0.91">
+  <channel>
+    <title>Maven Taglib Plugin - Checkstyle report</title>
+    <link>https://weblegacy.github.io/taglib-maven-plugin</link>
+    <description>Maven Taglib Plugin - Checkstyle report</description>
+    <language>en-us</language>
+    <copyright>&#169;2004 - 2022 Web-Legacy</copyright>
+    <item>
+      <title>File: 25,
+             Errors: 0,
+             Warnings: 2711,
+             Infos: 0
+      </title>
+            <link>https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html</link>
+      <description>
+        <p>Click <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html">here</a> for the full Checkstyle report.</p>
+
+        <table summary="Files" boder="1">
+          <thead>
+            <tr>
+              <th>Files</th>
+              <th style="width:30px;"><abbr title="Info">I</abbr></th>
+              <th style="width:30px;"><abbr title="Warning">W</abbr></th>
+              <th style="width:30px;"><abbr title="Error">E</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.checker.TagAttribute.java">net/sf/maventaglib/checker/TagAttribute.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  107
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.checker.Tld.java">net/sf/maventaglib/checker/Tld.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  85
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.ValidateRenderer.java">net/sf/maventaglib/ValidateRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  448
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.Taglib.java">net/sf/maventaglib/Taglib.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  52
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.checker.Tag.java">net/sf/maventaglib/checker/Tag.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  49
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.ValidateMojo.java">net/sf/maventaglib/ValidateMojo.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  191
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.TagreferenceMojo.java">net/sf/maventaglib/TagreferenceMojo.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  86
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.TaglibPluginTestBase.java">net/sf/maventaglib/TaglibPluginTestBase.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  16
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.TaglibdocMojoTest.java">net/sf/maventaglib/TaglibdocMojoTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  25
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#m2-taglib.properties">m2-taglib.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.TagreferenceMojoTest.java">net/sf/maventaglib/TagreferenceMojoTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  21
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#sampletags.SimpleTag.java">sampletags/SimpleTag.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  11
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.checker.ELFunction.java">net/sf/maventaglib/checker/ELFunction.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  43
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.checker.TldParser.java">net/sf/maventaglib/checker/TldParser.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  248
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.Messages.java">net/sf/maventaglib/Messages.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  45
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.TaglibdocJar.java">net/sf/maventaglib/TaglibdocJar.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  103
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.TaglibdocMojo.java">net/sf/maventaglib/TaglibdocMojo.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  105
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.checker.TagVariable.java">net/sf/maventaglib/checker/TagVariable.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  116
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.TldGenerateMojo.java">net/sf/maventaglib/TldGenerateMojo.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  288
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.checker.TldItem.java">net/sf/maventaglib/checker/TldItem.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  58
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.AbstractMavenTaglibReportRenderer.java">net/sf/maventaglib/AbstractMavenTaglibReportRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  16
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.TagreferenceRenderer.java">net/sf/maventaglib/TagreferenceRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  333
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.util.XmlHelper.java">net/sf/maventaglib/util/XmlHelper.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  207
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.checker.TagFile.java">net/sf/maventaglib/checker/TagFile.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  30
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://weblegacy.github.io/taglib-maven-plugin/checkstyle.html#net.sf.maventaglib.TldGenerateMojoTest.java">net/sf/maventaglib/TldGenerateMojoTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  28
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                      </tbody>
+        </table>
+        
+      </description>
+    </item>
+  </channel>
+</rss>
+
