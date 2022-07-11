@@ -188,7 +188,7 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
         printList(tld, tagfiles, "Tagfiles");
 
         sink.paragraph();
-        sink.text(getMessageString("Tagreference.intro.required")); //$NON-NLS-1$
+        sink.text(getMessageString("Tagreference.intro.required") + ' ');  //$NON-NLS-1$ //$NON-NLS-2$
         sink.bold();
         sink.text(getMessageString("Tagreference.required.marker")); //$NON-NLS-1$
         sink.bold_();

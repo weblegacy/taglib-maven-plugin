@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* Some Report-corrections
 * JDK8: Use For-Each-Loops
 * Remove debug-option from `maven-javadoc-plugin`
 * Add link to documentation in README.md

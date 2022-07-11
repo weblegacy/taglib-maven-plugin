@@ -192,7 +192,7 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
         // new section for each tld
         sink.anchor(tld.getFilename());
         sink.anchor_();
-        startSection(tld.getName() + " " + tld.getFilename()); //$NON-NLS-1$
+        startSection(StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname()) + " " + tld.getFilename()); //$NON-NLS-1$
 
         doTags(tld.getTags(), tld.getShortname());
         doFunctions(tld.getFunctions(), tld.getShortname());
