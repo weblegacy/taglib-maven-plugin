@@ -1,5 +1,6 @@
 # 2.6 / YYYY-MM-DD
 
+* JDK8: Use For-Each-Loops
 * Remove debug-option from `maven-javadoc-plugin`
 * Add link to documentation in README.md
 * Bump `jdom` (new `jdom2`) from 2.0.2 to 2.0.6.1

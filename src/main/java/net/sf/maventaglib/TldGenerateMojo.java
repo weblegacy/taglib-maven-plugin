@@ -279,10 +279,12 @@ public class TldGenerateMojo extends AbstractMojo
             }
 
             File[] files = taglib.getTagdir().listFiles();
-            for (int j = 0; files != null && j < files.length; j++)
+            if (files == null)
             {
-                File tag = files[j];
-
+                files = new File[0];
+            }
+            for (File tag : files)
+            {
                 if (!tag.isDirectory()
                     && (tag.getName().toLowerCase().endsWith(".tag") || tag.getName().toLowerCase().endsWith(".tagx")))
                 {
@@ -360,10 +362,8 @@ public class TldGenerateMojo extends AbstractMojo
 
         if (taglib.getFunctionClasses() != null)
         {
-            for (int j = 0; j < taglib.getFunctionClasses().length; j++)
+            for (String functionClassString : taglib.getFunctionClasses())
             {
-                String functionClassString = taglib.getFunctionClasses()[j];
-
                 Class<?> functionClass = null;
                 try
                 {
@@ -384,9 +384,8 @@ public class TldGenerateMojo extends AbstractMojo
                 }
                 Method[] declaredMethods = functionClass.getDeclaredMethods();
 
-                for (int k = 0; k < declaredMethods.length; k++)
+                for (Method method : declaredMethods)
                 {
-                    Method method = declaredMethods[k];
                     if (!Modifier.isStatic(method.getModifiers()) || !Modifier.isPublic(method.getModifiers()))
                     {
                         // not a public static method

@@ -111,24 +111,24 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
         paragraph(getMessageString("Tagreference.intro")); //$NON-NLS-1$
 
         sink.list();
-        for (int j = 0; j < tlds.length; j++)
+        for (Tld tld : tlds)
         {
-            log.debug("Rendering " + tlds[j].getFilename());
+            log.debug("Rendering " + tld.getFilename());
             sink.listItem();
-            sink.link("#" + tlds[j].getFilename()); //$NON-NLS-1$
+            sink.link("#" + tld.getFilename()); //$NON-NLS-1$
             sink.text(MessageFormat.format(getMessageString("Tagreference.listitem.tld"), new Object[]{ //$NON-NLS-1$
-                StringUtils.defaultIfEmpty(tlds[j].getName(), tlds[j].getShortname()), tlds[j].getFilename()}));
+                StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname()), tld.getFilename()}));
             sink.link_();
-            sink.text(getMessageString("Tagreference.listitem.uri") + tlds[j].getUri()); //$NON-NLS-1$
+            sink.text(getMessageString("Tagreference.listitem.uri") + tld.getUri()); //$NON-NLS-1$
             sink.listItem_();
         }
         sink.list_();
 
         endSection();
 
-        for (int j = 0; j < tlds.length; j++)
+        for (Tld tld : tlds)
         {
-            doTld(tlds[j]);
+            doTld(tld);
             sink.pageBreak();
         }
 
@@ -196,24 +196,24 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
 
         if (tags != null)
         {
-            for (int j = 0; j < tags.length; j++)
+            for (TldItem tag : tags)
             {
-                doTag(tld.getShortname(), (Tag) tags[j]);
+                doTag(tld.getShortname(), (Tag) tag);
             }
         }
 
         if (functions != null)
         {
-            for (int j = 0; j < functions.length; j++)
+            for (ELFunction function : functions)
             {
-                doFunction(tld.getShortname(), functions[j]);
+                doFunction(tld.getShortname(), function);
             }
         }
         if (tagfiles != null)
         {
-            for (int j = 0; j < tagfiles.length; j++)
+            for (TagFile tagfile : tagfiles)
             {
-                doTagFile(tld.getShortname(), tagfiles[j]);
+                doTagFile(tld.getShortname(), tagfile);
             }
         }
 
@@ -284,10 +284,8 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
 
             sink.list();
 
-            for (int j = 0; j < tags.length; j++)
+            for (TldItem tag : tags)
             {
-                TldItem tag = tags[j];
-
                 sink.listItem();
 
                 sink.link("#" + tld.getShortname() + ":" + tag.getName()); //$NON-NLS-1$
@@ -364,10 +362,8 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
             tableHeader(new String[]{
                   getMessageString("Tagreference.attribute.name"), getMessageString("Tagreference.attribute.description"), getMessageString("Tagreference.attribute.type")}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-            for (int i = 0; i < attributes.length; i++)
+            for (TagAttribute attribute : attributes)
             {
-                TagAttribute attribute = attributes[i];
-
                 sink.tableRow();
 
                 sink.tableCell();
@@ -442,9 +438,8 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
             tableHeader(new String[]{
                 getMessageString("Tagreference.variable.name"), getMessageString("Tagreference.variable.type"), getMessageString("Tagreference.variable.scope"), getMessageString("Tagreference.variable.description")}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
-            for (int i = 0; i < variables.length; i++)
+            for (TagVariable variable : variables)
             {
-                TagVariable variable = variables[i];
                 sink.tableRow();
 
                 sink.tableCell();

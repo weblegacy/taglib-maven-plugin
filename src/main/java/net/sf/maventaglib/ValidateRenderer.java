@@ -27,7 +27,6 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -160,15 +159,15 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
         paragraph(getMessageString("Validate.intro2")); //$NON-NLS-1$
 
         sink.list();
-        for (int j = 0; j < tlds.length; j++)
+        for (Tld tld : tlds)
         {
 
             sink.listItem();
-            sink.link("#" + tlds[j].getFilename()); //$NON-NLS-1$
+            sink.link("#" + tld.getFilename()); //$NON-NLS-1$
             sink.text(MessageFormat.format(getMessageString("Validate.listitem.tld"), new Object[]{ //$NON-NLS-1$
-                StringUtils.defaultIfEmpty(tlds[j].getName(), tlds[j].getShortname()), tlds[j].getFilename() }));
+                StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname()), tld.getFilename() }));
             sink.link_();
-            sink.text(getMessageString("Validate.listitem.uri") + tlds[j].getUri()); //$NON-NLS-1$
+            sink.text(getMessageString("Validate.listitem.uri") + tld.getUri()); //$NON-NLS-1$
 
             sink.listItem_();
         }
@@ -176,9 +175,9 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
 
         endSection();
 
-        for (int j = 0; j < tlds.length; j++)
+        for (Tld tld : tlds)
         {
-            checkTld(tlds[j]);
+            checkTld(tld);
         }
 
         sink.body_();
@@ -208,10 +207,8 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
     {
         if (tags != null && tags.length > 0)
         {
-            for (int j = 0; j < tags.length; j++)
+            for (Tag tldItem : tags)
             {
-                Tag tldItem = tags[j];
-
                 checkTag(shortname, tldItem);
             }
         }
@@ -229,11 +226,9 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
             tableHeader(new String[]{
                 getMessageString("Validate.header.validated"), "function", getMessageString("Validate.header.class"), getMessageString("Validate.header.signature") }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
-            for (int j = 0; j < tags.length; j++)
+            for (ELFunction tldItem : tags)
             {
-                ELFunction tldItem = tags[j];
                 checkFunction(shortname, tldItem);
-
             }
 
             endTable();
@@ -403,9 +398,9 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
                 StringUtils.EMPTY,
                 getMessageString("Validate.header.attributename"), getMessageString("Validate.header.tlddeclares"), getMessageString("Validate.header.tagdeclares") }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
-            for (int j = 0; j < attributes.length; j++)
+            for (TagAttribute attribute : attributes)
             {
-                checkAttribute(tagObject, attributes[j]);
+                checkAttribute(tagObject, attribute);
             }
 
             endTable();
@@ -551,9 +546,8 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
 
         int figure = ICO_SUCCESS;
 
-        for (Iterator<ValidationError> iter = validationErrors.iterator(); iter.hasNext();)
+        for (ValidationError error : validationErrors)
         {
-            ValidationError error = iter.next();
             if (error.getLevel() == ValidationError.LEVEL_ERROR)
             {
                 figure = ICO_ERROR;
@@ -571,10 +565,8 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
         sink.tableCell();
         sink.text(tldName);
 
-        Iterator<ValidationError> iterator = validationErrors.iterator();
-        while (iterator.hasNext())
+        for (ValidationError error : validationErrors)
         {
-            ValidationError error = iterator.next();
             sink.lineBreak();
             if (error.getLevel() == ValidationError.LEVEL_ERROR)
             {

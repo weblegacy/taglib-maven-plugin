@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -127,10 +126,8 @@ public class TagreferenceMojo extends AbstractMavenReport
             throw new MavenReportException(e.getMessage(), e);
         }
         List<Tld> tldList = new ArrayList<>();
-        for (Iterator<File> i = tlds.iterator(); i.hasNext();)
+        for (File current : tlds)
         {
-            File current = i.next();
-
             Document tldDoc;
             try
             {

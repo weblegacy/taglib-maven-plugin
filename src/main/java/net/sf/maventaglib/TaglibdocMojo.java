@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -113,9 +112,9 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport
         {
             // handle tlds
             List<File> tlds = FileUtils.getFiles(srcDir, searchprefix + "*.tld", null); //$NON-NLS-1$
-            for (Iterator<File> it = tlds.iterator(); it.hasNext();)
+            for (File tld : tlds)
             {
-                generator.addTLD(it.next());
+                generator.addTLD(tld);
             }
 
             // handle tag files. Add any directory containing .tag or .tagx files
@@ -125,13 +124,13 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport
             if (!tags.isEmpty())
             {
                 Set<File> directories = new HashSet<>();
-                for (Iterator<File> it = tags.iterator(); it.hasNext();)
+                for (File tag : tags)
                 {
-                    directories.add(it.next().getParentFile());
+                    directories.add(tag.getParentFile());
                 }
-                for (Iterator<File> it = directories.iterator(); it.hasNext();)
+                for (File directory : directories)
                 {
-                    generator.addTagDir(it.next());
+                    generator.addTagDir(directory);
                 }
             }
 

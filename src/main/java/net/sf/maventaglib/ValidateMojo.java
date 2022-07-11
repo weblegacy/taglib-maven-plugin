@@ -32,7 +32,6 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -139,10 +138,8 @@ public class ValidateMojo
         }
 
         List<Tld> tldList = new ArrayList<>();
-        for ( Iterator<File> i = tlds.iterator(); i.hasNext(); )
+        for ( File current : tlds )
         {
-            File current = i.next();
-
             Document tldDoc;
             try
             {
@@ -180,12 +177,11 @@ public class ValidateMojo
 
         List<URL> URLs = new ArrayList<>( classPathStrings.size() );
 
-        Iterator<String> iter = classPathStrings.iterator();
-        while ( iter.hasNext() )
+        for ( String classPathString : classPathStrings )
         {
             try
             {
-                URLs.add( new File( iter.next() ).toURI().toURL() );
+                URLs.add( new File( classPathString ).toURI().toURL() );
             }
             catch ( MalformedURLException e )
             {
