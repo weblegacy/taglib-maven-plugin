@@ -1,11 +1,9 @@
-${project.name}
-===============
+#[[##]]# ${project.name}
 
 The Taglib Plug-in is a Maven plugin for jsp tag libraries developers.
 It eases the generation, documentation and testing of jsp tag libraries.
 
-Basic configuration
--------------------
+#[[###]]# Basic configuration
 
 Adds the following to your pom.xml to enable generation of taglib
 reports:
@@ -23,8 +21,8 @@ reports:
 
 This will trigger the generation of:
 
--   tldDoc documentation
--   a tag library validation report
--   a tag reference page
+* tldDoc documentation
+* a tag library validation report
+* a tag reference page
 
 For advanced usage see the [usage](usage.html) section.

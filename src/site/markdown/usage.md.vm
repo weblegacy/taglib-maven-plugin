@@ -1,11 +1,10 @@
-Reporting
-=========
+#[[##]]# Reporting
 
 This plugin supports the generation of several reports:
 
--   tldDoc documentation
--   a tag library validation report
--   a tag reference page for each tld
+* tldDoc documentation
+* a tag library validation report
+* a tag reference page for each tld
 
 In order to enable generation of taglib reports you only need to add the
 following to your pom.xml:
@@ -15,6 +14,7 @@ following to your pom.xml:
       <plugin>
         <groupId>${project.groupId}</groupId>
         <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
       </plugin>
     </plugins>
   </reporting>
@@ -35,6 +35,7 @@ plugin element:
       <plugin>
         <groupId>${project.groupId}</groupId>
         <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
         <configuration>
           <taglib.src.dir>src/main/resources/META-INF</taglib.src.dir>
         </configuration>
@@ -43,8 +44,7 @@ plugin element:
   </reporting>
 ```
 
-Tlddoc
-------
+#[[###]]# Tlddoc
 
 You can configure the plugin in order to produce a jar with taglib
 documentation that will be installed to the local repository (and
@@ -57,6 +57,7 @@ taglib:taglibdocjar goal to the package lifecycle phase in you pom:
       <plugin>
         <groupId>${project.groupId}</groupId>
         <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
         <configuration>
           <taglibs>
             <taglib>
@@ -83,8 +84,7 @@ taglib:taglibdocjar goal to the package lifecycle phase in you pom:
   </build>
 ```
 
-Generating tag library descriptors from tag files
--------------------------------------------------
+#[[###]]# Generating tag library descriptors from tag files
 
 According to the jsp 2.0 specifications, you don't need a tld if you
 bundle your custom tag files in the WEB-INF/tags directory of your web
@@ -106,6 +106,7 @@ will inherit the same name as the directory containing the tag files.
       <plugin>
         <groupId>${project.groupId}</groupId>
         <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
         <executions>
           <execution>
             <goals>

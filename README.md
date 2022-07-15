@@ -8,14 +8,14 @@ Full [CHANGELOG](CHANGELOG.md)
 
 For documentation see [https://weblegacy.github.io/taglib-maven-plugin](https://weblegacy.github.io/taglib-maven-plugin)
 
-# Building `taglib-maven-plugin`
+## Building `taglib-maven-plugin`
 
-## Prerequesits
+### Prerequesits
 
 * Apache Maven 3.5.4\+
 * JDK 8\+
 
-## MAVEN-Profiles
+### MAVEN-Profiles
 
 * *assembly*
   * Create assemblies for distribution
@@ -24,7 +24,7 @@ For documentation see [https://weblegacy.github.io/taglib-maven-plugin](https://
   * Add JavaDoc-artifact for deployment to central-repo
   * Add Source-artifact for deployment to central-repo
 
-## Building-Steps
+### Building-Steps
 
 1. Clean full project  
    `mvn clean`
@@ -42,10 +42,9 @@ For documentation see [https://weblegacy.github.io/taglib-maven-plugin](https://
    * `mvn clean deploy` for SNAPSHOTs
    * `mvn -Prelease clean deploy` for releases
 
-## Support runs
+### Support runs
 
 * Set version number
   `mvn versions:set -DnewVersion=...`
-
 * Dependency Report
   `mvn -Passembly,release versions:display-dependency-updates versions:display-plugin-updates versions:display-property-updates`

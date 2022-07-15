@@ -1,5 +1,8 @@
-# 2.6 / YYYY-MM-DD
+# Change-Log
 
+## 2.6 / YYYY-MM-DD
+
+* Lint markdown-files
 * Some Report-corrections
 * JDK8: Use For-Each-Loops
 * Remove debug-option from `maven-javadoc-plugin`
@@ -75,7 +78,7 @@
 * Some Code-optimization in `TagreferenceRenderer`
 * Set version to 2.6-SNAPSHOT
 
-# 2.5 / 2022-04-19
+## 2.5 / 2022-04-19
 
 * Rename from `maven-taglib-plugin` to `taglib-maven-plugin`
 * Set version to 2.5
@@ -106,7 +109,7 @@
 * Add new POM-Properties and check maven-version thru enforcer-plugin
 * Update to latest commit [r218 - MAVENTAGLIB-18](https://sourceforge.net/p/maven-taglib/code/218/)
 
-# 2.4 / 2022-04-08
+## 2.4 / 2022-04-08
 
 * Rename LICENSE-file
 * Add CHANGELOG.md
