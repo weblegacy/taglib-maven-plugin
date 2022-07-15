@@ -287,91 +287,91 @@
 <a class="jxr_linenumber" name="L279" href="#L279">279</a>             }
 <a class="jxr_linenumber" name="L280" href="#L280">280</a> 
 <a class="jxr_linenumber" name="L281" href="#L281">281</a>             File[] files = taglib.getTagdir().listFiles();
-<a class="jxr_linenumber" name="L282" href="#L282">282</a>             <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> j = 0; files != <strong class="jxr_keyword">null</strong> &amp;&amp; j &lt; files.length; j++)
+<a class="jxr_linenumber" name="L282" href="#L282">282</a>             <strong class="jxr_keyword">if</strong> (files == <strong class="jxr_keyword">null</strong>)
 <a class="jxr_linenumber" name="L283" href="#L283">283</a>             {
-<a class="jxr_linenumber" name="L284" href="#L284">284</a>                 File tag = files[j];
-<a class="jxr_linenumber" name="L285" href="#L285">285</a> 
-<a class="jxr_linenumber" name="L286" href="#L286">286</a>                 <strong class="jxr_keyword">if</strong> (!tag.isDirectory()
-<a class="jxr_linenumber" name="L287" href="#L287">287</a>                     &amp;&amp; (tag.getName().toLowerCase().endsWith(<span class="jxr_string">".tag"</span>) || tag.getName().toLowerCase().endsWith(<span class="jxr_string">".tagx"</span>)))
-<a class="jxr_linenumber" name="L288" href="#L288">288</a>                 {
-<a class="jxr_linenumber" name="L289" href="#L289">289</a>                     String tagName = tag.getName().substring(0, tag.getName().lastIndexOf('.'));
-<a class="jxr_linenumber" name="L290" href="#L290">290</a>                     String tagPath = path + tag.getName();
-<a class="jxr_linenumber" name="L291" href="#L291">291</a> 
-<a class="jxr_linenumber" name="L292" href="#L292">292</a>                     Element tagFileElement = result.createElement(<span class="jxr_string">"tag-file"</span>);
-<a class="jxr_linenumber" name="L293" href="#L293">293</a>                     Element nameElement = result.createElement(<span class="jxr_string">"name"</span>);
-<a class="jxr_linenumber" name="L294" href="#L294">294</a>                     nameElement.appendChild(result.createTextNode(tagName));
-<a class="jxr_linenumber" name="L295" href="#L295">295</a>                     tagFileElement.appendChild(nameElement);
-<a class="jxr_linenumber" name="L296" href="#L296">296</a>                     Element pathElement = result.createElement(<span class="jxr_string">"path"</span>);
-<a class="jxr_linenumber" name="L297" href="#L297">297</a>                     pathElement.appendChild(result.createTextNode(tagPath));
-<a class="jxr_linenumber" name="L298" href="#L298">298</a>                     tagFileElement.appendChild(pathElement);
-<a class="jxr_linenumber" name="L299" href="#L299">299</a>                     taglibElement.appendChild(tagFileElement);
-<a class="jxr_linenumber" name="L300" href="#L300">300</a> 
-<a class="jxr_linenumber" name="L301" href="#L301">301</a>                     <em class="jxr_comment">// tag-file Subelements</em>
-<a class="jxr_linenumber" name="L302" href="#L302">302</a>                     <em class="jxr_comment">//</em>
-<a class="jxr_linenumber" name="L303" href="#L303">303</a>                     <em class="jxr_comment">// description (optional) A description of the tag.</em>
-<a class="jxr_linenumber" name="L304" href="#L304">304</a>                     <em class="jxr_comment">// display-name (optional) Name intended to be displayed by tools.</em>
-<a class="jxr_linenumber" name="L305" href="#L305">305</a>                     <em class="jxr_comment">// icon (optional) Icon that can be used by tools.</em>
-<a class="jxr_linenumber" name="L306" href="#L306">306</a>                     <em class="jxr_comment">// name The unique tag name.</em>
-<a class="jxr_linenumber" name="L307" href="#L307">307</a>                     <em class="jxr_comment">// path Where to find the tag file implementing this tag, relative to the root of the web</em>
-<a class="jxr_linenumber" name="L308" href="#L308">308</a>                     <em class="jxr_comment">// application or</em>
-<a class="jxr_linenumber" name="L309" href="#L309">309</a>                     <em class="jxr_comment">// the root</em>
-<a class="jxr_linenumber" name="L310" href="#L310">310</a>                     <em class="jxr_comment">// of the JAR file for a tag library packaged in a JAR. This must begin with /WEB-INF/tags/ if the</em>
-<a class="jxr_linenumber" name="L311" href="#L311">311</a>                     <em class="jxr_comment">// tag</em>
-<a class="jxr_linenumber" name="L312" href="#L312">312</a>                     <em class="jxr_comment">// file resides</em>
-<a class="jxr_linenumber" name="L313" href="#L313">313</a>                     <em class="jxr_comment">// in the WAR, or /META-INF/tags/ if the tag file resides in a JAR.</em>
-<a class="jxr_linenumber" name="L314" href="#L314">314</a>                     <em class="jxr_comment">// example (optional) Informal description of an example use of the tag.</em>
-<a class="jxr_linenumber" name="L315" href="#L315">315</a>                     <em class="jxr_comment">// tag-extension (optional) Extensions that provide extra information about the tag for tools.</em>
-<a class="jxr_linenumber" name="L316" href="#L316">316</a> 
-<a class="jxr_linenumber" name="L317" href="#L317">317</a>                     <strong class="jxr_keyword">try</strong> (InputStream is = <strong class="jxr_keyword">new</strong> FileInputStream(tag))
-<a class="jxr_linenumber" name="L318" href="#L318">318</a>                     {
-<a class="jxr_linenumber" name="L319" href="#L319">319</a>                         TagFile tagFile = TagFile.parse(is);
-<a class="jxr_linenumber" name="L320" href="#L320">320</a> 
-<a class="jxr_linenumber" name="L321" href="#L321">321</a>                         <strong class="jxr_keyword">for</strong> (Directive directive : tagFile.getDirectives())
-<a class="jxr_linenumber" name="L322" href="#L322">322</a>                         {
-<a class="jxr_linenumber" name="L323" href="#L323">323</a>                             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"tag"</span>.equals(directive.getDirectiveName()))
-<a class="jxr_linenumber" name="L324" href="#L324">324</a>                             {
-<a class="jxr_linenumber" name="L325" href="#L325">325</a>                                 <strong class="jxr_keyword">for</strong> (Attribute attribute : directive.getAttributes())
-<a class="jxr_linenumber" name="L326" href="#L326">326</a>                                 {
-<a class="jxr_linenumber" name="L327" href="#L327">327</a>                                     <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"description"</span>.equals(attribute.getName())
-<a class="jxr_linenumber" name="L328" href="#L328">328</a>                                         || <span class="jxr_string">"display-name"</span>.equals(attribute.getName())
-<a class="jxr_linenumber" name="L329" href="#L329">329</a>                                         || <span class="jxr_string">"example"</span>.equals(attribute.getName()))
-<a class="jxr_linenumber" name="L330" href="#L330">330</a>                                     {
-<a class="jxr_linenumber" name="L331" href="#L331">331</a>                                         Element element = result.createElement(attribute.getName());
-<a class="jxr_linenumber" name="L332" href="#L332">332</a>                                         element.appendChild(result.createTextNode(attribute.getValue()));
-<a class="jxr_linenumber" name="L333" href="#L333">333</a>                                         tagFileElement.appendChild(element);
-<a class="jxr_linenumber" name="L334" href="#L334">334</a>                                     }
-<a class="jxr_linenumber" name="L335" href="#L335">335</a> 
-<a class="jxr_linenumber" name="L336" href="#L336">336</a>                                 }
+<a class="jxr_linenumber" name="L284" href="#L284">284</a>                 files = <strong class="jxr_keyword">new</strong> File[0];
+<a class="jxr_linenumber" name="L285" href="#L285">285</a>             }
+<a class="jxr_linenumber" name="L286" href="#L286">286</a>             <strong class="jxr_keyword">for</strong> (File tag : files)
+<a class="jxr_linenumber" name="L287" href="#L287">287</a>             {
+<a class="jxr_linenumber" name="L288" href="#L288">288</a>                 <strong class="jxr_keyword">if</strong> (!tag.isDirectory()
+<a class="jxr_linenumber" name="L289" href="#L289">289</a>                     &amp;&amp; (tag.getName().toLowerCase().endsWith(<span class="jxr_string">".tag"</span>) || tag.getName().toLowerCase().endsWith(<span class="jxr_string">".tagx"</span>)))
+<a class="jxr_linenumber" name="L290" href="#L290">290</a>                 {
+<a class="jxr_linenumber" name="L291" href="#L291">291</a>                     String tagName = tag.getName().substring(0, tag.getName().lastIndexOf('.'));
+<a class="jxr_linenumber" name="L292" href="#L292">292</a>                     String tagPath = path + tag.getName();
+<a class="jxr_linenumber" name="L293" href="#L293">293</a> 
+<a class="jxr_linenumber" name="L294" href="#L294">294</a>                     Element tagFileElement = result.createElement(<span class="jxr_string">"tag-file"</span>);
+<a class="jxr_linenumber" name="L295" href="#L295">295</a>                     Element nameElement = result.createElement(<span class="jxr_string">"name"</span>);
+<a class="jxr_linenumber" name="L296" href="#L296">296</a>                     nameElement.appendChild(result.createTextNode(tagName));
+<a class="jxr_linenumber" name="L297" href="#L297">297</a>                     tagFileElement.appendChild(nameElement);
+<a class="jxr_linenumber" name="L298" href="#L298">298</a>                     Element pathElement = result.createElement(<span class="jxr_string">"path"</span>);
+<a class="jxr_linenumber" name="L299" href="#L299">299</a>                     pathElement.appendChild(result.createTextNode(tagPath));
+<a class="jxr_linenumber" name="L300" href="#L300">300</a>                     tagFileElement.appendChild(pathElement);
+<a class="jxr_linenumber" name="L301" href="#L301">301</a>                     taglibElement.appendChild(tagFileElement);
+<a class="jxr_linenumber" name="L302" href="#L302">302</a> 
+<a class="jxr_linenumber" name="L303" href="#L303">303</a>                     <em class="jxr_comment">// tag-file Subelements</em>
+<a class="jxr_linenumber" name="L304" href="#L304">304</a>                     <em class="jxr_comment">//</em>
+<a class="jxr_linenumber" name="L305" href="#L305">305</a>                     <em class="jxr_comment">// description (optional) A description of the tag.</em>
+<a class="jxr_linenumber" name="L306" href="#L306">306</a>                     <em class="jxr_comment">// display-name (optional) Name intended to be displayed by tools.</em>
+<a class="jxr_linenumber" name="L307" href="#L307">307</a>                     <em class="jxr_comment">// icon (optional) Icon that can be used by tools.</em>
+<a class="jxr_linenumber" name="L308" href="#L308">308</a>                     <em class="jxr_comment">// name The unique tag name.</em>
+<a class="jxr_linenumber" name="L309" href="#L309">309</a>                     <em class="jxr_comment">// path Where to find the tag file implementing this tag, relative to the root of the web</em>
+<a class="jxr_linenumber" name="L310" href="#L310">310</a>                     <em class="jxr_comment">// application or</em>
+<a class="jxr_linenumber" name="L311" href="#L311">311</a>                     <em class="jxr_comment">// the root</em>
+<a class="jxr_linenumber" name="L312" href="#L312">312</a>                     <em class="jxr_comment">// of the JAR file for a tag library packaged in a JAR. This must begin with /WEB-INF/tags/ if the</em>
+<a class="jxr_linenumber" name="L313" href="#L313">313</a>                     <em class="jxr_comment">// tag</em>
+<a class="jxr_linenumber" name="L314" href="#L314">314</a>                     <em class="jxr_comment">// file resides</em>
+<a class="jxr_linenumber" name="L315" href="#L315">315</a>                     <em class="jxr_comment">// in the WAR, or /META-INF/tags/ if the tag file resides in a JAR.</em>
+<a class="jxr_linenumber" name="L316" href="#L316">316</a>                     <em class="jxr_comment">// example (optional) Informal description of an example use of the tag.</em>
+<a class="jxr_linenumber" name="L317" href="#L317">317</a>                     <em class="jxr_comment">// tag-extension (optional) Extensions that provide extra information about the tag for tools.</em>
+<a class="jxr_linenumber" name="L318" href="#L318">318</a> 
+<a class="jxr_linenumber" name="L319" href="#L319">319</a>                     <strong class="jxr_keyword">try</strong> (InputStream is = <strong class="jxr_keyword">new</strong> FileInputStream(tag))
+<a class="jxr_linenumber" name="L320" href="#L320">320</a>                     {
+<a class="jxr_linenumber" name="L321" href="#L321">321</a>                         TagFile tagFile = TagFile.parse(is);
+<a class="jxr_linenumber" name="L322" href="#L322">322</a> 
+<a class="jxr_linenumber" name="L323" href="#L323">323</a>                         <strong class="jxr_keyword">for</strong> (Directive directive : tagFile.getDirectives())
+<a class="jxr_linenumber" name="L324" href="#L324">324</a>                         {
+<a class="jxr_linenumber" name="L325" href="#L325">325</a>                             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"tag"</span>.equals(directive.getDirectiveName()))
+<a class="jxr_linenumber" name="L326" href="#L326">326</a>                             {
+<a class="jxr_linenumber" name="L327" href="#L327">327</a>                                 <strong class="jxr_keyword">for</strong> (Attribute attribute : directive.getAttributes())
+<a class="jxr_linenumber" name="L328" href="#L328">328</a>                                 {
+<a class="jxr_linenumber" name="L329" href="#L329">329</a>                                     <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"description"</span>.equals(attribute.getName())
+<a class="jxr_linenumber" name="L330" href="#L330">330</a>                                         || <span class="jxr_string">"display-name"</span>.equals(attribute.getName())
+<a class="jxr_linenumber" name="L331" href="#L331">331</a>                                         || <span class="jxr_string">"example"</span>.equals(attribute.getName()))
+<a class="jxr_linenumber" name="L332" href="#L332">332</a>                                     {
+<a class="jxr_linenumber" name="L333" href="#L333">333</a>                                         Element element = result.createElement(attribute.getName());
+<a class="jxr_linenumber" name="L334" href="#L334">334</a>                                         element.appendChild(result.createTextNode(attribute.getValue()));
+<a class="jxr_linenumber" name="L335" href="#L335">335</a>                                         tagFileElement.appendChild(element);
+<a class="jxr_linenumber" name="L336" href="#L336">336</a>                                     }
 <a class="jxr_linenumber" name="L337" href="#L337">337</a> 
-<a class="jxr_linenumber" name="L338" href="#L338">338</a>                             }
+<a class="jxr_linenumber" name="L338" href="#L338">338</a>                                 }
 <a class="jxr_linenumber" name="L339" href="#L339">339</a> 
-<a class="jxr_linenumber" name="L340" href="#L340">340</a>                         }
+<a class="jxr_linenumber" name="L340" href="#L340">340</a>                             }
 <a class="jxr_linenumber" name="L341" href="#L341">341</a> 
-<a class="jxr_linenumber" name="L342" href="#L342">342</a>                     }
-<a class="jxr_linenumber" name="L343" href="#L343">343</a>                     <strong class="jxr_keyword">catch</strong> (IOException e)
-<a class="jxr_linenumber" name="L344" href="#L344">344</a>                     {
-<a class="jxr_linenumber" name="L345" href="#L345">345</a>                         <em class="jxr_comment">// @todo Auto-generated catch block</em>
-<a class="jxr_linenumber" name="L346" href="#L346">346</a>                         e.printStackTrace();
-<a class="jxr_linenumber" name="L347" href="#L347">347</a>                     }
-<a class="jxr_linenumber" name="L348" href="#L348">348</a>                     <strong class="jxr_keyword">catch</strong> (ParseException e)
-<a class="jxr_linenumber" name="L349" href="#L349">349</a>                     {
-<a class="jxr_linenumber" name="L350" href="#L350">350</a>                         <em class="jxr_comment">// @todo Auto-generated catch block</em>
-<a class="jxr_linenumber" name="L351" href="#L351">351</a>                         e.printStackTrace();
-<a class="jxr_linenumber" name="L352" href="#L352">352</a>                     }
-<a class="jxr_linenumber" name="L353" href="#L353">353</a> 
-<a class="jxr_linenumber" name="L354" href="#L354">354</a>                 }
+<a class="jxr_linenumber" name="L342" href="#L342">342</a>                         }
+<a class="jxr_linenumber" name="L343" href="#L343">343</a> 
+<a class="jxr_linenumber" name="L344" href="#L344">344</a>                     }
+<a class="jxr_linenumber" name="L345" href="#L345">345</a>                     <strong class="jxr_keyword">catch</strong> (IOException e)
+<a class="jxr_linenumber" name="L346" href="#L346">346</a>                     {
+<a class="jxr_linenumber" name="L347" href="#L347">347</a>                         <em class="jxr_comment">// @todo Auto-generated catch block</em>
+<a class="jxr_linenumber" name="L348" href="#L348">348</a>                         e.printStackTrace();
+<a class="jxr_linenumber" name="L349" href="#L349">349</a>                     }
+<a class="jxr_linenumber" name="L350" href="#L350">350</a>                     <strong class="jxr_keyword">catch</strong> (ParseException e)
+<a class="jxr_linenumber" name="L351" href="#L351">351</a>                     {
+<a class="jxr_linenumber" name="L352" href="#L352">352</a>                         <em class="jxr_comment">// @todo Auto-generated catch block</em>
+<a class="jxr_linenumber" name="L353" href="#L353">353</a>                         e.printStackTrace();
+<a class="jxr_linenumber" name="L354" href="#L354">354</a>                     }
 <a class="jxr_linenumber" name="L355" href="#L355">355</a> 
-<a class="jxr_linenumber" name="L356" href="#L356">356</a>             }
-<a class="jxr_linenumber" name="L357" href="#L357">357</a>         }
-<a class="jxr_linenumber" name="L358" href="#L358">358</a> 
-<a class="jxr_linenumber" name="L359" href="#L359">359</a>         Map&lt;String, Integer&gt; duplicateFunctions = <strong class="jxr_keyword">new</strong> HashMap&lt;String, Integer&gt;();
+<a class="jxr_linenumber" name="L356" href="#L356">356</a>                 }
+<a class="jxr_linenumber" name="L357" href="#L357">357</a> 
+<a class="jxr_linenumber" name="L358" href="#L358">358</a>             }
+<a class="jxr_linenumber" name="L359" href="#L359">359</a>         }
 <a class="jxr_linenumber" name="L360" href="#L360">360</a> 
-<a class="jxr_linenumber" name="L361" href="#L361">361</a>         <strong class="jxr_keyword">if</strong> (taglib.getFunctionClasses() != <strong class="jxr_keyword">null</strong>)
-<a class="jxr_linenumber" name="L362" href="#L362">362</a>         {
-<a class="jxr_linenumber" name="L363" href="#L363">363</a>             <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> j = 0; j &lt; taglib.getFunctionClasses().length; j++)
-<a class="jxr_linenumber" name="L364" href="#L364">364</a>             {
-<a class="jxr_linenumber" name="L365" href="#L365">365</a>                 String functionClassString = taglib.getFunctionClasses()[j];
-<a class="jxr_linenumber" name="L366" href="#L366">366</a> 
+<a class="jxr_linenumber" name="L361" href="#L361">361</a>         Map&lt;String, Integer&gt; duplicateFunctions = <strong class="jxr_keyword">new</strong> HashMap&lt;String, Integer&gt;();
+<a class="jxr_linenumber" name="L362" href="#L362">362</a> 
+<a class="jxr_linenumber" name="L363" href="#L363">363</a>         <strong class="jxr_keyword">if</strong> (taglib.getFunctionClasses() != <strong class="jxr_keyword">null</strong>)
+<a class="jxr_linenumber" name="L364" href="#L364">364</a>         {
+<a class="jxr_linenumber" name="L365" href="#L365">365</a>             <strong class="jxr_keyword">for</strong> (String functionClassString : taglib.getFunctionClasses())
+<a class="jxr_linenumber" name="L366" href="#L366">366</a>             {
 <a class="jxr_linenumber" name="L367" href="#L367">367</a>                 Class&lt;?&gt; functionClass = <strong class="jxr_keyword">null</strong>;
 <a class="jxr_linenumber" name="L368" href="#L368">368</a>                 <strong class="jxr_keyword">try</strong>
 <a class="jxr_linenumber" name="L369" href="#L369">369</a>                 {
@@ -392,132 +392,131 @@
 <a class="jxr_linenumber" name="L384" href="#L384">384</a>                 }
 <a class="jxr_linenumber" name="L385" href="#L385">385</a>                 Method[] declaredMethods = functionClass.getDeclaredMethods();
 <a class="jxr_linenumber" name="L386" href="#L386">386</a> 
-<a class="jxr_linenumber" name="L387" href="#L387">387</a>                 <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> k = 0; k &lt; declaredMethods.length; k++)
+<a class="jxr_linenumber" name="L387" href="#L387">387</a>                 <strong class="jxr_keyword">for</strong> (Method method : declaredMethods)
 <a class="jxr_linenumber" name="L388" href="#L388">388</a>                 {
-<a class="jxr_linenumber" name="L389" href="#L389">389</a>                     Method method = declaredMethods[k];
-<a class="jxr_linenumber" name="L390" href="#L390">390</a>                     <strong class="jxr_keyword">if</strong> (!Modifier.isStatic(method.getModifiers()) || !Modifier.isPublic(method.getModifiers()))
-<a class="jxr_linenumber" name="L391" href="#L391">391</a>                     {
-<a class="jxr_linenumber" name="L392" href="#L392">392</a>                         <em class="jxr_comment">// not a public static method</em>
-<a class="jxr_linenumber" name="L393" href="#L393">393</a>                         <strong class="jxr_keyword">continue</strong>;
-<a class="jxr_linenumber" name="L394" href="#L394">394</a>                     }
-<a class="jxr_linenumber" name="L395" href="#L395">395</a> 
-<a class="jxr_linenumber" name="L396" href="#L396">396</a>                     Element tagFileElement = result.createElement(<span class="jxr_string">"function"</span>);
-<a class="jxr_linenumber" name="L397" href="#L397">397</a> 
-<a class="jxr_linenumber" name="L398" href="#L398">398</a>                     String functionName = method.getName();
-<a class="jxr_linenumber" name="L399" href="#L399">399</a> 
-<a class="jxr_linenumber" name="L400" href="#L400">400</a>                     <strong class="jxr_keyword">if</strong> (duplicateFunctions.containsKey(functionName))
-<a class="jxr_linenumber" name="L401" href="#L401">401</a>                     {
-<a class="jxr_linenumber" name="L402" href="#L402">402</a>                         <strong class="jxr_keyword">int</strong> currentNum = duplicateFunctions.get(functionName);
-<a class="jxr_linenumber" name="L403" href="#L403">403</a>                         duplicateFunctions.put(functionName, currentNum + 1);
-<a class="jxr_linenumber" name="L404" href="#L404">404</a>                         functionName = functionName + currentNum;
-<a class="jxr_linenumber" name="L405" href="#L405">405</a>                     }
-<a class="jxr_linenumber" name="L406" href="#L406">406</a>                     <strong class="jxr_keyword">else</strong>
-<a class="jxr_linenumber" name="L407" href="#L407">407</a>                     {
-<a class="jxr_linenumber" name="L408" href="#L408">408</a>                         duplicateFunctions.put(functionName, 1);
-<a class="jxr_linenumber" name="L409" href="#L409">409</a>                     }
-<a class="jxr_linenumber" name="L410" href="#L410">410</a> 
-<a class="jxr_linenumber" name="L411" href="#L411">411</a>                     Element nameElement = result.createElement(<span class="jxr_string">"name"</span>);
-<a class="jxr_linenumber" name="L412" href="#L412">412</a>                     nameElement.appendChild(result.createTextNode(functionName));
-<a class="jxr_linenumber" name="L413" href="#L413">413</a>                     tagFileElement.appendChild(nameElement);
-<a class="jxr_linenumber" name="L414" href="#L414">414</a> 
-<a class="jxr_linenumber" name="L415" href="#L415">415</a>                     Element classElement = result.createElement(<span class="jxr_string">"function-class"</span>);
-<a class="jxr_linenumber" name="L416" href="#L416">416</a>                     classElement.appendChild(result.createTextNode(method.getDeclaringClass().getName()));
-<a class="jxr_linenumber" name="L417" href="#L417">417</a>                     tagFileElement.appendChild(classElement);
-<a class="jxr_linenumber" name="L418" href="#L418">418</a> 
-<a class="jxr_linenumber" name="L419" href="#L419">419</a>                     StringBuffer parameterTypesString = <strong class="jxr_keyword">new</strong> StringBuffer();
-<a class="jxr_linenumber" name="L420" href="#L420">420</a>                     Class&lt; ? &gt;[] parameterTypes = method.getParameterTypes();
-<a class="jxr_linenumber" name="L421" href="#L421">421</a> 
-<a class="jxr_linenumber" name="L422" href="#L422">422</a>                     <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> p = 0; p &lt; parameterTypes.length; p++)
-<a class="jxr_linenumber" name="L423" href="#L423">423</a>                     {
-<a class="jxr_linenumber" name="L424" href="#L424">424</a>                         Class&lt; ? &gt; param = parameterTypes[p];
-<a class="jxr_linenumber" name="L425" href="#L425">425</a>                         parameterTypesString.append(nonPrimitiveName(param.getCanonicalName()));
-<a class="jxr_linenumber" name="L426" href="#L426">426</a>                         <strong class="jxr_keyword">if</strong> (parameterTypes.length - 1 &gt; p)
-<a class="jxr_linenumber" name="L427" href="#L427">427</a>                         {
-<a class="jxr_linenumber" name="L428" href="#L428">428</a>                             parameterTypesString.append(<span class="jxr_string">", "</span>);
-<a class="jxr_linenumber" name="L429" href="#L429">429</a>                         }
-<a class="jxr_linenumber" name="L430" href="#L430">430</a>                     }
-<a class="jxr_linenumber" name="L431" href="#L431">431</a> 
-<a class="jxr_linenumber" name="L432" href="#L432">432</a>                     Element signatureElement = result.createElement(<span class="jxr_string">"function-signature"</span>);
-<a class="jxr_linenumber" name="L433" href="#L433">433</a>                     signatureElement.appendChild(result.createTextNode(nonPrimitiveName(method
-<a class="jxr_linenumber" name="L434" href="#L434">434</a>                         .getReturnType()
-<a class="jxr_linenumber" name="L435" href="#L435">435</a>                         .getCanonicalName())
-<a class="jxr_linenumber" name="L436" href="#L436">436</a>                         + <span class="jxr_string">" "</span>
-<a class="jxr_linenumber" name="L437" href="#L437">437</a>                         + method.getName()
-<a class="jxr_linenumber" name="L438" href="#L438">438</a>                         + <span class="jxr_string">"("</span>
-<a class="jxr_linenumber" name="L439" href="#L439">439</a>                         + parameterTypesString.toString()
-<a class="jxr_linenumber" name="L440" href="#L440">440</a>                         + <span class="jxr_string">")"</span>));
-<a class="jxr_linenumber" name="L441" href="#L441">441</a>                     tagFileElement.appendChild(signatureElement);
-<a class="jxr_linenumber" name="L442" href="#L442">442</a> 
-<a class="jxr_linenumber" name="L443" href="#L443">443</a>                     taglibElement.appendChild(tagFileElement);
-<a class="jxr_linenumber" name="L444" href="#L444">444</a> 
-<a class="jxr_linenumber" name="L445" href="#L445">445</a>                 }
-<a class="jxr_linenumber" name="L446" href="#L446">446</a> 
-<a class="jxr_linenumber" name="L447" href="#L447">447</a>             }
-<a class="jxr_linenumber" name="L448" href="#L448">448</a>         }
-<a class="jxr_linenumber" name="L449" href="#L449">449</a> 
-<a class="jxr_linenumber" name="L450" href="#L450">450</a>         <strong class="jxr_keyword">return</strong> result;
-<a class="jxr_linenumber" name="L451" href="#L451">451</a>     }
-<a class="jxr_linenumber" name="L452" href="#L452">452</a> 
-<a class="jxr_linenumber" name="L453" href="#L453">453</a>     <strong class="jxr_keyword">private</strong> String nonPrimitiveName(String string)
-<a class="jxr_linenumber" name="L454" href="#L454">454</a>     {
-<a class="jxr_linenumber" name="L455" href="#L455">455</a>         <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"int"</span>.equals(string))
-<a class="jxr_linenumber" name="L456" href="#L456">456</a>         {
-<a class="jxr_linenumber" name="L457" href="#L457">457</a>             <strong class="jxr_keyword">return</strong> Integer.<strong class="jxr_keyword">class</strong>.getName();
-<a class="jxr_linenumber" name="L458" href="#L458">458</a>         }
-<a class="jxr_linenumber" name="L459" href="#L459">459</a>         <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"boolean"</span>.equals(string))
-<a class="jxr_linenumber" name="L460" href="#L460">460</a>         {
-<a class="jxr_linenumber" name="L461" href="#L461">461</a>             <strong class="jxr_keyword">return</strong> Boolean.<strong class="jxr_keyword">class</strong>.getName();
-<a class="jxr_linenumber" name="L462" href="#L462">462</a>         }
-<a class="jxr_linenumber" name="L463" href="#L463">463</a>         <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"double"</span>.equals(string))
-<a class="jxr_linenumber" name="L464" href="#L464">464</a>         {
-<a class="jxr_linenumber" name="L465" href="#L465">465</a>             <strong class="jxr_keyword">return</strong> Double.<strong class="jxr_keyword">class</strong>.getName();
-<a class="jxr_linenumber" name="L466" href="#L466">466</a>         }
-<a class="jxr_linenumber" name="L467" href="#L467">467</a>         <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"long"</span>.equals(string))
-<a class="jxr_linenumber" name="L468" href="#L468">468</a>         {
-<a class="jxr_linenumber" name="L469" href="#L469">469</a>             <strong class="jxr_keyword">return</strong> Long.<strong class="jxr_keyword">class</strong>.getName();
-<a class="jxr_linenumber" name="L470" href="#L470">470</a>         }
-<a class="jxr_linenumber" name="L471" href="#L471">471</a>         <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"char"</span>.equals(string))
-<a class="jxr_linenumber" name="L472" href="#L472">472</a>         {
-<a class="jxr_linenumber" name="L473" href="#L473">473</a>             <strong class="jxr_keyword">return</strong> Character.<strong class="jxr_keyword">class</strong>.getName();
-<a class="jxr_linenumber" name="L474" href="#L474">474</a>         }
-<a class="jxr_linenumber" name="L475" href="#L475">475</a> 
-<a class="jxr_linenumber" name="L476" href="#L476">476</a>         <strong class="jxr_keyword">return</strong> string;
-<a class="jxr_linenumber" name="L477" href="#L477">477</a>     }
-<a class="jxr_linenumber" name="L478" href="#L478">478</a> 
-<a class="jxr_linenumber" name="L479" href="#L479">479</a>     <strong class="jxr_keyword">protected</strong> Element createRootTaglibNode(Document result, String description, String shortName, String uri)
-<a class="jxr_linenumber" name="L480" href="#L480">480</a>     {
-<a class="jxr_linenumber" name="L481" href="#L481">481</a>         Element taglibElement = result.createElementNS(<span class="jxr_string">"http://java.sun.com/xml/ns/javaee"</span>, <span class="jxr_string">"taglib"</span>);
-<a class="jxr_linenumber" name="L482" href="#L482">482</a>         taglibElement.setAttributeNS(<span class="jxr_string">"http://www.w3.org/2000/xmlns/"</span>, <span class="jxr_string">"xmlns"</span>, <span class="jxr_string">"http://java.sun.com/xml/ns/javaee"</span>);
-<a class="jxr_linenumber" name="L483" href="#L483">483</a>         taglibElement.setAttributeNS(
-<a class="jxr_linenumber" name="L484" href="#L484">484</a>             <span class="jxr_string">"http://www.w3.org/2000/xmlns/"</span>,
-<a class="jxr_linenumber" name="L485" href="#L485">485</a>             <span class="jxr_string">"xmlns:xsi"</span>,
-<a class="jxr_linenumber" name="L486" href="#L486">486</a>             <span class="jxr_string">"http://www.w3.org/2001/XMLSchema-instance"</span>);
-<a class="jxr_linenumber" name="L487" href="#L487">487</a>         taglibElement.setAttributeNS(
-<a class="jxr_linenumber" name="L488" href="#L488">488</a>             <span class="jxr_string">"http://www.w3.org/2001/XMLSchema-instance"</span>,
-<a class="jxr_linenumber" name="L489" href="#L489">489</a>             <span class="jxr_string">"xsi:schemaLocation"</span>,
-<a class="jxr_linenumber" name="L490" href="#L490">490</a>             <span class="jxr_string">"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"</span>);
-<a class="jxr_linenumber" name="L491" href="#L491">491</a>         taglibElement.setAttribute(<span class="jxr_string">"version"</span>, <span class="jxr_string">"2.1"</span>);
-<a class="jxr_linenumber" name="L492" href="#L492">492</a>         result.appendChild(taglibElement);
-<a class="jxr_linenumber" name="L493" href="#L493">493</a> 
-<a class="jxr_linenumber" name="L494" href="#L494">494</a>         Element descriptionElement = result.createElement(<span class="jxr_string">"description"</span>);
-<a class="jxr_linenumber" name="L495" href="#L495">495</a>         descriptionElement.appendChild(result.createTextNode(description));
-<a class="jxr_linenumber" name="L496" href="#L496">496</a>         taglibElement.appendChild(descriptionElement);
-<a class="jxr_linenumber" name="L497" href="#L497">497</a> 
-<a class="jxr_linenumber" name="L498" href="#L498">498</a>         Element tlibVersionElement = result.createElement(<span class="jxr_string">"tlib-version"</span>);
-<a class="jxr_linenumber" name="L499" href="#L499">499</a>         tlibVersionElement.appendChild(result.createTextNode(version));
-<a class="jxr_linenumber" name="L500" href="#L500">500</a>         taglibElement.appendChild(tlibVersionElement);
-<a class="jxr_linenumber" name="L501" href="#L501">501</a> 
-<a class="jxr_linenumber" name="L502" href="#L502">502</a>         Element shortNameElement = result.createElement(<span class="jxr_string">"short-name"</span>);
-<a class="jxr_linenumber" name="L503" href="#L503">503</a>         shortNameElement.appendChild(result.createTextNode(shortName));
-<a class="jxr_linenumber" name="L504" href="#L504">504</a>         taglibElement.appendChild(shortNameElement);
-<a class="jxr_linenumber" name="L505" href="#L505">505</a> 
-<a class="jxr_linenumber" name="L506" href="#L506">506</a>         Element uriElement = result.createElement(<span class="jxr_string">"uri"</span>);
-<a class="jxr_linenumber" name="L507" href="#L507">507</a>         uriElement.appendChild(result.createTextNode(uri));
-<a class="jxr_linenumber" name="L508" href="#L508">508</a>         taglibElement.appendChild(uriElement);
-<a class="jxr_linenumber" name="L509" href="#L509">509</a> 
-<a class="jxr_linenumber" name="L510" href="#L510">510</a>         <strong class="jxr_keyword">return</strong> taglibElement;
-<a class="jxr_linenumber" name="L511" href="#L511">511</a>     }
-<a class="jxr_linenumber" name="L512" href="#L512">512</a> }
+<a class="jxr_linenumber" name="L389" href="#L389">389</a>                     <strong class="jxr_keyword">if</strong> (!Modifier.isStatic(method.getModifiers()) || !Modifier.isPublic(method.getModifiers()))
+<a class="jxr_linenumber" name="L390" href="#L390">390</a>                     {
+<a class="jxr_linenumber" name="L391" href="#L391">391</a>                         <em class="jxr_comment">// not a public static method</em>
+<a class="jxr_linenumber" name="L392" href="#L392">392</a>                         <strong class="jxr_keyword">continue</strong>;
+<a class="jxr_linenumber" name="L393" href="#L393">393</a>                     }
+<a class="jxr_linenumber" name="L394" href="#L394">394</a> 
+<a class="jxr_linenumber" name="L395" href="#L395">395</a>                     Element tagFileElement = result.createElement(<span class="jxr_string">"function"</span>);
+<a class="jxr_linenumber" name="L396" href="#L396">396</a> 
+<a class="jxr_linenumber" name="L397" href="#L397">397</a>                     String functionName = method.getName();
+<a class="jxr_linenumber" name="L398" href="#L398">398</a> 
+<a class="jxr_linenumber" name="L399" href="#L399">399</a>                     <strong class="jxr_keyword">if</strong> (duplicateFunctions.containsKey(functionName))
+<a class="jxr_linenumber" name="L400" href="#L400">400</a>                     {
+<a class="jxr_linenumber" name="L401" href="#L401">401</a>                         <strong class="jxr_keyword">int</strong> currentNum = duplicateFunctions.get(functionName);
+<a class="jxr_linenumber" name="L402" href="#L402">402</a>                         duplicateFunctions.put(functionName, currentNum + 1);
+<a class="jxr_linenumber" name="L403" href="#L403">403</a>                         functionName = functionName + currentNum;
+<a class="jxr_linenumber" name="L404" href="#L404">404</a>                     }
+<a class="jxr_linenumber" name="L405" href="#L405">405</a>                     <strong class="jxr_keyword">else</strong>
+<a class="jxr_linenumber" name="L406" href="#L406">406</a>                     {
+<a class="jxr_linenumber" name="L407" href="#L407">407</a>                         duplicateFunctions.put(functionName, 1);
+<a class="jxr_linenumber" name="L408" href="#L408">408</a>                     }
+<a class="jxr_linenumber" name="L409" href="#L409">409</a> 
+<a class="jxr_linenumber" name="L410" href="#L410">410</a>                     Element nameElement = result.createElement(<span class="jxr_string">"name"</span>);
+<a class="jxr_linenumber" name="L411" href="#L411">411</a>                     nameElement.appendChild(result.createTextNode(functionName));
+<a class="jxr_linenumber" name="L412" href="#L412">412</a>                     tagFileElement.appendChild(nameElement);
+<a class="jxr_linenumber" name="L413" href="#L413">413</a> 
+<a class="jxr_linenumber" name="L414" href="#L414">414</a>                     Element classElement = result.createElement(<span class="jxr_string">"function-class"</span>);
+<a class="jxr_linenumber" name="L415" href="#L415">415</a>                     classElement.appendChild(result.createTextNode(method.getDeclaringClass().getName()));
+<a class="jxr_linenumber" name="L416" href="#L416">416</a>                     tagFileElement.appendChild(classElement);
+<a class="jxr_linenumber" name="L417" href="#L417">417</a> 
+<a class="jxr_linenumber" name="L418" href="#L418">418</a>                     StringBuffer parameterTypesString = <strong class="jxr_keyword">new</strong> StringBuffer();
+<a class="jxr_linenumber" name="L419" href="#L419">419</a>                     Class&lt; ? &gt;[] parameterTypes = method.getParameterTypes();
+<a class="jxr_linenumber" name="L420" href="#L420">420</a> 
+<a class="jxr_linenumber" name="L421" href="#L421">421</a>                     <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> p = 0; p &lt; parameterTypes.length; p++)
+<a class="jxr_linenumber" name="L422" href="#L422">422</a>                     {
+<a class="jxr_linenumber" name="L423" href="#L423">423</a>                         Class&lt; ? &gt; param = parameterTypes[p];
+<a class="jxr_linenumber" name="L424" href="#L424">424</a>                         parameterTypesString.append(nonPrimitiveName(param.getCanonicalName()));
+<a class="jxr_linenumber" name="L425" href="#L425">425</a>                         <strong class="jxr_keyword">if</strong> (parameterTypes.length - 1 &gt; p)
+<a class="jxr_linenumber" name="L426" href="#L426">426</a>                         {
+<a class="jxr_linenumber" name="L427" href="#L427">427</a>                             parameterTypesString.append(<span class="jxr_string">", "</span>);
+<a class="jxr_linenumber" name="L428" href="#L428">428</a>                         }
+<a class="jxr_linenumber" name="L429" href="#L429">429</a>                     }
+<a class="jxr_linenumber" name="L430" href="#L430">430</a> 
+<a class="jxr_linenumber" name="L431" href="#L431">431</a>                     Element signatureElement = result.createElement(<span class="jxr_string">"function-signature"</span>);
+<a class="jxr_linenumber" name="L432" href="#L432">432</a>                     signatureElement.appendChild(result.createTextNode(nonPrimitiveName(method
+<a class="jxr_linenumber" name="L433" href="#L433">433</a>                         .getReturnType()
+<a class="jxr_linenumber" name="L434" href="#L434">434</a>                         .getCanonicalName())
+<a class="jxr_linenumber" name="L435" href="#L435">435</a>                         + <span class="jxr_string">" "</span>
+<a class="jxr_linenumber" name="L436" href="#L436">436</a>                         + method.getName()
+<a class="jxr_linenumber" name="L437" href="#L437">437</a>                         + <span class="jxr_string">"("</span>
+<a class="jxr_linenumber" name="L438" href="#L438">438</a>                         + parameterTypesString.toString()
+<a class="jxr_linenumber" name="L439" href="#L439">439</a>                         + <span class="jxr_string">")"</span>));
+<a class="jxr_linenumber" name="L440" href="#L440">440</a>                     tagFileElement.appendChild(signatureElement);
+<a class="jxr_linenumber" name="L441" href="#L441">441</a> 
+<a class="jxr_linenumber" name="L442" href="#L442">442</a>                     taglibElement.appendChild(tagFileElement);
+<a class="jxr_linenumber" name="L443" href="#L443">443</a> 
+<a class="jxr_linenumber" name="L444" href="#L444">444</a>                 }
+<a class="jxr_linenumber" name="L445" href="#L445">445</a> 
+<a class="jxr_linenumber" name="L446" href="#L446">446</a>             }
+<a class="jxr_linenumber" name="L447" href="#L447">447</a>         }
+<a class="jxr_linenumber" name="L448" href="#L448">448</a> 
+<a class="jxr_linenumber" name="L449" href="#L449">449</a>         <strong class="jxr_keyword">return</strong> result;
+<a class="jxr_linenumber" name="L450" href="#L450">450</a>     }
+<a class="jxr_linenumber" name="L451" href="#L451">451</a> 
+<a class="jxr_linenumber" name="L452" href="#L452">452</a>     <strong class="jxr_keyword">private</strong> String nonPrimitiveName(String string)
+<a class="jxr_linenumber" name="L453" href="#L453">453</a>     {
+<a class="jxr_linenumber" name="L454" href="#L454">454</a>         <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"int"</span>.equals(string))
+<a class="jxr_linenumber" name="L455" href="#L455">455</a>         {
+<a class="jxr_linenumber" name="L456" href="#L456">456</a>             <strong class="jxr_keyword">return</strong> Integer.<strong class="jxr_keyword">class</strong>.getName();
+<a class="jxr_linenumber" name="L457" href="#L457">457</a>         }
+<a class="jxr_linenumber" name="L458" href="#L458">458</a>         <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"boolean"</span>.equals(string))
+<a class="jxr_linenumber" name="L459" href="#L459">459</a>         {
+<a class="jxr_linenumber" name="L460" href="#L460">460</a>             <strong class="jxr_keyword">return</strong> Boolean.<strong class="jxr_keyword">class</strong>.getName();
+<a class="jxr_linenumber" name="L461" href="#L461">461</a>         }
+<a class="jxr_linenumber" name="L462" href="#L462">462</a>         <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"double"</span>.equals(string))
+<a class="jxr_linenumber" name="L463" href="#L463">463</a>         {
+<a class="jxr_linenumber" name="L464" href="#L464">464</a>             <strong class="jxr_keyword">return</strong> Double.<strong class="jxr_keyword">class</strong>.getName();
+<a class="jxr_linenumber" name="L465" href="#L465">465</a>         }
+<a class="jxr_linenumber" name="L466" href="#L466">466</a>         <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"long"</span>.equals(string))
+<a class="jxr_linenumber" name="L467" href="#L467">467</a>         {
+<a class="jxr_linenumber" name="L468" href="#L468">468</a>             <strong class="jxr_keyword">return</strong> Long.<strong class="jxr_keyword">class</strong>.getName();
+<a class="jxr_linenumber" name="L469" href="#L469">469</a>         }
+<a class="jxr_linenumber" name="L470" href="#L470">470</a>         <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"char"</span>.equals(string))
+<a class="jxr_linenumber" name="L471" href="#L471">471</a>         {
+<a class="jxr_linenumber" name="L472" href="#L472">472</a>             <strong class="jxr_keyword">return</strong> Character.<strong class="jxr_keyword">class</strong>.getName();
+<a class="jxr_linenumber" name="L473" href="#L473">473</a>         }
+<a class="jxr_linenumber" name="L474" href="#L474">474</a> 
+<a class="jxr_linenumber" name="L475" href="#L475">475</a>         <strong class="jxr_keyword">return</strong> string;
+<a class="jxr_linenumber" name="L476" href="#L476">476</a>     }
+<a class="jxr_linenumber" name="L477" href="#L477">477</a> 
+<a class="jxr_linenumber" name="L478" href="#L478">478</a>     <strong class="jxr_keyword">protected</strong> Element createRootTaglibNode(Document result, String description, String shortName, String uri)
+<a class="jxr_linenumber" name="L479" href="#L479">479</a>     {
+<a class="jxr_linenumber" name="L480" href="#L480">480</a>         Element taglibElement = result.createElementNS(<span class="jxr_string">"http://java.sun.com/xml/ns/javaee"</span>, <span class="jxr_string">"taglib"</span>);
+<a class="jxr_linenumber" name="L481" href="#L481">481</a>         taglibElement.setAttributeNS(<span class="jxr_string">"http://www.w3.org/2000/xmlns/"</span>, <span class="jxr_string">"xmlns"</span>, <span class="jxr_string">"http://java.sun.com/xml/ns/javaee"</span>);
+<a class="jxr_linenumber" name="L482" href="#L482">482</a>         taglibElement.setAttributeNS(
+<a class="jxr_linenumber" name="L483" href="#L483">483</a>             <span class="jxr_string">"http://www.w3.org/2000/xmlns/"</span>,
+<a class="jxr_linenumber" name="L484" href="#L484">484</a>             <span class="jxr_string">"xmlns:xsi"</span>,
+<a class="jxr_linenumber" name="L485" href="#L485">485</a>             <span class="jxr_string">"http://www.w3.org/2001/XMLSchema-instance"</span>);
+<a class="jxr_linenumber" name="L486" href="#L486">486</a>         taglibElement.setAttributeNS(
+<a class="jxr_linenumber" name="L487" href="#L487">487</a>             <span class="jxr_string">"http://www.w3.org/2001/XMLSchema-instance"</span>,
+<a class="jxr_linenumber" name="L488" href="#L488">488</a>             <span class="jxr_string">"xsi:schemaLocation"</span>,
+<a class="jxr_linenumber" name="L489" href="#L489">489</a>             <span class="jxr_string">"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"</span>);
+<a class="jxr_linenumber" name="L490" href="#L490">490</a>         taglibElement.setAttribute(<span class="jxr_string">"version"</span>, <span class="jxr_string">"2.1"</span>);
+<a class="jxr_linenumber" name="L491" href="#L491">491</a>         result.appendChild(taglibElement);
+<a class="jxr_linenumber" name="L492" href="#L492">492</a> 
+<a class="jxr_linenumber" name="L493" href="#L493">493</a>         Element descriptionElement = result.createElement(<span class="jxr_string">"description"</span>);
+<a class="jxr_linenumber" name="L494" href="#L494">494</a>         descriptionElement.appendChild(result.createTextNode(description));
+<a class="jxr_linenumber" name="L495" href="#L495">495</a>         taglibElement.appendChild(descriptionElement);
+<a class="jxr_linenumber" name="L496" href="#L496">496</a> 
+<a class="jxr_linenumber" name="L497" href="#L497">497</a>         Element tlibVersionElement = result.createElement(<span class="jxr_string">"tlib-version"</span>);
+<a class="jxr_linenumber" name="L498" href="#L498">498</a>         tlibVersionElement.appendChild(result.createTextNode(version));
+<a class="jxr_linenumber" name="L499" href="#L499">499</a>         taglibElement.appendChild(tlibVersionElement);
+<a class="jxr_linenumber" name="L500" href="#L500">500</a> 
+<a class="jxr_linenumber" name="L501" href="#L501">501</a>         Element shortNameElement = result.createElement(<span class="jxr_string">"short-name"</span>);
+<a class="jxr_linenumber" name="L502" href="#L502">502</a>         shortNameElement.appendChild(result.createTextNode(shortName));
+<a class="jxr_linenumber" name="L503" href="#L503">503</a>         taglibElement.appendChild(shortNameElement);
+<a class="jxr_linenumber" name="L504" href="#L504">504</a> 
+<a class="jxr_linenumber" name="L505" href="#L505">505</a>         Element uriElement = result.createElement(<span class="jxr_string">"uri"</span>);
+<a class="jxr_linenumber" name="L506" href="#L506">506</a>         uriElement.appendChild(result.createTextNode(uri));
+<a class="jxr_linenumber" name="L507" href="#L507">507</a>         taglibElement.appendChild(uriElement);
+<a class="jxr_linenumber" name="L508" href="#L508">508</a> 
+<a class="jxr_linenumber" name="L509" href="#L509">509</a>         <strong class="jxr_keyword">return</strong> taglibElement;
+<a class="jxr_linenumber" name="L510" href="#L510">510</a>     }
+<a class="jxr_linenumber" name="L511" href="#L511">511</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2004&#x2013;2022 <a href="https://github.com/weblegacy">Web-Legacy</a>. All rights reserved.</div>

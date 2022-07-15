@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"sampletags","l":"SimpleTag"},{"p":"net.sf.maventaglib","l":"TaglibdocMojoTest"},{"p":"net.sf.maventaglib","l":"TaglibPluginTestBase"},{"p":"net.sf.maventaglib","l":"TagreferenceMojoTest"},{"p":"net.sf.maventaglib","l":"TldGenerateMojoTest"}];updateSearchResults();

@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"net.sf.maventaglib"},{"l":"net.sf.maventaglib.checker"},{"l":"net.sf.maventaglib.util"}];updateSearchResults();

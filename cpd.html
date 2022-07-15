@@ -34,7 +34,7 @@
 
         <div id="breadcrumbs">
           <ul class="breadcrumb">
-        <li id="publishDate">Last Published: 2022-07-08<span class="divider">|</span>
+        <li id="publishDate">Last Published: 2022-07-15<span class="divider">|</span>
 </li>
           <li id="projectVersion">Version: 2.6-SNAPSHOT</li>
           </ul>
@@ -94,10 +94,10 @@
 <th>Line</th></tr>
 <tr class="b">
 <td>net/sf/maventaglib/TagreferenceMojo.java</td>
-<td><a href="./xref/net/sf/maventaglib/TagreferenceMojo.html#L92">92</a></td></tr>
+<td><a href="./xref/net/sf/maventaglib/TagreferenceMojo.html#L91">91</a></td></tr>
 <tr class="a">
 <td>net/sf/maventaglib/ValidateMojo.java</td>
-<td><a href="./xref/net/sf/maventaglib/ValidateMojo.html#L98">98</a></td></tr>
+<td><a href="./xref/net/sf/maventaglib/ValidateMojo.html#L97">97</a></td></tr>
 <tr class="b"><td colspan='2'>
 <div>
 <pre>}
@@ -138,10 +138,8 @@
             throw new MavenReportException(e.getMessage(), e);
         }
         List&lt;Tld&gt; tldList = new ArrayList&lt;&gt;();
-        for (Iterator&lt;File&gt; i = tlds.iterator(); i.hasNext();)
+        for (File current : tlds)
         {
-            File current = i.next();
-
             Document tldDoc;
             try
             {
