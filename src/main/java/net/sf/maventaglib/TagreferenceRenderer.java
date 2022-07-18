@@ -116,8 +116,8 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
             log.debug("Rendering " + tld.getFilename());
             sink.listItem();
             sink.link("#" + tld.getFilename()); //$NON-NLS-1$
-            sink.text(MessageFormat.format(getMessageString("Tagreference.listitem.tld"), new Object[]{ //$NON-NLS-1$
-                StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname()), tld.getFilename()}));
+            sink.text(MessageFormat.format(getMessageString("Tagreference.listitem.tld"), //$NON-NLS-1$
+                StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname()), tld.getFilename()));
             sink.link_();
             sink.text(getMessageString("Tagreference.listitem.uri") + tld.getUri()); //$NON-NLS-1$
             sink.listItem_();
@@ -155,7 +155,7 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
 
         startSection(StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname())
             + " - "
-            + MessageFormat.format(getMessageString("Tagreference.tldversion"), new Object[]{tld.getTlibversion()}));
+            + MessageFormat.format(getMessageString("Tagreference.tldversion"), tld.getTlibversion()));
 
         sink.paragraph();
         if (parseHtml)

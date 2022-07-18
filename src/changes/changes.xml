@@ -9,6 +9,7 @@
   </properties>
   <body>
     <release version="2.6" date="YYYY-MM-DD" description="">
+      <action type="update" dev="ste-gr">Use varargs for &quot;MessageFormat.format&quot;</action>
       <action type="fix" dev="ste-gr">Lint markdown-files</action>
       <action type="fix" dev="ste-gr">Some Report-corrections</action>
       <action type="update" dev="ste-gr">JDK8: Use For-Each-Loops</action>

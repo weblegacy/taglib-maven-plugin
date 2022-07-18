@@ -2,6 +2,7 @@
 
 ## 2.6 / YYYY-MM-DD
 
+* Use varargs for `MessageFormat.format`
 * Lint markdown-files
 * Some Report-corrections
 * JDK8: Use For-Each-Loops

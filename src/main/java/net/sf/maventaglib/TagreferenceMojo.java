@@ -99,12 +99,12 @@ public class TagreferenceMojo extends AbstractMavenReport
         if (!srcDir.isDirectory())
         {
             throw new MavenReportException(MessageFormat.format(
-                Messages.getString("Taglib.notadir"), new Object[]{srcDir //$NON-NLS-1$
-                    .getAbsolutePath()}));
+                Messages.getString("Taglib.notadir"), //$NON-NLS-1$
+                    srcDir.getAbsolutePath()));
         }
 
         getLog().debug(
-            MessageFormat.format(Messages.getString("Taglib.validating"), new Object[]{srcDir.getAbsolutePath()})); //$NON-NLS-1$
+            MessageFormat.format(Messages.getString("Taglib.validating"), srcDir.getAbsolutePath())); //$NON-NLS-1$
 
         DocumentBuilder builder;
 
@@ -136,7 +136,7 @@ public class TagreferenceMojo extends AbstractMavenReport
             catch (Exception e)
             {
                 throw new MavenReportException(MessageFormat.format(Messages.getString("Taglib.errorwhileparsing"), //$NON-NLS-1$
-                    new Object[]{current.getAbsolutePath()}), e);
+                    current.getAbsolutePath()), e);
 
             }
 
@@ -148,7 +148,7 @@ public class TagreferenceMojo extends AbstractMavenReport
         if (tldList.size() == 0)
         {
             getLog().info(
-                MessageFormat.format(Messages.getString("Taglib.notldfound"), new Object[]{srcDir.getAbsolutePath()})); //$NON-NLS-1$
+                MessageFormat.format(Messages.getString("Taglib.notldfound"), srcDir.getAbsolutePath())); //$NON-NLS-1$
             return;
         }
 

@@ -120,7 +120,7 @@ public class TldGenerateMojo extends AbstractMojo
     public void execute() throws MojoExecutionException, MojoFailureException
     {
         getLog().debug(MessageFormat.format(Messages.getString("Taglib.generating.tld"), //$NON-NLS-1$
-            new Object[]{tagDir.getAbsolutePath() }));
+            tagDir.getAbsolutePath() ));
 
         try
         {
@@ -194,7 +194,7 @@ public class TldGenerateMojo extends AbstractMojo
                 else
                 {
                     getLog().warn(MessageFormat.format(Messages.getString("Taglib.generating.notfound"), //$NON-NLS-1$
-                        new Object[]{tagDir.getAbsolutePath() }));
+                        tagDir.getAbsolutePath() ));
                 }
             }
         }
@@ -243,7 +243,7 @@ public class TldGenerateMojo extends AbstractMojo
         }
 
         getLog().info(MessageFormat.format(Messages.getString("Taglib.generating.file"), //$NON-NLS-1$
-            new Object[]{tldName, taglib.getShortName() }));
+            tldName, taglib.getShortName() ));
 
         try (FileOutputStream fos = new FileOutputStream(outputFile)) 
         {

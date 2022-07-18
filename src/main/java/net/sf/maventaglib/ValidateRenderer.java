@@ -164,8 +164,8 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
 
             sink.listItem();
             sink.link("#" + tld.getFilename()); //$NON-NLS-1$
-            sink.text(MessageFormat.format(getMessageString("Validate.listitem.tld"), new Object[]{ //$NON-NLS-1$
-                StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname()), tld.getFilename() }));
+            sink.text(MessageFormat.format(getMessageString("Validate.listitem.tld"), //$NON-NLS-1$
+                StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname()), tld.getFilename() ));
             sink.link_();
             sink.text(getMessageString("Validate.listitem.uri") + tld.getUri()); //$NON-NLS-1$
 
@@ -517,8 +517,8 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
                 {
 
                     validationErrors.add(new ValidationError(ValidationError.LEVEL_ERROR, MessageFormat.format(
-                        getMessageString("Validate.error.attributetypemismatch"), new Object[]{ //$NON-NLS-1$
-                        tldType, tagType.getName() })));
+                        getMessageString("Validate.error.attributetypemismatch"), //$NON-NLS-1$
+                        tldType, tagType.getName() )));
                 }
             }
         }
@@ -530,8 +530,8 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
             if (tldType != null && !tldType.equals(tagType.getName()))
             {
                 validationErrors.add(new ValidationError(ValidationError.LEVEL_WARNING, MessageFormat.format(
-                    getMessageString("Validate.error.attributetypeinexactmatch"), new Object[]{ //$NON-NLS-1$
-                    tldType, tagType.getName() })));
+                    getMessageString("Validate.error.attributetypeinexactmatch"), //$NON-NLS-1$
+                    tldType, tagType.getName() )));
             }
             else if (tldType == null && !String.class.equals(tagType))
             {
@@ -655,7 +655,7 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
             catch (ClassNotFoundException e)
             {
                 log.error(MessageFormat.format(Messages.getString("Validate.error.unabletofindclass"), //$NON-NLS-1$
-                    new Object[]{className }));
+                    className ));
             }
         }
         return tldTypeClass;

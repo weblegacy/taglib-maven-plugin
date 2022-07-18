@@ -107,14 +107,14 @@ public class ValidateMojo
         if ( !srcDir.isDirectory() )
         {
             throw new MavenReportException( MessageFormat
-                .format( Messages.getString( "Taglib.notadir" ), new Object[] { srcDir //$NON-NLS-1$
-                    .getAbsolutePath() } ) );
+                .format( Messages.getString( "Taglib.notadir" ), //$NON-NLS-1$
+                    srcDir.getAbsolutePath() ) );
         }
 
         getLog()
             .debug(
                     MessageFormat
-                        .format( Messages.getString( "Taglib.validating" ), new Object[] { srcDir.getAbsolutePath() } ) ); //$NON-NLS-1$
+                        .format( Messages.getString( "Taglib.validating" ), srcDir.getAbsolutePath() ) ); //$NON-NLS-1$
 
         DocumentBuilder builder;
 
@@ -148,7 +148,7 @@ public class ValidateMojo
             catch ( Exception e )
             {
                 throw new MavenReportException( MessageFormat.format( Messages.getString( "Taglib.errorwhileparsing" ), //$NON-NLS-1$
-                                                                      new Object[] { current.getAbsolutePath() } ), e );
+                                                                      current.getAbsolutePath() ), e );
             }
 
             Tld tld = TldParser.parse( tldDoc, current.getName() );
@@ -161,7 +161,7 @@ public class ValidateMojo
                 .info(
                        MessageFormat
                            .format(
-                                    Messages.getString( "Taglib.notldfound" ), new Object[] { srcDir.getAbsolutePath() } ) ); //$NON-NLS-1$
+                                    Messages.getString( "Taglib.notldfound" ), srcDir.getAbsolutePath() ) ); //$NON-NLS-1$
             return;
         }
 

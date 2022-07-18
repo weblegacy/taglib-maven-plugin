@@ -89,7 +89,7 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport
     public void execute() throws MojoExecutionException
     {
         getLog().debug(MessageFormat.format(Messages.getString("Taglib.generating.tlddoc"), //$NON-NLS-1$
-            new Object[]{srcDir.getAbsolutePath() }));
+            srcDir.getAbsolutePath() ));
         TLDDocGenerator generator = new TLDDocGenerator();
         generator.setOutputDirectory(tldDocDir);
         generator.setQuiet(true);
@@ -104,8 +104,8 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport
         if (!srcDir.isDirectory())
         {
             throw new MojoExecutionException(MessageFormat.format(
-                Messages.getString("Taglib.notadir"), new Object[]{srcDir //$NON-NLS-1$
-                    .getAbsolutePath() }));
+                Messages.getString("Taglib.notadir"), //$NON-NLS-1$
+                    srcDir.getAbsolutePath() ));
         }
 
         try
@@ -147,7 +147,7 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport
         catch (Throwable e)
         {
             getLog().error(MessageFormat.format(Messages.getString("Taglib.exception"), //$NON-NLS-1$
-                new Object[]{e.getClass(), e.getMessage() }), e);
+                e.getClass(), e.getMessage() ), e);
         }
     }
 
