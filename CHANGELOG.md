@@ -2,6 +2,7 @@
 
 ## 2.6 / YYYY-MM-DD
 
+* Typo in properties
 * Use varargs for `MessageFormat.format`
 * Lint markdown-files
 * Some Report-corrections
