@@ -8,7 +8,7 @@
     <author email="stefan.graff@gmx.at">Stefan Graff</author>
   </properties>
   <body>
-    <release version="2.6" date="YYYY-MM-DD" description="">
+    <release version="2.6" date="2022-07-19" description="">
       <action type="update" dev="ste-gr">Bump &quot;tlddoc&quot; from 1.4-SNAPSHOT to 1.4</action>
       <action type="fix" dev="ste-gr">Unescape HTML in tag-description-list when parse-html is on.</action>
       <action type="fix" dev="ste-gr">A few embellishments to the Tag-Reference-Report</action>

@@ -1,7 +1,8 @@
 # Change-Log
 
-## 2.6 / YYYY-MM-DD
+## 2.6 / 2022-07-19
 
+* Set Version to 2.6
 * Bump `tlddoc` from 1.4-SNAPSHOT to 1.4
 * Unescape HTML in tag-description-list when parse-html is on.
 * A few embellishments to the Tag-Reference-Report
