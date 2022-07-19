@@ -34,9 +34,9 @@
 
         <div id="breadcrumbs">
           <ul class="breadcrumb">
-        <li id="publishDate">Last Published: 2022-07-15<span class="divider">|</span>
+        <li id="publishDate">Last Published: 2022-07-19<span class="divider">|</span>
 </li>
-          <li id="projectVersion">Version: 2.6-SNAPSHOT</li>
+          <li id="projectVersion">Version: 2.6</li>
           </ul>
         </div>
       </header>
@@ -111,12 +111,12 @@
         if (!srcDir.isDirectory())
         {
             throw new MavenReportException(MessageFormat.format(
-                Messages.getString(&quot;Taglib.notadir&quot;), new Object[]{srcDir //$NON-NLS-1$
-                    .getAbsolutePath()}));
+                Messages.getString(&quot;Taglib.notadir&quot;), //$NON-NLS-1$
+                    srcDir.getAbsolutePath()));
         }
 
         getLog().debug(
-            MessageFormat.format(Messages.getString(&quot;Taglib.validating&quot;), new Object[]{srcDir.getAbsolutePath()})); //$NON-NLS-1$
+            MessageFormat.format(Messages.getString(&quot;Taglib.validating&quot;), srcDir.getAbsolutePath())); //$NON-NLS-1$
 
         DocumentBuilder builder;
 
@@ -148,7 +148,7 @@
             catch (Exception e)
             {
                 throw new MavenReportException(MessageFormat.format(Messages.getString(&quot;Taglib.errorwhileparsing&quot;), //$NON-NLS-1$
-                    new Object[]{current.getAbsolutePath()}), e);
+                    current.getAbsolutePath()), e);
 
             }
 
@@ -160,7 +160,7 @@
         if (tldList.size() == 0)
         {
             getLog().info(
-                MessageFormat.format(Messages.getString(&quot;Taglib.notldfound&quot;), new Object[]{srcDir.getAbsolutePath()})); //$NON-NLS-1$
+                MessageFormat.format(Messages.getString(&quot;Taglib.notldfound&quot;), srcDir.getAbsolutePath())); //$NON-NLS-1$
             return;
         }</pre></div></td></tr></table></section>
         </main>

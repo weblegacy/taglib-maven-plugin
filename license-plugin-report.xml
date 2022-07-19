@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<licensePluginReport goal="FORMAT" timestamp="1657861484732">
-    <module artifactId="taglib-maven-plugin" groupId="io.github.weblegacy" version="2.6-SNAPSHOT"/>
+<licensePluginReport goal="FORMAT" timestamp="1658261330061">
+    <module artifactId="taglib-maven-plugin" groupId="io.github.weblegacy" version="2.6"/>
     <files>
         <file path="src/main/java/net/sf/maventaglib/AbstractMavenTaglibReportRenderer.java" result="NOOP"/>
         <file path="src/main/java/net/sf/maventaglib/Messages.java" result="NOOP"/>

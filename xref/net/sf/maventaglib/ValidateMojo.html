@@ -115,14 +115,14 @@
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>         <strong class="jxr_keyword">if</strong> ( !srcDir.isDirectory() )
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>         {
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MavenReportException( MessageFormat
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>                 .format( Messages.getString( <span class="jxr_string">"Taglib.notadir"</span> ), <strong class="jxr_keyword">new</strong> Object[] { srcDir <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L111" href="#L111">111</a>                     .getAbsolutePath() } ) );
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>                 .format( Messages.getString( <span class="jxr_string">"Taglib.notadir"</span> ), <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>                     srcDir.getAbsolutePath() ) );
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>         }
 <a class="jxr_linenumber" name="L113" href="#L113">113</a> 
 <a class="jxr_linenumber" name="L114" href="#L114">114</a>         getLog()
 <a class="jxr_linenumber" name="L115" href="#L115">115</a>             .debug(
 <a class="jxr_linenumber" name="L116" href="#L116">116</a>                     MessageFormat
-<a class="jxr_linenumber" name="L117" href="#L117">117</a>                         .format( Messages.getString( <span class="jxr_string">"Taglib.validating"</span> ), <strong class="jxr_keyword">new</strong> Object[] { srcDir.getAbsolutePath() } ) ); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>                         .format( Messages.getString( <span class="jxr_string">"Taglib.validating"</span> ), srcDir.getAbsolutePath() ) ); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L118" href="#L118">118</a> 
 <a class="jxr_linenumber" name="L119" href="#L119">119</a>         DocumentBuilder builder;
 <a class="jxr_linenumber" name="L120" href="#L120">120</a> 
@@ -156,7 +156,7 @@
 <a class="jxr_linenumber" name="L148" href="#L148">148</a>             <strong class="jxr_keyword">catch</strong> ( Exception e )
 <a class="jxr_linenumber" name="L149" href="#L149">149</a>             {
 <a class="jxr_linenumber" name="L150" href="#L150">150</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MavenReportException( MessageFormat.format( Messages.getString( <span class="jxr_string">"Taglib.errorwhileparsing"</span> ), <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L151" href="#L151">151</a>                                                                       <strong class="jxr_keyword">new</strong> Object[] { current.getAbsolutePath() } ), e );
+<a class="jxr_linenumber" name="L151" href="#L151">151</a>                                                                       current.getAbsolutePath() ), e );
 <a class="jxr_linenumber" name="L152" href="#L152">152</a>             }
 <a class="jxr_linenumber" name="L153" href="#L153">153</a> 
 <a class="jxr_linenumber" name="L154" href="#L154">154</a>             <a name="Tld" href="../../../net/sf/maventaglib/checker/Tld.html#Tld">Tld</a> tld = TldParser.parse( tldDoc, current.getName() );
@@ -169,7 +169,7 @@
 <a class="jxr_linenumber" name="L161" href="#L161">161</a>                 .info(
 <a class="jxr_linenumber" name="L162" href="#L162">162</a>                        MessageFormat
 <a class="jxr_linenumber" name="L163" href="#L163">163</a>                            .format(
-<a class="jxr_linenumber" name="L164" href="#L164">164</a>                                     Messages.getString( <span class="jxr_string">"Taglib.notldfound"</span> ), <strong class="jxr_keyword">new</strong> Object[] { srcDir.getAbsolutePath() } ) ); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L164" href="#L164">164</a>                                     Messages.getString( <span class="jxr_string">"Taglib.notldfound"</span> ), srcDir.getAbsolutePath() ) ); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L165" href="#L165">165</a>             <strong class="jxr_keyword">return</strong>;
 <a class="jxr_linenumber" name="L166" href="#L166">166</a>         }
 <a class="jxr_linenumber" name="L167" href="#L167">167</a> 

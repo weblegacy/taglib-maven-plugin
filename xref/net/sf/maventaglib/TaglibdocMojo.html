@@ -97,7 +97,7 @@
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> execute() <strong class="jxr_keyword">throws</strong> MojoExecutionException
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>      {
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>          getLog().debug(MessageFormat.format(Messages.getString(<span class="jxr_string">"Taglib.generating.tlddoc"</span>), <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>              <strong class="jxr_keyword">new</strong> Object[]{srcDir.getAbsolutePath() }));
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>              srcDir.getAbsolutePath() ));
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>          TLDDocGenerator generator = <strong class="jxr_keyword">new</strong> TLDDocGenerator();
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>          generator.setOutputDirectory(tldDocDir);
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>          generator.setQuiet(<strong class="jxr_keyword">true</strong>);
@@ -112,8 +112,8 @@
 <a class="jxr_linenumber" name="L104" href="#L104">104</a>         <strong class="jxr_keyword">if</strong> (!srcDir.isDirectory())
 <a class="jxr_linenumber" name="L105" href="#L105">105</a>         {
 <a class="jxr_linenumber" name="L106" href="#L106">106</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(MessageFormat.format(
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>                 Messages.getString(<span class="jxr_string">"Taglib.notadir"</span>), <strong class="jxr_keyword">new</strong> Object[]{srcDir <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>                     .getAbsolutePath() }));
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>                 Messages.getString(<span class="jxr_string">"Taglib.notadir"</span>), <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>                     srcDir.getAbsolutePath() ));
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>         }
 <a class="jxr_linenumber" name="L110" href="#L110">110</a> 
 <a class="jxr_linenumber" name="L111" href="#L111">111</a>         <strong class="jxr_keyword">try</strong>
@@ -155,7 +155,7 @@
 <a class="jxr_linenumber" name="L147" href="#L147">147</a>         <strong class="jxr_keyword">catch</strong> (Throwable e)
 <a class="jxr_linenumber" name="L148" href="#L148">148</a>         {
 <a class="jxr_linenumber" name="L149" href="#L149">149</a>             getLog().error(MessageFormat.format(Messages.getString(<span class="jxr_string">"Taglib.exception"</span>), <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L150" href="#L150">150</a>                 <strong class="jxr_keyword">new</strong> Object[]{e.getClass(), e.getMessage() }), e);
+<a class="jxr_linenumber" name="L150" href="#L150">150</a>                 e.getClass(), e.getMessage() ), e);
 <a class="jxr_linenumber" name="L151" href="#L151">151</a>         }
 <a class="jxr_linenumber" name="L152" href="#L152">152</a>     }
 <a class="jxr_linenumber" name="L153" href="#L153">153</a> 

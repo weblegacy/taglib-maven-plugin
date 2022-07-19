@@ -172,8 +172,8 @@
 <a class="jxr_linenumber" name="L164" href="#L164">164</a> 
 <a class="jxr_linenumber" name="L165" href="#L165">165</a>             sink.listItem();
 <a class="jxr_linenumber" name="L166" href="#L166">166</a>             sink.link(<span class="jxr_string">"#"</span> + tld.getFilename()); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L167" href="#L167">167</a>             sink.text(MessageFormat.format(getMessageString(<span class="jxr_string">"Validate.listitem.tld"</span>), <strong class="jxr_keyword">new</strong> Object[]{ <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L168" href="#L168">168</a>                 StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname()), tld.getFilename() }));
+<a class="jxr_linenumber" name="L167" href="#L167">167</a>             sink.text(MessageFormat.format(getMessageString(<span class="jxr_string">"Validate.listitem.tld"</span>), <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L168" href="#L168">168</a>                 StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname()), tld.getFilename() ));
 <a class="jxr_linenumber" name="L169" href="#L169">169</a>             sink.link_();
 <a class="jxr_linenumber" name="L170" href="#L170">170</a>             sink.text(getMessageString(<span class="jxr_string">"Validate.listitem.uri"</span>) + tld.getUri()); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L171" href="#L171">171</a> 
@@ -525,8 +525,8 @@
 <a class="jxr_linenumber" name="L517" href="#L517">517</a>                 {
 <a class="jxr_linenumber" name="L518" href="#L518">518</a> 
 <a class="jxr_linenumber" name="L519" href="#L519">519</a>                     validationErrors.add(<strong class="jxr_keyword">new</strong> ValidationError(ValidationError.LEVEL_ERROR, MessageFormat.format(
-<a class="jxr_linenumber" name="L520" href="#L520">520</a>                         getMessageString(<span class="jxr_string">"Validate.error.attributetypemismatch"</span>), <strong class="jxr_keyword">new</strong> Object[]{ <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L521" href="#L521">521</a>                         tldType, tagType.getName() })));
+<a class="jxr_linenumber" name="L520" href="#L520">520</a>                         getMessageString(<span class="jxr_string">"Validate.error.attributetypemismatch"</span>), <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L521" href="#L521">521</a>                         tldType, tagType.getName() )));
 <a class="jxr_linenumber" name="L522" href="#L522">522</a>                 }
 <a class="jxr_linenumber" name="L523" href="#L523">523</a>             }
 <a class="jxr_linenumber" name="L524" href="#L524">524</a>         }
@@ -538,8 +538,8 @@
 <a class="jxr_linenumber" name="L530" href="#L530">530</a>             <strong class="jxr_keyword">if</strong> (tldType != <strong class="jxr_keyword">null</strong> &amp;&amp; !tldType.equals(tagType.getName()))
 <a class="jxr_linenumber" name="L531" href="#L531">531</a>             {
 <a class="jxr_linenumber" name="L532" href="#L532">532</a>                 validationErrors.add(<strong class="jxr_keyword">new</strong> ValidationError(ValidationError.LEVEL_WARNING, MessageFormat.format(
-<a class="jxr_linenumber" name="L533" href="#L533">533</a>                     getMessageString(<span class="jxr_string">"Validate.error.attributetypeinexactmatch"</span>), <strong class="jxr_keyword">new</strong> Object[]{ <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L534" href="#L534">534</a>                     tldType, tagType.getName() })));
+<a class="jxr_linenumber" name="L533" href="#L533">533</a>                     getMessageString(<span class="jxr_string">"Validate.error.attributetypeinexactmatch"</span>), <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L534" href="#L534">534</a>                     tldType, tagType.getName() )));
 <a class="jxr_linenumber" name="L535" href="#L535">535</a>             }
 <a class="jxr_linenumber" name="L536" href="#L536">536</a>             <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (tldType == <strong class="jxr_keyword">null</strong> &amp;&amp; !String.<strong class="jxr_keyword">class</strong>.equals(tagType))
 <a class="jxr_linenumber" name="L537" href="#L537">537</a>             {
@@ -663,7 +663,7 @@
 <a class="jxr_linenumber" name="L655" href="#L655">655</a>             <strong class="jxr_keyword">catch</strong> (ClassNotFoundException e)
 <a class="jxr_linenumber" name="L656" href="#L656">656</a>             {
 <a class="jxr_linenumber" name="L657" href="#L657">657</a>                 log.error(MessageFormat.format(Messages.getString(<span class="jxr_string">"Validate.error.unabletofindclass"</span>), <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L658" href="#L658">658</a>                     <strong class="jxr_keyword">new</strong> Object[]{className }));
+<a class="jxr_linenumber" name="L658" href="#L658">658</a>                     className ));
 <a class="jxr_linenumber" name="L659" href="#L659">659</a>             }
 <a class="jxr_linenumber" name="L660" href="#L660">660</a>         }
 <a class="jxr_linenumber" name="L661" href="#L661">661</a>         <strong class="jxr_keyword">return</strong> tldTypeClass;
