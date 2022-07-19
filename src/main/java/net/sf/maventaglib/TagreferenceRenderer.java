@@ -188,7 +188,7 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
         printList(tld, tagfiles, "Tagfiles");
 
         sink.paragraph();
-        sink.text(getMessageString("Tagreference.intro.required") + ' ');  //$NON-NLS-1$ //$NON-NLS-2$
+        sink.text(getMessageString("Tagreference.intro.required") + ' '); //$NON-NLS-1$
         sink.bold();
         sink.text(getMessageString("Tagreference.required.marker")); //$NON-NLS-1$
         sink.bold_();
@@ -338,7 +338,7 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
         }
 
         sink.paragraph();
-        sink.text(getMessageString("Tagreference.cancontain")); //$NON-NLS-1$
+        sink.text(getMessageString("Tagreference.cancontain") + ' '); //$NON-NLS-1$
         sink.text(tag.getBodycontent());
         sink.paragraph_();
 
@@ -455,7 +455,7 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
                 }
                 else
                 {
-                    sink.text(getMessageString("Tagreference.variable.specifiedvia")); //$NON-NLS-1$
+                    sink.text(getMessageString("Tagreference.variable.specifiedvia") + ' '); //$NON-NLS-1$
                     sink.text(variable.getNameFromAttribute());
                 }
 

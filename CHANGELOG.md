@@ -2,6 +2,7 @@
 
 ## 2.6 / YYYY-MM-DD
 
+* A few embellishments to the Tag-Reference-Report
 * Typo in properties
 * Use varargs for `MessageFormat.format`
 * Lint markdown-files
