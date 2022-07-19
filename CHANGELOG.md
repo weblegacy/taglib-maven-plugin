@@ -2,6 +2,7 @@
 
 ## 2.6 / YYYY-MM-DD
 
+* Bump `tlddoc` from 1.4-SNAPSHOT to 1.4
 * Unescape HTML in tag-description-list when parse-html is on.
 * A few embellishments to the Tag-Reference-Report
 * Typo in properties
