@@ -9,6 +9,7 @@
   </properties>
   <body>
     <release version="2.6" date="YYYY-MM-DD" description="">
+      <action type="fix" dev="ste-gr">Unescape HTML in tag-description-list when parse-html is on.</action>
       <action type="fix" dev="ste-gr">A few embellishments to the Tag-Reference-Report</action>
       <action type="fix" dev="ste-gr">Typo in properties</action>
       <action type="update" dev="ste-gr">Use varargs for &quot;MessageFormat.format&quot;</action>

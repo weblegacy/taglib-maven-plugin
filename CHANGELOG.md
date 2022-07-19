@@ -2,6 +2,7 @@
 
 ## 2.6 / YYYY-MM-DD
 
+* Unescape HTML in tag-description-list when parse-html is on.
 * A few embellishments to the Tag-Reference-Report
 * Typo in properties
 * Use varargs for `MessageFormat.format`

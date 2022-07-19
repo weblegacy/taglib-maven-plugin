@@ -31,6 +31,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.doxia.module.xhtml5.Xhtml5Parser;
 import org.apache.maven.doxia.parser.ParseException;
 import org.apache.maven.doxia.sink.Sink;
+import org.apache.maven.doxia.util.HtmlTools;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.reporting.AbstractMavenReportRenderer;
 
@@ -306,7 +307,13 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
                 sink.link_();
 
                 sink.text(" "); //$NON-NLS-1$
-                sink.text(stripTags(StringUtils.substringBefore(tag.getDescription(), "."))); //$NON-NLS-1$
+
+                String cleanedDescription = stripTags(StringUtils.substringBefore(tag.getDescription(), ".")) + '.'; //$NON-NLS-1$
+                if (parseHtml)
+                {
+                    cleanedDescription = HtmlTools.unescapeHTML(cleanedDescription);
+                }
+                sink.text(cleanedDescription);
 
                 sink.listItem_();
             }
