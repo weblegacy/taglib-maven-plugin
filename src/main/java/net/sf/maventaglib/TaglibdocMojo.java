@@ -1,7 +1,7 @@
 /*
  * The MIT License
  * Copyright © 2004-2014 Fabrizio Giustina
- * Copyright © 2022-2022 Web-Legacy
+ * Copyright © 2022-2024 Web-Legacy
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,8 @@
  */
 package net.sf.maventaglib;
 
+import com.sun.tlddoc.TLDDocGenerator;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -38,8 +40,6 @@ import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReport;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.plexus.util.FileUtils;
-
-import com.sun.tlddoc.TLDDocGenerator;
 
 
 /**
@@ -144,7 +144,7 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport
         {
             generator.generate();
         }
-        catch (Throwable e)
+        catch (Exception e)
         {
             getLog().error(MessageFormat.format(Messages.getString("Taglib.exception"), //$NON-NLS-1$
                 e.getClass(), e.getMessage() ), e);
@@ -215,8 +215,8 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport
 
         try
         {
-            boolean hasTldFiles = FileUtils.getFiles(srcDir, "**/*.tld", null).size() > 0;//$NON-NLS-1$
-            boolean hasTagFiles = FileUtils.getFiles(srcDir, "**/*.tag", null).size() > 0;//$NON-NLS-1$
+            boolean hasTldFiles = !FileUtils.getFiles(srcDir, "**/*.tld", null).isEmpty();//$NON-NLS-1$
+            boolean hasTagFiles = !FileUtils.getFiles(srcDir, "**/*.tag", null).isEmpty();//$NON-NLS-1$
             return hasTldFiles || hasTagFiles;
         }
         catch (IOException e)

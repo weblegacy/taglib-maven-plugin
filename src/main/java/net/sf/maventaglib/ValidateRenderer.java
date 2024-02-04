@@ -1,7 +1,7 @@
 /*
  * The MIT License
  * Copyright © 2004-2014 Fabrizio Giustina
- * Copyright © 2022-2022 Web-Legacy
+ * Copyright © 2022-2024 Web-Legacy
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -284,7 +284,7 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
                 found = false;
             }
         }
-        catch (Throwable e)
+        catch (Exception e)
         {
             found = false;
         }
@@ -342,19 +342,13 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
             {
                 tagObject = tagClass.getDeclaredConstructor().newInstance();
             }
-            catch (Throwable e)
+            catch (Exception e)
             {
                 loadable = false;
             }
 
         }
-        catch (ClassNotFoundException e)
-        {
-            found = false;
-            loadable = false;
-            extend = false;
-        }
-        catch (NoClassDefFoundError e)
+        catch (ClassNotFoundException | NoClassDefFoundError e)
         {
             found = false;
             loadable = false;
@@ -433,19 +427,12 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
             {
                 teiClass.getDeclaredConstructor().newInstance();
             }
-            catch (Throwable e)
+            catch (Exception e)
             {
                 loadable = false;
             }
         }
-        catch (ClassNotFoundException e)
-        {
-            found = false;
-            loadable = false;
-            extend = false;
-        }
-
-        catch (NoClassDefFoundError e)
+        catch (ClassNotFoundException | NoClassDefFoundError e)
         {
             found = false;
             loadable = false;
@@ -502,7 +489,7 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
             {
                 tagType = PropertyUtils.getPropertyType(tag, tldName);
             }
-            catch (Throwable e)
+            catch (Exception e)
             {
                 // should never happen, since we already checked the writable property
                 log.warn(e);
@@ -527,7 +514,7 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
         if (validationErrors.isEmpty())
         {
 
-            if (tldType != null && !tldType.equals(tagType.getName()))
+            if (tldType != null && tagType != null && !tldType.equals(tagType.getName()))
             {
                 validationErrors.add(new ValidationError(ValidationError.LEVEL_WARNING, MessageFormat.format(
                     getMessageString("Validate.error.attributetypeinexactmatch"), //$NON-NLS-1$

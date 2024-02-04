@@ -1,7 +1,7 @@
 /*
  * The MIT License
  * Copyright © 2004-2014 Fabrizio Giustina
- * Copyright © 2022-2022 Web-Legacy
+ * Copyright © 2022-2024 Web-Legacy
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -45,7 +45,7 @@ public abstract class AbstractMavenTaglibReportRenderer extends AbstractMavenRep
      * @param sink the sink to use.
      * @param locale the wanted locale to return the report's description, could be {@code null}.
      */
-    public AbstractMavenTaglibReportRenderer( Sink sink, Locale locale )
+    protected AbstractMavenTaglibReportRenderer( Sink sink, Locale locale )
     {
         super(sink);
         this.locale = locale;
