@@ -1,7 +1,7 @@
 /*
  * The MIT License
  * Copyright © 2004-2014 Fabrizio Giustina
- * Copyright © 2022-2022 Web-Legacy
+ * Copyright © 2022-2024 Web-Legacy
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@ package net.sf.maventaglib;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import org.apache.maven.artifact.handler.ArtifactHandler;
 import org.apache.maven.plugin.AbstractMojo;
@@ -103,11 +104,7 @@ public class TaglibdocJar
                 projectHelper.attachArtifact( project, "jar", "tlddoc", outputFile );
             }
         }
-        catch ( ArchiverException e )
-        {
-            throw new MojoExecutionException( "Error while creating archive.", e );
-        }
-        catch ( IOException e )
+        catch ( ArchiverException | IOException e )
         {
             throw new MojoExecutionException( "Error while creating archive.", e );
         }
@@ -122,7 +119,7 @@ public class TaglibdocJar
             throw new MojoExecutionException( "tlddoc files not found." );
         }
 
-        if ( tlddocJar.exists() && !tlddocJar.delete())
+        if ( !Files.deleteIfExists(tlddocJar.toPath()) )
         {
             throw new MojoExecutionException( "tlddocJar could not deleted." );
         }

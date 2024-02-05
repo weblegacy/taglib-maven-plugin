@@ -1,7 +1,7 @@
 /*
  * The MIT License
  * Copyright © 2004-2014 Fabrizio Giustina
- * Copyright © 2022-2022 Web-Legacy
+ * Copyright © 2022-2024 Web-Legacy
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,6 @@ package net.sf.maventaglib;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -140,7 +139,7 @@ public class TldGenerateMojo extends AbstractMojo
     private void generateTlds() throws IOException, MojoExecutionException
     {
 
-        List<Taglib> taglibsList = new ArrayList<Taglib>();
+        List<Taglib> taglibsList = new ArrayList<>();
 
         if (taglibs != null)
         {
@@ -153,7 +152,7 @@ public class TldGenerateMojo extends AbstractMojo
                 {
                     PropertyUtils.copyProperties(tlib, taglib);
                 }
-                catch (Throwable e)
+                catch (Exception e)
                 {
                     throw new MojoExecutionException(e.getMessage(), e);
                 }
@@ -161,10 +160,8 @@ public class TldGenerateMojo extends AbstractMojo
             }
         }
 
-        if (taglibsList == null || taglibsList.isEmpty())
+        if (taglibsList.isEmpty())
         {
-            taglibsList = new ArrayList<Taglib>();
-
             // old (pre 2.4) behavior, create taglib configurations from dir
             if (tagDir.isDirectory())
             {
@@ -174,7 +171,7 @@ public class TldGenerateMojo extends AbstractMojo
 
                 if (!tags.isEmpty())
                 {
-                    Set<File> directories = new HashSet<File>();
+                    Set<File> directories = new HashSet<>();
                     for (File tag : tags)
                     {
                         directories.add(tag.getParentFile());
@@ -215,10 +212,9 @@ public class TldGenerateMojo extends AbstractMojo
     /**
      * @param taglib
      * @throws MojoExecutionException
-     * @throws FileNotFoundException
      * @throws IOException
      */
-    private void doTaglib(Taglib taglib) throws MojoExecutionException, FileNotFoundException, IOException
+    private void doTaglib(Taglib taglib) throws MojoExecutionException, IOException
     {
         Document doc = getTLDDocument(taglib, XmlHelper.getDocumentBuilder());
 
@@ -342,23 +338,16 @@ public class TldGenerateMojo extends AbstractMojo
                         }
 
                     }
-                    catch (IOException e)
+                    catch (IOException | ParseException e)
                     {
-                        // @todo Auto-generated catch block
-                        e.printStackTrace();
+                        getLog().error(e);
                     }
-                    catch (ParseException e)
-                    {
-                        // @todo Auto-generated catch block
-                        e.printStackTrace();
-                    }
-
                 }
 
             }
         }
 
-        Map<String, Integer> duplicateFunctions = new HashMap<String, Integer>();
+        Map<String, Integer> duplicateFunctions = new HashMap<>();
 
         if (taglib.getFunctionClasses() != null)
         {
@@ -370,7 +359,7 @@ public class TldGenerateMojo extends AbstractMojo
                     functionClass = Class.forName(functionClassString);
 
                 }
-                catch (Throwable e)
+                catch (Exception e)
                 {
                     getLog().error(
                         "Unable to load function class "
@@ -415,7 +404,7 @@ public class TldGenerateMojo extends AbstractMojo
                     classElement.appendChild(result.createTextNode(method.getDeclaringClass().getName()));
                     tagFileElement.appendChild(classElement);
 
-                    StringBuffer parameterTypesString = new StringBuffer();
+                    StringBuilder parameterTypesString = new StringBuilder();
                     Class< ? >[] parameterTypes = method.getParameterTypes();
 
                     for (int p = 0; p < parameterTypes.length; p++)
