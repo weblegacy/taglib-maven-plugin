@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Bump `maven-checkstyle-plugin` from 3.1.2 to 3.3.1
 * Add missing plugin (assembly)
 * Add missing plugin (antrun)
 * Add `versions-maven-plugin` with reports
