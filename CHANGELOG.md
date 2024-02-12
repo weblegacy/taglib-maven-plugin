@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Bump `maven-fluido-skin` from 1.11.0 to 1.12.0
 * Bump `build-helper-maven-plugin` from 3.3.0 to 3.5.0
 * Bump `license-maven-plugin` from 4.2.rc3 to 4.3
 * Bump `spotbugs-maven-plugin` from 4.7.1.0 to 4.8.3.1
