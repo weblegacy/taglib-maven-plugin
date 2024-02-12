@@ -79,7 +79,7 @@
     <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
     <mavenVersion>3.6.3</mavenVersion>
     <javaVersion>8</javaVersion>
-    <mavenPluginVersion>${mavenVersion}</mavenPluginVersion>
+    <mavenPluginVersion>3.8.1</mavenPluginVersion>
     <junitVersion>4.13.2</junitVersion>
     <mavenPluginTestingHarnessVersion>3.3.0</mavenPluginTestingHarnessVersion>
     <mavenReportingVersion>4.0.0-M1</mavenReportingVersion>
@@ -512,7 +512,7 @@
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-archiver</artifactId>
-      <version>4.4.0</version>
+      <version>4.8.0</version>
     </dependency>
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
