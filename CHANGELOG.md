@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Bump `maven-gpg-plugin` from 3.0.1 to 3.1.0
 * Set minimum MAVEN-Version from 3.5.4 to 3.6.3
 * Bump `maven-fluido-skin` from 1.11.0 to 1.12.0
 * Bump `build-helper-maven-plugin` from 3.3.0 to 3.5.0
