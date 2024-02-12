@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Bump `maven-clean-plugin` from 3.2.0 to 3.3.2
 * Bump `checkstyle` from 9.3 to 10.13.0
 * Bump `maven-checkstyle-plugin` from 3.1.2 to 3.3.1
 * Add missing plugin (assembly)
