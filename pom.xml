@@ -333,8 +333,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
-          <!-- Downgrade to version 3.12.0 because https://issues.apache.org/jira/browse/MPLUGIN-403 -->
-          <version>3.12.0</version>
+          <version>3.12.1</version>
           <configuration>
             <skipDeploy>true</skipDeploy>
           </configuration>
