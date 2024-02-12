@@ -77,7 +77,7 @@
     <propertiesEncoding>${encoding}</propertiesEncoding>
     <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
     <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
-    <mavenVersion>[3.5.4,4)</mavenVersion>
+    <mavenVersion>3.6.3</mavenVersion>
     <javaVersion>8</javaVersion>
     <mavenPluginVersion>3.8.6</mavenPluginVersion>
     <junitVersion>4.13.2</junitVersion>
@@ -406,7 +406,7 @@
             <configuration>
               <rules>
                 <requireMavenVersion>
-                  <version>${mavenVersion}</version>
+                  <version>[${mavenVersion},4)</version>
                 </requireMavenVersion>
               </rules>
             </configuration>
