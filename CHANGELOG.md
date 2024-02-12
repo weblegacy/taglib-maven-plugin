@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Add missing plugin (assembly)
 * Add missing plugin (antrun)
 * Add `versions-maven-plugin` with reports
 * Set version to 3.0.0-SNAPSHOT
