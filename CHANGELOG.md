@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Add `versions-maven-plugin` with reports
 * Set version to 3.0.0-SNAPSHOT
 
 ## 2.6 / 2022-07-19
