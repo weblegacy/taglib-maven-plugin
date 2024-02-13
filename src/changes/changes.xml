@@ -9,6 +9,7 @@
   </properties>
   <body>
     <release version="3.0.0-SNAPSHOT" description="Jakarta EE 9+, JDK 11, JPMS">
+      <action type="fix" dev="ste-gr">Downgrade &quot;maven-reporting-api/impl&quot; from 4.0.0-M1 to 3.1.0</action>
       <action type="fix" dev="ste-gr">Set minimum MAVEN-PlugIn-Version from 3.8.6 down to 3.6.3</action>
       <action type="fix" dev="ste-gr">Set scope of &quot;jsp-api&quot; from &quot;compile&quot; to &quot;test&quot;</action>
       <action type="fix" dev="ste-gr">Remove unused dependency &quot;maven-compat&quot;</action>
