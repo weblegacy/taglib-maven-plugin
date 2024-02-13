@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Set scope of `jsp-api` from `compile` to `test`
 * Remove unused dependency `maven-compat`
 * Add plugin `maven-model`
 * Remove unused dependency `servlet-api`
