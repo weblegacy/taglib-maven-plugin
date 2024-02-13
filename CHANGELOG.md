@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Set minimum MAVEN-PlugIn-Version from 3.8.6 down to 3.6.3
 * Set scope of `jsp-api` from `compile` to `test`
 * Remove unused dependency `maven-compat`
 * Add plugin `maven-model`
