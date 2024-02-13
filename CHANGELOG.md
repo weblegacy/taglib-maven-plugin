@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Add plugin `maven-model`
 * Remove unused dependency `servlet-api`
 * Move `maven-assembly-plug`-configuration from `pluginManagement` to `plugin`
 * Bump `maven-gpg-plugin` from 3.0.1 to 3.1.0
