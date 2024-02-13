@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Downgrade `doxia-plugin`s-version from 2.0.0-M3 to 1.12.0
 * Downgrade `maven-reporting-api/impl` from 4.0.0-M1 to 3.1.0
 * Set minimum MAVEN-PlugIn-Version from 3.8.6 down to 3.6.3
 * Set scope of `jsp-api` from `compile` to `test`

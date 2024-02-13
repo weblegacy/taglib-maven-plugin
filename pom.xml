@@ -83,7 +83,7 @@
     <junitVersion>4.13.2</junitVersion>
     <mavenPluginTestingHarnessVersion>3.3.0</mavenPluginTestingHarnessVersion>
     <mavenReportingVersion>3.1.0</mavenReportingVersion>
-    <doxiaVersion>2.0.0-M3</doxiaVersion>
+    <doxiaVersion>1.12.0</doxiaVersion>
   </properties>
 
   <profiles>
