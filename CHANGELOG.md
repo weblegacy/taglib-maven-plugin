@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Downgrade `doxia`-plguins from 2.0.0-M3 to 1.12.0
 * Set minimum MAVEN-Plugin-Version from 3.8.6 to 3.2.5
 * Add plugin `maven-model`
 * Remove unused dependency `servlet-api`
