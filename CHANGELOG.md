@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Change `javax.servlet.jsp-api`-scope from `compile` to `test`
 * Resort and group dependencies
 * Bump `jsp-api` 2.0 to `javax.servlet.jsp-api` 2.3.3
 * Bump `plexus-utils` from 3.4.2 to 4.0.0 and add `plexus-xml` 3.0.0
