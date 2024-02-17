@@ -82,7 +82,6 @@
     <mavenPluginVersion>3.2.5</mavenPluginVersion>
     <junitVersion>4.13.2</junitVersion>
     <mavenPluginTestingHarnessVersion>3.3.0</mavenPluginTestingHarnessVersion>
-    <mavenReportingVersion>4.0.0-M1</mavenReportingVersion>
     <doxiaVersion>1.12.0</doxiaVersion>
   </properties>
 
@@ -536,12 +535,12 @@
     <dependency>
       <groupId>org.apache.maven.reporting</groupId>
       <artifactId>maven-reporting-api</artifactId>
-      <version>${mavenReportingVersion}</version>
+      <version>3.1.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.reporting</groupId>
       <artifactId>maven-reporting-impl</artifactId>
-      <version>${mavenReportingVersion}</version>
+      <version>3.2.0</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.doxia</groupId>
