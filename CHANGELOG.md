@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Correct testcases because downgraded `doxia`- and `maven-reporting`-versions
 * Replace `commons-logging` with `jcl-over-slf4j`
 * Set version of `commons-digester` to 2.1
 * Set version of `commons-chain` to 1.2

@@ -27,6 +27,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
+import org.apache.maven.artifact.repository.MavenArtifactRepository;
+import org.apache.maven.artifact.repository.layout.DefaultRepositoryLayout;
+import org.apache.maven.execution.MavenSession;
+import org.apache.maven.project.MavenProject;
+import org.codehaus.plexus.PlexusTestCase;
 import org.junit.Test;
 
 
@@ -49,7 +54,20 @@ public class TagreferenceMojoTest extends TaglibPluginTestBase
         assertNotNull(basedir);
         assertTrue(basedir.exists());
 
-        TagreferenceMojo myMojo = (TagreferenceMojo) rule.lookupConfiguredMojo(basedir, "tagreference");
+        MavenProject project = rule.readMavenProject(basedir);
+        MavenSession session = rule.newMavenSession(project);
+
+        File localRepo = new File(PlexusTestCase.getBasedir(), "target/local-repo");
+        MavenArtifactRepository repo = new MavenArtifactRepository(
+                "localRepository",
+                "file://" + localRepo.getAbsolutePath(),
+                new DefaultRepositoryLayout(),
+                null,
+                null);
+
+        session.getRequest().setLocalRepository(repo);
+
+        TagreferenceMojo myMojo = (TagreferenceMojo) rule.lookupConfiguredMojo(session, rule.newMojoExecution("tagreference"));
         assertNotNull(myMojo);
         myMojo.execute();
 

@@ -9,6 +9,7 @@
   </properties>
   <body>
     <release version="3.0.0-SNAPSHOT" description="Jakarta EE 9+, JDK 11, JPMS">
+      <action type="fix" dev="ste-gr">Correct testcases because downgraded &quot;doxia&quot;- and &quot;maven-reporting&quot;-versions</action>
       <action type="fix" dev="ste-gr">Replace &quot;commons-logging&quot; with &quot;jcl-over-slf4j&quot;</action>
       <action type="fix" dev="ste-gr">Set version of &quot;commons-digester&quot; to 2.1</action>
       <action type="fix" dev="ste-gr">Set version of &quot;commons-chain&quot; to 1.2</action>
