@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Change `maven-compat`-scope from `provided` to `test`
 * Change `javax.servlet.jsp-api`-scope from `compile` to `test`
 * Resort and group dependencies
 * Bump `jsp-api` 2.0 to `javax.servlet.jsp-api` 2.3.3
