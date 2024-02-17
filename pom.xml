@@ -79,7 +79,7 @@
     <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
     <mavenVersion>3.6.3</mavenVersion>
     <javaVersion>8</javaVersion>
-    <mavenPluginVersion>3.2.5</mavenPluginVersion>
+    <mavenPluginVersion>3.9.6</mavenPluginVersion>
     <mavenPluginToolsVersion>3.11.0</mavenPluginToolsVersion>
     <surefireVersion>3.2.5</surefireVersion>
     <aetherVersion>1.0.0.v20140518</aetherVersion>
