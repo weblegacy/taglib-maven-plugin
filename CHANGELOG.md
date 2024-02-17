@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Add missing `slf4j-api`-dependency and bump from 1.7.5 to 1.7.36
 * Add missing test-dependencies for artifact-http-transfer
 * Change `maven-compat`-scope from `provided` to `test`
 * Change `javax.servlet.jsp-api`-scope from `compile` to `test`

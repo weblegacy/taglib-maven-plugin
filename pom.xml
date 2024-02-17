@@ -82,6 +82,7 @@
     <mavenPluginVersion>3.2.5</mavenPluginVersion>
     <mavenPluginToolsVersion>3.11.0</mavenPluginToolsVersion>
     <surefireVersion>3.2.5</surefireVersion>
+    <slf4jVersion>1.7.36</slf4jVersion>
     <junitVersion>4.13.2</junitVersion>
     <mavenPluginTestingHarnessVersion>3.3.0</mavenPluginTestingHarnessVersion>
     <doxiaVersion>1.12.0</doxiaVersion>
@@ -538,6 +539,12 @@
       <artifactId>jdom2</artifactId>
       <version>2.0.6.1</version>
     </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4jVersion}</version>
+      <scope>provided</scope>
+    </dependency>
 
     <!-- Doxia API and Doxia Sitetools -->
     <dependency>
@@ -622,7 +629,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>1.7.5</version>
+      <version>${slf4jVersion}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
