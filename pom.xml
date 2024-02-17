@@ -81,6 +81,7 @@
     <javaVersion>8</javaVersion>
     <mavenPluginVersion>3.2.5</mavenPluginVersion>
     <mavenPluginToolsVersion>3.11.0</mavenPluginToolsVersion>
+    <surefireVersion>3.2.5</surefireVersion>
     <junitVersion>4.13.2</junitVersion>
     <mavenPluginTestingHarnessVersion>3.3.0</mavenPluginTestingHarnessVersion>
     <doxiaVersion>1.12.0</doxiaVersion>
@@ -336,7 +337,11 @@
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.2.5</version>
+          <version>${surefireVersion}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-report-plugin</artifactId>
+          <version>${surefireVersion}</version>
         </plugin>
         <plugin>
           <groupId>com.github.spotbugs</groupId>
@@ -693,6 +698,9 @@
             </configuration>
           </reportSet>
         </reportSets>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-report-plugin</artifactId>
       </plugin>
       <plugin>
         <artifactId>maven-plugin-report-plugin</artifactId>
