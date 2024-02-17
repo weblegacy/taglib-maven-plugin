@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Add missing test-dependencies for artifact-http-transfer
 * Change `maven-compat`-scope from `provided` to `test`
 * Change `javax.servlet.jsp-api`-scope from `compile` to `test`
 * Resort and group dependencies
