@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Set version of `commons-digester` to 2.1
 * Set version of `commons-chain` to 1.2
 * Exclude dependency `plexus-container-default`
 * Add missing `org.eclipse.sisu.plexus`
