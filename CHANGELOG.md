@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Bump `commons-lang3` from 3.12.0 to 3.14.0
 * Add missing `maven-surefire-report-plugin`
 * Add missing `maven-plugin-report-plugin`
 * Bump `maven-plugin-annotations` from 3.6.4 to 3.11.0
