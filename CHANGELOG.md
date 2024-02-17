@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Exclude dependency `plexus-container-default`
 * Add missing `org.eclipse.sisu.plexus`
 * Add missing `slf4j-api`-dependency and bump from 1.7.5 to 1.7.36
 * Add missing test-dependencies for artifact-http-transfer
