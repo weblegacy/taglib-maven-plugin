@@ -82,6 +82,7 @@
     <mavenPluginVersion>3.2.5</mavenPluginVersion>
     <mavenPluginToolsVersion>3.11.0</mavenPluginToolsVersion>
     <surefireVersion>3.2.5</surefireVersion>
+    <aetherVersion>1.0.0.v20140518</aetherVersion>
     <slf4jVersion>1.7.36</slf4jVersion>
     <junitVersion>4.13.2</junitVersion>
     <mavenPluginTestingHarnessVersion>3.3.0</mavenPluginTestingHarnessVersion>
