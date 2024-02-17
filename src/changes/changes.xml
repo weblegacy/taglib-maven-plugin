@@ -9,6 +9,7 @@
   </properties>
   <body>
     <release version="3.0.0-SNAPSHOT" description="Jakarta EE 9+, JDK 11, JPMS">
+      <action type="fix" dev="ste-gr">Set minimum MAVEN-Plugin-Version from 3.8.6 to 3.2.5</action>
       <action type="fix" dev="ste-gr">Add plugin &quot;maven-model&quot;</action>
       <action type="fix" dev="ste-gr">Remove unused dependency &quot;servlet-api&quot;</action>
       <action type="fix" dev="ste-gr">Move &quot;maven-assembly-plug&quot;-configuration from &quot;pluginManagement&quot; to &quot;plugin&quot;</action>

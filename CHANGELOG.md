@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Set minimum MAVEN-Plugin-Version from 3.8.6 to 3.2.5
 * Add plugin `maven-model`
 * Remove unused dependency `servlet-api`
 * Move `maven-assembly-plug`-configuration from `pluginManagement` to `plugin`
