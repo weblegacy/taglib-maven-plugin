@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Set version of `commons-chain` to 1.2
 * Exclude dependency `plexus-container-default`
 * Add missing `org.eclipse.sisu.plexus`
 * Add missing `slf4j-api`-dependency and bump from 1.7.5 to 1.7.36
