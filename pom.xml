@@ -523,6 +523,12 @@
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
       <version>1.9.4</version>
+      <exclusions>
+          <exclusion>
+              <groupId>commons-logging</groupId>
+              <artifactId>commons-logging</artifactId>
+          </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -562,6 +568,12 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>${slf4jVersion}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>org.eclipse.sisu</groupId>
       <artifactId>org.eclipse.sisu.plexus</artifactId>
       <version>0.3.0.M1</version>
@@ -574,6 +586,10 @@
       <artifactId>doxia-core</artifactId>
       <version>${doxiaVersion}</version>
       <exclusions>
+          <exclusion>
+              <groupId>commons-logging</groupId>
+              <artifactId>commons-logging</artifactId>
+          </exclusion>
           <exclusion>
               <groupId>org.codehaus.plexus</groupId>
               <artifactId>plexus-container-default</artifactId>
@@ -602,6 +618,10 @@
       <artifactId>maven-reporting-impl</artifactId>
       <version>3.2.0</version>
       <exclusions>
+          <exclusion>
+              <groupId>commons-logging</groupId>
+              <artifactId>commons-logging</artifactId>
+          </exclusion>
           <exclusion>
               <groupId>org.codehaus.plexus</groupId>
               <artifactId>plexus-container-default</artifactId>
@@ -689,6 +709,12 @@
       <artifactId>wagon-http</artifactId>
       <version>2.8</version>
       <scope>test</scope>
+      <exclusions>
+          <exclusion>
+              <groupId>commons-logging</groupId>
+              <artifactId>commons-logging</artifactId>
+          </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
 
