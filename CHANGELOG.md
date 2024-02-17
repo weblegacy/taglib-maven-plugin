@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Add missing `maven-plugin-report-plugin`
 * Bump `maven-plugin-annotations` from 3.6.4 to 3.11.0
 * Downgrade `maven-reporting`-plugins from 4.0.0-M1 to 3.2.0 / 3.1.1
 * Downgrade `doxia`-plguins from 2.0.0-M3 to 1.12.0

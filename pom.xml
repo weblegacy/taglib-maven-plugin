@@ -296,6 +296,10 @@
           </configuration>
         </plugin>
         <plugin>
+          <artifactId>maven-plugin-report-plugin</artifactId>
+          <version>${mavenPluginToolsVersion}</version>
+        </plugin>
+        <plugin>
           <artifactId>maven-pmd-plugin</artifactId>
           <version>3.21.2</version>
         </plugin>
@@ -691,7 +695,7 @@
         </reportSets>
       </plugin>
       <plugin>
-        <artifactId>maven-plugin-plugin</artifactId>
+        <artifactId>maven-plugin-report-plugin</artifactId>
       </plugin>
       <plugin>
         <artifactId>maven-pmd-plugin</artifactId>
