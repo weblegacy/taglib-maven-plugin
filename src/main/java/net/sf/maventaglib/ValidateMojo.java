@@ -1,7 +1,7 @@
 /*
  * The MIT License
  * Copyright © 2004-2014 Fabrizio Giustina
- * Copyright © 2022-2022 Web-Legacy
+ * Copyright © 2022-2024 Web-Legacy
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -155,7 +155,7 @@ public class ValidateMojo
             tldList.add( tld );
 
         }
-        if ( tldList.size() == 0 )
+        if ( tldList.isEmpty() )
         {
             getLog()
                 .info(
@@ -175,13 +175,13 @@ public class ValidateMojo
             throw new MavenReportException( e.getMessage(), e );
         }
 
-        List<URL> URLs = new ArrayList<>( classPathStrings.size() );
+        List<URL> urls = new ArrayList<>( classPathStrings.size() );
 
         for ( String classPathString : classPathStrings )
         {
             try
             {
-                URLs.add( new File( classPathString ).toURI().toURL() );
+                urls.add( new File( classPathString ).toURI().toURL() );
             }
             catch ( MalformedURLException e )
             {
@@ -191,7 +191,7 @@ public class ValidateMojo
 
         URLClassLoader projectClassLoader = AccessController.doPrivileged(
                 (PrivilegedAction<URLClassLoader>) () ->
-                        new URLClassLoader( URLs.toArray( new URL[0] ), null )
+                        new URLClassLoader( urls.toArray( new URL[0] ), null )
         );
 
         ValidateRenderer r = new ValidateRenderer( getSink(), locale,
@@ -215,7 +215,7 @@ public class ValidateMojo
 
         try
         {
-            return FileUtils.getFiles( srcDir, "**/*.tld", null ).size() > 0; //$NON-NLS-1$
+            return !FileUtils.getFiles( srcDir, "**/*.tld", null ).isEmpty(); //$NON-NLS-1$
         }
         catch ( IOException e )
         {

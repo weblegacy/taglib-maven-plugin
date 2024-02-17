@@ -1,5 +1,61 @@
 # Change-Log
 
+## 3.0.0 / YYYY-MM-DD
+
+* Replace `commons-logging` with `jcl-over-slf4j`
+* Set version of `commons-digester` to 2.1
+* Set version of `commons-chain` to 1.2
+* Exclude dependency `plexus-container-default`
+* Add missing `org.eclipse.sisu.plexus`
+* Add missing `slf4j-api`-dependency and bump from 1.7.5 to 1.7.36
+* Add missing test-dependencies for artifact-http-transfer
+* Change `maven-compat`-scope from `provided` to `test`
+* Change `javax.servlet.jsp-api`-scope from `compile` to `test`
+* Resort and group dependencies
+* Bump `jsp-api` 2.0 to `javax.servlet.jsp-api` 2.3.3
+* Bump `plexus-utils` from 3.4.2 to 4.0.0 and add `plexus-xml` 3.0.0
+* Bump `plexus-archiver` from 4.4.0 to 4.9.1
+* Bump `commons-lang3` from 3.12.0 to 3.14.0
+* Add missing `maven-surefire-report-plugin`
+* Add missing `maven-plugin-report-plugin`
+* Bump `maven-plugin-annotations` from 3.6.4 to 3.11.0
+* Downgrade `maven-reporting`-plugins from 4.0.0-M1 to 3.2.0 / 3.1.1
+* Downgrade `doxia`-plguins from 2.0.0-M3 to 1.12.0
+* Set minimum MAVEN-Plugin-Version from 3.8.6 to 3.2.5
+* Add plugin `maven-model`
+* Remove unused dependency `servlet-api`
+* Move `maven-assembly-plug`-configuration from `pluginManagement` to `plugin`
+* Bump `maven-gpg-plugin` from 3.0.1 to 3.1.0
+* Set minimum MAVEN-Version from 3.5.4 to 3.6.3
+* Bump `maven-fluido-skin` from 1.11.0 to 1.12.0
+* Bump `build-helper-maven-plugin` from 3.3.0 to 3.5.0
+* Bump `license-maven-plugin` from 4.2.rc3 to 4.3
+* Bump `spotbugs-maven-plugin` from 4.7.1.0 to 4.8.3.1
+* Bump `maven-surefire-plugin` from 3.0.0-M7 to 3.2.5
+* Bump `maven-source-plugin` from 3.2.1 to 3.3.0
+* Bump `maven-site-plugin` from 3.12.0 to 3.12.1
+* Bump `maven-scm-publish-plugin` from 3.1.0 to 3.2.1
+* Bump `maven-resources-plugin` from 3.2.0 to 3.3.1
+* Bump `maven-release-plugin` from 3.0.0-M6 to 3.0.1
+* Bump `maven-project-info-reports-plugin` from 3.3.0 to 3.5.0
+* Bump `maven-pmd-plugin` from 3.17.0 to 3.21.2
+* Bump `maven-plugin-plugin` from 3.6.4 to 3.11.0
+* Bump `maven-jxr-plugin` from 3.2.0 to 3.3.2
+* Bump `maven-javadoc-plugin` from 3.4.0 to 3.6.3
+* Bump `maven-jar-plugin` from 3.2.2 to 3.3.0
+* Bump `maven-install-plugin` from 3.0.0-M1 to 3.1.1
+* Bump `maven-enforcer-plugin` from 3.1.0 to 3.4.1
+* Bump `maven-deploy-plugin` from 3.0.0-M2 to 3.1.1
+* Bump `maven-dependency-plugin` from 3.3.0 to 3.6.1
+* Bump `maven-compiler-plugin` from 3.10.1 to 3.12.1
+* Bump `maven-clean-plugin` from 3.2.0 to 3.3.2
+* Bump `checkstyle` from 9.3 to 10.13.0
+* Bump `maven-checkstyle-plugin` from 3.1.2 to 3.3.1
+* Add missing plugin (assembly)
+* Add missing plugin (antrun)
+* Add `versions-maven-plugin` with reports
+* Set version to 3.0.0-SNAPSHOT
+
 ## 2.6 / 2022-07-19
 
 * Set Version to 2.6

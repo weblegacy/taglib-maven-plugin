@@ -1,7 +1,7 @@
 /*
  * The MIT License
  * Copyright © 2004-2014 Fabrizio Giustina
- * Copyright © 2022-2022 Web-Legacy
+ * Copyright © 2022-2024 Web-Legacy
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -145,7 +145,7 @@ public class TagreferenceMojo extends AbstractMavenReport
 
         }
 
-        if (tldList.size() == 0)
+        if (tldList.isEmpty())
         {
             getLog().info(
                 MessageFormat.format(Messages.getString("Taglib.notldfound"), srcDir.getAbsolutePath())); //$NON-NLS-1$
@@ -174,7 +174,7 @@ public class TagreferenceMojo extends AbstractMavenReport
 
         try
         {
-            return FileUtils.getFiles(srcDir, "**/*.tld", null).size() > 0;
+            return !FileUtils.getFiles(srcDir, "**/*.tld", null).isEmpty();
         }
         catch (IOException e)
         {

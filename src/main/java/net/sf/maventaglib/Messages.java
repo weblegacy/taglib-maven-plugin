@@ -1,7 +1,7 @@
 /*
  * The MIT License
  * Copyright © 2004-2014 Fabrizio Giustina
- * Copyright © 2022-2022 Web-Legacy
+ * Copyright © 2022-2024 Web-Legacy
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -90,7 +90,7 @@ public class Messages
         final ResourceBundle resourceBundle = locale == null
                 ? DFLT_RESOURCE_BUNDLE
                 : RESOURCE_BUNDLES.computeIfAbsent( locale.toString(),
-                        (k) -> ResourceBundle.getBundle( BUNDLE_NAME, locale ) );
+                        k -> ResourceBundle.getBundle( BUNDLE_NAME, locale ) );
         return getString( resourceBundle, key );
     }
 
