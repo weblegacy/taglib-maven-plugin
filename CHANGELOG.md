@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Add missing `maven-resolver-api`
 * Rename POM-property `encoding` to `sourceEncoding`
 * Set minimum MAVEN-Plugin-Version from 3.2.5 to 3.8.1
 * Correct testcases because downgraded `doxia`- and `maven-reporting`-versions
