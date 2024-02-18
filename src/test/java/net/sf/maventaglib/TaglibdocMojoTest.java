@@ -20,60 +20,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package net.sf.maventaglib;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-
+import java.nio.file.Path;
 import org.junit.Test;
-
 
 /**
  * Test for taglibdoc generation.
+ *
  * @author Fabrizio Giustina
- * @version $Revision: 217 $ ($Author: fgiust $)
+ *
+ * @version 2.3
  */
-public class TaglibdocMojoTest extends TaglibPluginTestBase
-{
+public class TaglibdocMojoTest extends TaglibPluginTestBase {
 
     /**
-     * test for the tag reference goal.
+     * Test for the tag reference goal.
+     *
      * @throws Exception any exception thrown during test
      */
     @Test
-    public final void testGoalTagreference() throws Exception
-    {
-
-        File basedir = new File("target/test-classes/project2/");
-        assertNotNull(basedir);
-        assertTrue(basedir.exists());
-
-        TaglibdocMojo myMojo = (TaglibdocMojo) rule.lookupConfiguredMojo(basedir, "taglibdoc");
-        assertNotNull(myMojo);
-        myMojo.execute();
-
-        assertFileExists(new File(basedir, "target/site/tlddoc/project2/ul.html"));
-        assertFileExists(new File(basedir, "target/site/tlddoc/project2/url.html"));
+    public final void testGoalTagreference() throws Exception {
+        final Path basedir = this.mojoExecute("project2", "taglibdoc");
+        assertFileExists(basedir, "target", "site", "tlddoc", "project2", "ul.html");
+        assertFileExists(basedir, "target", "site", "tlddoc", "project2", "url.html");
     }
 
     /**
-     * test for the tagglibdoc goal.
+     * Test for the tagglibdoc goal.
+     *
      * @throws Exception any exception thrown during test
      */
     @Test
-    public final void testGoalTaglibDoc() throws Exception
-    {
-        File basedir = new File("target/test-classes/project1/");
-        assertNotNull(basedir);
-        assertTrue(basedir.exists());
-
-        TaglibdocMojo myMojo = (TaglibdocMojo) rule.lookupConfiguredMojo(basedir, "taglibdoc");
-        assertNotNull(myMojo);
-        myMojo.execute();
-
-        assertFileExists(new File(basedir, "target/site/tlddoc/test-12-tld-a/jsp12tldtag1.html"));
+    public final void testGoalTaglibDoc() throws Exception {
+        final Path basedir = this.mojoExecute("project1", "taglibdoc");
+        assertFileExists(basedir, "target", "site", "tlddoc", "test-12-tld-a", "jsp12tldtag1.html");
     }
-
 }

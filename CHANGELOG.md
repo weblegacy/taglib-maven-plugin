@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Rewrite and reformat testcases
 * Use own `checkstyle.xml` (from tlddoc)
 * Add missing `maven-resolver-api`
 * Rename POM-property `encoding` to `sourceEncoding`

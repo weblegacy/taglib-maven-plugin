@@ -20,59 +20,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package net.sf.maventaglib;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-
-import org.apache.maven.artifact.repository.MavenArtifactRepository;
-import org.apache.maven.artifact.repository.layout.DefaultRepositoryLayout;
-import org.apache.maven.execution.MavenSession;
-import org.apache.maven.project.MavenProject;
-import org.codehaus.plexus.PlexusTestCase;
+import java.nio.file.Path;
 import org.junit.Test;
-
 
 /**
  * Test for tag reference generation.
+ *
  * @author Fabrizio Giustina
- * @version $Revision: 217 $ ($Author: fgiust $)
+ *
+ * @version 2.2
  */
-public class TagreferenceMojoTest extends TaglibPluginTestBase
-{
+public class TagreferenceMojoTest extends TaglibPluginTestBase {
 
     /**
-     * test for the tag reference goal.
+     * Test for the tag reference goal.
+     *
      * @throws Exception any exception thrown during test
      */
     @Test
-    public final void testGoalTagreference() throws Exception
-    {
-        File basedir = new File("target/test-classes/project1/");
-        assertNotNull(basedir);
-        assertTrue(basedir.exists());
-
-        MavenProject project = rule.readMavenProject(basedir);
-        MavenSession session = rule.newMavenSession(project);
-
-        File localRepo = new File(PlexusTestCase.getBasedir(), "target/local-repo");
-        MavenArtifactRepository repo = new MavenArtifactRepository(
-                "localRepository",
-                "file://" + localRepo.getAbsolutePath(),
-                new DefaultRepositoryLayout(),
-                null,
-                null);
-
-        session.getRequest().setLocalRepository(repo);
-
-        TagreferenceMojo myMojo = (TagreferenceMojo) rule.lookupConfiguredMojo(session, rule.newMojoExecution("tagreference"));
-        assertNotNull(myMojo);
-        myMojo.execute();
-
-        File outputFile = new File( basedir, "target/site/tagreference.html" );
-        assertFileExists( outputFile );
+    public final void testGoalTagreference() throws Exception {
+        final Path basedir = this.mojoExecute("project1", "tagreference");
+        assertFileExists(basedir, "target", "site", "tagreference.html");
     }
-
 }

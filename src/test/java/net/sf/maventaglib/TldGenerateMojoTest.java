@@ -20,62 +20,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package net.sf.maventaglib;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-
+import java.nio.file.Path;
 import org.junit.Test;
-
 
 /**
  * Test for taglibdoc generation.
+ *
  * @author Fabrizio Giustina
- * @version $Revision: 217 $ ($Author: fgiust $)
+ *
+ * @version 2.3
  */
-public class TldGenerateMojoTest extends TaglibPluginTestBase
-{
+public class TldGenerateMojoTest extends TaglibPluginTestBase {
 
     /**
-     * test for the tag generate goal (tag-files)
+     * Test for the tag generate goal (tag-files).
+     *
      * @throws Exception any exception thrown during test
      */
     @Test
-    public final void testTldGenerateWithTags() throws Exception
-    {
-
-        File basedir = new File("target/test-classes/project2/");
-        assertNotNull(basedir);
-        assertTrue(basedir.exists());
-
-        TldGenerateMojo myMojo = (TldGenerateMojo) rule.lookupConfiguredMojo(basedir, "tldgenerate");
-        assertNotNull(myMojo);
-        myMojo.execute();
-
-        assertFileExists(new File(basedir, "target/classes/META-INF/testtag.tld"));
-
+    public final void testTldGenerateWithTags() throws Exception {
+        final Path basedir = this.mojoExecute("project2", "tldgenerate");
+        assertFileExists(basedir, "target", "classes", "META-INF", "testtag.tld");
     }
 
     /**
-     * test for the tag generate goal (function-class).
+     * Test for the tag generate goal (function-class).
+     *
      * @throws Exception any exception thrown during test
      */
     @Test
-    public final void testTldGenerateWithFunctions() throws Exception
-    {
-
-        File basedir = new File("target/test-classes/project3/");
-        assertNotNull(basedir);
-        assertTrue(basedir.exists());
-
-        TldGenerateMojo myMojo = (TldGenerateMojo) rule.lookupConfiguredMojo(basedir, "tldgenerate");
-        assertNotNull(myMojo);
-        myMojo.execute();
-
-        assertFileExists(new File(basedir,"target/classes/META-INF/testtaglib.tld"));
-
+    public final void testTldGenerateWithFunctions() throws Exception {
+        final Path basedir = this.mojoExecute("project3", "tldgenerate");
+        assertFileExists(basedir, "target", "classes", "META-INF", "testtaglib.tld");
     }
-
 }

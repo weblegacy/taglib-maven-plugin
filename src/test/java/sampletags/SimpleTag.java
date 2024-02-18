@@ -20,22 +20,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package sampletags;
 
 import javax.servlet.jsp.tagext.TagSupport;
 
-
 /**
  * Simple tag for junit tests.
+ *
  * @author Fabrizio Giustina
- * @version $Revision: 217 $ ($Author: fgiust $)
+ *
+ * @version 2.2
  */
-public class SimpleTag extends TagSupport
-{
+public class SimpleTag extends TagSupport {
 
-    /**
-     * <code>serialVersionUID</code>.
-     */
     private static final long serialVersionUID = 1L;
 
     /**
@@ -45,20 +43,19 @@ public class SimpleTag extends TagSupport
 
     /**
      * Setter for ant attribute.
+     *
      * @return ant attribute value
      */
-    public String getAnt()
-    {
+    public String getAnt() {
         return this.ant;
     }
 
     /**
      * Setter for ant attribute.
+     *
      * @param value attribute value
      */
-    public void setAnt(String value)
-    {
+    public void setAnt(String value) {
         this.ant = value;
     }
-
 }
