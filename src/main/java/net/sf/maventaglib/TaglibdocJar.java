@@ -48,8 +48,7 @@ import org.codehaus.plexus.archiver.jar.JarArchiver;
  */
 @Mojo(name = "taglibdocjar", defaultPhase = LifecyclePhase.PACKAGE)
 @Execute(goal = "taglibdoc")
-public class TaglibdocJar
-        extends AbstractMojo {
+public class TaglibdocJar extends AbstractMojo {
 
     /**
      * TldDoc output dir.
@@ -84,8 +83,7 @@ public class TaglibdocJar
     private boolean attach = true;
 
     @Override
-    public void execute()
-            throws MojoExecutionException {
+    public void execute() throws MojoExecutionException {
         ArtifactHandler artifactHandler = project.getArtifact().getArtifactHandler();
         if (!"java".equals(artifactHandler.getLanguage())) {
             getLog().info("Not executing tlddoc as the project is not a "

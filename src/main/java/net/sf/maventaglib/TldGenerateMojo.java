@@ -147,33 +147,31 @@ public class TldGenerateMojo extends AbstractMojo {
             }
         }
 
-        if (taglibsList.isEmpty()) {
-            // old (pre 2.4) behavior, create taglib configurations from dir
-            if (tagDir.isDirectory()) {
-                // handle tag files. Add any directory containing .tag or .tagx files
-                List<File> tags = FileUtils.getFiles(tagDir, "**/*.tag", null);
-                tags.addAll(FileUtils.getFiles(tagDir, "**/*.tagx", null));
+        // old (pre 2.4) behavior, create taglib configurations from dir
+        if (taglibsList.isEmpty() && tagDir.isDirectory()) {
+            // handle tag files. Add any directory containing .tag or .tagx files
+            List<File> tags = FileUtils.getFiles(tagDir, "**/*.tag", null);
+            tags.addAll(FileUtils.getFiles(tagDir, "**/*.tagx", null));
 
-                if (!tags.isEmpty()) {
-                    Set<File> directories = new HashSet<>();
-                    for (File tag : tags) {
-                        directories.add(tag.getParentFile());
-                    }
-
-                    for (File dir : directories) {
-                        Taglib tlib = new Taglib();
-                        tlib.setTagdir(dir);
-                        tlib.setShortName(dir.getName());
-                        tlib.setOutputname(dir.getName() + ".tld");
-                        tlib.setUri(dir.getName());
-                        tlib.setShortName("Tag library for tag file directory " + dir.getName());
-                        taglibsList.add(tlib);
-                    }
-                } else {
-                    getLog().warn(MessageFormat.format(
-                            Messages.getString("Taglib.generating.notfound"),
-                            tagDir.getAbsolutePath()));
+            if (!tags.isEmpty()) {
+                Set<File> directories = new HashSet<>();
+                for (File tag : tags) {
+                    directories.add(tag.getParentFile());
                 }
+
+                for (File dir : directories) {
+                    Taglib tlib = new Taglib();
+                    tlib.setTagdir(dir);
+                    tlib.setShortName(dir.getName());
+                    tlib.setOutputname(dir.getName() + ".tld");
+                    tlib.setUri(dir.getName());
+                    tlib.setShortName("Tag library for tag file directory " + dir.getName());
+                    taglibsList.add(tlib);
+                }
+            } else {
+                getLog().warn(MessageFormat.format(
+                        Messages.getString("Taglib.generating.notfound"),
+                        tagDir.getAbsolutePath()));
             }
         }
 

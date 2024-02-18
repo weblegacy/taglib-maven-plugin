@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Resolve all CPD and PMD messages
 * Reformat sources and resolve all checkstyle messages
 * Rewrite and reformat testcases
 * Use own `checkstyle.xml` (from tlddoc)

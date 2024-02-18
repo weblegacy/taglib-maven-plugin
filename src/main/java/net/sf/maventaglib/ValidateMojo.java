@@ -25,29 +25,18 @@
 package net.sf.maventaglib;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import javax.xml.parsers.DocumentBuilder;
 import net.sf.maventaglib.checker.Tld;
-import net.sf.maventaglib.checker.TldParser;
-import net.sf.maventaglib.util.XmlHelper;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
-import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;
-import org.codehaus.plexus.util.FileUtils;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 /**
  * Generates a tag library validation report.
@@ -55,13 +44,7 @@ import org.xml.sax.SAXException;
  * @author Fabrizio Giustina
  */
 @Mojo(name = "validate")
-public class ValidateMojo extends AbstractMavenReport {
-
-    /**
-     * Directory containing tld files. Subdirectories are also processed.
-     */
-    @Parameter(alias = "taglib.src.dir", defaultValue = "src/main/resources/META-INF")
-    private File srcDir;
+public class ValidateMojo extends AbstractReportMojoEx {
 
     @Override
     public String getName(Locale locale) {
@@ -80,59 +63,16 @@ public class ValidateMojo extends AbstractMavenReport {
 
     @Override
     protected void executeReport(Locale locale) throws MavenReportException {
-        if (!srcDir.isDirectory()) {
-            throw new MavenReportException(MessageFormat.format(
-                    Messages.getString("Taglib.notadir"), srcDir.getAbsolutePath()));
-        }
+        final List<Tld> tldList = loadTldFiles();
 
-        getLog().debug(MessageFormat.format(
-                Messages.getString("Taglib.validating"), srcDir.getAbsolutePath()));
-
-        DocumentBuilder builder;
-
-        try {
-            builder = XmlHelper.getDocumentBuilder();
-        } catch (MojoExecutionException e) {
-            throw new MavenReportException(e.getMessage(), e);
-        }
-
-        List<File> tlds;
-        try {
-            tlds = FileUtils.getFiles(srcDir, "**/*.tld", null);
-        } catch (IOException e) {
-            throw new MavenReportException(e.getMessage(), e);
-        }
-
-        List<Tld> tldList = new ArrayList<>();
-        for (File current : tlds) {
-            Document tldDoc;
-            try {
-                tldDoc = builder.parse(current);
-            } catch (IOException | SAXException e) {
-                throw new MavenReportException(MessageFormat.format(
-                        Messages.getString("Taglib.errorwhileparsing"), current.getAbsolutePath()),
-                        e);
-            }
-
-            Tld tld = TldParser.parse(tldDoc, current.getName());
-            tldList.add(tld);
-
-        }
-        if (tldList.isEmpty()) {
-            getLog().info(MessageFormat.format(
-                    Messages.getString("Taglib.notldfound"), srcDir.getAbsolutePath()));
-            return;
-        }
-
-        List<String> classPathStrings;
+        final List<String> classPathStrings;
         try {
             classPathStrings = this.project.getCompileClasspathElements();
         } catch (DependencyResolutionRequiredException e) {
             throw new MavenReportException(e.getMessage(), e);
         }
 
-        List<URL> urls = new ArrayList<>(classPathStrings.size());
-
+        final List<URL> urls = new ArrayList<>(classPathStrings.size());
         for (String classPathString : classPathStrings) {
             try {
                 urls.add(new File(classPathString).toURI().toURL());
@@ -151,19 +91,5 @@ public class ValidateMojo extends AbstractMavenReport {
                 projectClassLoader);
 
         r.render();
-    }
-
-    @Override
-    public boolean canGenerateReport() {
-        if (!srcDir.isDirectory()) {
-            return false;
-        }
-
-        try {
-            return !FileUtils.getFiles(srcDir, "**/*.tld", null).isEmpty();
-        } catch (IOException e) {
-            getLog().error(e.getMessage(), e);
-        }
-        return false;
     }
 }

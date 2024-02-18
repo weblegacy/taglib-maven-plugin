@@ -24,48 +24,49 @@
 
 package net.sf.maventaglib;
 
-import java.util.List;
-import java.util.Locale;
-import net.sf.maventaglib.checker.Tld;
-import org.apache.maven.plugins.annotations.Mojo;
+import java.io.File;
+import java.io.IOException;
 import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.reporting.MavenReportException;
+import org.apache.maven.reporting.AbstractMavenReport;
+import org.codehaus.plexus.util.FileUtils;
 
 /**
- * Generates a tag reference xdoc that can be integrated in a maven generated site.
+ * An abstract class for the {@code Mojo}s of this plugin.
  *
- * @author Fabrizio Giustina
+ * @author ste-gr
  */
-@Mojo(name = "tagreference")
-public class TagreferenceMojo extends AbstractReportMojoEx {
+public abstract class AbstractReportMojo extends AbstractMavenReport {
 
     /**
-     * Whether to parse html in the description of tld info, tags and attributes. The default value
-     * is false.
+     * If set, only file contained directly in the specified directory are used.
      */
-    @Parameter(defaultValue = "false")
-    private boolean parseHtml;
+    @Parameter
+    protected boolean dontRecurseIntoSubdirs;
 
-    @Override
-    public String getOutputName() {
-        return "tagreference";
-    }
+    /**
+     * Returns {@code true} if at least one file is found with one of the given extensions.
+     *
+     * @param dir  to source the files
+     * @param exts the extensions to test
+     *
+     * @return {@code true} if at least on file is found
+     */
+    protected boolean hasFiles(final File dir, final String... exts) {
+        if (!dir.isDirectory()) {
+            return false;
+        }
 
-    @Override
-    public String getName(Locale locale) {
-        return Messages.getString(locale, "Tagreference.name");
-    }
+        final String searchprefix = dontRecurseIntoSubdirs ? "" : "**/";
 
-    @Override
-    public String getDescription(Locale locale) {
-        return Messages.getString(locale, "Tagreference.description");
-    }
-
-    @Override
-    protected void executeReport(Locale locale) throws MavenReportException {
-        final List<Tld> tldList = loadTldFiles();
-
-        new TagreferenceRenderer(getSink(), locale, tldList.toArray(new Tld[0]), parseHtml,
-                getLog()).render();
+        try {
+            for (String ext : exts) {
+                if (!FileUtils.getFiles(dir, searchprefix + "*." + ext, null).isEmpty()) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            getLog().error(e.getMessage(), e);
+        }
+        return false;
     }
 }

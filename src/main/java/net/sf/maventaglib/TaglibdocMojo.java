@@ -36,8 +36,6 @@ import java.util.Set;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.reporting.AbstractMavenReport;
-import org.apache.maven.reporting.MavenReport;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.plexus.util.FileUtils;
 
@@ -47,7 +45,7 @@ import org.codehaus.plexus.util.FileUtils;
  * @author Fabrizio Giustina
  */
 @Mojo(name = "taglibdoc")
-public class TaglibdocMojo extends AbstractMavenReport implements MavenReport {
+public class TaglibdocMojo extends AbstractReportMojo {
 
     /**
      * The title for tlddoc generated documentation.
@@ -63,16 +61,10 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport {
 
     /**
      * Directory containing tld or tag files. Subdirectories are also processed, unless the
-     * "dontRecurseIntoSubdirs" parameter is set.
+     * {@code dontRecurseIntoSubdirs} parameter is set.
      */
     @Parameter(alias = "taglib.src.dir", defaultValue = "src/main/resources/META-INF")
-    private File srcDir;
-
-    /**
-     * If set, only file contained directly in the specified directory are used.
-     */
-    @Parameter
-    private boolean dontRecurseIntoSubdirs;
+    protected File srcDir;
 
     /**
      * Directory containing custom xsl files (equivalent to the "-xslt" parameter to tlddoc).
@@ -82,8 +74,14 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport {
 
     @Override
     public void execute() throws MojoExecutionException {
-        getLog().debug(MessageFormat.format(Messages.getString("Taglib.generating.tlddoc"),
-                srcDir.getAbsolutePath()));
+        if (!srcDir.isDirectory()) {
+            throw new MojoExecutionException(MessageFormat.format(
+                    Messages.getString("Taglib.notadir"), srcDir.getAbsolutePath()));
+        }
+
+        getLog().debug(MessageFormat.format(
+                Messages.getString("Taglib.generating.tlddoc"), srcDir.getAbsolutePath()));
+
         TLDDocGenerator generator = new TLDDocGenerator();
         generator.setOutputDirectory(tldDocDir);
         generator.setQuiet(true);
@@ -92,12 +90,7 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport {
             generator.setXSLTDirectory(xsltDir);
         }
 
-        String searchprefix = dontRecurseIntoSubdirs ? "" : "**/";
-
-        if (!srcDir.isDirectory()) {
-            throw new MojoExecutionException(MessageFormat.format(
-                    Messages.getString("Taglib.notadir"), srcDir.getAbsolutePath()));
-        }
+        final String searchprefix = dontRecurseIntoSubdirs ? "" : "**/";
 
         try {
             // handle tlds
@@ -119,7 +112,6 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport {
                     generator.addTagDir(directory);
                 }
             }
-
         } catch (IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
@@ -139,7 +131,6 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport {
         } catch (MojoExecutionException e) {
             throw new MavenReportException(e.getMessage(), e);
         }
-
     }
 
     @Override
@@ -164,17 +155,6 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport {
 
     @Override
     public boolean canGenerateReport() {
-        if (!srcDir.isDirectory()) {
-            return false;
-        }
-
-        try {
-            boolean hasTldFiles = !FileUtils.getFiles(srcDir, "**/*.tld", null).isEmpty();
-            boolean hasTagFiles = !FileUtils.getFiles(srcDir, "**/*.tag", null).isEmpty();
-            return hasTldFiles || hasTagFiles;
-        } catch (IOException e) {
-            getLog().error(e.getMessage(), e);
-        }
-        return false;
+        return hasFiles(srcDir, "tld", "tag", "tagx");
     }
 }
