@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package net.sf.maventaglib.checker;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -29,81 +30,110 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-
 /**
  * Contains information about a tag.
+ *
  * @author Fabrizio Giustina
- * @version $Revision $ ($Author $)
  */
-public class Tag extends TldItem
-{
+public class Tag extends TldItem {
 
+    /**
+     * The tag-class information.
+     */
     private String tagClass;
 
+    /**
+     * The tei-class information.
+     */
     private String teiClass;
 
+    /**
+     * The body-content information.
+     */
     private String bodycontent;
 
+    /**
+     * The attributs of the tag.
+     */
     private TagAttribute[] attributes;
 
+    /**
+     * The variables of the tag.
+     */
     private TagVariable[] variables;
 
-    public TagAttribute[] getAttributes()
-    {
+    /**
+     * Gets the attributes of the tag.
+     *
+     * @return the attributes of the tag
+     */
+    public TagAttribute[] getAttributes() {
         return this.attributes;
     }
 
-    public void setAttributes(TagAttribute[] tagAttributes)
-    {
+    /**
+     * Sets the attributes of the tag.
+     *
+     * @param tagAttributes the attributes of the tag
+     */
+    public void setAttributes(TagAttribute[] tagAttributes) {
         this.attributes = tagAttributes;
     }
 
-    public String getTagClass()
-    {
+    /**
+     * Gets the tag-class of the tag.
+     *
+     * @return the tag-class of the tag
+     */
+    public String getTagClass() {
         return this.tagClass;
     }
 
-    public void setTagClass(String className)
-    {
+    /**
+     * Sets the tag-class of the tag.
+     *
+     * @param className the tag-class of the tag
+     */
+    public void setTagClass(String className) {
         this.tagClass = className;
     }
 
-    public String getTeiClass()
-    {
+    /**
+     * Gets the tei-class of the tag.
+     *
+     * @return the tei-class of the tag
+     */
+    public String getTeiClass() {
         return this.teiClass;
     }
 
-    public void setTeiClass(String className)
-    {
+    /**
+     * Sets the tei-class of the tag.
+     *
+     * @param className the tei-class of the tag
+     */
+    public void setTeiClass(String className) {
         this.teiClass = className;
     }
 
-    public String getBodycontent()
-    {
+    public String getBodycontent() {
         return this.bodycontent;
     }
 
-    public void setBodycontent(String bodycontent)
-    {
+    public void setBodycontent(String bodycontent) {
         this.bodycontent = bodycontent;
     }
 
-    public TagVariable[] getVariables()
-    {
+    public TagVariable[] getVariables() {
         return this.variables;
     }
 
-    public void setVariables(TagVariable[] variables)
-    {
+    public void setVariables(TagVariable[] variables) {
         this.variables = variables;
     }
 
-    /**
-     * @see java.lang.Comparable#compareTo(Object)
-     */
     @Override
-    public int compareTo(TldItem object)
-    {
+    public int compareTo(TldItem object) {
         int ret = super.compareTo(object);
         if (ret != 0) {
             return ret;
@@ -111,20 +141,15 @@ public class Tag extends TldItem
 
         Tag rhs = (Tag) object;
         return new CompareToBuilder()
-            .append(this.tagClass, rhs.tagClass)
-            .append(this.teiClass, rhs.teiClass)
-            .append(this.attributes, rhs.attributes)
-            .toComparison();
+                .append(this.tagClass, rhs.tagClass)
+                .append(this.teiClass, rhs.teiClass)
+                .append(this.attributes, rhs.attributes)
+                .toComparison();
     }
 
-    /**
-     * @see java.lang.Object#equals(Object)
-     */
     @Override
-    public boolean equals(Object obj)
-    {
-        if(obj == null || !super.equals(obj))
-        {
+    public boolean equals(Object obj) {
+        if (obj == null || !super.equals(obj)) {
             return false;
         }
 
@@ -134,11 +159,8 @@ public class Tag extends TldItem
                 .append(this.teiClass, rhs.teiClass)
                 .append(this.attributes, rhs.attributes)
                 .isEquals();
-      }
+    }
 
-    /**
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
@@ -147,18 +169,15 @@ public class Tag extends TldItem
                 .append(this.teiClass)
                 .append(this.attributes)
                 .toHashCode();
-      }
-
-    /**
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString()
-    {
-        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append("name", this.getName()) //$NON-NLS-1$
-            .append("tagClass", this.tagClass).append("teiClass", this.teiClass).append("attributes", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                this.attributes)
-            .toString();
     }
 
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE)
+                .append("name", this.getName())
+                .append("tagClass", this.tagClass)
+                .append("teiClass", this.teiClass)
+                .append("attributes", this.attributes)
+                .toString();
+    }
 }

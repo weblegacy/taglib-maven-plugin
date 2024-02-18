@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package net.sf.maventaglib.checker;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -30,140 +31,136 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * Javabean representing a tag attribute.
+ * Java-Bean representing a tag attribute.
+ *
  * @author Fabrizio Giustina
- * @version $Revision: 217 $ ($Author: fgiust $)
  */
 public class TagAttribute
-    implements Comparable<TagAttribute>
-{
+        implements Comparable<TagAttribute> {
 
+    /**
+     * The name of the attribute.
+     */
     private String name;
 
+    /**
+     * The type of the attribute.
+     */
     private String type;
 
+    /**
+     * The description of the attribute.
+     */
     private String description;
 
+    /**
+     * If the attribute is required.
+     */
     private boolean required;
 
+    /**
+     * If the attribute is deprecated.
+     */
     private boolean deprecated;
 
+    /**
+     * If the attribute is a runtime-expression-value.
+     */
     private boolean rtexprvalue;
 
-    public String getName()
-    {
+    public String getName() {
         return this.name;
     }
 
-    public void setName( String attributeName )
-    {
+    public void setName(String attributeName) {
         this.name = attributeName;
     }
 
-    public String getType()
-    {
+    public String getType() {
         return this.type;
     }
 
-    public void setType( String attributeType )
-    {
+    public void setType(String attributeType) {
         this.type = attributeType;
     }
 
-    public boolean isDeprecated()
-    {
+    public boolean isDeprecated() {
         return this.deprecated;
     }
 
-    public void setDeprecated( boolean deprecated )
-    {
+    public void setDeprecated(boolean deprecated) {
         this.deprecated = deprecated;
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return this.description;
     }
 
-    public void setDescription( String description )
-    {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public boolean isRequired()
-    {
+    public boolean isRequired() {
         return this.required;
     }
 
-    public void setRequired( boolean required )
-    {
+    public void setRequired(boolean required) {
         this.required = required;
     }
 
-    public boolean isRtexprvalue()
-    {
+    public boolean isRtexprvalue() {
         return this.rtexprvalue;
     }
 
-    public void setRtexprvalue( boolean rtexprvalue )
-    {
+    public void setRtexprvalue(boolean rtexprvalue) {
         this.rtexprvalue = rtexprvalue;
     }
 
-    /**
-     * @see java.lang.Comparable#compareTo(Object)
-     */
-    public int compareTo( TagAttribute object )
-    {
-        return new CompareToBuilder().append( this.deprecated, object.deprecated ).append( this.name, object.name )
-            .toComparison();
+    @Override
+    public int compareTo(TagAttribute object) {
+        return new CompareToBuilder()
+                .append(this.deprecated, object.deprecated)
+                .append(this.name, object.name)
+                .toComparison();
     }
 
-    /**
-     * @see java.lang.Object#equals(Object)
-     */
     @Override
-    public boolean equals( Object obj )
-    {
-        if( obj == null )
-        {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
 
-        if( obj == this )
-        {
+        if (obj == this) {
             return true;
         }
 
-        if( obj.getClass() != getClass() )
-        {
+        if (obj.getClass() != getClass()) {
             return false;
         }
 
         TagAttribute rhs = (TagAttribute) obj;
-        return new EqualsBuilder().append( this.deprecated, rhs.deprecated ).append( this.name, rhs.name )
+        return new EqualsBuilder()
+                .append(this.deprecated, rhs.deprecated)
+                .append(this.name, rhs.name)
                 .isEquals();
-      }
-
-    /**
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append( this.deprecated ).append( this.name )
-                .toHashCode();
-      }
-
-    /**
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString()
-    {
-        return new ToStringBuilder( this, ToStringStyle.SHORT_PREFIX_STYLE ).append( "name", this.name ) //$NON-NLS-1$
-            .append( "description", this.description ).append( "deprecated", this.deprecated ).append( "type", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                                                                                                       this.type )
-            .append( "required", this.required ).toString(); //$NON-NLS-1$
     }
 
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(this.deprecated)
+                .append(this.name)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("name", this.name)
+                .append("description", this.description)
+                .append("deprecated", this.deprecated)
+                .append("type", this.type)
+                .append("required", this.required)
+                .toString();
+    }
 }

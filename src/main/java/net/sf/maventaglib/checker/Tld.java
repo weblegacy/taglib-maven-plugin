@@ -21,47 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package net.sf.maventaglib.checker;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-
 /**
  * Contains information about a single tag library.
+ *
  * @author Fabrizio Giustina
- * @version $Revision $ ($Author $)
  */
-public class Tld
-{
+public class Tld {
 
     /**
-     * tag library shortname.
+     * The tag library shortname.
      */
     private String name;
 
     /**
-     * tag library shortname.
+     * The tag library shortname.
      */
     private String shortname;
 
     /**
-     * tld file name.
+     * The tld file name.
      */
     private String filename;
 
     /**
-     * tlibversion.
+     * The tlibversion.
      */
     private String tlibversion;
 
     /**
-     * taglib uri.
+     * The taglib uri.
      */
     private String uri;
 
     /**
-     * info/description.
+     * The info/description.
      */
     private String info;
 
@@ -76,179 +75,177 @@ public class Tld
     private TagFile[] tagfiles;
 
     /**
-     * List of EL Functions
+     * List of EL Functions.
      */
-    private ELFunction[] functions;
+    private ElFunction[] functions;
 
     /**
+     * Gets the filename.
+     *
      * @return Returns the filename.
      */
-    public String getFilename()
-    {
+    public String getFilename() {
         return this.filename;
     }
 
     /**
+     * Sets the filename.
+     *
      * @param file The filename to set.
      */
-    public void setFilename( String file )
-    {
+    public void setFilename(String file) {
         this.filename = file;
     }
 
     /**
      * Returns the shortname for this library.
+     *
      * @return shortname for this tag library
      */
-    public String getName()
-    {
+    public String getName() {
         return this.name;
     }
 
     /**
      * Sets the shortname for this library.
+     *
      * @param tagLibName shortname for this tag library.
      */
-    public void setName( String tagLibName )
-    {
+    public void setName(String tagLibName) {
         this.name = tagLibName;
     }
 
     /**
      * Returnss the list of tags in this tag library.
+     *
      * @return list of tags in this tag library
      */
-    public Tag[] getTags()
-    {
+    public Tag[] getTags() {
         return this.tags;
     }
 
     /**
-     * Getter for <code>uri</code>.
+     * Getter for {@code uri}.
+     *
      * @return Returns the uri.
      */
-    public String getUri()
-    {
+    public String getUri() {
         return this.uri;
     }
 
     /**
-     * Setter for <code>uri</code>.
+     * Setter for {@code uri}.
+     *
      * @param uri The uri to set.
      */
-    public void setUri( String uri )
-    {
+    public void setUri(String uri) {
         this.uri = uri;
     }
 
     /**
      * Sets the list of tags in this tag library.
+     *
      * @param tagList list of tags in this tag library
      */
-    public void setTags( Tag[] tagList )
-    {
+    public void setTags(Tag[] tagList) {
         this.tags = tagList;
     }
 
-    /**
-     * @see java.lang.Object#toString()
-     */
     @Override
-    public String toString()
-    {
-        return new ToStringBuilder( this, ToStringStyle.SIMPLE_STYLE ).append( "name", this.name ).append( "tags", //$NON-NLS-1$ //$NON-NLS-2$
-                                                                                                           this.tags )
-            .toString();
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE)
+                .append("name", this.name)
+                .append("tags", this.tags)
+                .toString();
     }
 
     /**
-     * Getter for <code>shortname</code>.
+     * Getter for {@code shortname}.
+     *
      * @return Returns the shortname.
      */
-    public String getShortname()
-    {
+    public String getShortname() {
         return this.shortname;
     }
 
     /**
-     * Setter for <code>shortname</code>.
+     * Setter for {@code shortname}.
+     *
      * @param shortname The shortname to set.
      */
-    public void setShortname( String shortname )
-    {
+    public void setShortname(String shortname) {
         this.shortname = shortname;
     }
 
     /**
-     * Getter for <code>info</code>.
+     * Getter for {@code info}.
+     *
      * @return Returns the info.
      */
-    public String getInfo()
-    {
+    public String getInfo() {
         return this.info;
     }
 
     /**
-     * Setter for <code>info</code>.
+     * Setter for {@code info}.
+     *
      * @param info The info to set.
      */
-    public void setInfo( String info )
-    {
+    public void setInfo(String info) {
         this.info = info;
     }
 
     /**
-     * Getter for <code>tlibversion</code>.
+     * Getter for {@code tlibversion}.
+     *
      * @return Returns the tlibversion.
      */
-    public String getTlibversion()
-    {
+    public String getTlibversion() {
         return this.tlibversion;
     }
 
     /**
-     * Setter for <code>tlibversion</code>.
+     * Setter for {@code tlibversion}.
+     *
      * @param tlibversion The tlibversion to set.
      */
-    public void setTlibversion( String tlibversion )
-    {
+    public void setTlibversion(String tlibversion) {
         this.tlibversion = tlibversion;
     }
 
     /**
      * Returns the functions.
+     *
      * @return the functions
      */
-    public ELFunction[] getFunctions()
-    {
+    public ElFunction[] getFunctions() {
         return functions;
     }
 
     /**
      * Sets the functions.
+     *
      * @param functions the functions to set
      */
-    public void setFunctions(ELFunction[] functions)
-    {
+    public void setFunctions(ElFunction[] functions) {
         this.functions = functions;
     }
 
     /**
      * Returns the tagfiles.
+     *
      * @return the tagfiles
      */
-    public TagFile[] getTagfiles()
-    {
+    public TagFile[] getTagfiles() {
         return tagfiles;
     }
 
     /**
      * Sets the tagfiles.
+     *
      * @param tagfiles the tagfiles to set
      */
-    public void setTagfiles(TagFile[] tagfiles)
-    {
+    public void setTagfiles(TagFile[] tagfiles) {
         this.tagfiles = tagfiles;
     }
-
 }

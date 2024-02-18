@@ -21,18 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package net.sf.maventaglib;
 
 import java.util.Locale;
-
 import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.reporting.AbstractMavenReportRenderer;
 
 /**
+ * An abstract class to manage report generation of this plugin.
+ *
  * @author ste-gr
  */
-public abstract class AbstractMavenTaglibReportRenderer extends AbstractMavenReportRenderer
-{
+public abstract class AbstractMavenTaglibReportRenderer extends AbstractMavenReportRenderer {
 
     /**
      * The defined locale for the messages.
@@ -40,30 +41,28 @@ public abstract class AbstractMavenTaglibReportRenderer extends AbstractMavenRep
     private final Locale locale;
 
     /**
-     * Class-Constructor
+     * The class-constructor.
      *
-     * @param sink the sink to use.
+     * @param sink   the sink to use.
      * @param locale the wanted locale to return the report's description, could be {@code null}.
      */
-    protected AbstractMavenTaglibReportRenderer( Sink sink, Locale locale )
-    {
+    protected AbstractMavenTaglibReportRenderer(Sink sink, Locale locale) {
         super(sink);
         this.locale = locale;
     }
 
     /**
-     * Gets a string for the given key from the resource bundle with the defined locale.
-     * If the locale is {@code null}, then the default-locale is used.
+     * Gets a string for the given key from the resource bundle with the defined locale. If the
+     * locale is {@code null}, then the default-locale is used.
      *
      * @param key the key for the desired string
      *
      * @exception NullPointerException if {@code key} is {@code null}
-     * @exception ClassCastException if the object found for the given key is not a string
+     * @exception ClassCastException   if the object found for the given key is not a string
      *
      * @return the string for the given key with the defined locale
      */
-    protected String getMessageString( String key )
-    {
+    protected String getMessageString(String key) {
         return Messages.getString(locale, key);
     }
 }

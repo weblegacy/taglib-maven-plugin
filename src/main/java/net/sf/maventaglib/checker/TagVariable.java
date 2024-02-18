@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package net.sf.maventaglib.checker;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -30,141 +31,139 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * Javabean representing a tag attribute.
+ * Java-Bean representing a tag attribute.
+ *
  * @author Fabrizio Giustina
- * @version $Revision: 217 $ ($Author: fgiust $)
  */
-public class TagVariable
-    implements Comparable<TagVariable>
-{
+public class TagVariable implements Comparable<TagVariable> {
+
+    /**
+     * The name-given of the tag attribute.
+     */
     private String nameGiven;
 
+    /**
+     * The name-from-attribute of the tag attribute.
+     */
     private String nameFromAttribute;
 
+    /**
+     * The type of the tag attribute.
+     */
     private String type;
 
+    /**
+     * The scope of the tag attribute.
+     */
     private String scope;
 
+    /**
+     * The description of the tag attribute.
+     */
     private String description;
 
+    /**
+     * If the tag attribute is deprecated.
+     */
     private boolean deprecated;
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return this.description;
     }
 
-    public void setDescription( String description )
-    {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getNameGiven()
-    {
+    public String getNameGiven() {
         return this.nameGiven;
     }
 
-    public void setNameGiven( String name )
-    {
+    public void setNameGiven(String name) {
         this.nameGiven = name;
     }
 
-    public String getScope()
-    {
+    public String getScope() {
         return this.scope;
     }
 
-    public void setScope( String scope )
-    {
+    public void setScope(String scope) {
         this.scope = scope;
     }
 
-    public String getType()
-    {
+    public String getType() {
         return this.type;
     }
 
-    public void setType( String type )
-    {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public String getNameFromAttribute()
-    {
+    public String getNameFromAttribute() {
         return this.nameFromAttribute;
     }
 
-    public void setNameFromAttribute( String nameFromAttribute )
-    {
+    public void setNameFromAttribute(String nameFromAttribute) {
         this.nameFromAttribute = nameFromAttribute;
     }
 
-    public boolean isDeprecated()
-    {
+    public boolean isDeprecated() {
         return this.deprecated;
     }
 
-    public void setDeprecated( boolean deprecated )
-    {
+    public void setDeprecated(boolean deprecated) {
         this.deprecated = deprecated;
     }
 
-    /**
-     * @see java.lang.Object#toString()
-     */
     @Override
-    public String toString()
-    {
-        return new ToStringBuilder( this, ToStringStyle.SHORT_PREFIX_STYLE ).append( "nameGiven", this.nameGiven ) //$NON-NLS-1$
-            .append( "description", this.description ).append( "deprecated", this.deprecated ).append( "type", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                                                                                                       this.type )
-            .append( "scope", this.scope ).append( "nameFromAttribute", this.nameFromAttribute ).toString(); //$NON-NLS-1$ //$NON-NLS-2$
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("nameGiven", this.nameGiven)
+                .append("description", this.description)
+                .append("deprecated", this.deprecated)
+                .append("type", this.type)
+                .append("scope", this.scope)
+                .append("nameFromAttribute", this.nameFromAttribute)
+                .toString();
     }
 
-    /**
-     * @see java.lang.Comparable#compareTo(Object)
-     */
-    public int compareTo( TagVariable object )
-    {
-        return new CompareToBuilder().append( this.deprecated, object.deprecated ).append( this.nameGiven,
-                                                                                           object.nameGiven )
-            .append( this.nameFromAttribute, object.nameFromAttribute ).toComparison();
+    @Override
+    public int compareTo(TagVariable object) {
+        return new CompareToBuilder()
+                .append(this.deprecated, object.deprecated)
+                .append(this.nameGiven, object.nameGiven)
+                .append(this.nameFromAttribute, object.nameFromAttribute)
+                .toComparison();
     }
 
-    /**
-     * @see java.lang.Object#equals(Object)
-     */
     @Override
-    public boolean equals( Object obj )
-    {
-        if( obj == null )
-        {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
 
-        if( obj == this )
-        {
+        if (obj == this) {
             return true;
         }
 
-        if( obj.getClass() != getClass() )
-        {
+        if (obj.getClass() != getClass()) {
             return false;
         }
 
         TagVariable rhs = (TagVariable) obj;
-        return new EqualsBuilder().append( this.deprecated, rhs.deprecated ).append( this.nameGiven,
-                                                                                     rhs.nameGiven )
-            .append( this.nameFromAttribute, rhs.nameFromAttribute ).isEquals();
-      }
+        return new EqualsBuilder()
+                .append(this.deprecated, rhs.deprecated)
+                .append(this.nameGiven, rhs.nameGiven)
+                .append(this.nameFromAttribute, rhs.nameFromAttribute)
+                .isEquals();
+    }
 
-    /**
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append( this.deprecated ).append( this.nameGiven )
-            .append( this.nameFromAttribute ).toHashCode();
-      }
-
+        return new HashCodeBuilder()
+                .append(this.deprecated)
+                .append(this.nameGiven)
+                .append(this.nameFromAttribute)
+                .toHashCode();
+    }
 }

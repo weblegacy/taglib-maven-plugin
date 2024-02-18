@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package net.sf.maventaglib.checker;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -28,38 +29,37 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
+ * Contains information about a file.
+ *
  * @author fgiust
- * @version $Id: TagFile.java 217 2014-08-15 20:50:32Z fgiust $
  */
-public class TagFile extends TldItem
-{
+public class TagFile extends TldItem {
 
+    /**
+     * The path.
+     */
     private String path;
 
     /**
      * Returns the path.
+     *
      * @return the path
      */
-    public String getPath()
-    {
+    public String getPath() {
         return path;
     }
 
     /**
      * Sets the path.
+     *
      * @param path the path to set
      */
-    public void setPath(String path)
-    {
+    public void setPath(String path) {
         this.path = path;
     }
 
-    /**
-     * @see java.lang.Comparable#compareTo(Object)
-     */
     @Override
-    public int compareTo(TldItem object)
-    {
+    public int compareTo(TldItem object) {
         int ret = super.compareTo(object);
         if (ret != 0) {
             return ret;
@@ -67,19 +67,14 @@ public class TagFile extends TldItem
 
         TagFile rhs = (TagFile) object;
         return new CompareToBuilder()
-            .appendSuper(super.compareTo(object))
-            .append(this.path, rhs.path)
-            .toComparison();
+                .appendSuper(super.compareTo(object))
+                .append(this.path, rhs.path)
+                .toComparison();
     }
 
-    /**
-     * @see java.lang.Object#equals(Object)
-     */
     @Override
-    public boolean equals(Object obj)
-    {
-        if(obj == null || !super.equals(obj))
-        {
+    public boolean equals(Object obj) {
+        if (obj == null || !super.equals(obj)) {
             return false;
         }
 
@@ -88,17 +83,13 @@ public class TagFile extends TldItem
                 .appendSuper(super.equals(obj))
                 .append(this.path, rhs.path)
                 .isEquals();
-      }
+    }
 
-    /**
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
                 .appendSuper(super.hashCode())
                 .append(this.path)
                 .toHashCode();
-      }
-
+    }
 }

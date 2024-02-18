@@ -21,114 +21,105 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package net.sf.maventaglib;
 
 import java.io.StringReader;
 import java.text.MessageFormat;
 import java.util.Locale;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.maven.doxia.module.xhtml5.Xhtml5Parser;
-import org.apache.maven.doxia.parser.ParseException;
-import org.apache.maven.doxia.sink.Sink;
-import org.apache.maven.doxia.util.HtmlTools;
-import org.apache.maven.plugin.logging.Log;
-import org.apache.maven.reporting.AbstractMavenReportRenderer;
-
-import net.sf.maventaglib.checker.ELFunction;
+import net.sf.maventaglib.checker.ElFunction;
 import net.sf.maventaglib.checker.Tag;
 import net.sf.maventaglib.checker.TagAttribute;
 import net.sf.maventaglib.checker.TagFile;
 import net.sf.maventaglib.checker.TagVariable;
 import net.sf.maventaglib.checker.Tld;
 import net.sf.maventaglib.checker.TldItem;
-
+import org.apache.commons.lang3.StringUtils;
+import org.apache.maven.doxia.module.xhtml5.Xhtml5Parser;
+import org.apache.maven.doxia.parser.ParseException;
+import org.apache.maven.doxia.sink.Sink;
+import org.apache.maven.doxia.util.HtmlTools;
+import org.apache.maven.plugin.logging.Log;
 
 /**
  * Generates a tag reference xdoc that can be integrated in a maven generated site.
  *
  * @author Fabrizio Giustina
- * @version $Revision $ ($Author $)
  */
-public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
-{
+public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer {
 
+    /**
+     * Constant for opening HTML-DIV-Tag.
+     */
     private static final String OPEN_DIV = "<div>";
 
+    /**
+     * Constant for closing HTML-DIV-Tag.
+     */
     private static final String CLOSE_DIV = "</div>";
 
     /**
-     * list of Tld to check.
+     * The list of Tld to check.
      */
-    private Tld[] tlds;
+    private final Tld[] tlds;
 
     /**
-     * {@code true} to parse html in the description of tld info, tags and attributes.
+     * {@code True} to parse html in the description of tld info, tags and attributes.
      */
-    private boolean parseHtml = true;
+    private final boolean parseHtml;
 
     /**
-     * the logger that has been injected into this mojo.
+     * The logger that has been injected into this mojo.
      */
-    private Log log;
+    private final Log log;
 
     /**
-     * Class-Constructor
+     * The class-constructor.
      *
-     * @param sink the sink to use.
-     * @param locale the wanted locale to return the report's description, could be <code>null</code>.
-     * @param tlds list of TLDs to check.
-     * @param parseHtml {@code true} to parse html in the description of tld info, tags and attributes.
-     * @param log the logger that has been injected into this mojo.
+     * @param sink      the sink to use.
+     * @param locale    the wanted locale to return the report's description, could be {@code null}.
+     * @param tlds      list of TLDs to check.
+     * @param parseHtml {@code true} to parse html in the description of tld info, tags and
+     *                  attributes.
+     * @param log       the logger that has been injected into this mojo.
      */
-    public TagreferenceRenderer(Sink sink, Locale locale, Tld[] tlds, boolean parseHtml, Log log)
-    {
+    public TagreferenceRenderer(Sink sink, Locale locale, Tld[] tlds, boolean parseHtml, Log log) {
         super(sink, locale);
 
         this.tlds = tlds;
         this.parseHtml = parseHtml;
         this.log = log;
-
     }
 
-    /**
-     * @see AbstractMavenReportRenderer#getTitle()
-     */
     @Override
-    public String getTitle()
-    {
-        return getMessageString("Tagreference.title"); //$NON-NLS-1$
+    public String getTitle() {
+        return getMessageString("Tagreference.title");
     }
 
-    /**
-     * @see AbstractMavenReportRenderer#renderBody()
-     */
     @Override
-    protected void renderBody()
-    {
+    protected void renderBody() {
         sink.body();
 
-        startSection(getMessageString("Tagreference.h1")); //$NON-NLS-1$
-        paragraph(getMessageString("Tagreference.intro")); //$NON-NLS-1$
+        startSection(getMessageString("Tagreference.h1"));
+        paragraph(getMessageString("Tagreference.intro"));
 
         sink.list();
-        for (Tld tld : tlds)
-        {
+        for (Tld tld : tlds) {
             log.debug("Rendering " + tld.getFilename());
             sink.listItem();
-            sink.link("#" + tld.getFilename()); //$NON-NLS-1$
-            sink.text(MessageFormat.format(getMessageString("Tagreference.listitem.tld"), //$NON-NLS-1$
-                StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname()), tld.getFilename()));
+            sink.link('#' + tld.getFilename());
+            sink.text(MessageFormat.format(getMessageString("Tagreference.listitem.tld"),
+                    StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname()),
+                    tld.getFilename()));
             sink.link_();
-            sink.text(getMessageString("Tagreference.listitem.uri") + tld.getUri()); //$NON-NLS-1$
+            sink.text(getMessageString("Tagreference.listitem.uri") + tld.getUri());
             sink.listItem_();
         }
         sink.list_();
 
         endSection();
 
-        for (Tld tld : tlds)
-        {
+        for (Tld tld : tlds) {
             doTld(tld);
             sink.pageBreak();
         }
@@ -136,35 +127,39 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
         sink.body_();
     }
 
-    private String stripTags(String html)
-    {
-        if (html == null)
-        {
+    /**
+     * Remove any html-tags.
+     *
+     * @param html the html-text
+     *
+     * @return text without html-tags
+     */
+    private String stripTags(String html) {
+        if (html == null) {
             return StringUtils.EMPTY;
         }
-        return html.replaceAll("\\<.*?\\>", StringUtils.EMPTY); //$NON-NLS-1$
+        return html.replaceAll("\\<.*?\\>", StringUtils.EMPTY);
     }
 
     /**
+     * Generate report for one tld.
+     *
      * @param tld Tld
      */
-    private void doTld(Tld tld)
-    {
+    private void doTld(Tld tld) {
         // new section for each tld
         sink.anchor(tld.getFilename());
         sink.anchor_();
 
-        startSection(StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname())
-            + " - "
-            + MessageFormat.format(getMessageString("Tagreference.tldversion"), tld.getTlibversion()));
+        startSection(StringUtils.defaultIfEmpty(tld.getName(),
+                tld.getShortname()) + " - "
+                + MessageFormat.format(getMessageString("Tagreference.tldversion"),
+                        tld.getTlibversion()));
 
         sink.paragraph();
-        if (parseHtml)
-        {
+        if (parseHtml) {
             parseHtml(tld.getInfo());
-        }
-        else
-        {
+        } else {
             sink.text(tld.getInfo());
         }
         sink.paragraph_();
@@ -181,7 +176,7 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
         sink.paragraph_();
 
         TldItem[] tags = tld.getTags();
-        ELFunction[] functions = tld.getFunctions();
+        ElFunction[] functions = tld.getFunctions();
         TagFile[] tagfiles = tld.getTagfiles();
 
         printList(tld, tags, "Tags");
@@ -189,31 +184,25 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
         printList(tld, tagfiles, "Tagfiles");
 
         sink.paragraph();
-        sink.text(getMessageString("Tagreference.intro.required") + ' '); //$NON-NLS-1$
+        sink.text(getMessageString("Tagreference.intro.required") + ' ');
         sink.bold();
-        sink.text(getMessageString("Tagreference.required.marker")); //$NON-NLS-1$
+        sink.text(getMessageString("Tagreference.required.marker"));
         sink.bold_();
         sink.paragraph_();
 
-        if (tags != null)
-        {
-            for (TldItem tag : tags)
-            {
+        if (tags != null) {
+            for (TldItem tag : tags) {
                 doTag(tld.getShortname(), (Tag) tag);
             }
         }
 
-        if (functions != null)
-        {
-            for (ELFunction function : functions)
-            {
+        if (functions != null) {
+            for (ElFunction function : functions) {
                 doFunction(tld.getShortname(), function);
             }
         }
-        if (tagfiles != null)
-        {
-            for (TagFile tagfile : tagfiles)
-            {
+        if (tagfiles != null) {
+            for (TagFile tagfile : tagfiles) {
                 doTagFile(tld.getShortname(), tagfile);
             }
         }
@@ -222,17 +211,18 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
     }
 
     /**
-     * @param shortname
-     * @param elFunction
+     * Generate report-part for a function.
+     *
+     * @param prefix the prefix of the function
+     * @param tag    the function itself
      */
-    private void doFunction(String prefix, ELFunction tag)
-    {
+    private void doFunction(String prefix, ElFunction tag) {
 
         sink.anchor(prefix + ":" + tag.getName());
         sink.anchor_();
 
         // new subsection for each tag
-        startSection(prefix + ":" + tag.getName() + "(" + tag.getParameters() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        startSection(prefix + ":" + tag.getName() + "(" + tag.getParameters() + ")");
 
         sink.paragraph();
         sink.bold();
@@ -247,20 +237,16 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
         sink.text(tag.getFunctionSignature());
         sink.paragraph_();
 
-        if (parseHtml)
-        {
+        if (parseHtml) {
             parseHtml(tag.getDescription());
-        }
-        else
-        {
+        } else {
             sink.paragraph();
             sink.text(tag.getDescription());
             sink.paragraph_();
         }
 
-        if (StringUtils.isNotEmpty(tag.getExample()))
-        {
-            startSection(getMessageString("Tagreference.example")); //$NON-NLS-1$
+        if (StringUtils.isNotEmpty(tag.getExample())) {
+            startSection(getMessageString("Tagreference.example"));
             verbatimText(tag.getExample());
             endSection();
         }
@@ -269,13 +255,14 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
     }
 
     /**
-     * @param tld
-     * @param tags
+     * Generate a list-report of all tags of a tld.
+     *
+     * @param tld   the tld
+     * @param tags  the items of the tld
+     * @param intro intro-text for the report
      */
-    private void printList(Tld tld, TldItem[] tags, String intro)
-    {
-        if (tags != null && tags.length > 0)
-        {
+    private void printList(Tld tld, TldItem[] tags, String intro) {
+        if (tags != null && tags.length > 0) {
 
             sink.paragraph();
             sink.bold();
@@ -285,32 +272,29 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
 
             sink.list();
 
-            for (TldItem tag : tags)
-            {
+            for (TldItem tag : tags) {
                 sink.listItem();
 
-                sink.link("#" + tld.getShortname() + ":" + tag.getName()); //$NON-NLS-1$
-                if (tag.isDeprecated())
-                {
+                sink.link("#" + tld.getShortname() + ":" + tag.getName());
+                if (tag.isDeprecated()) {
                     sink.italic();
                 }
                 sink.text(tag.getName());
-                if (tag instanceof ELFunction)
-                {
+                if (tag instanceof ElFunction) {
                     sink.text("()");
                 }
 
-                if (tag.isDeprecated())
-                {
+                if (tag.isDeprecated()) {
                     sink.italic_();
                 }
                 sink.link_();
 
-                sink.text(" "); //$NON-NLS-1$
+                sink.text(" ");
 
-                String cleanedDescription = stripTags(StringUtils.substringBefore(tag.getDescription(), ".")) + '.'; //$NON-NLS-1$
-                if (parseHtml)
-                {
+                String cleanedDescription = stripTags(
+                        StringUtils.substringBefore(tag.getDescription(), ".")) + '.';
+
+                if (parseHtml) {
                     cleanedDescription = HtmlTools.unescapeHTML(cleanedDescription);
                 }
                 sink.text(cleanedDescription);
@@ -324,102 +308,88 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
 
     /**
      * Checks a single tag and returns validation results.
-     * @param tag Tag
+     *
+     * @param prefix the prefix of the tag
+     * @param tag    Tag
      */
-    private void doTag(String prefix, Tag tag)
-    {
+    private void doTag(String prefix, Tag tag) {
         sink.anchor(prefix + ":" + tag.getName());
         sink.anchor_();
 
         // new subsection for each tag
-        startSection("<" + prefix + ":" + tag.getName() + ">"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        if (parseHtml)
-        {
+        startSection("<" + prefix + ":" + tag.getName() + ">");
+        if (parseHtml) {
             parseHtml(tag.getDescription());
-        }
-        else
-        {
+        } else {
             sink.paragraph();
             sink.text(tag.getDescription());
             sink.paragraph_();
         }
 
         sink.paragraph();
-        sink.text(getMessageString("Tagreference.cancontain") + ' '); //$NON-NLS-1$
+        sink.text(getMessageString("Tagreference.cancontain") + ' ');
         sink.text(tag.getBodycontent());
         sink.paragraph_();
 
-        if (StringUtils.isNotEmpty(tag.getExample()))
-        {
-            startSection(getMessageString("Tagreference.example")); //$NON-NLS-1$
+        if (StringUtils.isNotEmpty(tag.getExample())) {
+            startSection(getMessageString("Tagreference.example"));
             verbatimText(tag.getExample());
             endSection();
         }
 
         // variables
-
         // attributes
         TagAttribute[] attributes = tag.getAttributes();
 
-        if (attributes != null && attributes.length > 0)
-        {
-            startSection(getMessageString("Tagreference.attributes")); //$NON-NLS-1$
+        if (attributes != null && attributes.length > 0) {
+            startSection(getMessageString("Tagreference.attributes"));
 
             startTable();
             tableHeader(new String[]{
-                  getMessageString("Tagreference.attribute.name"), getMessageString("Tagreference.attribute.description"), getMessageString("Tagreference.attribute.type")}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                getMessageString("Tagreference.attribute.name"),
+                getMessageString("Tagreference.attribute.description"),
+                getMessageString("Tagreference.attribute.type")
+            });
 
-            for (TagAttribute attribute : attributes)
-            {
+            for (TagAttribute attribute : attributes) {
                 sink.tableRow();
 
                 sink.tableCell();
-                if (attribute.isDeprecated())
-                {
+                if (attribute.isDeprecated()) {
                     sink.italic();
                 }
-                if (attribute.isRequired())
-                {
+                if (attribute.isRequired()) {
                     sink.bold();
                 }
                 sink.text(attribute.getName());
-                if (attribute.isRequired())
-                {
-                    sink.text(getMessageString("Tagreference.required.marker")); //$NON-NLS-1$
+                if (attribute.isRequired()) {
+                    sink.text(getMessageString("Tagreference.required.marker"));
                     sink.bold_();
                 }
-                if (attribute.isDeprecated())
-                {
+                if (attribute.isDeprecated()) {
                     sink.italic_();
                 }
                 sink.tableCell_();
 
                 sink.tableCell();
-                if (attribute.isDeprecated() || StringUtils.isBlank(attribute.getDescription()))
-                {
+                if (attribute.isDeprecated() || StringUtils.isBlank(attribute.getDescription())) {
                     sink.italic();
                 }
 
-                if (StringUtils.isBlank(attribute.getDescription()))
-                {
+                if (StringUtils.isBlank(attribute.getDescription())) {
                     sink.text(getMessageString("Tagreference.required.marker"));
-                }
-                else if (parseHtml)
-                {
+                } else if (parseHtml) {
                     parseHtml(attribute.getDescription());
-                }
-                else
-                {
+                } else {
                     sink.text(attribute.getDescription());
                 }
-                if (attribute.isDeprecated() || StringUtils.isBlank(attribute.getDescription()))
-                {
+                if (attribute.isDeprecated() || StringUtils.isBlank(attribute.getDescription())) {
                     sink.italic_();
                 }
                 sink.tableCell_();
 
                 tableCell(StringUtils.defaultIfEmpty(
-                    StringUtils.substringBefore(attribute.getType(), "java.lang."), "String")); //$NON-NLS-1$ //$NON-NLS-2$
+                        StringUtils.substringBefore(attribute.getType(), "java.lang."), "String"));
 
                 sink.tableRow_();
 
@@ -428,70 +398,60 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
             endTable();
 
             endSection();
-        }
-        else
-        {
-            paragraph(getMessageString("Tagreference.noattributes")); //$NON-NLS-1$
+        } else {
+            paragraph(getMessageString("Tagreference.noattributes"));
         }
 
         // attributes
         TagVariable[] variables = tag.getVariables();
 
-        if (variables != null && variables.length > 0)
-        {
-            startSection(getMessageString("Tagreference.variables")); //$NON-NLS-1$
+        if (variables != null && variables.length > 0) {
+            startSection(getMessageString("Tagreference.variables"));
 
             startTable();
             tableHeader(new String[]{
-                getMessageString("Tagreference.variable.name"), getMessageString("Tagreference.variable.type"), getMessageString("Tagreference.variable.scope"), getMessageString("Tagreference.variable.description")}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                getMessageString("Tagreference.variable.name"),
+                getMessageString("Tagreference.variable.type"),
+                getMessageString("Tagreference.variable.scope"),
+                getMessageString("Tagreference.variable.description")
+            });
 
-            for (TagVariable variable : variables)
-            {
+            for (TagVariable variable : variables) {
                 sink.tableRow();
 
                 sink.tableCell();
-                if (variable.isDeprecated())
-                {
+                if (variable.isDeprecated()) {
                     sink.italic();
                 }
 
-                if (variable.getNameGiven() != null)
-                {
+                if (variable.getNameGiven() != null) {
                     sink.text(variable.getNameGiven());
-                    sink.text(getMessageString("Tagreference.variable.constant")); //$NON-NLS-1$
-                }
-                else
-                {
-                    sink.text(getMessageString("Tagreference.variable.specifiedvia") + ' '); //$NON-NLS-1$
+                    sink.text(getMessageString("Tagreference.variable.constant"));
+                } else {
+                    sink.text(getMessageString("Tagreference.variable.specifiedvia") + ' ');
                     sink.text(variable.getNameFromAttribute());
                 }
 
-                if (variable.isDeprecated())
-                {
+                if (variable.isDeprecated()) {
                     sink.italic_();
                 }
                 sink.tableCell_();
 
-                tableCell(StringUtils.defaultIfEmpty(StringUtils.substringBefore(variable.getType(), "java.lang."), //$NON-NLS-1$
-                    "String")); //$NON-NLS-1$
+                tableCell(StringUtils.defaultIfEmpty(
+                        StringUtils.substringBefore(variable.getType(), "java.lang."), "String"));
 
                 tableCell(variable.getScope());
 
                 sink.tableCell();
-                if (variable.isDeprecated())
-                {
+                if (variable.isDeprecated()) {
                     sink.italic();
                 }
-                if (parseHtml)
-                {
+                if (parseHtml) {
                     parseHtml(variable.getDescription());
-                }
-                else
-                {
+                } else {
                     sink.text(variable.getDescription());
                 }
-                if (variable.isDeprecated())
-                {
+                if (variable.isDeprecated()) {
                     sink.italic_();
                 }
                 sink.tableCell_();
@@ -511,29 +471,26 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
 
     /**
      * Checks a single tag and returns validation results.
-     * @param tag Tag
+     *
+     * @param prefix the prefix of the function
+     * @param tag    Tag
      */
-    private void doTagFile(String prefix, TagFile tag)
-    {
+    private void doTagFile(String prefix, TagFile tag) {
         sink.anchor(prefix + ":" + tag.getName());
         sink.anchor_();
 
         // new subsection for each tag
-        startSection("<" + prefix + ":" + tag.getName() + ">"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        if (parseHtml)
-        {
+        startSection("<" + prefix + ":" + tag.getName() + ">");
+        if (parseHtml) {
             parseHtml(tag.getDescription());
-        }
-        else
-        {
+        } else {
             sink.paragraph();
             sink.text(tag.getDescription());
             sink.paragraph_();
         }
 
-        if (StringUtils.isNotEmpty(tag.getExample()))
-        {
-            startSection(getMessageString("Tagreference.example")); //$NON-NLS-1$
+        if (StringUtils.isNotEmpty(tag.getExample())) {
+            startSection(getMessageString("Tagreference.example"));
             verbatimText(tag.getExample());
             endSection();
         }
@@ -542,16 +499,16 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer
 
     }
 
-    private void parseHtml(String description)
-    {
-        try
-        {
+    /**
+     * Writes the description to the report and checks for valid html-code.
+     *
+     * @param description the description
+     */
+    private void parseHtml(String description) {
+        try {
             new Xhtml5Parser().parse(new StringReader(OPEN_DIV + description + CLOSE_DIV), sink);
-        }
-        catch (ParseException e)
-        {
+        } catch (ParseException e) {
             log.error(description, e);
         }
     }
-
 }

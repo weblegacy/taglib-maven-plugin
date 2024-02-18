@@ -21,57 +21,85 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package net.sf.maventaglib;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
+import net.sf.maventaglib.checker.ElFunction;
+import net.sf.maventaglib.checker.Tag;
+import net.sf.maventaglib.checker.TagAttribute;
+import net.sf.maventaglib.checker.Tld;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.plugin.logging.Log;
 
-import net.sf.maventaglib.checker.ELFunction;
-import net.sf.maventaglib.checker.Tag;
-import net.sf.maventaglib.checker.TagAttribute;
-import net.sf.maventaglib.checker.Tld;
-
-
 /**
  * Validates tag handler classes fount in tlds.
+ *
  * @author Fabrizio Giustina
- * @version $Revision $ ($Author $)
  */
-public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
-{
+public class ValidateRenderer extends AbstractMavenTaglibReportRenderer {
 
+    /**
+     * Code for Success-Icon.
+     */
     private static final int ICO_SUCCESS = 0;
 
+    /**
+     * Code for Info-Icon.
+     */
     private static final int ICO_INFO = 1;
 
+    /**
+     * Code for Warning-Icon.
+     */
     private static final int ICO_WARNING = 2;
 
+    /**
+     * Code for Error-Icon.
+     */
     private static final int ICO_ERROR = 3;
 
-    private static final String IMAGE_ERROR_SRC = Messages.getString("Validate.image.error"); //$NON-NLS-1$
+    /**
+     * Path to Error-Icon.
+     */
+    private static final String IMAGE_ERROR_SRC = Messages.getString("Validate.image.error");
 
-    private static final String IMAGE_WARNING_SRC = Messages.getString("Validate.image.warning"); //$NON-NLS-1$
+    /**
+     * Path to Waring-Icon.
+     */
+    private static final String IMAGE_WARNING_SRC = Messages.getString("Validate.image.warning");
 
-    private static final String IMAGE_INFO_SRC = Messages.getString("Validate.image.info"); //$NON-NLS-1$
+    /**
+     * Path to Info-Icon.
+     */
+    private static final String IMAGE_INFO_SRC = Messages.getString("Validate.image.info");
 
-    private static final String IMAGE_SUCCESS_SRC = Messages.getString("Validate.image.success"); //$NON-NLS-1$
+    /**
+     * Path to Success-Icon.
+     */
+    private static final String IMAGE_SUCCESS_SRC = Messages.getString("Validate.image.success");
 
     /**
      * list of Tld to check.
      */
     private Tld[] tlds;
 
+    /**
+     * For logging.
+     */
     private Log log;
 
+    /**
+     * The class-loader for the project.
+     */
     private ClassLoader projectClassLoader;
 
     /**
@@ -90,55 +118,46 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
     private Class<?> simpleTagClass;
 
     /**
-     * Class-Constructor
+     * The class-constructor.
      *
-     * @param sink the sink to use.
-     * @param locale the wanted locale to return the report's description, could be <code>null</code>.
-     * @param tlds list of TLDs to check.
-     * @param log the logger that has been injected into this mojo.
+     * @param sink               the sink to use.
+     * @param locale             the wanted locale to return the report's description, could be
+     *                           <code>null</code>.
+     * @param tlds               list of TLDs to check.
+     * @param log                the logger that has been injected into this mojo.
      * @param projectClassLoader ClassLoader for all compile-classpaths
      */
-    public ValidateRenderer(Sink sink, Locale locale, Tld[] tlds, Log log, ClassLoader projectClassLoader)
-    {
+    public ValidateRenderer(Sink sink, Locale locale, Tld[] tlds, Log log,
+            ClassLoader projectClassLoader) {
+
         super(sink, locale);
         this.tlds = tlds;
         this.log = log;
         this.projectClassLoader = projectClassLoader;
 
-        try
-        {
-            tagSupportClass = Class.forName("javax.servlet.jsp.tagext.TagSupport", true, this.projectClassLoader); //$NON-NLS-1$
+        try {
+            tagSupportClass = Class.forName("javax.servlet.jsp.tagext.TagSupport", true,
+                    this.projectClassLoader);
+        } catch (ClassNotFoundException e) {
+            log.error(Messages.getString("Validate.error.unabletoload.TagSupport"));
         }
-        catch (ClassNotFoundException e)
-        {
-            log.error(Messages.getString("Validate.error.unabletoload.TagSupport")); //$NON-NLS-1$
+        try {
+            tagExtraInfoClass = Class.forName("javax.servlet.jsp.tagext.TagExtraInfo", true,
+                    this.projectClassLoader);
+        } catch (ClassNotFoundException e) {
+            log.error(Messages.getString("Validate.error.unabletoload.TagExtraInfo"));
         }
-        try
-        {
-            tagExtraInfoClass = Class.forName("javax.servlet.jsp.tagext.TagExtraInfo", true, this.projectClassLoader); //$NON-NLS-1$
+        try {
+            simpleTagClass = Class.forName("javax.servlet.jsp.tagext.SimpleTag", true,
+                    this.projectClassLoader);
+        } catch (ClassNotFoundException e) {
+            log.debug(Messages.getString("Validate.error.unabletoload.SimpleTag"));
         }
-        catch (ClassNotFoundException e)
-        {
-            log.error(Messages.getString("Validate.error.unabletoload.TagExtraInfo")); //$NON-NLS-1$
-        }
-        try
-        {
-            simpleTagClass = Class.forName("javax.servlet.jsp.tagext.SimpleTag", true, this.projectClassLoader); //$NON-NLS-1$
-        }
-        catch (ClassNotFoundException e)
-        {
-            log.debug(Messages.getString("Validate.error.unabletoload.SimpleTag")); //$NON-NLS-1$
-        }
-
     }
 
-    /**
-     * @see org.apache.maven.reporting.AbstractMavenReportRenderer#getTitle()
-     */
     @Override
-    public String getTitle()
-    {
-        return getMessageString("Validate.title"); //$NON-NLS-1$
+    public String getTitle() {
+        return getMessageString("Validate.title");
     }
 
     /**
@@ -146,28 +165,29 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
      * <ul>
      * <li>Any tag class is loadable</li>
      * <li>the tag class has a setter for any of the declared attribute</li>
-     * <li>the type declared in the dtd for an attribute (if any) matches the type accepted by the getter</li>
+     * <li>the type declared in the dtd for an attribute (if any) matches the type accepted by the
+     * getter</li>
      * </ul>
-     * @see org.apache.maven.reporting.AbstractMavenReportRenderer#renderBody()
+     *
+     * @see AbstractMavenReportRenderer#renderBody()
      */
     @Override
-    protected void renderBody()
-    {
+    protected void renderBody() {
         sink.body();
-        startSection(getMessageString("Validate.h1")); //$NON-NLS-1$
-        paragraph(getMessageString("Validate.into1")); //$NON-NLS-1$
-        paragraph(getMessageString("Validate.intro2")); //$NON-NLS-1$
+        startSection(getMessageString("Validate.h1"));
+        paragraph(getMessageString("Validate.into1"));
+        paragraph(getMessageString("Validate.intro2"));
 
         sink.list();
-        for (Tld tld : tlds)
-        {
+        for (Tld tld : tlds) {
 
             sink.listItem();
-            sink.link("#" + tld.getFilename()); //$NON-NLS-1$
-            sink.text(MessageFormat.format(getMessageString("Validate.listitem.tld"), //$NON-NLS-1$
-                StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname()), tld.getFilename() ));
+            sink.link("#" + tld.getFilename());
+            sink.text(MessageFormat.format(getMessageString("Validate.listitem.tld"),
+                    StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname()),
+                    tld.getFilename()));
             sink.link_();
-            sink.text(getMessageString("Validate.listitem.uri") + tld.getUri()); //$NON-NLS-1$
+            sink.text(getMessageString("Validate.listitem.uri") + tld.getUri());
 
             sink.listItem_();
         }
@@ -175,8 +195,7 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
 
         endSection();
 
-        for (Tld tld : tlds)
-        {
+        for (Tld tld : tlds) {
             checkTld(tld);
         }
 
@@ -185,14 +204,15 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
 
     /**
      * Checks a single tld and returns validation results.
+     *
      * @param tld Tld
      */
-    private void checkTld(Tld tld)
-    {
+    private void checkTld(Tld tld) {
         // new section for each tld
         sink.anchor(tld.getFilename());
         sink.anchor_();
-        startSection(StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname()) + " " + tld.getFilename()); //$NON-NLS-1$
+        startSection(StringUtils.defaultIfEmpty(tld.getName(),
+                tld.getShortname()) + ' ' + tld.getFilename());
 
         doTags(tld.getTags(), tld.getShortname());
         doFunctions(tld.getFunctions(), tld.getShortname());
@@ -201,33 +221,40 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
     }
 
     /**
-     * @param tld
+     * Checks the tags and returns validation results.
+     *
+     * @param tags      tags of the Tld
+     * @param shortname shortname of the Tld
      */
-    private void doTags(Tag[] tags, String shortname)
-    {
-        if (tags != null && tags.length > 0)
-        {
-            for (Tag tldItem : tags)
-            {
+    private void doTags(Tag[] tags, String shortname) {
+        if (tags != null && tags.length > 0) {
+            for (Tag tldItem : tags) {
                 checkTag(shortname, tldItem);
             }
         }
     }
 
-    private void doFunctions(ELFunction[] tags, String shortname)
-    {
-        if (tags != null && tags.length > 0)
-        {
+    /**
+     * Checks the functions and returns validation results.
+     *
+     * @param tags      functions of the Tld
+     * @param shortname shortname of the Tld
+     */
+    private void doFunctions(ElFunction[] tags, String shortname) {
+        if (tags != null && tags.length > 0) {
 
             startSection("EL functions");
 
             startTable();
 
             tableHeader(new String[]{
-                getMessageString("Validate.header.validated"), "function", getMessageString("Validate.header.class"), getMessageString("Validate.header.signature") }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                getMessageString("Validate.header.validated"),
+                "function",
+                getMessageString("Validate.header.class"),
+                getMessageString("Validate.header.signature")
+            });
 
-            for (ELFunction tldItem : tags)
-            {
+            for (ElFunction tldItem : tags) {
                 checkFunction(shortname, tldItem);
             }
 
@@ -238,12 +265,12 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
     }
 
     /**
-     * @param shortname
-     * @param tldItem
+     * Checks a function and returns the validation result.
+     *
+     * @param prefix prefix of the function
+     * @param tag    the function
      */
-    private void checkFunction(String prefix, ELFunction tag)
-    {
-
+    private void checkFunction(String prefix, ElFunction tag) {
         String className = tag.getFunctionClass();
 
         boolean found = true;
@@ -251,8 +278,7 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         Thread.currentThread().setContextClassLoader(this.projectClassLoader);
 
-        try
-        {
+        try {
             Class<?> functionClass = Class.forName(className, true, this.projectClassLoader);
 
             String fullSignature = tag.getFunctionSignature();
@@ -260,8 +286,7 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
             String returnvalue = null;
 
             String methodName = StringUtils.trim(StringUtils.substringBefore(fullSignature, "("));
-            if (StringUtils.contains(methodName, " "))
-            {
+            if (StringUtils.contains(methodName, " ")) {
                 returnvalue = StringUtils.substringBefore(methodName, " ");
                 methodName = StringUtils.substringAfter(methodName, " ");
             }
@@ -270,22 +295,20 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
 
             List<Class<?>> parClasses = new ArrayList<>(params.length);
 
-            for (String stringClass : params)
-            {
-                parClasses.add(Class.forName(StringUtils.trim(stringClass), true, this.projectClassLoader));
+            for (String stringClass : params) {
+                parClasses.add(Class.forName(StringUtils.trim(stringClass), true,
+                        this.projectClassLoader));
             }
 
-            Method method = functionClass.getMethod(methodName, parClasses.toArray(new Class<?>[0]));
+            Method method = functionClass.getMethod(methodName,
+                    parClasses.toArray(new Class<?>[0]));
 
-            Class< ? > returnType = method.getReturnType();
+            Class<?> returnType = method.getReturnType();
 
-            if (!(returnvalue == null || returnType.getCanonicalName().equals(returnvalue)))
-            {
+            if (!(returnvalue == null || returnType.getCanonicalName().equals(returnvalue))) {
                 found = false;
             }
-        }
-        catch (Exception e)
-        {
+        } catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
             found = false;
         }
 
@@ -302,62 +325,59 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
         tableCell(tag.getFunctionSignature());
 
         sink.tableRow_();
-
     }
 
     /**
      * Checks a single tag and returns validation results.
-     * @param tag Tag
+     *
+     * @param prefix prefix of the tag
+     * @param tag    Tag
      */
-    private void checkTag(String prefix, Tag tag)
-    {
+    private void checkTag(String prefix, Tag tag) {
 
         // new subsection for each tag
-        startSection("<" + prefix + ":" + tag.getName() + ">"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        startSection("<" + prefix + ":" + tag.getName() + ">");
 
         String className = tag.getTagClass();
 
         startTable();
 
         tableHeader(new String[]{
-            getMessageString("Validate.header.found"), getMessageString("Validate.header.loadable"), getMessageString("Validate.header.extends"), getMessageString("Validate.header.class") }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            getMessageString("Validate.header.found"),
+            getMessageString("Validate.header.loadable"),
+            getMessageString("Validate.header.extends"),
+            getMessageString("Validate.header.class")
+        });
 
         boolean found = true;
         boolean loadable = true;
-        boolean extend = true;
+        boolean extend;
 
         Object tagObject = null;
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         Thread.currentThread().setContextClassLoader(this.projectClassLoader);
 
-        try
-        {
+        try {
             Class<?> tagClass = Class.forName(className, true, this.projectClassLoader);
 
             // extend only true, if tagClass derives from TagSupport or derives from SimpleTag
             extend = tagSupportClass.isAssignableFrom(tagClass)
-                || simpleTagClass != null && simpleTagClass.isAssignableFrom(tagClass);
+                    || simpleTagClass != null && simpleTagClass.isAssignableFrom(tagClass);
 
-            try
-            {
+            try {
                 tagObject = tagClass.getDeclaredConstructor().newInstance();
-            }
-            catch (Exception e)
-            {
+            } catch (IllegalAccessException | IllegalArgumentException | InstantiationException
+                    | NoSuchMethodException | SecurityException | InvocationTargetException e) {
                 loadable = false;
             }
 
-        }
-        catch (ClassNotFoundException | NoClassDefFoundError e)
-        {
+        } catch (ClassNotFoundException | NoClassDefFoundError e) {
             found = false;
             loadable = false;
             extend = false;
         }
 
         Thread.currentThread().setContextClassLoader(currentClassLoader);
-
-        TagAttribute[] attributes = tag.getAttributes();
 
         sink.tableRow();
 
@@ -377,23 +397,24 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
 
         sink.tableRow_();
 
-        if (tag.getTeiClass() != null)
-        {
+        if (tag.getTeiClass() != null) {
             checkTeiClass(tag.getTeiClass());
         }
 
         endTable();
 
-        if (tagObject != null && attributes.length > 0)
-        {
+        TagAttribute[] attributes = tag.getAttributes();
+        if (tagObject != null && attributes.length > 0) {
 
             startTable();
             tableHeader(new String[]{
                 StringUtils.EMPTY,
-                getMessageString("Validate.header.attributename"), getMessageString("Validate.header.tlddeclares"), getMessageString("Validate.header.tagdeclares") }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                getMessageString("Validate.header.attributename"),
+                getMessageString("Validate.header.tlddeclares"),
+                getMessageString("Validate.header.tagdeclares")
+            });
 
-            for (TagAttribute attribute : attributes)
-            {
+            for (TagAttribute attribute : attributes) {
                 checkAttribute(tagObject, attribute);
             }
 
@@ -404,36 +425,30 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
 
     /**
      * Check a declared TagExtraInfo class.
+     *
      * @param className TEI class name
      */
-    private void checkTeiClass(String className)
-    {
+    private void checkTeiClass(String className) {
 
         boolean found = true;
         boolean loadable = true;
         boolean extend = true;
 
-        Class<?> teiClass = null;
-        try
-        {
+        Class<?> teiClass;
+        try {
             teiClass = Class.forName(className, true, this.projectClassLoader);
 
-            if (tagExtraInfoClass == null || !tagExtraInfoClass.isAssignableFrom(teiClass))
-            {
+            if (tagExtraInfoClass == null || !tagExtraInfoClass.isAssignableFrom(teiClass)) {
                 extend = false;
             }
 
-            try
-            {
+            try {
                 teiClass.getDeclaredConstructor().newInstance();
-            }
-            catch (Exception e)
-            {
+            } catch (IllegalAccessException | IllegalArgumentException | InstantiationException
+                    | NoSuchMethodException | SecurityException | InvocationTargetException e) {
                 loadable = false;
             }
-        }
-        catch (ClassNotFoundException | NoClassDefFoundError e)
-        {
+        } catch (ClassNotFoundException | NoClassDefFoundError e) {
             found = false;
             loadable = false;
             extend = false;
@@ -462,11 +477,11 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
 
     /**
      * Checks a single attribute and returns validation results.
-     * @param tag tag handler instance
+     *
+     * @param tag       tag handler instance
      * @param attribute TagAttribute
      */
-    private void checkAttribute(Object tag, TagAttribute attribute)
-    {
+    private void checkAttribute(Object tag, TagAttribute attribute) {
 
         String tldType = attribute.getType();
         String tldName = attribute.getName();
@@ -475,55 +490,46 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
 
         List<ValidationError> validationErrors = new ArrayList<>(3);
 
-        if (!PropertyUtils.isWriteable(tag, tldName))
-        {
+        if (!PropertyUtils.isWriteable(tag, tldName)) {
             validationErrors.add(new ValidationError(ValidationError.LEVEL_ERROR,
-                getMessageString("Validate.error.setternotfound"))); //$NON-NLS-1$
+                    getMessageString("Validate.error.setternotfound")));
         }
 
         // don't check if setter is missing
-        if (validationErrors.isEmpty())
-        {
+        if (validationErrors.isEmpty()) {
 
-            try
-            {
+            try {
                 tagType = PropertyUtils.getPropertyType(tag, tldName);
-            }
-            catch (Exception e)
-            {
+            } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                 // should never happen, since we already checked the writable property
                 log.warn(e);
             }
             tagTypeName = tagType == null ? StringUtils.EMPTY : tagType.getName();
 
-            if (tldType != null && tagType != null)
-            {
+            if (tldType != null && tagType != null) {
                 Class<?> tldTypeClass = getClassFromName(tldType);
 
-                if (!tagType.isAssignableFrom(tldTypeClass))
-                {
+                if (!tagType.isAssignableFrom(tldTypeClass)) {
 
-                    validationErrors.add(new ValidationError(ValidationError.LEVEL_ERROR, MessageFormat.format(
-                        getMessageString("Validate.error.attributetypemismatch"), //$NON-NLS-1$
-                        tldType, tagType.getName() )));
+                    validationErrors.add(new ValidationError(ValidationError.LEVEL_ERROR,
+                            MessageFormat.format(
+                                    getMessageString("Validate.error.attributetypemismatch"),
+                                    tldType, tagType.getName())));
                 }
             }
         }
 
         // don't check if we already know type is different
-        if (validationErrors.isEmpty())
-        {
+        if (validationErrors.isEmpty()) {
 
-            if (tldType != null && tagType != null && !tldType.equals(tagType.getName()))
-            {
-                validationErrors.add(new ValidationError(ValidationError.LEVEL_WARNING, MessageFormat.format(
-                    getMessageString("Validate.error.attributetypeinexactmatch"), //$NON-NLS-1$
-                    tldType, tagType.getName() )));
-            }
-            else if (tldType == null && !String.class.equals(tagType))
-            {
+            if (tldType != null && tagType != null && !tldType.equals(tagType.getName())) {
+                validationErrors.add(new ValidationError(ValidationError.LEVEL_WARNING,
+                        MessageFormat.format(
+                                getMessageString("Validate.error.attributetypeinexactmatch"),
+                                tldType, tagType.getName())));
+            } else if (tldType == null && !String.class.equals(tagType)) {
                 validationErrors.add(new ValidationError(ValidationError.LEVEL_INFO,
-                    getMessageString("Validate.error.attributetype"))); //$NON-NLS-1$
+                        getMessageString("Validate.error.attributetype")));
             }
         }
 
@@ -531,19 +537,34 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
 
         sink.tableCell();
 
-        int figure = ICO_SUCCESS;
-
-        for (ValidationError error : validationErrors)
-        {
-            if (error.getLevel() == ValidationError.LEVEL_ERROR)
-            {
-                figure = ICO_ERROR;
+        boolean errors = false;
+        boolean warnings = false;
+        boolean infos = false;
+        for (ValidationError error : validationErrors) {
+            switch (error.getLevel()) {
+                case ValidationError.LEVEL_ERROR:
+                    errors = true;
+                    break;
+                case ValidationError.LEVEL_WARNING:
+                    warnings = true;
+                    break;
+                case ValidationError.LEVEL_INFO:
+                    infos = true;
+                    break;
+                default:
+                    break;
             }
-            else if (figure == ICO_SUCCESS) // warning
-            {
-                figure = ICO_WARNING;
-            }
+        }
 
+        final int figure;
+        if (errors) {
+            figure = ICO_ERROR;
+        } else if (warnings) {
+            figure = ICO_WARNING;
+        } else if (infos) {
+            figure = ICO_INFO;
+        } else {
+            figure = ICO_SUCCESS;
         }
 
         figure(figure);
@@ -552,16 +573,13 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
         sink.tableCell();
         sink.text(tldName);
 
-        for (ValidationError error : validationErrors)
-        {
+        for (ValidationError error : validationErrors) {
             sink.lineBreak();
-            if (error.getLevel() == ValidationError.LEVEL_ERROR)
-            {
+            if (error.getLevel() == ValidationError.LEVEL_ERROR) {
                 sink.bold();
             }
             sink.text(error.getText());
-            if (error.getLevel() == ValidationError.LEVEL_ERROR)
-            {
+            if (error.getLevel() == ValidationError.LEVEL_ERROR) {
                 sink.bold_();
 
             }
@@ -570,39 +588,36 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
         sink.tableCell_();
 
         sink.tableCell();
-        if (tldType != null)
-        {
-            sink.text(StringUtils.substringAfter(tldType, "java.lang.")); //$NON-NLS-1$
+        if (tldType != null) {
+            sink.text(StringUtils.substringAfter(tldType, "java.lang."));
         }
         sink.tableCell_();
 
-        tableCell(StringUtils.substringAfter(tagTypeName, "java.lang.")); //$NON-NLS-1$
+        tableCell(StringUtils.substringAfter(tagTypeName, "java.lang."));
 
         sink.tableRow_();
 
     }
 
-    private void figure(int type)
-    {
+    private void figure(int type) {
         String text;
         String src;
 
-        switch (type)
-        {
-            case ICO_ERROR :
-                text = getMessageString("Validate.level.error"); //$NON-NLS-1$
+        switch (type) {
+            case ICO_ERROR:
+                text = getMessageString("Validate.level.error");
                 src = IMAGE_ERROR_SRC;
                 break;
-            case ICO_WARNING :
-                text = getMessageString("Validate.level.warning"); //$NON-NLS-1$
+            case ICO_WARNING:
+                text = getMessageString("Validate.level.warning");
                 src = IMAGE_WARNING_SRC;
                 break;
-            case ICO_INFO :
-                text = getMessageString("Validate.level.info"); //$NON-NLS-1$
+            case ICO_INFO:
+                text = getMessageString("Validate.level.info");
                 src = IMAGE_INFO_SRC;
                 break;
-            default :
-                text = getMessageString("Validate.level.success"); //$NON-NLS-1$
+            default:
+                text = getMessageString("Validate.level.success");
                 src = IMAGE_SUCCESS_SRC;
                 break;
         }
@@ -617,141 +632,159 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer
 
     /**
      * returns a class from its name, handling primitives.
+     *
      * @param className clss name
+     *
      * @return Class istantiated using Class.forName or the matching primitive.
      */
-    private Class<?> getClassFromName(String className)
-    {
+    private Class<?> getClassFromName(String className) {
 
         Class<?> tldTypeClass = tryGettingPrimitiveClass(className);
 
-        if (tldTypeClass == null)
-        {
+        if (tldTypeClass == null) {
             // not a primitive type
-            try
-            {
-                if (isArrayClassName(className))
-                {
+            try {
+                if (isArrayClassName(className)) {
                     tldTypeClass = getArrayClass(className);
-                }
-                else
-                {
+                } else {
                     tldTypeClass = Class.forName(className, true, this.projectClassLoader);
                 }
-            }
-            catch (ClassNotFoundException e)
-            {
-                log.error(MessageFormat.format(Messages.getString("Validate.error.unabletofindclass"), //$NON-NLS-1$
-                    className ));
+            } catch (ClassNotFoundException e) {
+                log.error(MessageFormat.format(
+                        Messages.getString("Validate.error.unabletofindclass"), className));
             }
         }
         return tldTypeClass;
     }
 
-    private Class<?> tryGettingPrimitiveClass(String className)
-    {
-        if ("int".equals(className)) //$NON-NLS-1$
-        {
-            return int.class;
-        }
-        if ("long".equals(className)) //$NON-NLS-1$
-        {
-            return long.class;
-        }
-        if ("double".equals(className)) //$NON-NLS-1$
-        {
-            return double.class;
-        }
-        if ("boolean".equals(className)) //$NON-NLS-1$
-        {
-            return boolean.class;
-        }
-        if ("char".equals(className)) //$NON-NLS-1$
-        {
-            return char.class;
-        }
-        if ("byte".equals(className)) //$NON-NLS-1$
-        {
-            return byte.class;
+    private Class<?> tryGettingPrimitiveClass(String className) {
+        if (className == null) {
+            return null;
         }
 
-        return null;
+        switch (className) {
+            case "byte":
+                return byte.class;
+            case "short":
+                return int.class;
+            case "int":
+                return int.class;
+            case "long":
+                return long.class;
+            case "float":
+                return double.class;
+            case "double":
+                return double.class;
+            case "boolean":
+                return boolean.class;
+            case "char":
+                return char.class;
+            default:
+                return null;
+        }
     }
 
-    private boolean isArrayClassName(String className)
-    {
+    /**
+     * Tests if the given {@code className} as an array.
+     *
+     * @param className the className to test
+     *
+     * @return {@code true} if the given {@code className} as an array
+     */
+    private boolean isArrayClassName(String className) {
         return className.endsWith("[]");
     }
 
-    private Class<?> getArrayClass(String className) throws ClassNotFoundException
-    {
+    /**
+     * Gets the class of an array with the elements of {@code className}.
+     *
+     * @param className elements-class of the array
+     *
+     * @return the array-class
+     *
+     * @throws ClassNotFoundException if the class is not found
+     */
+    private Class<?> getArrayClass(String className) throws ClassNotFoundException {
         String elementClassName = StringUtils.replace(className, "[]", "");
         Class<?> elementClass = tryGettingPrimitiveClass(elementClassName);
-        if (elementClass == null)
-        {
+        if (elementClass == null) {
             elementClass = Class.forName(elementClassName);
         }
         return Array.newInstance(elementClass, 0).getClass();
     }
 
-    static class ValidationError
-    {
+    static class ValidationError {
 
+        /**
+         * Level of validation is information.
+         */
         public static final int LEVEL_INFO = 1;
 
+        /**
+         * Level of validation is warning.
+         */
         public static final int LEVEL_WARNING = 2;
 
+        /**
+         * Level of validation is error.
+         */
         public static final int LEVEL_ERROR = 3;
 
+        /**
+         * The level of the validation.
+         */
         private int level;
 
+        /**
+         * The text of the validation.
+         */
         private String text;
 
         /**
-         * @param level
-         * @param text
+         * The class-constructor.
+         *
+         * @param level the level of the validation
+         * @param text  the text of the validation
          */
-        public ValidationError(int level, String text)
-        {
+        public ValidationError(int level, String text) {
             this.level = level;
             this.text = text;
         }
 
         /**
-         * Getter for <code>level</code>.
+         * Getter for {@code level}.
+         *
          * @return Returns the level.
          */
-        public int getLevel()
-        {
+        public int getLevel() {
             return this.level;
         }
 
         /**
-         * Setter for <code>level</code>.
+         * Setter for {@code level}.
+         *
          * @param level The level to set.
          */
-        public void setLevel(int level)
-        {
+        public void setLevel(int level) {
             this.level = level;
         }
 
         /**
-         * Getter for <code>text</code>.
+         * Getter for {@code text}.
+         *
          * @return Returns the text.
          */
-        public String getText()
-        {
+        public String getText() {
             return this.text;
         }
 
         /**
-         * Setter for <code>text</code>.
+         * Setter for {@code text}.
+         *
          * @param text The text to set.
          */
-        public void setText(String text)
-        {
+        public void setText(String text) {
             this.text = text;
         }
     }
-
 }

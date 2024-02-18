@@ -21,10 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package net.sf.maventaglib;
 
+import com.sun.tlddoc.GeneratorException;
 import com.sun.tlddoc.TLDDocGenerator;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -32,7 +33,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -41,33 +41,31 @@ import org.apache.maven.reporting.MavenReport;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.plexus.util.FileUtils;
 
-
 /**
  * Generates taglibdoc documentation.
+ *
  * @author Fabrizio Giustina
- * @version $Id: TaglibdocMojo.java 217 2014-08-15 20:50:32Z fgiust $
  */
-@Mojo(name="taglibdoc")
-public class TaglibdocMojo extends AbstractMavenReport implements MavenReport
-{
+@Mojo(name = "taglibdoc")
+public class TaglibdocMojo extends AbstractMavenReport implements MavenReport {
 
     /**
-     * title for tlddoc generated documentation.
+     * The title for tlddoc generated documentation.
      */
-    @Parameter(defaultValue="${project.name} Tag library documentation")
+    @Parameter(defaultValue = "${project.name} Tag library documentation")
     private String title;
 
     /**
-     * TldDoc output dir.
+     * The TldDoc output dir.
      */
-    @Parameter(defaultValue="${project.reporting.outputDirectory}/tlddoc")
+    @Parameter(defaultValue = "${project.reporting.outputDirectory}/tlddoc")
     private File tldDocDir;
 
     /**
-     * Directory containing tld or tag files. Subdirectories are also processed, unless the "dontRecurseIntoSubdirs"
-     * parameter is set.
+     * Directory containing tld or tag files. Subdirectories are also processed, unless the
+     * "dontRecurseIntoSubdirs" parameter is set.
      */
-    @Parameter(alias="taglib.src.dir", defaultValue="src/main/resources/META-INF")
+    @Parameter(alias = "taglib.src.dir", defaultValue = "src/main/resources/META-INF")
     private File srcDir;
 
     /**
@@ -82,149 +80,101 @@ public class TaglibdocMojo extends AbstractMavenReport implements MavenReport
     @Parameter
     private File xsltDir;
 
-    /**
-     * @see AbstractMavenReport#execute()
-     */
     @Override
-    public void execute() throws MojoExecutionException
-    {
-        getLog().debug(MessageFormat.format(Messages.getString("Taglib.generating.tlddoc"), //$NON-NLS-1$
-            srcDir.getAbsolutePath() ));
+    public void execute() throws MojoExecutionException {
+        getLog().debug(MessageFormat.format(Messages.getString("Taglib.generating.tlddoc"),
+                srcDir.getAbsolutePath()));
         TLDDocGenerator generator = new TLDDocGenerator();
         generator.setOutputDirectory(tldDocDir);
         generator.setQuiet(true);
         generator.setWindowTitle(this.title);
-        if (xsltDir != null)
-        {
+        if (xsltDir != null) {
             generator.setXSLTDirectory(xsltDir);
         }
 
         String searchprefix = dontRecurseIntoSubdirs ? "" : "**/";
 
-        if (!srcDir.isDirectory())
-        {
+        if (!srcDir.isDirectory()) {
             throw new MojoExecutionException(MessageFormat.format(
-                Messages.getString("Taglib.notadir"), //$NON-NLS-1$
-                    srcDir.getAbsolutePath() ));
+                    Messages.getString("Taglib.notadir"), srcDir.getAbsolutePath()));
         }
 
-        try
-        {
+        try {
             // handle tlds
-            List<File> tlds = FileUtils.getFiles(srcDir, searchprefix + "*.tld", null); //$NON-NLS-1$
-            for (File tld : tlds)
-            {
+            List<File> tlds = FileUtils.getFiles(srcDir, searchprefix + "*.tld", null);
+            for (File tld : tlds) {
                 generator.addTLD(tld);
             }
 
             // handle tag files. Add any directory containing .tag or .tagx files
-            List<File> tags = FileUtils.getFiles(srcDir, searchprefix + "*.tag", null); //$NON-NLS-1$
-            tags.addAll(FileUtils.getFiles(srcDir, searchprefix + "*.tagx", null)); //$NON-NLS-1$
+            List<File> tags = FileUtils.getFiles(srcDir, searchprefix + "*.tag", null);
+            tags.addAll(FileUtils.getFiles(srcDir, searchprefix + "*.tagx", null));
 
-            if (!tags.isEmpty())
-            {
+            if (!tags.isEmpty()) {
                 Set<File> directories = new HashSet<>();
-                for (File tag : tags)
-                {
+                for (File tag : tags) {
                     directories.add(tag.getParentFile());
                 }
-                for (File directory : directories)
-                {
+                for (File directory : directories) {
                     generator.addTagDir(directory);
                 }
             }
 
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
 
-        try
-        {
+        try {
             generator.generate();
-        }
-        catch (Exception e)
-        {
-            getLog().error(MessageFormat.format(Messages.getString("Taglib.exception"), //$NON-NLS-1$
-                e.getClass(), e.getMessage() ), e);
+        } catch (GeneratorException e) {
+            getLog().error(MessageFormat.format(Messages.getString("Taglib.exception"),
+                    e.getClass(), e.getMessage()), e);
         }
     }
 
-    /**
-     * @see org.apache.maven.reporting.AbstractMavenReport#executeReport(java.util.Locale)
-     */
     @Override
-    protected void executeReport(Locale locale) throws MavenReportException
-    {
-        try
-        {
+    protected void executeReport(Locale locale) throws MavenReportException {
+        try {
             execute();
-        }
-        catch (MojoExecutionException e)
-        {
+        } catch (MojoExecutionException e) {
             throw new MavenReportException(e.getMessage(), e);
         }
 
     }
 
-    /**
-     * @see org.apache.maven.reporting.MavenReport#getOutputName()
-     */
-    public String getOutputName()
-    {
-        return "tlddoc/index"; //$NON-NLS-1$
-    }
-
-    /**
-     * @see org.apache.maven.reporting.MavenReport#getName(java.util.Locale)
-     */
-    public String getName(Locale locale)
-    {
-        return Messages.getString(locale, "Taglibdoc.name"); //$NON-NLS-1$
-    }
-
-    /**
-     * @see org.apache.maven.reporting.MavenReport#getDescription(java.util.Locale)
-     */
-    public String getDescription(Locale locale)
-    {
-        return Messages.getString(locale, "Taglibdoc.description"); //$NON-NLS-1$
-    }
-
-    /**
-     * @see org.apache.maven.reporting.MavenReport#isExternalReport()
-     */
     @Override
-    public boolean isExternalReport()
-    {
+    public String getOutputName() {
+        return "tlddoc/index";
+    }
+
+    @Override
+    public String getName(Locale locale) {
+        return Messages.getString(locale, "Taglibdoc.name");
+    }
+
+    @Override
+    public String getDescription(Locale locale) {
+        return Messages.getString(locale, "Taglibdoc.description");
+    }
+
+    @Override
+    public boolean isExternalReport() {
         return true;
     }
 
-    /**
-     * @see org.apache.maven.reporting.AbstractMavenReport#canGenerateReport()
-     */
     @Override
-    public boolean canGenerateReport()
-    {
-
-        if (!srcDir.isDirectory())
-        {
+    public boolean canGenerateReport() {
+        if (!srcDir.isDirectory()) {
             return false;
         }
 
-        try
-        {
-            boolean hasTldFiles = !FileUtils.getFiles(srcDir, "**/*.tld", null).isEmpty();//$NON-NLS-1$
-            boolean hasTagFiles = !FileUtils.getFiles(srcDir, "**/*.tag", null).isEmpty();//$NON-NLS-1$
+        try {
+            boolean hasTldFiles = !FileUtils.getFiles(srcDir, "**/*.tld", null).isEmpty();
+            boolean hasTagFiles = !FileUtils.getFiles(srcDir, "**/*.tag", null).isEmpty();
             return hasTldFiles || hasTagFiles;
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             getLog().error(e.getMessage(), e);
         }
         return false;
-
     }
-
 }

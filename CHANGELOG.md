@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Reformat sources and resolve all checkstyle messages
 * Rewrite and reformat testcases
 * Use own `checkstyle.xml` (from tlddoc)
 * Add missing `maven-resolver-api`

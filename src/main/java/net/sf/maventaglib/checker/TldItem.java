@@ -21,110 +21,102 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package net.sf.maventaglib.checker;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-
 /**
+ * Java-Bean representing a tld item.
+ *
  * @author fgiust
- * @version $Id: TldItem.java 217 2014-08-15 20:50:32Z fgiust $
  */
-public class TldItem implements Comparable<TldItem>
-{
+public class TldItem implements Comparable<TldItem> {
 
+    /**
+     * The name of the tld item.
+     */
     private String name;
 
+    /**
+     * The description of the tld item.
+     */
     private String description;
 
+    /**
+     * The example of the tld item.
+     */
     private String example;
 
+    /**
+     * If the tld item is deprecated.
+     */
     private boolean deprecated;
 
-    public String getName()
-    {
+    public String getName() {
         return this.name;
     }
 
-    public void setName(String tagName)
-    {
+    public void setName(String tagName) {
         this.name = tagName;
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return this.description;
     }
 
-    public void setDescription(String description)
-    {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getExample()
-    {
+    public String getExample() {
         return this.example;
     }
 
-    public void setExample(String example)
-    {
+    public void setExample(String example) {
         this.example = example;
     }
 
-    public boolean isDeprecated()
-    {
+    public boolean isDeprecated() {
         return this.deprecated;
     }
 
-    public void setDeprecated(boolean deprecated)
-    {
+    public void setDeprecated(boolean deprecated) {
         this.deprecated = deprecated;
     }
 
-    /**
-     * @see java.lang.Comparable#compareTo(Object)
-     */
-    public int compareTo(TldItem object)
-    {
-        if(object == this)
-        {
+    @Override
+    public int compareTo(TldItem object) {
+        if (object == this) {
             return 0;
         }
 
-        if(object.getClass() != getClass())
-        {
-            throw new ClassCastException("compareTo with different classes: " +
-                this.getClass().getName() +
-                " <> " +
-                object.getClass().getName());
+        if (object.getClass() != getClass()) {
+            throw new ClassCastException("compareTo with different classes: "
+                    + this.getClass().getName()
+                    + " <> "
+                    + object.getClass().getName());
         }
 
         return new CompareToBuilder()
-            .append(this.deprecated, object.deprecated)
-            .append(this.name, object.name)
-            .toComparison();
+                .append(this.deprecated, object.deprecated)
+                .append(this.name, object.name)
+                .toComparison();
     }
 
-    /**
-     * @see java.lang.Object#equals(Object)
-     */
     @Override
-    public boolean equals(Object obj)
-    {
-        if(obj == null)
-        {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
 
-        if(obj == this)
-        {
+        if (obj == this) {
             return true;
         }
 
-        if(obj.getClass() != getClass())
-        {
+        if (obj.getClass() != getClass()) {
             return false;
         }
 
@@ -133,16 +125,13 @@ public class TldItem implements Comparable<TldItem>
                 .append(this.deprecated, rhs.deprecated)
                 .append(this.name, rhs.name)
                 .isEquals();
-      }
+    }
 
-    /**
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
                 .append(this.deprecated)
                 .append(this.name)
                 .toHashCode();
-      }
+    }
 }
