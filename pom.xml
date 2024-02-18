@@ -73,10 +73,10 @@
   </issueManagement>
 
   <properties>
-    <encoding>UTF-8</encoding>
-    <propertiesEncoding>${encoding}</propertiesEncoding>
-    <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
+    <sourceEncoding>UTF-8</sourceEncoding>
+    <propertiesEncoding>${sourceEncoding}</propertiesEncoding>
+    <project.build.sourceEncoding>${sourceEncoding}</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>${sourceEncoding}</project.reporting.outputEncoding>
     <mavenVersion>3.6.3</mavenVersion>
     <javaVersion>8</javaVersion>
     <mavenPluginVersion>3.8.1</mavenPluginVersion>
@@ -318,7 +318,7 @@
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.3.1</version>
           <configuration>
-            <encoding>${encoding}</encoding>
+            <encoding>${sourceEncoding}</encoding>
             <propertiesEncoding>${propertiesEncoding}</propertiesEncoding>
           </configuration>
         </plugin>
