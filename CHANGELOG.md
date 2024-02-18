@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Use own `checkstyle.xml` (from tlddoc)
 * Add missing `maven-resolver-api`
 * Rename POM-property `encoding` to `sourceEncoding`
 * Set minimum MAVEN-Plugin-Version from 3.2.5 to 3.8.1

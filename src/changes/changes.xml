@@ -9,6 +9,7 @@
   </properties>
   <body>
     <release version="3.0.0-SNAPSHOT" description="Jakarta EE 9+, JDK 11, JPMS">
+      <action type="update" dev="ste-gr">Use own &quot;checkstyle.xml&quot; (from tlddoc)</action>
       <action type="fix" dev="ste-gr">Add missing &quot;maven-resolver-api&quot;</action>
       <action type="fix" dev="ste-gr">Rename POM-property &quot;encoding&quot; to &quot;sourceEncoding&quot;</action>
       <action type="fix" dev="ste-gr">Correct testcases because downgraded &quot;doxia&quot;- and &quot;maven-reporting&quot;-versions</action>

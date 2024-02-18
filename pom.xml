@@ -754,7 +754,7 @@
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <configuration>
-          <configLocation>google_checks.xml</configLocation>
+          <configLocation>checkstyle.xml</configLocation>
           <sourceDirectories>
             <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
             <sourceDirectory>${project.build.testSourceDirectory}</sourceDirectory>
