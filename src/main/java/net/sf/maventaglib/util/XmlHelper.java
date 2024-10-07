@@ -24,34 +24,18 @@
 
 package net.sf.maventaglib.util;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.CharArrayReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.FactoryConfigurationError;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParserFactory;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.sax.SAXSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
 
 /**
  * Utilities for xml-processing.
@@ -72,13 +56,15 @@ public class XmlHelper {
         DocumentBuilder builder;
         DocumentBuilderFactory factory;
         try {
-            builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             factory = DocumentBuilderFactory.newInstance();
             factory.setValidating(false);
             factory.setNamespaceAware(false);
             factory.setExpandEntityReferences(false);
+
+            builder = factory.newDocumentBuilder();
             builder.setEntityResolver((publicId, systemId)
-                    -> new InputSource(new CharArrayReader(new char[0])));
+                    -> new InputSource(new CharArrayReader(new char[0]))
+            );
 
             return builder;
         } catch (FactoryConfigurationError | ParserConfigurationException e) {
@@ -87,114 +73,21 @@ public class XmlHelper {
     }
 
     /**
-     * Returns a XMLReader instance.
+     * Look up a single Attribute by name. Returns the Attribute's string value, or an empty string
+     * (NOT null!) to indicate that the name did not map to a currently defined attribute.
      *
-     * @return XMLReader instance
+     * @param tagNode the XML-node to get the attribute
+     * @param name    name of the attribute
      *
-     * @throws MojoExecutionException in case of an SAX-Parser-Error
+     * @return the "flattened" string obtained from Attribute.getValue()
      */
-    protected static XMLReader getReader()
-            throws MojoExecutionException {
-        try {
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            factory.setNamespaceAware(true);
-            factory.setValidating(false);
-            XMLReader reader = factory.newSAXParser().getXMLReader();
-
-            reader.setEntityResolver((publicId, systemId)
-                    -> new InputSource(new CharArrayReader(new char[0])));
-
-            return reader;
-        } catch (FactoryConfigurationError | Exception e) {
-            throw new MojoExecutionException("Unable to obtain a new xml parser", e);
+    public static String getAttribute(final Node tagNode, final String name) {
+        final NamedNodeMap attrs = tagNode.getAttributes();
+        if (attrs == null) {
+            return "";
         }
-    }
-
-    /**
-     * Apply an xsl stylesheet to a java.xml.tranform.Source.
-     *
-     * @param src        Source
-     * @param stylesheet xslt used for transformation
-     * @param outputFile output file
-     *
-     * @throws MojoExecutionException xml parsing/transforming exceptions
-     * @throws TransformerException   If an unrecoverable error occurs during the course of the
-     *                                transformation.
-     * @throws IOException            if output directory could not created
-     */
-    protected static void applyXslt(Source src, String stylesheet, File outputFile)
-            throws MojoExecutionException, TransformerException, IOException {
-
-        OutputStream fos = null;
-        File outputDir = outputFile.getParentFile();
-        if (!(outputDir.mkdirs() || outputDir.isDirectory())) {
-            throw new IOException("Unable to create output directory "
-                    + outputDir.getAbsolutePath());
-        }
-
-        try {
-            try {
-                fos = new BufferedOutputStream(new FileOutputStream(outputFile));
-            } catch (FileNotFoundException e) {
-                throw new MojoExecutionException(
-                        "Unable to complete xslt transformation. Unable to create output file "
-                        + outputFile.getAbsolutePath() + ": " + e.getMessage(), e);
-            }
-
-            // result
-            StreamResult res = new StreamResult(fos);
-
-            // transformer
-            InputStream xsl = XmlHelper.class.getResourceAsStream(stylesheet);
-            if (xsl == null) {
-                throw new MojoExecutionException("Can't find stylesheet " + stylesheet);
-            }
-
-            Transformer transformer = TransformerFactory
-                    .newInstance().newTransformer(new StreamSource(xsl));
-            transformer.transform(src, res);
-        } finally {
-            try {
-                if (fos != null) {
-                    fos.close();
-                }
-            } catch (IOException ignored) {
-                // ignore
-            }
-        }
-    }
-
-    /**
-     * Transform a file using the given xsl stylesheet.
-     *
-     * @param inputFile  input file
-     * @param stylesheet xslt used for transformation
-     * @param outputFile output file
-     *
-     * @throws MojoExecutionException xml parsing/transforming exceptions
-     */
-    protected static void applyXslt(File inputFile, String stylesheet, File outputFile)
-            throws MojoExecutionException {
-
-        InputStream fis = null;
-        try {
-            fis = new BufferedInputStream(new FileInputStream(inputFile));
-            XMLReader reader = getReader();
-            Source src = new SAXSource(reader, new InputSource(fis));
-            applyXslt(src, stylesheet, outputFile);
-        } catch (IOException | TransformerException | MojoExecutionException e) {
-            throw new MojoExecutionException("Unable to complete xslt transformation from "
-                    + inputFile.getAbsolutePath() + " to " + outputFile.getAbsolutePath()
-                    + " using " + stylesheet + ": " + e.getMessage(), e);
-        } finally {
-            try {
-                if (fis != null) {
-                    fis.close();
-                }
-            } catch (IOException ignored) {
-                // ignore
-            }
-        }
+        final Attr attr = (Attr) attrs.getNamedItem(name);
+        return attr == null ? "" : attr.getValue();
     }
 
     /**

@@ -24,6 +24,7 @@
 
 package net.sf.maventaglib.checker;
 
+import java.util.List;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -35,49 +36,104 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class Tld {
 
     /**
-     * The tag library shortname.
-     */
-    private String name;
-
-    /**
-     * The tag library shortname.
-     */
-    private String shortname;
-
-    /**
      * The tld file name.
      */
-    private String filename;
+    private final String filename;
 
     /**
-     * The tlibversion.
+     * A simple string describing the "use" of this taglib, should be user discernable.
      */
-    private String tlibversion;
+    private final LangElements<StringLang> description;
 
     /**
-     * The taglib uri.
+     * The display-name element contains a short name that is intended to be displayed by tools.
      */
-    private String uri;
+    private final LangElements<StringLang> displayName;
 
     /**
-     * The info/description.
+     * Optional icons that can be used by tools
      */
-    private String info;
+    private final LangElements<Icon> icons;
 
     /**
-     * List of tags.
+     * The version of the tag library implementation.
      */
-    private Tag[] tags;
+    private final String tlibVersion;
 
     /**
-     * List of tagfiles.
+     * A simple default short name that could be used by a JSP authoring tool to create names with a
+     * mnemonic value; for example, the it may be used as the preferred prefix value in taglib
+     * directives.
      */
-    private TagFile[] tagfiles;
+    private final StringId shortName;
 
     /**
-     * List of EL Functions.
+     * A URI uniquely identifying this taglib.
      */
-    private ElFunction[] functions;
+    private final StringId uri;
+
+    /**
+     * Optional TagLibraryValidator information.
+     */
+    private final String validator;
+
+    ddd /**
+             * The info/description.
+             */
+    private final String info;
+
+    /**
+     * Optional event listener specification.
+     */
+    private final String listener;
+
+    /**
+     * Tags in this tag library.
+     */
+    private List<Tag> tags;
+
+    /**
+     * Tag files in this tag library.
+     */
+    private List<TagFile> tagfiles;
+
+    /**
+     * Zero or more EL functions defined in this tag library.
+     */
+    private List<ElFunction> functions;
+
+    /**
+     * Zero or more extensions that provide extra information about this taglib, for tool
+     * consumption.
+     */
+    private List<String> taglibExtension;
+
+    /**
+     *
+     * @param name
+     * @param shortname
+     * @param filename
+     * @param tlibversion
+     * @param uri
+     * @param info
+     * @param tags
+     * @param tagfiles
+     * @param functions
+     */
+    public Tld(LangElement<String> description, LangElement<String> displayName, LangElement<Icon> icon, String name, String shortname, String filename, String tlibversion, String uri, String info, List<Tag> tags, List<TagFile> tagfiles, List<ElFunction> functions) {
+        this.description = description;
+        this.displayName = displayName;
+        this.icon = icon;
+        this.name = name;
+        this.shortname = shortname;
+        this.filename = filename;
+        this.tlibversion = tlibversion;
+        this.uri = uri;
+        this.info = info;
+        this.tags = tags;
+        this.tagfiles = tagfiles;
+        this.functions = functions;
+    }
 
     /**
      * Gets the filename.
@@ -86,15 +142,6 @@ public class Tld {
      */
     public String getFilename() {
         return this.filename;
-    }
-
-    /**
-     * Sets the filename.
-     *
-     * @param file The filename to set.
-     */
-    public void setFilename(String file) {
-        this.filename = file;
     }
 
     /**
@@ -107,20 +154,11 @@ public class Tld {
     }
 
     /**
-     * Sets the shortname for this library.
-     *
-     * @param tagLibName shortname for this tag library.
-     */
-    public void setName(String tagLibName) {
-        this.name = tagLibName;
-    }
-
-    /**
-     * Returnss the list of tags in this tag library.
+     * Returns the list of tags in this tag library.
      *
      * @return list of tags in this tag library
      */
-    public Tag[] getTags() {
+    public List<Tag> getTags() {
         return this.tags;
     }
 
@@ -134,47 +172,12 @@ public class Tld {
     }
 
     /**
-     * Setter for {@code uri}.
-     *
-     * @param uri The uri to set.
-     */
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    /**
-     * Sets the list of tags in this tag library.
-     *
-     * @param tagList list of tags in this tag library
-     */
-    public void setTags(Tag[] tagList) {
-        this.tags = tagList;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE)
-                .append("name", this.name)
-                .append("tags", this.tags)
-                .toString();
-    }
-
-    /**
      * Getter for {@code shortname}.
      *
      * @return Returns the shortname.
      */
     public String getShortname() {
         return this.shortname;
-    }
-
-    /**
-     * Setter for {@code shortname}.
-     *
-     * @param shortname The shortname to set.
-     */
-    public void setShortname(String shortname) {
-        this.shortname = shortname;
     }
 
     /**
@@ -187,15 +190,6 @@ public class Tld {
     }
 
     /**
-     * Setter for {@code info}.
-     *
-     * @param info The info to set.
-     */
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
-    /**
      * Getter for {@code tlibversion}.
      *
      * @return Returns the tlibversion.
@@ -205,30 +199,12 @@ public class Tld {
     }
 
     /**
-     * Setter for {@code tlibversion}.
-     *
-     * @param tlibversion The tlibversion to set.
-     */
-    public void setTlibversion(String tlibversion) {
-        this.tlibversion = tlibversion;
-    }
-
-    /**
      * Returns the functions.
      *
      * @return the functions
      */
-    public ElFunction[] getFunctions() {
+    public List<ElFunction> getFunctions() {
         return functions;
-    }
-
-    /**
-     * Sets the functions.
-     *
-     * @param functions the functions to set
-     */
-    public void setFunctions(ElFunction[] functions) {
-        this.functions = functions;
     }
 
     /**
@@ -236,16 +212,15 @@ public class Tld {
      *
      * @return the tagfiles
      */
-    public TagFile[] getTagfiles() {
+    public List<TagFile> getTagfiles() {
         return tagfiles;
     }
 
-    /**
-     * Sets the tagfiles.
-     *
-     * @param tagfiles the tagfiles to set
-     */
-    public void setTagfiles(TagFile[] tagfiles) {
-        this.tagfiles = tagfiles;
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE)
+                .append("name", this.name)
+                .append("tags", this.tags)
+                .toString();
     }
 }
