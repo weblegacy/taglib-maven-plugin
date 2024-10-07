@@ -9,6 +9,7 @@
   </properties>
   <body>
     <release version="3.0.0-SNAPSHOT" description="Jakarta EE 9+, JDK 11, JPMS">
+      <action type="fix" dev="ste-gr">Tipfix message</action>
       <action type="fix" dev="ste-gr">Resolve all CPD and PMD messages</action>
       <action type="fix" dev="ste-gr">Reformat sources and resolve all checkstyle messages</action>
       <action type="fix" dev="ste-gr">Rewrite and reformat testcases</action>
