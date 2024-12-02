@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Change minimum Java-Version to JDK11
 * Tipfix message
 * Resolve all CPD and PMD messages
 * Reformat sources and resolve all checkstyle messages
