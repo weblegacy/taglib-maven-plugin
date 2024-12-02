@@ -24,8 +24,6 @@
 
 package net.sf.maventaglib;
 
-import com.sun.tlddoc.GeneratorException;
-import com.sun.tlddoc.TLDDocGenerator;
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -33,11 +31,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.plexus.util.FileUtils;
+
+import io.github.weblegacy.tlddoc.main.GeneratorException;
+import io.github.weblegacy.tlddoc.main.TldDocGenerator;
 
 /**
  * Generates taglibdoc documentation.
@@ -82,12 +84,12 @@ public class TaglibdocMojo extends AbstractReportMojo {
         getLog().debug(MessageFormat.format(
                 Messages.getString("Taglib.generating.tlddoc"), srcDir.getAbsolutePath()));
 
-        TLDDocGenerator generator = new TLDDocGenerator();
-        generator.setOutputDirectory(tldDocDir);
+        TldDocGenerator generator = new TldDocGenerator();
+        generator.setOutputDirectory(tldDocDir.toPath());
         generator.setQuiet(true);
         generator.setWindowTitle(this.title);
         if (xsltDir != null) {
-            generator.setXSLTDirectory(xsltDir);
+            generator.setXsltDirectory(xsltDir.toPath());
         }
 
         final String searchprefix = dontRecurseIntoSubdirs ? "" : "**/";
@@ -96,7 +98,7 @@ public class TaglibdocMojo extends AbstractReportMojo {
             // handle tlds
             List<File> tlds = FileUtils.getFiles(srcDir, searchprefix + "*.tld", null);
             for (File tld : tlds) {
-                generator.addTLD(tld);
+                generator.addTld(tld.toPath());
             }
 
             // handle tag files. Add any directory containing .tag or .tagx files
@@ -109,7 +111,7 @@ public class TaglibdocMojo extends AbstractReportMojo {
                     directories.add(tag.getParentFile());
                 }
                 for (File directory : directories) {
-                    generator.addTagDir(directory);
+                    generator.addTagDir(directory.toPath());
                 }
             }
         } catch (IOException e) {

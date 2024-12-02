@@ -24,10 +24,6 @@
 
 package net.sf.maventaglib;
 
-import com.sun.tlddoc.tagfileparser.Attribute;
-import com.sun.tlddoc.tagfileparser.Directive;
-import com.sun.tlddoc.tagfileparser.javacc.ParseException;
-import com.sun.tlddoc.tagfileparser.javacc.TagFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -43,8 +39,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import javax.xml.parsers.DocumentBuilder;
-import net.sf.maventaglib.util.XmlHelper;
+
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -58,6 +55,12 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import io.github.weblegacy.tlddoc.tagfileparser.Attribute;
+import io.github.weblegacy.tlddoc.tagfileparser.Directive;
+import io.github.weblegacy.tlddoc.tagfileparser.javacc.ParseException;
+import io.github.weblegacy.tlddoc.tagfileparser.javacc.TagFile;
+import net.sf.maventaglib.util.XmlHelper;
 
 /**
  * Generates tld files from directories of jsp 2.0 tag files.

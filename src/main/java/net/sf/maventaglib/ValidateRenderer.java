@@ -31,14 +31,17 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import net.sf.maventaglib.checker.ElFunction;
-import net.sf.maventaglib.checker.Tag;
-import net.sf.maventaglib.checker.TagAttribute;
-import net.sf.maventaglib.checker.Tld;
+
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.reporting.AbstractMavenReportRenderer;
+
+import net.sf.maventaglib.checker.ElFunction;
+import net.sf.maventaglib.checker.Tag;
+import net.sf.maventaglib.checker.TagAttribute;
+import net.sf.maventaglib.checker.Tld;
 
 /**
  * Validates tag handler classes fount in tlds.
