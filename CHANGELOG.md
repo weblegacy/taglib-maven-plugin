@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Update Copyright to 2025
 * Bump `tlddoc` from 1.4 to 2.0.0-SNAPSHOT
 * Change minimum Java-Version to JDK11
 * Tipfix message

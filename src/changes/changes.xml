@@ -9,6 +9,7 @@
   </properties>
   <body>
     <release version="3.0.0-SNAPSHOT" description="Jakarta EE 9+, JDK 11, JPMS">
+      <action type="update" dev="ste-gr">Update Copyright to 2025</action>
       <action type="update" dev="ste-gr">Bump &quot;tlddoc&quot; from 1.4 to 2.0.0-SNAPSHOT</action>
       <action type="update" dev="ste-gr">Change minimum Java-Version to JDK11</action>
       <action type="fix" dev="ste-gr">Tipfix message</action>
