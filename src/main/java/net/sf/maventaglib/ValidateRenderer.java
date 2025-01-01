@@ -303,7 +303,7 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer {
             }
 
             Method method = functionClass.getMethod(methodName,
-                    parClasses.toArray(new Class<?>[0]));
+                    parClasses.toArray(Class<?>[]::new));
 
             Class<?> returnType = method.getReturnType();
 

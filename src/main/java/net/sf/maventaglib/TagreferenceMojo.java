@@ -64,7 +64,7 @@ public class TagreferenceMojo extends AbstractReportMojoEx {
     protected void executeReport(Locale locale) throws MavenReportException {
         final List<Tld> tldList = loadTldFiles();
 
-        new TagreferenceRenderer(getSink(), locale, tldList.toArray(new Tld[0]), parseHtml,
+        new TagreferenceRenderer(getSink(), locale, tldList.toArray(Tld[]::new), parseHtml,
                 getLog()).render();
     }
 }

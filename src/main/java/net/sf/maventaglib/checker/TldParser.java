@@ -123,9 +123,9 @@ public final class TldParser {
                 }
             }
 
-            tld.setTags(tags.toArray(new Tag[0]));
-            tld.setFunctions(functions.toArray(new ElFunction[0]));
-            tld.setTagfiles(tagfiles.toArray(new TagFile[0]));
+            tld.setTags(tags.toArray(Tag[]::new));
+            tld.setFunctions(functions.toArray(ElFunction[]::new));
+            tld.setTagfiles(tagfiles.toArray(TagFile[]::new));
         }
 
         return tld;
@@ -276,8 +276,8 @@ public final class TldParser {
                         break;
                 }
             }
-            tag.setAttributes(attributes.toArray(new TagAttribute[0]));
-            tag.setVariables(variables.toArray(new TagVariable[0]));
+            tag.setAttributes(attributes.toArray(TagAttribute[]::new));
+            tag.setVariables(variables.toArray(TagVariable[]::new));
         }
 
         tag.setDeprecated(StringUtils.contains(tag.getDescription(), "@deprecated"));

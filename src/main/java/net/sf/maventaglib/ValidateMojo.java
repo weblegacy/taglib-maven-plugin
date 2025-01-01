@@ -82,11 +82,11 @@ public class ValidateMojo extends AbstractReportMojoEx {
 
         URLClassLoader projectClassLoader = AccessController.doPrivileged(
                 (PrivilegedAction<URLClassLoader>) ()
-                -> new URLClassLoader(urls.toArray(new URL[0]), null)
+                -> new URLClassLoader(urls.toArray(URL[]::new), null)
         );
 
         ValidateRenderer r = new ValidateRenderer(getSink(), locale,
-                tldList.toArray(new Tld[0]), getLog(),
+                tldList.toArray(Tld[]::new), getLog(),
                 projectClassLoader);
 
         r.render();
