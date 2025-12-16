@@ -31,17 +31,17 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
+import net.sf.maventaglib.checker.ElFunction;
+import net.sf.maventaglib.checker.Tag;
+import net.sf.maventaglib.checker.TagAttribute;
+import net.sf.maventaglib.checker.Tld;
+import net.sf.maventaglib.util.JspCheck;
+import net.sf.maventaglib.util.JspClass;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.reporting.AbstractMavenReportRenderer;
-
-import net.sf.maventaglib.checker.ElFunction;
-import net.sf.maventaglib.checker.Tag;
-import net.sf.maventaglib.checker.TagAttribute;
-import net.sf.maventaglib.checker.Tld;
 
 /**
  * Validates tag handler classes fount in tlds.
@@ -93,32 +93,22 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer {
     /**
      * list of Tld to check.
      */
-    private Tld[] tlds;
+    private final Tld[] tlds;
 
     /**
      * For logging.
      */
-    private Log log;
+    private final Log log;
 
     /**
      * The class-loader for the project.
      */
-    private ClassLoader projectClassLoader;
+    private final ClassLoader projectClassLoader;
 
     /**
-     * javax.servlet.jsp.tagext.TagSupport class loaded using the project classloader.
+     * Utility to check for the loaded Jsp-Classes.
      */
-    private Class<?> tagSupportClass;
-
-    /**
-     * javax.servlet.jsp.tagext.TagExtraInfo class loaded using the project classloader.
-     */
-    private Class<?> tagExtraInfoClass;
-
-    /**
-     * javax.servlet.jsp.tagext.SimpleTag class loaded using the project classloader.
-     */
-    private Class<?> simpleTagClass;
+    private final JspCheck jspCheck;
 
     /**
      * The class-constructor.
@@ -130,32 +120,16 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer {
      * @param log                the logger that has been injected into this mojo.
      * @param projectClassLoader ClassLoader for all compile-classpaths
      */
-    public ValidateRenderer(Sink sink, Locale locale, Tld[] tlds, Log log,
-            ClassLoader projectClassLoader) {
+    public ValidateRenderer(final Sink sink, final Locale locale, final Tld[] tlds, final Log log,
+            final ClassLoader projectClassLoader) {
 
         super(sink, locale);
         this.tlds = tlds;
         this.log = log;
         this.projectClassLoader = projectClassLoader;
 
-        try {
-            tagSupportClass = Class.forName("javax.servlet.jsp.tagext.TagSupport", true,
-                    this.projectClassLoader);
-        } catch (ClassNotFoundException e) {
-            log.error(Messages.getString("Validate.error.unabletoload.TagSupport"));
-        }
-        try {
-            tagExtraInfoClass = Class.forName("javax.servlet.jsp.tagext.TagExtraInfo", true,
-                    this.projectClassLoader);
-        } catch (ClassNotFoundException e) {
-            log.error(Messages.getString("Validate.error.unabletoload.TagExtraInfo"));
-        }
-        try {
-            simpleTagClass = Class.forName("javax.servlet.jsp.tagext.SimpleTag", true,
-                    this.projectClassLoader);
-        } catch (ClassNotFoundException e) {
-            log.debug(Messages.getString("Validate.error.unabletoload.SimpleTag"));
-        }
+        // Load all jsp-classes for all namespaces.
+        this.jspCheck = new JspCheck(log, projectClassLoader);
     }
 
     @Override
@@ -364,8 +338,8 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer {
             Class<?> tagClass = Class.forName(className, true, this.projectClassLoader);
 
             // extend only true, if tagClass derives from TagSupport or derives from SimpleTag
-            extend = tagSupportClass.isAssignableFrom(tagClass)
-                    || simpleTagClass != null && simpleTagClass.isAssignableFrom(tagClass);
+            extend = jspCheck.check(JspClass.TAG_SUPPORT, tagClass)
+                    || jspCheck.check(JspClass.SIMPLE_TAG, tagClass);
 
             try {
                 tagObject = tagClass.getDeclaredConstructor().newInstance();
@@ -373,7 +347,6 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer {
                     | NoSuchMethodException | SecurityException | InvocationTargetException e) {
                 loadable = false;
             }
-
         } catch (ClassNotFoundException | NoClassDefFoundError e) {
             found = false;
             loadable = false;
@@ -435,15 +408,13 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer {
 
         boolean found = true;
         boolean loadable = true;
-        boolean extend = true;
+        boolean extend;
 
         Class<?> teiClass;
         try {
             teiClass = Class.forName(className, true, this.projectClassLoader);
 
-            if (tagExtraInfoClass == null || !tagExtraInfoClass.isAssignableFrom(teiClass)) {
-                extend = false;
-            }
+            extend = jspCheck.check(JspClass.TAG_EXTRA_INFO, teiClass);
 
             try {
                 teiClass.getDeclaredConstructor().newInstance();
