@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Remove unused methods
 * Bump `maven-fluido-skin` from 1.12.0 to 2.1.0 and move version to POM
 * Bump `maven-site-plugin` from 3.12.1 to 3.21.0
 * Bump `maven-changes-plugin` from 2.12.1 to 3.0.0-M3 with adaptations
