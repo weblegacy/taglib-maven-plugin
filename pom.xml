@@ -79,6 +79,7 @@
     <project.reporting.outputEncoding>${sourceEncoding}</project.reporting.outputEncoding>
     <mavenVersion>3.6.3</mavenVersion>
     <javaVersion>11</javaVersion>
+    <fludioVersion>2.1.0</fludioVersion>
     <mavenPluginVersion>3.8.1</mavenPluginVersion>
     <mavenPluginToolsVersion>3.11.0</mavenPluginToolsVersion>
     <surefireVersion>3.2.5</surefireVersion>
@@ -329,7 +330,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
-          <version>3.12.1</version>
+          <version>3.21.0</version>
           <configuration>
             <skipDeploy>true</skipDeploy>
           </configuration>

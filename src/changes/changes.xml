@@ -9,7 +9,10 @@
     </properties>
     <body>
         <release version="3.0.0-SNAPSHOT" date="YYYY-MM-DD" description="Jakarta EE 9+, JDK 11, JPMS">
-            <action type="update" dev="ste-gr">Bump &quot;maven-changes-plugin&quot; from 2.12.1 to 3.0.0-M3 with adaptations</action>            <action type="fix" dev="ste-gr">Resolve checkstyle-messages</action>
+            <action type="update" dev="ste-gr">Bump &quot;maven-fluido-skin&quot; from 1.12.0 to 2.1.0 and move version to POM</action>
+            <action type="update" dev="ste-gr">Bump &quot;maven-site-plugin&quot; from 3.12.1 to 3.21.0</action>
+            <action type="update" dev="ste-gr">Bump &quot;maven-changes-plugin&quot; from 2.12.1 to 3.0.0-M3 with adaptations</action>
+            <action type="fix" dev="ste-gr">Resolve checkstyle-messages</action>
             <action type="update" dev="ste-gr">New version of &quot;checksytle.xml&quot;</action>
             <action type="update" dev="ste-gr">Bump &quot;checkstyle&quot; from 10.13.0 to 12.3.0</action>
             <action type="update" dev="ste-gr">Bump &quot;maven-checkstyle-plugin&quot; from 3.3.1 to 3.6.0</action>
