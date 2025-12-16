@@ -21,8 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package net.sf.maventaglib;
 
+import io.github.weblegacy.tlddoc.tagfileparser.Attribute;
+import io.github.weblegacy.tlddoc.tagfileparser.Directive;
+import io.github.weblegacy.tlddoc.tagfileparser.javacc.ParseException;
+import io.github.weblegacy.tlddoc.tagfileparser.javacc.TagFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -38,9 +43,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javax.xml.parsers.DocumentBuilder;
-
+import net.sf.maventaglib.util.XmlHelper;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -54,12 +58,6 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import io.github.weblegacy.tlddoc.tagfileparser.Attribute;
-import io.github.weblegacy.tlddoc.tagfileparser.Directive;
-import io.github.weblegacy.tlddoc.tagfileparser.javacc.ParseException;
-import io.github.weblegacy.tlddoc.tagfileparser.javacc.TagFile;
-import net.sf.maventaglib.util.XmlHelper;
 
 /**
  * Generates tld files from directories of jsp 2.0 tag files.
@@ -225,6 +223,14 @@ public class TldGenerateMojo extends AbstractMojo {
         }
     }
 
+    /**
+     * Read whole taglib-files an generate a tld-xml.
+     *
+     * @param taglib          the taglib
+     * @param documentBuilder DocumentBuilder instance
+     *
+     * @return generated tld-xml
+     */
     protected Document getTldDocument(Taglib taglib, DocumentBuilder documentBuilder) {
         Document result = documentBuilder.newDocument();
 
@@ -404,6 +410,16 @@ public class TldGenerateMojo extends AbstractMojo {
         }
     }
 
+    /**
+     * Creates the root-element of an empty tld-xml.
+     *
+     * @param result      resulting tld-xml
+     * @param description description of the taglib
+     * @param shortName   short-name of the taglib
+     * @param uri         uri of the taglib
+     *
+     * @return the root-element
+     */
     protected Element createRootTaglibNode(Document result, String description, String shortName,
             String uri) {
 

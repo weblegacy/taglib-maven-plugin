@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package net.sf.maventaglib.util;
 
 import java.io.BufferedInputStream;
@@ -213,7 +214,7 @@ public class XmlHelper {
         for (int j = 0; j < nodeList.getLength(); j++) {
             Node k = nodeList.item(j);
             buf.append(k.getNodeValue());
-            //getTextContent( k );
+            // getTextContent( k );
         }
 
         return buf.toString();

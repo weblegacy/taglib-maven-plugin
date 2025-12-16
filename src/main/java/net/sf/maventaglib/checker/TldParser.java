@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package net.sf.maventaglib.checker;
 
 import java.util.Set;
@@ -70,14 +71,16 @@ public final class TldParser {
             if (tagNode != null && tagNode.getNodeName() != null) {
                 switch (tagNode.getNodeName()) {
                     case "shortname":
-                    case "short-name": {
+                    case "short-name":
+                    {
                         Node child = tagNode.getFirstChild();
                         if (child != null) {
                             tld.setShortname(child.getNodeValue());
                         }
                         break;
                     }
-                    case "display-name": {
+                    case "display-name":
+                    {
                         Node child = tagNode.getFirstChild();
                         if (child != null) {
                             tld.setName(child.getNodeValue());
@@ -89,31 +92,36 @@ public final class TldParser {
                         tld.setInfo(XmlHelper.getTextContent(tagNode));
                         break;
                     case "tlib-version":
-                    case "tlibversion": {
+                    case "tlibversion":
+                    {
                         Node child = tagNode.getFirstChild();
                         if (child != null) {
                             tld.setTlibversion(child.getNodeValue());
                         }
                         break;
                     }
-                    case "uri": {
+                    case "uri":
+                    {
                         Node child = tagNode.getFirstChild();
                         if (child != null) {
                             tld.setUri(child.getNodeValue());
                         }
                         break;
                     }
-                    case "tag": {
+                    case "tag":
+                    {
                         Tag tag = parseTag(tagNode);
                         tags.add(tag);
                         break;
                     }
-                    case "function": {
+                    case "function":
+                    {
                         ElFunction tag = parseFunction(tagNode);
                         functions.add(tag);
                         break;
                     }
-                    case "tag-file": {
+                    case "tag-file":
+                    {
                         TagFile tag = parseTagFile(tagNode);
                         tagfiles.add(tag);
                         break;
