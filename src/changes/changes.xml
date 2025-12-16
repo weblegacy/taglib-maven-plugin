@@ -9,6 +9,7 @@
   </properties>
   <body>
     <release version="3.0.0-SNAPSHOT" description="Jakarta EE 9+, JDK 11, JPMS">
+      <action type="update" dev="ste-gr">New version of &quot;checksytle.xml&quot;</action>
       <action type="update" dev="ste-gr">Bump &quot;checkstyle&quot; from 10.13.0 to 12.3.0</action>
       <action type="update" dev="ste-gr">Bump &quot;maven-checkstyle-plugin&quot; from 3.3.1 to 3.6.0</action>
       <action type="update" dev="ste-gr">Use JDK11-toArray</action>
