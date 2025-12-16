@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Bump `maven-checkstyle-plugin` from 3.3.1 to 3.6.0
 * Use JDK11-toArray
 * Update Copyright to 2025
 * Bump `tlddoc` from 1.4 to 2.0.0-SNAPSHOT
