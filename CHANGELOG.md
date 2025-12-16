@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Bump `maven-changes-plugin` from 2.12.1 to 3.0.0-M3 with adaptations
 * Resolve checkstyle-messages
 * New version of `checksytle.xml`
 * Bump `checkstyle` from 10.13.0 to 12.3.0

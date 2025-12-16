@@ -191,11 +191,12 @@
         </plugin>
         <plugin>
           <artifactId>maven-changes-plugin</artifactId>
-          <version>2.12.1</version>
+          <version>3.0.0-M3</version>
           <configuration>
-            <githubAPIScheme>https</githubAPIScheme>
-            <githubAPIPort>443</githubAPIPort>
-            <teamlist>team.html</teamlist>
+            <issueLinkTemplatePerSystem>
+              <SourceForgeBugs>https://sourceforge.net/p/maven-taglib/bugs/%ISSUE%</SourceForgeBugs>
+              <SourceForgeCode>https://sourceforge.net/p/maven-taglib/code/%ISSUE%</SourceForgeCode>
+            </issueLinkTemplatePerSystem>
             <onlyMilestoneIssues>false</onlyMilestoneIssues>
           </configuration>
         </plugin>
@@ -745,8 +746,8 @@
         <reportSets>
           <reportSet>
             <reports>
-              <report>changes-report</report>
-              <report>github-report</report>
+              <report>changes</report>
+              <report>github-changes</report>
             </reports>
           </reportSet>
         </reportSets>
