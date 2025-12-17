@@ -195,8 +195,7 @@
           <version>3.0.0-M3</version>
           <configuration>
             <issueLinkTemplatePerSystem>
-              <SourceForgeBugs>https://sourceforge.net/p/maven-taglib/bugs/%ISSUE%</SourceForgeBugs>
-              <SourceForgeCode>https://sourceforge.net/p/maven-taglib/code/%ISSUE%</SourceForgeCode>
+              <sourceForge>https://sourceforge.net/support/tracker.php?aid=%ISSUE%</sourceForge>
             </issueLinkTemplatePerSystem>
             <onlyMilestoneIssues>false</onlyMilestoneIssues>
           </configuration>

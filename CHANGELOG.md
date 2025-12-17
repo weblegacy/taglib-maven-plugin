@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Correct old issue-links to `sourceForge`
 * Optimize and add check for javax- and jakarta-namespace
 * Remove unused methods
 * Bump `maven-fluido-skin` from 1.12.0 to 2.1.0 and move version to POM
