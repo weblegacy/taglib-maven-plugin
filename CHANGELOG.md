@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Update Copyright to 2026
 * Correct old issue-links to `sourceForge`
 * Optimize and add check for javax- and jakarta-namespace
 * Remove unused methods
