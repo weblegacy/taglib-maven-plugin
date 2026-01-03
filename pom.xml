@@ -481,10 +481,20 @@
             <licenseSet>
               <header>src/license/MIT.txt</header>
               <includes>
-                <include>src/main/**</include>
+                <include>src/**</include>
+                <inlcude>pom.xml</inlcude>
               </includes>
+              <excludes>
+                <exclude>src/assemblies/**</exclude>
+              </excludes>
             </licenseSet>
           </licenseSets>
+          <mapping>
+            <tag>XML_STYLE</tag>
+          </mapping>
+          <defaultHeaderDefinitions>
+            <defaultHeaderDefinition>src/license/headerStyles.xml</defaultHeaderDefinition>
+          </defaultHeaderDefinitions>
           <properties>
             <currentYear>${currentYear}</currentYear>
           </properties>
