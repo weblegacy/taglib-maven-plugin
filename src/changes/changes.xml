@@ -34,6 +34,7 @@
     </properties>
     <body>
         <release version="3.0.0-SNAPSHOT" date="YYYY-MM-DD" description="Jakarta EE 9+, JDK 11, JPMS">
+            <action type="update" dev="ste-gr">Bump &quot;maven-deploy-plugin&quot; from 3.1.1 to 3.1.4</action>
             <action type="update" dev="ste-gr">Bump &quot;maven-dependency-plugin&quot; from 3.6.1 to 3.9.0 with config-adaptions, report-optimization and more analysis</action>
             <action type="update" dev="ste-gr">Bump &quot;maven-compiler-plugin&quot; from 3.12.1 to 3.14.1 with some config-adaptions</action>
             <action type="update" dev="ste-gr">Bump &quot;maven-clean-plugin&quot; from 3.3.2 to 3.5.0</action>
