@@ -116,6 +116,7 @@
     <slf4jVersion>1.7.36</slf4jVersion>
     <junitVersion>4.13.2</junitVersion>
     <mavenPluginTestingHarnessVersion>3.3.0</mavenPluginTestingHarnessVersion>
+    <mavenReportingVersion>4.0.0</mavenReportingVersion>
     <mavenResolverVersion>1.6.2</mavenResolverVersion>
     <doxiaVersion>1.12.0</doxiaVersion>
     <sisuVersion>0.3.4</sisuVersion>
@@ -735,20 +736,16 @@
     <dependency>
       <groupId>org.apache.maven.reporting</groupId>
       <artifactId>maven-reporting-api</artifactId>
-      <version>3.1.1</version>
+      <version>${mavenReportingVersion}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.reporting</groupId>
       <artifactId>maven-reporting-impl</artifactId>
-      <version>3.2.0</version>
+      <version>${mavenReportingVersion}</version>
       <exclusions>
           <exclusion>
               <groupId>commons-logging</groupId>
               <artifactId>commons-logging</artifactId>
-          </exclusion>
-          <exclusion>
-              <groupId>org.codehaus.plexus</groupId>
-              <artifactId>plexus-container-default</artifactId>
           </exclusion>
       </exclusions>
     </dependency>

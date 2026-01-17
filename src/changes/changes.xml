@@ -34,6 +34,7 @@
     </properties>
     <body>
         <release version="3.0.0-SNAPSHOT" date="YYYY-MM-DD" description="Jakarta EE 9+, JDK 11, JPMS">
+            <action type="update" dev="ste-gr">Bump &quot;maven-reporting-api&quot; from 3.1.1 to 4.0.0 and &quot;maven-reporting-impl&quot; from 3.2.0 to 4.0.0</action>
             <action type="fix" dev="ste-gr">Add missing dependencies &quot;javax.inject&quot;, &quot;maven-resolver-provider&quot;, &quot;maven-resolver-impl&quot;</action>
             <action type="fix" dev="ste-gr">Change scope from &quot;org.eclipse.sisu.plexus&quot;</action>
             <action type="fix" dev="ste-gr">Change scopes from &quot;slf4j&quot;-dependencies</action>
