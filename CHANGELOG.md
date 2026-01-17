@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Bump `commons-beanutils` from 1.9.4 to 1.11.0
 * Remove unnecessary dependency `javax.servlet.jsp-api`
 * Remove unused `SimpleTag`-test-class
 * Bump `doxia`-dependencies from 1.12.0 to 2.0.0
