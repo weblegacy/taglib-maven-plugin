@@ -117,6 +117,7 @@
     <mavenPluginTestingHarnessVersion>3.3.0</mavenPluginTestingHarnessVersion>
     <mavenResolverVersion>1.6.2</mavenResolverVersion>
     <doxiaVersion>1.12.0</doxiaVersion>
+    <sisuVersion>0.3.4</sisuVersion>
   </properties>
 
   <profiles>
@@ -423,6 +424,11 @@
           <artifactId>versions-maven-plugin</artifactId>
           <version>2.20.1</version>
         </plugin>
+        <plugin>
+          <groupId>org.eclipse.sisu</groupId>
+          <artifactId>sisu-maven-plugin</artifactId>
+          <version>${sisuVersion}</version>
+        </plugin>
       </plugins>
     </pluginManagement>
 
@@ -551,6 +557,19 @@
             <id>help-goal</id>
             <goals>
               <goal>helpmojo</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.sisu</groupId>
+        <artifactId>sisu-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>generate-index</id>
+            <goals>
+              <goal>main-index</goal>
+              <goal>test-index</goal>
             </goals>
           </execution>
         </executions>
