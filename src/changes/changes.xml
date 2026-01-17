@@ -34,6 +34,7 @@
     </properties>
     <body>
         <release version="3.0.0-SNAPSHOT" date="YYYY-MM-DD" description="Jakarta EE 9+, JDK 11, JPMS">
+            <action type="fix" dev="ste-gr">Optimize reporting-section</action>
             <action type="add" dev="ste-gr">Add integration-tests</action>
             <action type="fix" dev="ste-gr">Adapting configurations from &quot;maven-javadoc-plugin&quot;</action>
             <action type="add" dev="ste-gr">Add &quot;junit&quot;-test for validate-mojo</action>

@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Optimize reporting-section
 * Add integration-tests
 * Adapting configurations from `maven-javadoc-plugin`
 * Add `junit`-test for validate-mojo
