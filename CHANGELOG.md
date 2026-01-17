@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Add missing dependencies `javax.inject`, `maven-resolver-provider`, `maven-resolver-impl`
 * Change scope from `org.eclipse.sisu.plexus`
 * Change scopes from `slf4j`-dependencies
 * Remove unnecessary dependencies `commons-chain`, `commons-digester`, `plexus-component-annotations`, `plexus-xml`, `maven-compat`
