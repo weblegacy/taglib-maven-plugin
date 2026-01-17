@@ -429,6 +429,11 @@
           <artifactId>sisu-maven-plugin</artifactId>
           <version>${sisuVersion}</version>
         </plugin>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.14</version>
+        </plugin>
       </plugins>
     </pluginManagement>
 
@@ -541,6 +546,18 @@
               <locale>en,US</locale>
               <pattern>yyyy</pattern>
             </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+              <goal>prepare-agent-integration</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
@@ -919,6 +936,18 @@
               <report>dependency-updates-report</report>
               <report>plugin-updates-report</report>
               <report>property-updates-report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>report</report>
+              <report>report-integration</report>
             </reports>
           </reportSet>
         </reportSets>
