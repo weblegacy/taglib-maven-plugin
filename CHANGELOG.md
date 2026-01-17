@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Correct plugin-name in message-text
 * Rename package `net.sf.maventaglib` to `io.github.weblegacy.maven.plugin.taglib`
 * Various adjustments due to dependency upgrades
 * Optimize reporting-section
