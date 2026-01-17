@@ -27,10 +27,10 @@ package net.sf.maventaglib;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import javax.inject.Inject;
 import org.apache.maven.artifact.handler.ArtifactHandler;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Execute;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -39,6 +39,7 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectHelper;
 import org.codehaus.plexus.archiver.ArchiverException;
 import org.codehaus.plexus.archiver.jar.JarArchiver;
+import org.codehaus.plexus.archiver.util.DefaultFileSet;
 
 /**
  * Generates a jar containing the tlddoc generated documentation. The generated jar is
@@ -63,12 +64,6 @@ public class TaglibdocJar extends AbstractMojo {
     private MavenProject project;
 
     /**
-     * Maven Project Helper.
-     */
-    @Component
-    private MavenProjectHelper projectHelper;
-
-    /**
      * Generated jar name/location.
      */
     @Parameter(defaultValue = "${project.build.directory}/${project.build.finalName}-tlddoc.jar",
@@ -81,6 +76,21 @@ public class TaglibdocJar extends AbstractMojo {
      */
     @Parameter(property = "attach", defaultValue = "true")
     private boolean attach = true;
+
+    /**
+     * Maven Project Helper.
+     */
+    private final MavenProjectHelper projectHelper;
+
+    /**
+     * Entry-point of this MoJo.
+     *
+     * @param projectHelper Maven-Project-Helper-Class
+     */
+    @Inject
+    public TaglibdocJar(final MavenProjectHelper projectHelper) {
+        this.projectHelper = projectHelper;
+    }
 
     @Override
     public void execute() throws MojoExecutionException {
@@ -117,7 +127,7 @@ public class TaglibdocJar extends AbstractMojo {
 
         JarArchiver archiver = new JarArchiver();
 
-        archiver.addDirectory(tdldocDir);
+        archiver.addFileSet(DefaultFileSet.fileSet(tdldocDir));
         archiver.setDestFile(tlddocJar);
         archiver.createArchive();
 

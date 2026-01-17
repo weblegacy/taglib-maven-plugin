@@ -28,6 +28,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import net.sf.maventaglib.util.XmlHelper;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -41,7 +42,7 @@ import org.w3c.dom.NodeList;
 public final class TldParser {
 
     /**
-     * don't instantiate.
+     * Don't instantiate.
      */
     private TldParser() {
         // unused
@@ -176,7 +177,7 @@ public final class TldParser {
             }
         }
 
-        tag.setDeprecated(StringUtils.contains(tag.getDescription(), "@deprecated"));
+        tag.setDeprecated(Strings.CS.contains(tag.getDescription(), "@deprecated"));
 
         return tag;
     }
@@ -222,7 +223,7 @@ public final class TldParser {
             }
         }
 
-        tag.setDeprecated(StringUtils.contains(tag.getDescription(), "@deprecated"));
+        tag.setDeprecated(Strings.CS.contains(tag.getDescription(), "@deprecated"));
 
         return tag;
     }
@@ -288,7 +289,7 @@ public final class TldParser {
             tag.setVariables(variables.toArray(TagVariable[]::new));
         }
 
-        tag.setDeprecated(StringUtils.contains(tag.getDescription(), "@deprecated"));
+        tag.setDeprecated(Strings.CS.contains(tag.getDescription(), "@deprecated"));
 
         return tag;
     }
@@ -320,11 +321,11 @@ public final class TldParser {
                         attribute.setDescription(XmlHelper.getTextContent(param));
                         break;
                     case "required":
-                        attribute.setRequired(StringUtils.contains(StringUtils.lowerCase(
+                        attribute.setRequired(Strings.CS.contains(StringUtils.lowerCase(
                                 param.getFirstChild().getNodeValue()), "true"));
                         break;
                     case "rtexprvalue":
-                        attribute.setRtexprvalue(StringUtils.contains(StringUtils.lowerCase(
+                        attribute.setRtexprvalue(Strings.CS.contains(StringUtils.lowerCase(
                                 param.getFirstChild().getNodeValue()), "true"));
                         break;
                     default:
@@ -333,7 +334,7 @@ public final class TldParser {
             }
         }
 
-        attribute.setDeprecated(StringUtils.contains(attribute.getDescription(), "@deprecated"));
+        attribute.setDeprecated(Strings.CS.contains(attribute.getDescription(), "@deprecated"));
 
         return attribute;
     }
@@ -377,7 +378,7 @@ public final class TldParser {
             }
         }
 
-        variable.setDeprecated(StringUtils.contains(variable.getDescription(), "@deprecated"));
+        variable.setDeprecated(Strings.CS.contains(variable.getDescription(), "@deprecated"));
 
         return variable;
     }

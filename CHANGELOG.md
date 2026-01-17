@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Various adjustments due to dependency upgrades
 * Optimize reporting-section
 * Add integration-tests
 * Adapting configurations from `maven-javadoc-plugin`

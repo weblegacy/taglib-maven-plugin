@@ -47,6 +47,7 @@ public class TagreferenceMojo extends AbstractReportMojoEx {
     private boolean parseHtml;
 
     @Override
+    @Deprecated
     public String getOutputName() {
         return "tagreference";
     }

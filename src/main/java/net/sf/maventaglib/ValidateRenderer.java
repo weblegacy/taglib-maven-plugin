@@ -39,6 +39,7 @@ import net.sf.maventaglib.util.JspCheck;
 import net.sf.maventaglib.util.JspClass;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.reporting.AbstractMavenReportRenderer;
@@ -91,7 +92,7 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer {
     private static final String IMAGE_SUCCESS_SRC = Messages.getString("Validate.image.success");
 
     /**
-     * list of Tld to check.
+     * List of TLDs to check.
      */
     private final Tld[] tlds;
 
@@ -263,7 +264,7 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer {
             String returnvalue = null;
 
             String methodName = StringUtils.trim(StringUtils.substringBefore(fullSignature, "("));
-            if (StringUtils.contains(methodName, " ")) {
+            if (Strings.CS.contains(methodName, " ")) {
                 returnvalue = StringUtils.substringBefore(methodName, " ");
                 methodName = StringUtils.substringAfter(methodName, " ");
             }
@@ -605,7 +606,7 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer {
     }
 
     /**
-     * returns a class from its name, handling primitives.
+     * Returns a class from its name, handling primitives.
      *
      * @param className clss name
      *
@@ -679,7 +680,7 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer {
      * @throws ClassNotFoundException if the class is not found
      */
     private Class<?> getArrayClass(String className) throws ClassNotFoundException {
-        String elementClassName = StringUtils.replace(className, "[]", "");
+        String elementClassName = Strings.CS.replace(className, "[]", "");
         Class<?> elementClass = tryGettingPrimitiveClass(elementClassName);
         if (elementClass == null) {
             elementClass = Class.forName(elementClassName);

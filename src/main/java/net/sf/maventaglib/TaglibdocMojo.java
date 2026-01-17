@@ -24,6 +24,8 @@
 
 package net.sf.maventaglib;
 
+import io.github.weblegacy.tlddoc.main.GeneratorException;
+import io.github.weblegacy.tlddoc.main.TldDocGenerator;
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -31,15 +33,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.plexus.util.FileUtils;
-
-import io.github.weblegacy.tlddoc.main.GeneratorException;
-import io.github.weblegacy.tlddoc.main.TldDocGenerator;
 
 /**
  * Generates taglibdoc documentation.
@@ -75,67 +73,63 @@ public class TaglibdocMojo extends AbstractReportMojo {
     private File xsltDir;
 
     @Override
-    public void execute() throws MojoExecutionException {
-        if (!srcDir.isDirectory()) {
-            throw new MojoExecutionException(MessageFormat.format(
-                    Messages.getString("Taglib.notadir"), srcDir.getAbsolutePath()));
-        }
-
-        getLog().debug(MessageFormat.format(
-                Messages.getString("Taglib.generating.tlddoc"), srcDir.getAbsolutePath()));
-
-        TldDocGenerator generator = new TldDocGenerator();
-        generator.setOutputDirectory(tldDocDir.toPath());
-        generator.setQuiet(true);
-        generator.setWindowTitle(this.title);
-        if (xsltDir != null) {
-            generator.setXsltDirectory(xsltDir.toPath());
-        }
-
-        final String searchprefix = dontRecurseIntoSubdirs ? "" : "**/";
-
-        try {
-            // handle tlds
-            List<File> tlds = FileUtils.getFiles(srcDir, searchprefix + "*.tld", null);
-            for (File tld : tlds) {
-                generator.addTld(tld.toPath());
-            }
-
-            // handle tag files. Add any directory containing .tag or .tagx files
-            List<File> tags = FileUtils.getFiles(srcDir, searchprefix + "*.tag", null);
-            tags.addAll(FileUtils.getFiles(srcDir, searchprefix + "*.tagx", null));
-
-            if (!tags.isEmpty()) {
-                Set<File> directories = new HashSet<>();
-                for (File tag : tags) {
-                    directories.add(tag.getParentFile());
-                }
-                for (File directory : directories) {
-                    generator.addTagDir(directory.toPath());
-                }
-            }
-        } catch (IOException e) {
-            throw new MojoExecutionException(e.getMessage(), e);
-        }
-
-        try {
-            generator.generate();
-        } catch (GeneratorException e) {
-            getLog().error(MessageFormat.format(Messages.getString("Taglib.exception"),
-                    e.getClass(), e.getMessage()), e);
-        }
-    }
-
-    @Override
     protected void executeReport(Locale locale) throws MavenReportException {
         try {
-            execute();
+            if (!srcDir.isDirectory()) {
+                throw new MojoExecutionException(MessageFormat.format(
+                        Messages.getString("Taglib.notadir"), srcDir.getAbsolutePath()));
+            }
+
+            getLog().debug(MessageFormat.format(
+                    Messages.getString("Taglib.generating.tlddoc"), srcDir.getAbsolutePath()));
+
+            TldDocGenerator generator = new TldDocGenerator();
+            generator.setOutputDirectory(tldDocDir.toPath());
+            generator.setQuiet(true);
+            generator.setWindowTitle(this.title);
+            if (xsltDir != null) {
+                generator.setXsltDirectory(xsltDir.toPath());
+            }
+
+            final String searchprefix = dontRecurseIntoSubdirs ? "" : "**/";
+
+            try {
+                // handle tlds
+                List<File> tlds = FileUtils.getFiles(srcDir, searchprefix + "*.tld", null);
+                for (File tld : tlds) {
+                    generator.addTld(tld.toPath());
+                }
+
+                // handle tag files. Add any directory containing .tag or .tagx files
+                List<File> tags = FileUtils.getFiles(srcDir, searchprefix + "*.tag", null);
+                tags.addAll(FileUtils.getFiles(srcDir, searchprefix + "*.tagx", null));
+
+                if (!tags.isEmpty()) {
+                    Set<File> directories = new HashSet<>();
+                    for (File tag : tags) {
+                        directories.add(tag.getParentFile());
+                    }
+                    for (File directory : directories) {
+                        generator.addTagDir(directory.toPath());
+                    }
+                }
+            } catch (IOException e) {
+                throw new MojoExecutionException(e.getMessage(), e);
+            }
+
+            try {
+                generator.generate();
+            } catch (GeneratorException e) {
+                getLog().error(MessageFormat.format(Messages.getString("Taglib.exception"),
+                        e.getClass(), e.getMessage()), e);
+            }
         } catch (MojoExecutionException e) {
             throw new MavenReportException(e.getMessage(), e);
         }
     }
 
     @Override
+    @Deprecated
     public String getOutputName() {
         return "tlddoc/index";
     }

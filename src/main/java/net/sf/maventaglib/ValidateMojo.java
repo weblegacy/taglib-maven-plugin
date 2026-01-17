@@ -57,6 +57,7 @@ public class ValidateMojo extends AbstractReportMojoEx {
     }
 
     @Override
+    @Deprecated
     public String getOutputName() {
         return "taglibvalidation";
     }
