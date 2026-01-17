@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Add `lifecycle-mapping` for eclipse m2e
 * Add `jacoco-maven-plugin` for test code coverage
 * Add `sisu-maven-plugin` to generate JSR330-index
 * Bump `versions-maven-plugin` from 2.16.2 to 2.20.1

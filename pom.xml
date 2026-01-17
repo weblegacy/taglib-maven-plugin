@@ -108,6 +108,7 @@
     <project.reporting.outputEncoding>${sourceEncoding}</project.reporting.outputEncoding>
     <mavenVersion>3.6.3</mavenVersion>
     <javaVersion>11</javaVersion>
+    <dependencyVersion>3.9.0</dependencyVersion>
     <fludioVersion>2.1.0</fludioVersion>
     <mavenPluginVersion>3.8.1</mavenPluginVersion>
     <mavenPluginToolsVersion>3.15.2</mavenPluginToolsVersion>
@@ -261,7 +262,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.9.0</version>
+          <version>${dependencyVersion}</version>
           <configuration>
             <ignoreNonCompile>true</ignoreNonCompile>
           </configuration>
@@ -433,6 +434,50 @@
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
           <version>0.8.14</version>
+        </plugin>
+
+        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.eclipse.sisu</groupId>
+                    <artifactId>sisu-maven-plugin</artifactId>
+                    <versionRange>[${sisuVersion},)</versionRange>
+                    <goals>
+                      <goal>main-index</goal>
+                      <goal>test-index</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <execute>
+                      <runOnIncremental>true</runOnIncremental>
+                      <runOnConfiguration>false</runOnConfiguration>
+                    </execute>
+                  </action>
+                </pluginExecution>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <versionRange>[${dependencyVersion},)</versionRange>
+                    <goals>
+                      <goal>analyze-dep-mgt</goal>
+                      <goal>analyze-exclusions</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore/>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
