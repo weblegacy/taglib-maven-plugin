@@ -118,7 +118,7 @@
     <mavenPluginTestingHarnessVersion>3.3.0</mavenPluginTestingHarnessVersion>
     <mavenReportingVersion>4.0.0</mavenReportingVersion>
     <mavenResolverVersion>1.6.2</mavenResolverVersion>
-    <doxiaVersion>1.12.0</doxiaVersion>
+    <doxiaVersion>2.0.0</doxiaVersion>
     <sisuVersion>0.3.4</sisuVersion>
   </properties>
 
@@ -710,16 +710,6 @@
       <groupId>org.apache.maven.doxia</groupId>
       <artifactId>doxia-core</artifactId>
       <version>${doxiaVersion}</version>
-      <exclusions>
-          <exclusion>
-              <groupId>commons-logging</groupId>
-              <artifactId>commons-logging</artifactId>
-          </exclusion>
-          <exclusion>
-              <groupId>org.codehaus.plexus</groupId>
-              <artifactId>plexus-container-default</artifactId>
-          </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.doxia</groupId>

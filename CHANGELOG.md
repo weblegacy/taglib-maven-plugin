@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Bump `doxia`-dependencies from 1.12.0 to 2.0.0
 * Bump `maven-reporting-api` from 3.1.1 to 4.0.0 and `maven-reporting-impl` from 3.2.0 to 4.0.0
 * Add missing dependencies `javax.inject`, `maven-resolver-provider`, `maven-resolver-impl`
 * Change scope from `org.eclipse.sisu.plexus`
