@@ -24,8 +24,11 @@
 
 package net.sf.maventaglib;
 
-import java.nio.file.Path;
-import org.junit.Test;
+import org.apache.maven.api.plugin.testing.Basedir;
+import org.apache.maven.api.plugin.testing.InjectMojo;
+import org.apache.maven.api.plugin.testing.MojoParameter;
+import org.apache.maven.api.plugin.testing.MojoTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test for taglibdoc generation.
@@ -34,28 +37,37 @@ import org.junit.Test;
  *
  * @version 2.3
  */
+@MojoTest(realRepositorySession = true)
 public class TaglibdocMojoTest extends TaglibPluginTestBase {
 
     /**
-     * Test for the tag reference goal.
+     * Test for the taglibdoc goal (tag-files).
      *
      * @throws Exception any exception thrown during test
      */
     @Test
-    public final void testGoalTagreference() throws Exception {
-        final Path basedir = this.mojoExecute("project2", "taglibdoc");
-        assertFileExists(basedir, "target", "site", "tlddoc", "project2", "ul.html");
-        assertFileExists(basedir, "target", "site", "tlddoc", "project2", "url.html");
+    @Basedir(TEST_DIR + "project2")
+    @InjectMojo(goal = "taglibdoc")
+    @MojoParameter(name = "tldDocDir", value = "taglibdoc")
+    public void testGoalTaglibDocWithTags(TaglibdocMojo mojo) throws Exception {
+        execute(mojo);
+
+        assertFileExists("taglibdoc", "project2", "ul.html");
+        assertFileExists("taglibdoc", "project2", "url.html");
     }
 
     /**
-     * Test for the tagglibdoc goal.
+     * Test for the taglibdoc goal (tld-file).
      *
      * @throws Exception any exception thrown during test
      */
     @Test
-    public final void testGoalTaglibDoc() throws Exception {
-        final Path basedir = this.mojoExecute("project1", "taglibdoc");
-        assertFileExists(basedir, "target", "site", "tlddoc", "test-12-tld-a", "jsp12tldtag1.html");
+    @Basedir(TEST_DIR + "project1")
+    @InjectMojo(goal = "taglibdoc")
+    @MojoParameter(name = "tldDocDir", value = "taglibdoc")
+    public void testGoalTaglibDoc(TaglibdocMojo mojo) throws Exception {
+        execute(mojo);
+
+        assertFileExists("taglibdoc", "test-12-tld-a", "jsp12tldtag1.html");
     }
 }

@@ -24,28 +24,20 @@
 
 package net.sf.maventaglib;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.apache.maven.artifact.repository.MavenArtifactRepository;
-import org.apache.maven.artifact.repository.layout.DefaultRepositoryLayout;
-import org.apache.maven.execution.DefaultMavenExecutionRequest;
-import org.apache.maven.execution.MavenExecutionRequest;
+import javax.inject.Inject;
+import org.apache.maven.api.plugin.testing.MojoExtension;
 import org.apache.maven.execution.MavenSession;
-import org.apache.maven.plugin.Mojo;
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecution;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugin.testing.AbstractMojoTestCase;
-import org.apache.maven.project.MavenProject;
-import org.apache.maven.project.ProjectBuilder;
-import org.apache.maven.project.ProjectBuildingException;
-import org.apache.maven.project.ProjectBuildingRequest;
-import org.codehaus.plexus.PlexusTestCase;
-import org.codehaus.plexus.component.configurator.ComponentConfigurationException;
-import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
-import org.eclipse.aether.DefaultRepositorySystemSession;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  * Base class for plugin tests.
@@ -54,93 +46,76 @@ import org.eclipse.aether.DefaultRepositorySystemSession;
  *
  * @version 2.2
  */
-public abstract class TaglibPluginTestBase extends AbstractMojoTestCase {
+public abstract class TaglibPluginTestBase {
 
     /**
-     * Executes the {@code goal} of the given {@code project} and returns the {@code path} to this.
-     *
-     * @param project the project to execute
-     * @param goal    the goal of the project to execute
-     *
-     * @return the path to the project-POM
-     *
-     * @throws ComponentConfigurationException If the configuration of the component is not success.
-     * @throws ComponentLookupException        If the searched component is not found.
-     * @throws ProjectBuildingException        If the project descriptor could not be successfully
-     *                                         built.
-     * @throws MojoExecutionException          if an unexpected problem occurs. Throwing this
-     *                                         exception causes a "BUILD ERROR" message to be
-     *                                         displayed.
-     * @throws MojoFailureException            if an expected problem (such as a compilation
-     *                                         failure) occurs. Throwing this exception causes a
-     *                                         "BUILD FAILURE" message to be displayed.
-     * @throws MalformedURLException           If a protocol handler for the URL could not be found,
-     *                                         or if some other error occurred while constructing
-     *                                         the URL.
-     * @throws Exception                       If any exception is thrown during configuration of
-     *                                         the MoJo.
+     * Injected Maven-Session.
      */
-    protected Path mojoExecute(final String project, final String goal) throws
-            ComponentConfigurationException, ComponentLookupException, ProjectBuildingException,
-            MalformedURLException, MojoExecutionException, MojoFailureException, Exception {
+    @Inject
+    protected MavenSession session;
 
-        final Path basedir = Paths.get(PlexusTestCase.getBasedir(), "target", "test-classes",
-                project);
+    /**
+     * Base directory where all test-project are.
+     */
+    protected static final String TEST_DIR = "target/test-classes/";
 
-        assertNotNull(basedir);
+    /**
+     * Set local repository path for each test.
+     */
+    @BeforeEach
+    void beforeEach() {
+        session.getRequest().setLocalRepositoryPath(
+                Paths.get("target", "local-repo").toAbsolutePath().toFile());
+    }
 
-        assertTrue(Files.exists(basedir));
+    /**
+     * Executes a {@code mojo}. In the case of a {@code report mojo}, the output directory is set
+     * according to the goal name and RepositorySystemSession is initialized.
+     *
+     * @param mojo Mojo to execute
+     *
+     * @throws MojoExecutionException if an unexpected problem occurs.
+     *                 Throwing this exception causes a "BUILD ERROR" message to be displayed.
+     * @throws MojoFailureException   if an expected problem (such as a compilation failure) occurs.
+     *                 Throwing this exception causes a "BUILD FAILURE" message to be displayed.
+     * @throws IllegalAccessException if the field {@code repoSession} is enforcing Java language
+     *                 access control and the underlying field is either inaccessible or final.
+     */
+    protected void execute(AbstractMojo mojo) throws MojoExecutionException, MojoFailureException,
+            IllegalAccessException {
 
-        final Path pom = basedir.resolve("pom.xml");
-        final MavenExecutionRequest request = new DefaultMavenExecutionRequest();
-        request.setBaseDirectory(basedir.toFile());
+        if (mojo instanceof AbstractReportMojo) {
+            MojoExecution execution = MojoExtension.getVariableValueFromObject(mojo,
+                    "mojoExecution");
 
-        final ProjectBuildingRequest configuration = request.getProjectBuildingRequest();
-        configuration.setRepositorySession(new DefaultRepositorySystemSession());
+            AbstractReportMojo reportMojo = (AbstractReportMojo) mojo;
+            reportMojo.setReportOutputDirectory(
+                    MojoExtension.getTestFile(execution.getMojoDescriptor().getGoal()));
 
-        final MavenProject mavenProject = lookup(ProjectBuilder.class)
-                .build(pom.toFile(), configuration)
-                .getProject();
+            MojoExtension.setVariableValueToObject(mojo, "repoSession",
+                    session.getRepositorySession());
+        }
 
-        assertNotNull(project);
-
-        final MavenSession session = newMavenSession(mavenProject);
-
-        final Path localRepo = Paths.get(PlexusTestCase.getBasedir(), "target", "local-repo");
-        final MavenArtifactRepository repo = new MavenArtifactRepository(
-                "localRepository",
-                localRepo.toUri().toURL().toString(),
-                new DefaultRepositoryLayout(),
-                null,
-                null);
-
-        session.getRequest().setLocalRepository(repo);
-
-        final Mojo mojo = lookupConfiguredMojo(session, newMojoExecution(goal));
-        assertNotNull(mojo);
         mojo.execute();
-
-        return basedir;
     }
 
     /**
      * Check that the given file exists and it's not empty.
      *
-     * @param basedir   base-directory of the given path
      * @param pathParts the path-parts of the given path
      *
      * @throws IOException if an I/O error occurs
      */
-    protected static void assertFileExists(final Path basedir, final String... pathParts)
+    protected static void assertFileExists(final String... pathParts)
             throws IOException {
 
-        Path path = basedir;
+        Path path = Paths.get(MojoExtension.getBasedir());
         for (String pathPart : pathParts) {
             path = path.resolve(pathPart);
         }
 
-        assertTrue("Output file [" + path.toAbsolutePath() + "] doesn't exists",
-                Files.exists(path));
-        assertTrue("Output file [" + path.toAbsolutePath() + "] is empty", Files.size(path) > 0);
+        assertTrue(Files.exists(path),
+                "Output file [" + path.toAbsolutePath() + "] doesn't exists");
+        assertTrue(Files.size(path) > 0, "Output file [" + path.toAbsolutePath() + "] is empty");
     }
 }

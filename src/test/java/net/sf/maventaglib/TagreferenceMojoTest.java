@@ -24,8 +24,10 @@
 
 package net.sf.maventaglib;
 
-import java.nio.file.Path;
-import org.junit.Test;
+import org.apache.maven.api.plugin.testing.Basedir;
+import org.apache.maven.api.plugin.testing.InjectMojo;
+import org.apache.maven.api.plugin.testing.MojoTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test for tag reference generation.
@@ -34,6 +36,7 @@ import org.junit.Test;
  *
  * @version 2.2
  */
+@MojoTest(realRepositorySession = true)
 public class TagreferenceMojoTest extends TaglibPluginTestBase {
 
     /**
@@ -42,8 +45,11 @@ public class TagreferenceMojoTest extends TaglibPluginTestBase {
      * @throws Exception any exception thrown during test
      */
     @Test
-    public final void testGoalTagreference() throws Exception {
-        final Path basedir = this.mojoExecute("project1", "tagreference");
-        assertFileExists(basedir, "target", "site", "tagreference.html");
+    @Basedir(TEST_DIR + "project1")
+    @InjectMojo(goal = "tagreference")
+    public void testGoalTagreference(TagreferenceMojo mojo) throws Exception {
+        execute(mojo);
+
+        assertFileExists("tagreference", "tagreference.html");
     }
 }

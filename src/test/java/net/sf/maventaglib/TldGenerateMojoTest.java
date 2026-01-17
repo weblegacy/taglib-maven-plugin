@@ -24,8 +24,11 @@
 
 package net.sf.maventaglib;
 
-import java.nio.file.Path;
-import org.junit.Test;
+import org.apache.maven.api.plugin.testing.Basedir;
+import org.apache.maven.api.plugin.testing.InjectMojo;
+import org.apache.maven.api.plugin.testing.MojoParameter;
+import org.apache.maven.api.plugin.testing.MojoTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test for taglibdoc generation.
@@ -34,6 +37,7 @@ import org.junit.Test;
  *
  * @version 2.3
  */
+@MojoTest
 public class TldGenerateMojoTest extends TaglibPluginTestBase {
 
     /**
@@ -42,9 +46,13 @@ public class TldGenerateMojoTest extends TaglibPluginTestBase {
      * @throws Exception any exception thrown during test
      */
     @Test
-    public final void testTldGenerateWithTags() throws Exception {
-        final Path basedir = this.mojoExecute("project2", "tldgenerate");
-        assertFileExists(basedir, "target", "classes", "META-INF", "testtag.tld");
+    @Basedir(TEST_DIR + "project2")
+    @InjectMojo(goal = "tldgenerate")
+    @MojoParameter(name = "outputDir", value = "tldgenerate")
+    public void testTldGenerateWithTags(TldGenerateMojo mojo) throws Exception {
+        execute(mojo);
+
+        assertFileExists("tldgenerate", "testtag.tld");
     }
 
     /**
@@ -53,8 +61,12 @@ public class TldGenerateMojoTest extends TaglibPluginTestBase {
      * @throws Exception any exception thrown during test
      */
     @Test
-    public final void testTldGenerateWithFunctions() throws Exception {
-        final Path basedir = this.mojoExecute("project3", "tldgenerate");
-        assertFileExists(basedir, "target", "classes", "META-INF", "testtaglib.tld");
+    @Basedir(TEST_DIR + "project3")
+    @InjectMojo(goal = "tldgenerate")
+    @MojoParameter(name = "outputDir", value = "tldgenerate")
+    public void testTldGenerateWithFunctions(TldGenerateMojo mojo) throws Exception {
+        execute(mojo);
+
+        assertFileExists("tldgenerate", "testtaglib.tld");
     }
 }
