@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Rename package `net.sf.maventaglib` to `io.github.weblegacy.maven.plugin.taglib`
 * Various adjustments due to dependency upgrades
 * Optimize reporting-section
 * Add integration-tests
