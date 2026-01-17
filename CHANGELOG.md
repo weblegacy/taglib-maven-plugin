@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Bump `versions-maven-plugin` from 2.16.2 to 2.20.1
 * Bump `build-helper-maven-plugin` from 3.5.0 to 3.6.1
 * Bump `license-maven-plugin` from 4.3 to 5.0.0 and move config to pluginManagement
 * Bump `spotbugs-maven-plugin` from 4.8.3.1 to 4.9.8.2

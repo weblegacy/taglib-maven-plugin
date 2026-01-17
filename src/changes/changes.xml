@@ -34,6 +34,7 @@
     </properties>
     <body>
         <release version="3.0.0-SNAPSHOT" date="YYYY-MM-DD" description="Jakarta EE 9+, JDK 11, JPMS">
+            <action type="update" dev="ste-gr">Bump &quot;versions-maven-plugin&quot; from 2.16.2 to 2.20.1</action>
             <action type="update" dev="ste-gr">Bump &quot;build-helper-maven-plugin&quot; from 3.5.0 to 3.6.1</action>
             <action type="update" dev="ste-gr">Bump &quot;license-maven-plugin&quot; from 4.3 to 5.0.0 and move config to pluginManagement</action>
             <action type="update" dev="ste-gr">Bump &quot;spotbugs-maven-plugin&quot; from 4.8.3.1 to 4.9.8.2</action>
