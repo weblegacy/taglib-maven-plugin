@@ -111,7 +111,7 @@
     <fludioVersion>2.1.0</fludioVersion>
     <mavenPluginVersion>3.8.1</mavenPluginVersion>
     <mavenPluginToolsVersion>3.15.2</mavenPluginToolsVersion>
-    <surefireVersion>3.2.5</surefireVersion>
+    <surefireVersion>3.5.4</surefireVersion>
     <slf4jVersion>1.7.36</slf4jVersion>
     <junitVersion>4.13.2</junitVersion>
     <mavenPluginTestingHarnessVersion>3.3.0</mavenPluginTestingHarnessVersion>
