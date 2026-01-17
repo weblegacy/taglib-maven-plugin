@@ -39,6 +39,10 @@
   <url>https://weblegacy.github.io/taglib-maven-plugin</url>
   <inceptionYear>2004</inceptionYear>
 
+  <prerequisites>
+    <maven>${mavenPluginVersion}</maven>
+  </prerequisites>
+
   <licenses>
     <license>
       <name>MIT License</name>

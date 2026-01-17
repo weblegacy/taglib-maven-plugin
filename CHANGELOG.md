@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Set `prerequisites` in POM for maven-plugin
 * Better config for `license-maven-plugin`
 * Update Copyright to 2026
 * Correct old issue-links to `sourceForge`
