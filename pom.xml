@@ -350,6 +350,12 @@
         <plugin>
           <artifactId>maven-release-plugin</artifactId>
           <version>3.3.1</version>
+          <configuration>
+            <autoVersionSubmodules>true</autoVersionSubmodules>
+            <useReleaseProfile>false</useReleaseProfile>
+            <releaseProfiles>release</releaseProfiles>
+            <goals>deploy</goals>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
@@ -362,6 +368,11 @@
         <plugin>
           <artifactId>maven-scm-publish-plugin</artifactId>
           <version>3.3.0</version>
+          <configuration>
+            <scmBranch>gh-pages</scmBranch>
+            <tryUpdate>true</tryUpdate>
+            <content>${project.reporting.outputDirectory}</content>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
@@ -557,11 +568,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-scm-publish-plugin</artifactId>
-        <configuration>
-          <scmBranch>gh-pages</scmBranch>
-          <tryUpdate>true</tryUpdate>
-          <content>${project.reporting.outputDirectory}</content>
-        </configuration>
         <executions>
           <execution>
             <id>scm-publish</id>
@@ -644,15 +650,6 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-release-plugin</artifactId>
-        <configuration>
-          <autoVersionSubmodules>true</autoVersionSubmodules>
-          <useReleaseProfile>false</useReleaseProfile>
-          <releaseProfiles>release</releaseProfiles>
-          <goals>deploy</goals>
-        </configuration>
       </plugin>
     </plugins>
   </build>
