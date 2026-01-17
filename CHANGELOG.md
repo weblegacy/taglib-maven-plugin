@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Add `findsecbugs-plugin` for more security-bug-findings
 * Add `lifecycle-mapping` for eclipse m2e
 * Add `jacoco-maven-plugin` for test code coverage
 * Add `sisu-maven-plugin` to generate JSR330-index

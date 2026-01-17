@@ -34,6 +34,7 @@
     </properties>
     <body>
         <release version="3.0.0-SNAPSHOT" date="YYYY-MM-DD" description="Jakarta EE 9+, JDK 11, JPMS">
+            <action type="add" dev="ste-gr">Add &quot;findsecbugs-plugin&quot; for more security-bug-findings</action>
             <action type="fix" dev="ste-gr">Add &quot;lifecycle-mapping&quot; for eclipse m2e</action>
             <action type="fix" dev="ste-gr">Add &quot;jacoco-maven-plugin&quot; for test code coverage</action>
             <action type="fix" dev="ste-gr">Add &quot;sisu-maven-plugin&quot; to generate JSR330-index</action>
