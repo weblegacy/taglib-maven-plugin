@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Bump `maven-assembly-plugin` from 3.6.0 to 3.8.0
 * Bump `maven-antrun-plugin` from 3.1.0 to 3.2.0
 * Set `prerequisites` in POM for maven-plugin
 * Better config for `license-maven-plugin`
