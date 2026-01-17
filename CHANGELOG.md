@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Change scopes from `slf4j`-dependencies
 * Remove unnecessary dependencies `commons-chain`, `commons-digester`, `plexus-component-annotations`, `plexus-xml`, `maven-compat`
 * Remove unnecessary descriptor goal from the `maven-plugin-plugin`
 * Move plugin-configs into pluginManagement
