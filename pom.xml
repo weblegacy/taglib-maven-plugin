@@ -115,7 +115,7 @@
     <surefireVersion>3.5.4</surefireVersion>
     <slf4jVersion>1.7.36</slf4jVersion>
     <junitVersion>4.13.2</junitVersion>
-    <mavenPluginTestingHarnessVersion>3.3.0</mavenPluginTestingHarnessVersion>
+    <mavenPluginTestingHarnessVersion>3.5.0</mavenPluginTestingHarnessVersion>
     <mavenReportingVersion>4.0.0</mavenReportingVersion>
     <mavenResolverVersion>1.4.2</mavenResolverVersion>
     <doxiaVersion>2.0.0</doxiaVersion>
