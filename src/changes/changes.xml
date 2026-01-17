@@ -34,6 +34,7 @@
     </properties>
     <body>
         <release version="3.0.0-SNAPSHOT" date="YYYY-MM-DD" description="Jakarta EE 9+, JDK 11, JPMS">
+            <action type="update" dev="ste-gr">Bump &quot;plexus-utils&quot; from 4.0.0 to 4.0.2</action>
             <action type="update" dev="ste-gr">Bump &quot;plexus-archiver&quot; from 4.9.1 to 4.11.0</action>
             <action type="update" dev="ste-gr">Bump &quot;commons-lang3&quot; from 3.14.0 to 3.20.0</action>
             <action type="update" dev="ste-gr">Bump &quot;commons-beanutils&quot; from 1.9.4 to 1.11.0</action>

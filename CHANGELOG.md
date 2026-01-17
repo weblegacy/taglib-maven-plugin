@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Bump `plexus-utils` from 4.0.0 to 4.0.2
 * Bump `plexus-archiver` from 4.9.1 to 4.11.0
 * Bump `commons-lang3` from 3.14.0 to 3.20.0
 * Bump `commons-beanutils` from 1.9.4 to 1.11.0
