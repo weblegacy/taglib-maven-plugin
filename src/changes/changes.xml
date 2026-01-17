@@ -34,6 +34,7 @@
     </properties>
     <body>
         <release version="3.0.0-SNAPSHOT" date="YYYY-MM-DD" description="Jakarta EE 9+, JDK 11, JPMS">
+            <action type="fix" dev="ste-gr">Set minimum MAVEN-Plugin-Version from 3.8.1 to 3.6.3</action>
             <action type="fix" dev="ste-gr">Downgrad &quot;maven-resolver&quot;-dependencies from 1.6.2 to 1.4.2</action>
             <action type="update" dev="ste-gr">Bump &quot;plexus-utils&quot; from 4.0.0 to 4.0.2</action>
             <action type="update" dev="ste-gr">Bump &quot;plexus-archiver&quot; from 4.9.1 to 4.11.0</action>

@@ -110,7 +110,7 @@
     <javaVersion>11</javaVersion>
     <dependencyVersion>3.9.0</dependencyVersion>
     <fludioVersion>2.1.0</fludioVersion>
-    <mavenPluginVersion>3.8.1</mavenPluginVersion>
+    <mavenPluginVersion>3.6.3</mavenPluginVersion>
     <mavenPluginToolsVersion>3.15.2</mavenPluginToolsVersion>
     <surefireVersion>3.5.4</surefireVersion>
     <slf4jVersion>1.7.36</slf4jVersion>
