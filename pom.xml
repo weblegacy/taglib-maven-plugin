@@ -260,7 +260,10 @@
         </plugin>
         <plugin>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.6.1</version>
+          <version>3.9.0</version>
+          <configuration>
+            <ignoreNonCompile>true</ignoreNonCompile>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-deploy-plugin</artifactId>
@@ -423,6 +426,26 @@
             <configuration>
               <failOnError>true</failOnError>
             </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>analyze-only</goal>
+              <goal>properties</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>dependency-checks</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>analyze-dep-mgt</goal>
+              <goal>analyze-duplicate</goal>
+              <goal>analyze-exclusions</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
@@ -805,9 +828,13 @@
       </plugin>
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
-        <configuration>
-          <ignoreNonCompile>true</ignoreNonCompile>
-        </configuration>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>analyze-report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
       </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
