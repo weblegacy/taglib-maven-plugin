@@ -703,12 +703,6 @@
       <version>${slf4jVersion}</version>
       <scope>runtime</scope>
     </dependency>
-    <dependency>
-      <groupId>org.eclipse.sisu</groupId>
-      <artifactId>org.eclipse.sisu.plexus</artifactId>
-      <version>0.3.4</version>
-      <scope>provided</scope>
-    </dependency>
 
     <!-- Doxia API and Doxia Sitetools -->
     <dependency>
@@ -814,6 +808,12 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <version>${slf4jVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.sisu</groupId>
+      <artifactId>org.eclipse.sisu.plexus</artifactId>
+      <version>${sisuVersion}</version>
       <scope>test</scope>
     </dependency>
     <dependency>

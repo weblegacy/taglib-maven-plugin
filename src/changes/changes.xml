@@ -34,7 +34,8 @@
     </properties>
     <body>
         <release version="3.0.0-SNAPSHOT" date="YYYY-MM-DD" description="Jakarta EE 9+, JDK 11, JPMS">
-            <action type="fix" dev="ste-gr">Change scopes from &quot;slf4j&quot;-dependencies;</action>
+            <action type="fix" dev="ste-gr">Change scope from &quot;org.eclipse.sisu.plexus&quot;</action>
+            <action type="fix" dev="ste-gr">Change scopes from &quot;slf4j&quot;-dependencies</action>
             <action type="fix" dev="ste-gr">Remove unnecessary dependencies &quot;commons-chain&quot;, &quot;commons-digester&quot;, &quot;plexus-component-annotations&quot;, &quot;plexus-xml&quot;, &quot;maven-compat&quot;</action>
             <action type="fix" dev="ste-gr">Remove unnecessary descriptor goal from the &quot;maven-plugin-plugin&quot;</action>
             <action type="update" dev="ste-gr">Move plugin-configs into pluginManagement</action>
