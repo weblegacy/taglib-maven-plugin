@@ -388,7 +388,30 @@
         <plugin>
           <groupId>com.mycila</groupId>
           <artifactId>license-maven-plugin</artifactId>
-          <version>4.3</version>
+          <version>5.0.0</version>
+          <configuration>
+            <licenseSets>
+              <licenseSet>
+                <header>src/license/MIT.txt</header>
+                <includes>
+                  <include>src/**</include>
+                  <inlcude>pom.xml</inlcude>
+                </includes>
+                <excludes>
+                  <exclude>src/assemblies/**</exclude>
+                </excludes>
+              </licenseSet>
+            </licenseSets>
+            <mapping>
+              <tag>XML_STYLE</tag>
+            </mapping>
+            <defaultHeaderDefinitions>
+              <defaultHeaderDefinition>src/license/headerStyles.xml</defaultHeaderDefinition>
+            </defaultHeaderDefinitions>
+            <properties>
+              <currentYear>${currentYear}</currentYear>
+            </properties>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -485,6 +508,19 @@
         </executions>
       </plugin>
       <plugin>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>update-license</id>
+            <goals>
+              <goal>format</goal>
+            </goals>
+            <phase>process-sources</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
         <executions>
@@ -499,42 +535,6 @@
               <locale>en,US</locale>
               <pattern>yyyy</pattern>
             </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>com.mycila</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <configuration>
-          <licenseSets>
-            <licenseSet>
-              <header>src/license/MIT.txt</header>
-              <includes>
-                <include>src/**</include>
-                <inlcude>pom.xml</inlcude>
-              </includes>
-              <excludes>
-                <exclude>src/assemblies/**</exclude>
-              </excludes>
-            </licenseSet>
-          </licenseSets>
-          <mapping>
-            <tag>XML_STYLE</tag>
-          </mapping>
-          <defaultHeaderDefinitions>
-            <defaultHeaderDefinition>src/license/headerStyles.xml</defaultHeaderDefinition>
-          </defaultHeaderDefinitions>
-          <properties>
-            <currentYear>${currentYear}</currentYear>
-          </properties>
-        </configuration>
-        <executions>
-          <execution>
-            <id>update-license</id>
-            <goals>
-              <goal>format</goal>
-            </goals>
-            <phase>process-sources</phase>
           </execution>
         </executions>
       </plugin>

@@ -34,6 +34,7 @@
     </properties>
     <body>
         <release version="3.0.0-SNAPSHOT" date="YYYY-MM-DD" description="Jakarta EE 9+, JDK 11, JPMS">
+            <action type="update" dev="ste-gr">Bump &quot;license-maven-plugin&quot; from 4.3 to 5.0.0 and move config to pluginManagement</action>
             <action type="update" dev="ste-gr">Bump &quot;spotbugs-maven-plugin&quot; from 4.8.3.1 to 4.9.8.2</action>
             <action type="update" dev="ste-gr">Bump &quot;maven-surefire-[report-]plugin&quot; from 3.2.5 to 3.5.4</action>
             <action type="update" dev="ste-gr">Bump &quot;maven-source-plugin&quot; from 3.3.0 to 3.4.0</action>

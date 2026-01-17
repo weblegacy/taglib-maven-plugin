@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Bump `license-maven-plugin` from 4.3 to 5.0.0 and move config to pluginManagement
 * Bump `spotbugs-maven-plugin` from 4.8.3.1 to 4.9.8.2
 * Bump `maven-surefire-[report-]plugin` from 3.2.5 to 3.5.4
 * Bump `maven-source-plugin` from 3.3.0 to 3.4.0
