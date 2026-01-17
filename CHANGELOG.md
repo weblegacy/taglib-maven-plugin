@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Add integration-tests
 * Adapting configurations from `maven-javadoc-plugin`
 * Add `junit`-test for validate-mojo
 * Bump `junit` from 4.13.2 to 6.0.2 and adapt junit-tests

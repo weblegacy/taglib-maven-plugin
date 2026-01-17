@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  - The MIT License
+  - Copyright © 2004-2014 Fabrizio Giustina
+  - Copyright © 2022-2026 Web-Legacy
+  -
+  - Permission is hereby granted, free of charge, to any person obtaining a copy
+  - of this software and associated documentation files (the "Software"), to deal
+  - in the Software without restriction, including without limitation the rights
+  - to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  - copies of the Software, and to permit persons to whom the Software is
+  - furnished to do so, subject to the following conditions:
+  -
+  - The above copyright notice and this permission notice shall be included in
+  - all copies or substantial portions of the Software.
+  -
+  - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  - IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  - FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  - AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  - LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  - OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  - THE SOFTWARE.
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.github.weblegacy</groupId>
+  <artifactId>taglib-maven-plugin-test-project3</artifactId>
+  <packaging>jar</packaging>
+  <name>Maven Taglib Plugin test project 3</name>
+  <version>1.0</version>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>@enforcerVersion@</version>
+        <executions>
+          <execution>
+            <id>enforce-maven</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireMavenVersion>
+                  <version>[@mavenVersion@,4)</version>
+                </requireMavenVersion>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>@siteVersion@</version>
+      </plugin>
+      <plugin>
+        <groupId>io.github.weblegacy</groupId>
+        <artifactId>taglib-maven-plugin</artifactId>
+        <version>@project.version@</version>
+        <configuration>
+          <taglibs>
+            <taglib>
+              <description>A test tld that contains functions</description>
+              <shortName>test</shortName>
+              <uri>testuri</uri>
+              <outputname>testtaglib</outputname>
+              <functionClasses>
+                <functionClass>org.apache.commons.lang3.StringUtils</functionClass>
+              </functionClasses>
+              <tagdir>src/tagfiles</tagdir>
+            </taglib>
+          </taglibs>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>tldgenerate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>@commonsLang3Version@</version>
+    </dependency>
+  </dependencies>
+
+  <reporting>
+    <excludeDefaults>true</excludeDefaults>
+    <plugins>
+      <plugin>
+        <groupId>io.github.weblegacy</groupId>
+        <artifactId>taglib-maven-plugin</artifactId>
+        <version>@project.version@</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>taglibdoc</report>
+              <report>tagreference</report>
+              <report>validate</report>
+            </reports>
+            <configuration>
+              <srcDir>${project.build.outputDirectory}/META-INF</srcDir>
+            </configuration>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
+</project>

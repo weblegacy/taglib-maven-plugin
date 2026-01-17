@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  - The MIT License
+  - Copyright © 2004-2014 Fabrizio Giustina
+  - Copyright © 2022-2026 Web-Legacy
+  -
+  - Permission is hereby granted, free of charge, to any person obtaining a copy
+  - of this software and associated documentation files (the "Software"), to deal
+  - in the Software without restriction, including without limitation the rights
+  - to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  - copies of the Software, and to permit persons to whom the Software is
+  - furnished to do so, subject to the following conditions:
+  -
+  - The above copyright notice and this permission notice shall be included in
+  - all copies or substantial portions of the Software.
+  -
+  - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  - IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  - FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  - AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  - LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  - OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  - THE SOFTWARE.
+-->
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+  version="2.0">
+  <tlib-version>1.0</tlib-version>
+  <jsp-version>1.2</jsp-version>
+  <short-name>test-12-tld-a</short-name>
+  <uri>http://tld12</uri>
+  <display-name>tld12</display-name>
+  <small-icon>small-icon.jpg</small-icon>
+  <large-icon>large-icon.jpg</large-icon>
+  <description>Test tag library info.</description>
+  <validator>
+    <validator-class>com.sun.Validator</validator-class>
+    <init-param>
+      <param-name>param1</param-name>
+      <param-value>param1.value</param-value>
+      <description>Description for Validator Param 1.</description>
+    </init-param>
+  </validator>
+  <listener>
+    <listener-class>com.sun.Listener1</listener-class>
+  </listener>
+  <listener>
+    <listener-class>com.sun.Listener2</listener-class>
+  </listener>
+  <tag>
+    <name>jsp12tldtag1</name>
+    <tag-class>com.sun.tld12.TagHandler1</tag-class>
+    <tei-class>com.sun.tld12.TagExtraInfo1</tei-class>
+    <body-content>JSP</body-content>
+    <display-name>tld12-display-name</display-name>
+    <small-icon>tld12-small.jpg</small-icon>
+    <large-icon>tld12-large.jpg</large-icon>
+    <description>Description for tld12.</description>
+    <variable>
+      <name-given>variable1</name-given>
+      <variable-class>java.lang.String</variable-class>
+      <declare>true</declare>
+      <scope>AT_BEGIN</scope>
+      <description>Description for variable 1</description>
+    </variable>
+    <variable>
+      <name-from-attribute>attr1</name-from-attribute>
+    </variable>
+    <attribute>
+      <name>attr1</name>
+      <required>true</required>
+      <rtexprvalue>false</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        <![CDATA[ Description for attribute 1 with CDATA ]]>
+      </description>
+    </attribute>
+    <attribute>
+      <name>attr2</name>
+      <description>
+        <![CDATA[ <strong>Formatted</strong>
+Description ]]>
+      </description>
+    </attribute>
+    <example><![CDATA[
+<strong>
+
+
+  <span>a</span>
+</strong>
+    ]]></example>
+  </tag>
+</taglib>
