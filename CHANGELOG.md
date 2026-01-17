@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Remove unnecessary descriptor goal from the `maven-plugin-plugin`
 * Move plugin-configs into pluginManagement
 * Add `findsecbugs-plugin` for more security-bug-findings
 * Add `lifecycle-mapping` for eclipse m2e

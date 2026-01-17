@@ -567,6 +567,17 @@
         </executions>
       </plugin>
       <plugin>
+        <artifactId>maven-plugin-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>help-goal</id>
+            <goals>
+              <goal>helpmojo</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <artifactId>maven-scm-publish-plugin</artifactId>
         <executions>
           <execution>
@@ -617,23 +628,6 @@
             <goals>
               <goal>prepare-agent</goal>
               <goal>prepare-agent-integration</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-plugin-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>mojo-descriptor</id>
-            <goals>
-              <goal>descriptor</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>help-goal</id>
-            <goals>
-              <goal>helpmojo</goal>
             </goals>
           </execution>
         </executions>
