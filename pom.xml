@@ -117,7 +117,7 @@
     <junitVersion>4.13.2</junitVersion>
     <mavenPluginTestingHarnessVersion>3.3.0</mavenPluginTestingHarnessVersion>
     <mavenReportingVersion>4.0.0</mavenReportingVersion>
-    <mavenResolverVersion>1.6.2</mavenResolverVersion>
+    <mavenResolverVersion>1.4.2</mavenResolverVersion>
     <doxiaVersion>2.0.0</doxiaVersion>
     <sisuVersion>0.3.4</sisuVersion>
     <commonsLang3Version>3.20.0</commonsLang3Version>
