@@ -120,6 +120,8 @@
     <mavenResolverVersion>1.4.2</mavenResolverVersion>
     <doxiaVersion>2.0.0</doxiaVersion>
     <sisuVersion>0.3.4</sisuVersion>
+    <javaxServletJspApiVersion>2.3.3</javaxServletJspApiVersion>
+    <jakartaServletJspApiVersion>4.0.0</jakartaServletJspApiVersion>
     <commonsLang3Version>3.20.0</commonsLang3Version>
   </properties>
 
@@ -299,27 +301,65 @@
             <notimestamp>true</notimestamp>
             <source>${javaVersion}</source>
             <detectLinks>true</detectLinks>
-            <!-- Add config sourcepath because https://issues.apache.org/jira/browse/MJAVADOC-700 -->
-            <sourcepath>${basedir}/src/main/java:${basedir}/target/generated-sources/plugin</sourcepath>
             <dependencyLinks>
               <dependencyLink>
                 <groupId>org.jdom</groupId>
                 <artifactId>jdom2</artifactId>
-                <url>http://www.jdom.org/docs/apidocs</url>
+                <url>https://www.jdom.org/docs/apidocs</url>
+              </dependencyLink>
+              <dependencyLink>
+                <groupId>javax.inject</groupId>
+                <artifactId>javax.inject</artifactId>
+                <url>https://javadoc.io/doc/javax.inject/javax.inject/1</url>
+              </dependencyLink>
+              <dependencyLink>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <url>https://docs.junit.org/${junitVersion}/api/</url>
+              </dependencyLink>
+              <dependencyLink>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <url>https://docs.junit.org/${junitVersion}/api/</url>
+              </dependencyLink>
+              <dependencyLink>
+                <groupId>jakarta.servlet.jsp</groupId>
+                <artifactId>jakarta.servlet.jsp-api</artifactId>
+                <url>https://javadoc.io/doc/jakarta.servlet.jsp/jakarta.servlet.jsp-api/${jakartaServletJspApiVersion}</url>
+              </dependencyLink>
+              <dependencyLink>
+                <groupId>javax.servlet.jsp</groupId>
+                <artifactId>javax.servlet.jsp-api</artifactId>
+                <url>https://javadoc.io/doc/javax.servlet.jsp/javax.servlet.jsp-api/${javaxServletJspApiVersion}</url>
+              </dependencyLink>
+              <dependencyLink>
+                <groupId>org.apache.maven.resolver</groupId>
+                <artifactId>maven-resolver-transport-http</artifactId>
+                <url>https://maven.apache.org/resolver-archives/resolver-${mavenResolverVersion}/maven-resolver-transport-http/apidocs</url>
+              </dependencyLink>
+              <dependencyLink>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <url>https://javadoc.io/doc/org.slf4j/slf4j-api/${slf4jVersion}</url>
+              </dependencyLink>
+              <dependencyLink>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <url>https://javadoc.io/doc/org.slf4j/slf4j-simple/${slf4jVersion}</url>
+              </dependencyLink>
+              <dependencyLink>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <url>https://javadoc.io/doc/org.slf4j/jcl-over-slf4j/${slf4jVersion}</url>
               </dependencyLink>
               <dependencyLink>
                 <groupId>org.eclipse.sisu</groupId>
                 <artifactId>org.eclipse.sisu.plexus</artifactId>
-                <url>https://www.eclipse.org/sisu/docs/api/org.eclipse.sisu.plexus/reference</url>
-              </dependencyLink>
-              <dependencyLink>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <url>https://junit.org/junit4/javadoc/${junitVersion}</url>
+                <url>https://eclipse.dev/sisu/org.eclipse.sisu.plexus/apidocs</url>
               </dependencyLink>
             </dependencyLinks>
             <links>
-              <link>https://docs.oracle.com/javaee/6/api</link>
+              <link>https://jakarta.ee/specifications/platform/11/apidocs</link>
             </links>
           </configuration>
         </plugin>
@@ -910,14 +950,7 @@
               <report>test-javadoc-no-fork</report>
             </reports>
             <configuration>
-              <!-- Add config sourcepath because https://issues.apache.org/jira/browse/MJAVADOC-700 -->
-              <sourcepath>${basedir}/src/test/java</sourcepath>
               <additionalDependencies>
-                <additionalDependency>
-                  <groupId>junit</groupId>
-                  <artifactId>junit</artifactId>
-                  <version>${junitVersion}</version>
-                </additionalDependency>
                 <additionalDependency>
                   <groupId>org.apache.maven.plugin-testing</groupId>
                   <artifactId>maven-plugin-testing-harness</artifactId>
