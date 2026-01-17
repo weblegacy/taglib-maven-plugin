@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Bump `maven-compiler-plugin` from 3.12.1 to 3.14.1 with some config-adaptions
 * Bump `maven-clean-plugin` from 3.3.2 to 3.5.0
 * Bump `checkstyle` from 12.3.0 to 13.0.0 and update `checkstyle.xml`
 * Bump `maven-assembly-plugin` from 3.6.0 to 3.8.0

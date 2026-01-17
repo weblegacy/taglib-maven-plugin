@@ -246,14 +246,16 @@
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.12.1</version>
+          <version>3.14.1</version>
           <configuration>
             <source>${javaVersion}</source>
             <target>${javaVersion}</target>
             <compilerArgs>
-              <arg>-Xlint:all,-processing</arg>
+              <arg>-Xlint:all</arg>
             </compilerArgs>
+            <showDeprecation>true</showDeprecation>
             <showWarnings>true</showWarnings>
+            <proc>none</proc>
           </configuration>
         </plugin>
         <plugin>
