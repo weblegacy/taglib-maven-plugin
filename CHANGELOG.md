@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Add `junit`-test for validate-mojo
 * Bump `junit` from 4.13.2 to 6.0.2 and adapt junit-tests
 * Bump `maven-plugin-testing-harness` from 3.3.0 to 3.5.0
 * Set minimum MAVEN-Plugin-Version from 3.8.1 to 3.6.3
