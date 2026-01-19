@@ -34,6 +34,7 @@
     </properties>
     <body>
         <release version="3.0.0-SNAPSHOT" date="YYYY-MM-DD" description="Jakarta EE 9+, JDK 11, JPMS">
+            <action type="update" dev="ste-gr">Bump &quot;versions-maven-plugin&quot; from 2.20.1 to 2.21.0</action>
             <action type="fix" dev="ste-gr">Correct scm-url in POM</action>
             <action type="fix" dev="ste-gr">Correct plugin-name in message-text</action>
             <action type="update" dev="ste-gr">Rename package &quot;net.sf.maventaglib&quot; to &quot;io.github.weblegacy.maven.plugin.taglib&quot;</action>
