@@ -1,0 +1,766 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ValidateRenderer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Taglib Plugin</a> &gt; <a href="index.source.html" class="el_package">io.github.weblegacy.maven.plugin.taglib</a> &gt; <span class="el_source">ValidateRenderer.java</span></div><h1>ValidateRenderer.java</h1><pre class="source lang-java linenums">/*
+ * The MIT License
+ * Copyright © 2004-2014 Fabrizio Giustina
+ * Copyright © 2022-2026 Web-Legacy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+package io.github.weblegacy.maven.plugin.taglib;
+
+import io.github.weblegacy.maven.plugin.taglib.checker.ElFunction;
+import io.github.weblegacy.maven.plugin.taglib.checker.Tag;
+import io.github.weblegacy.maven.plugin.taglib.checker.TagAttribute;
+import io.github.weblegacy.maven.plugin.taglib.checker.Tld;
+import io.github.weblegacy.maven.plugin.taglib.util.JspCheck;
+import io.github.weblegacy.maven.plugin.taglib.util.JspClass;
+import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
+import org.apache.maven.doxia.sink.Sink;
+import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.reporting.AbstractMavenReportRenderer;
+
+/**
+ * Validates tag handler classes fount in tlds.
+ *
+ * @author Fabrizio Giustina
+ */
+public class ValidateRenderer extends AbstractMavenTaglibReportRenderer {
+
+    /**
+     * Code for Success-Icon.
+     */
+    private static final int ICO_SUCCESS = 0;
+
+    /**
+     * Code for Info-Icon.
+     */
+    private static final int ICO_INFO = 1;
+
+    /**
+     * Code for Warning-Icon.
+     */
+    private static final int ICO_WARNING = 2;
+
+    /**
+     * Code for Error-Icon.
+     */
+    private static final int ICO_ERROR = 3;
+
+    /**
+     * Path to Error-Icon.
+     */
+<span class="fc" id="L77">    private static final String IMAGE_ERROR_SRC = Messages.getString(&quot;Validate.image.error&quot;);</span>
+
+    /**
+     * Path to Waring-Icon.
+     */
+<span class="fc" id="L82">    private static final String IMAGE_WARNING_SRC = Messages.getString(&quot;Validate.image.warning&quot;);</span>
+
+    /**
+     * Path to Info-Icon.
+     */
+<span class="fc" id="L87">    private static final String IMAGE_INFO_SRC = Messages.getString(&quot;Validate.image.info&quot;);</span>
+
+    /**
+     * Path to Success-Icon.
+     */
+<span class="fc" id="L92">    private static final String IMAGE_SUCCESS_SRC = Messages.getString(&quot;Validate.image.success&quot;);</span>
+
+    /**
+     * List of TLDs to check.
+     */
+    private final Tld[] tlds;
+
+    /**
+     * For logging.
+     */
+    private final Log log;
+
+    /**
+     * The class-loader for the project.
+     */
+    private final ClassLoader projectClassLoader;
+
+    /**
+     * Utility to check for the loaded Jsp-Classes.
+     */
+    private final JspCheck jspCheck;
+
+    /**
+     * The class-constructor.
+     *
+     * @param sink               the sink to use.
+     * @param locale             the wanted locale to return the report's description, could be
+     *                           &lt;code&gt;null&lt;/code&gt;.
+     * @param tlds               list of TLDs to check.
+     * @param log                the logger that has been injected into this mojo.
+     * @param projectClassLoader ClassLoader for all compile-classpaths
+     */
+    public ValidateRenderer(final Sink sink, final Locale locale, final Tld[] tlds, final Log log,
+            final ClassLoader projectClassLoader) {
+
+<span class="fc" id="L127">        super(sink, locale);</span>
+<span class="fc" id="L128">        this.tlds = tlds;</span>
+<span class="fc" id="L129">        this.log = log;</span>
+<span class="fc" id="L130">        this.projectClassLoader = projectClassLoader;</span>
+
+        // Load all jsp-classes for all namespaces.
+<span class="fc" id="L133">        this.jspCheck = new JspCheck(log, projectClassLoader);</span>
+<span class="fc" id="L134">    }</span>
+
+    @Override
+    public String getTitle() {
+<span class="fc" id="L138">        return getMessageString(&quot;Validate.title&quot;);</span>
+    }
+
+    /**
+     * Check the given tld. Assure that:
+     * &lt;ul&gt;
+     * &lt;li&gt;Any tag class is loadable&lt;/li&gt;
+     * &lt;li&gt;the tag class has a setter for any of the declared attribute&lt;/li&gt;
+     * &lt;li&gt;the type declared in the dtd for an attribute (if any) matches the type accepted by the
+     * getter&lt;/li&gt;
+     * &lt;/ul&gt;
+     *
+     * @see AbstractMavenReportRenderer#renderBody()
+     */
+    @Override
+    protected void renderBody() {
+<span class="fc" id="L154">        sink.body();</span>
+<span class="fc" id="L155">        startSection(getMessageString(&quot;Validate.h1&quot;));</span>
+<span class="fc" id="L156">        paragraph(getMessageString(&quot;Validate.into1&quot;));</span>
+<span class="fc" id="L157">        paragraph(getMessageString(&quot;Validate.intro2&quot;));</span>
+
+<span class="fc" id="L159">        sink.list();</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        for (Tld tld : tlds) {</span>
+
+<span class="fc" id="L162">            sink.listItem();</span>
+<span class="fc" id="L163">            sink.link(&quot;#&quot; + tld.getFilename());</span>
+<span class="fc" id="L164">            sink.text(MessageFormat.format(getMessageString(&quot;Validate.listitem.tld&quot;),</span>
+<span class="fc" id="L165">                    StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname()),</span>
+<span class="fc" id="L166">                    tld.getFilename()));</span>
+<span class="fc" id="L167">            sink.link_();</span>
+<span class="fc" id="L168">            sink.text(getMessageString(&quot;Validate.listitem.uri&quot;) + tld.getUri());</span>
+
+<span class="fc" id="L170">            sink.listItem_();</span>
+        }
+<span class="fc" id="L172">        sink.list_();</span>
+
+<span class="fc" id="L174">        endSection();</span>
+
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        for (Tld tld : tlds) {</span>
+<span class="fc" id="L177">            checkTld(tld);</span>
+        }
+
+<span class="fc" id="L180">        sink.body_();</span>
+<span class="fc" id="L181">    }</span>
+
+    /**
+     * Checks a single tld and returns validation results.
+     *
+     * @param tld Tld
+     */
+    private void checkTld(Tld tld) {
+        // new section for each tld
+<span class="fc" id="L190">        sink.anchor(tld.getFilename());</span>
+<span class="fc" id="L191">        sink.anchor_();</span>
+<span class="fc" id="L192">        startSection(StringUtils.defaultIfEmpty(tld.getName(),</span>
+<span class="fc" id="L193">                tld.getShortname()) + ' ' + tld.getFilename());</span>
+
+<span class="fc" id="L195">        doTags(tld.getTags(), tld.getShortname());</span>
+<span class="fc" id="L196">        doFunctions(tld.getFunctions(), tld.getShortname());</span>
+
+<span class="fc" id="L198">        endSection();</span>
+<span class="fc" id="L199">    }</span>
+
+    /**
+     * Checks the tags and returns validation results.
+     *
+     * @param tags      tags of the Tld
+     * @param shortname shortname of the Tld
+     */
+    private void doTags(Tag[] tags, String shortname) {
+<span class="pc bpc" id="L208" title="1 of 4 branches missed.">        if (tags != null &amp;&amp; tags.length &gt; 0) {</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">            for (Tag tldItem : tags) {</span>
+<span class="fc" id="L210">                checkTag(shortname, tldItem);</span>
+            }
+        }
+<span class="fc" id="L213">    }</span>
+
+    /**
+     * Checks the functions and returns validation results.
+     *
+     * @param tags      functions of the Tld
+     * @param shortname shortname of the Tld
+     */
+    private void doFunctions(ElFunction[] tags, String shortname) {
+<span class="pc bpc" id="L222" title="2 of 4 branches missed.">        if (tags != null &amp;&amp; tags.length &gt; 0) {</span>
+
+<span class="nc" id="L224">            startSection(&quot;EL functions&quot;);</span>
+
+<span class="nc" id="L226">            startTable();</span>
+
+<span class="nc" id="L228">            tableHeader(new String[]{</span>
+<span class="nc" id="L229">                getMessageString(&quot;Validate.header.validated&quot;),</span>
+                &quot;function&quot;,
+<span class="nc" id="L231">                getMessageString(&quot;Validate.header.class&quot;),</span>
+<span class="nc" id="L232">                getMessageString(&quot;Validate.header.signature&quot;)</span>
+            });
+
+<span class="nc bnc" id="L235" title="All 2 branches missed.">            for (ElFunction tldItem : tags) {</span>
+<span class="nc" id="L236">                checkFunction(shortname, tldItem);</span>
+            }
+
+<span class="nc" id="L239">            endTable();</span>
+
+<span class="nc" id="L241">            endSection();</span>
+        }
+<span class="fc" id="L243">    }</span>
+
+    /**
+     * Checks a function and returns the validation result.
+     *
+     * @param prefix prefix of the function
+     * @param tag    the function
+     */
+    private void checkFunction(String prefix, ElFunction tag) {
+<span class="nc" id="L252">        String className = tag.getFunctionClass();</span>
+
+<span class="nc" id="L254">        boolean found = true;</span>
+
+<span class="nc" id="L256">        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();</span>
+<span class="nc" id="L257">        Thread.currentThread().setContextClassLoader(this.projectClassLoader);</span>
+
+        try {
+<span class="nc" id="L260">            Class&lt;?&gt; functionClass = Class.forName(className, true, this.projectClassLoader);</span>
+
+<span class="nc" id="L262">            String fullSignature = tag.getFunctionSignature();</span>
+<span class="nc" id="L263">            String paramsString = tag.getParameters();</span>
+<span class="nc" id="L264">            String returnvalue = null;</span>
+
+<span class="nc" id="L266">            String methodName = StringUtils.trim(StringUtils.substringBefore(fullSignature, &quot;(&quot;));</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">            if (Strings.CS.contains(methodName, &quot; &quot;)) {</span>
+<span class="nc" id="L268">                returnvalue = StringUtils.substringBefore(methodName, &quot; &quot;);</span>
+<span class="nc" id="L269">                methodName = StringUtils.substringAfter(methodName, &quot; &quot;);</span>
+            }
+
+<span class="nc" id="L272">            String[] params = StringUtils.split(paramsString, &quot;,&quot;);</span>
+
+<span class="nc" id="L274">            List&lt;Class&lt;?&gt;&gt; parClasses = new ArrayList&lt;&gt;(params.length);</span>
+
+<span class="nc bnc" id="L276" title="All 2 branches missed.">            for (String stringClass : params) {</span>
+<span class="nc" id="L277">                parClasses.add(Class.forName(StringUtils.trim(stringClass), true,</span>
+                        this.projectClassLoader));
+            }
+
+<span class="nc" id="L281">            Method method = functionClass.getMethod(methodName,</span>
+<span class="nc" id="L282">                    parClasses.toArray(Class&lt;?&gt;[]::new));</span>
+
+<span class="nc" id="L284">            Class&lt;?&gt; returnType = method.getReturnType();</span>
+
+<span class="nc bnc" id="L286" title="All 4 branches missed.">            if (!(returnvalue == null || returnType.getCanonicalName().equals(returnvalue))) {</span>
+<span class="nc" id="L287">                found = false;</span>
+            }
+<span class="nc" id="L289">        } catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {</span>
+<span class="nc" id="L290">            found = false;</span>
+<span class="nc" id="L291">        }</span>
+
+<span class="nc" id="L293">        Thread.currentThread().setContextClassLoader(currentClassLoader);</span>
+
+<span class="nc" id="L295">        sink.tableRow();</span>
+
+<span class="nc" id="L297">        sink.tableCell();</span>
+<span class="nc bnc" id="L298" title="All 2 branches missed.">        figure(found ? ICO_SUCCESS : ICO_ERROR);</span>
+<span class="nc" id="L299">        sink.tableCell_();</span>
+
+<span class="nc" id="L301">        tableCell(prefix + &quot;:&quot; + tag.getName() + &quot;()&quot;);</span>
+<span class="nc" id="L302">        tableCell(className);</span>
+<span class="nc" id="L303">        tableCell(tag.getFunctionSignature());</span>
+
+<span class="nc" id="L305">        sink.tableRow_();</span>
+<span class="nc" id="L306">    }</span>
+
+    /**
+     * Checks a single tag and returns validation results.
+     *
+     * @param prefix prefix of the tag
+     * @param tag    Tag
+     */
+    private void checkTag(String prefix, Tag tag) {
+
+        // new subsection for each tag
+<span class="fc" id="L317">        startSection(&quot;&lt;&quot; + prefix + &quot;:&quot; + tag.getName() + &quot;&gt;&quot;);</span>
+
+<span class="fc" id="L319">        String className = tag.getTagClass();</span>
+
+<span class="fc" id="L321">        startTable();</span>
+
+<span class="fc" id="L323">        tableHeader(new String[]{</span>
+<span class="fc" id="L324">            getMessageString(&quot;Validate.header.found&quot;),</span>
+<span class="fc" id="L325">            getMessageString(&quot;Validate.header.loadable&quot;),</span>
+<span class="fc" id="L326">            getMessageString(&quot;Validate.header.extends&quot;),</span>
+<span class="fc" id="L327">            getMessageString(&quot;Validate.header.class&quot;)</span>
+        });
+
+<span class="fc" id="L330">        boolean found = true;</span>
+<span class="fc" id="L331">        boolean loadable = true;</span>
+        boolean extend;
+
+<span class="fc" id="L334">        Object tagObject = null;</span>
+<span class="fc" id="L335">        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();</span>
+<span class="fc" id="L336">        Thread.currentThread().setContextClassLoader(this.projectClassLoader);</span>
+
+        try {
+<span class="nc" id="L339">            Class&lt;?&gt; tagClass = Class.forName(className, true, this.projectClassLoader);</span>
+
+            // extend only true, if tagClass derives from TagSupport or derives from SimpleTag
+<span class="nc bnc" id="L342" title="All 2 branches missed.">            extend = jspCheck.check(JspClass.TAG_SUPPORT, tagClass)</span>
+<span class="nc bnc" id="L343" title="All 2 branches missed.">                    || jspCheck.check(JspClass.SIMPLE_TAG, tagClass);</span>
+
+            try {
+<span class="nc" id="L346">                tagObject = tagClass.getDeclaredConstructor().newInstance();</span>
+<span class="nc" id="L347">            } catch (IllegalAccessException | IllegalArgumentException | InstantiationException</span>
+                    | NoSuchMethodException | SecurityException | InvocationTargetException e) {
+<span class="nc" id="L349">                loadable = false;</span>
+<span class="nc" id="L350">            }</span>
+<span class="fc" id="L351">        } catch (ClassNotFoundException | NoClassDefFoundError e) {</span>
+<span class="fc" id="L352">            found = false;</span>
+<span class="fc" id="L353">            loadable = false;</span>
+<span class="fc" id="L354">            extend = false;</span>
+<span class="nc" id="L355">        }</span>
+
+<span class="fc" id="L357">        Thread.currentThread().setContextClassLoader(currentClassLoader);</span>
+
+<span class="fc" id="L359">        sink.tableRow();</span>
+
+<span class="fc" id="L361">        sink.tableCell();</span>
+<span class="pc bpc" id="L362" title="1 of 2 branches missed.">        figure(found ? ICO_SUCCESS : ICO_ERROR);</span>
+<span class="fc" id="L363">        sink.tableCell_();</span>
+
+<span class="fc" id="L365">        sink.tableCell();</span>
+<span class="pc bpc" id="L366" title="1 of 2 branches missed.">        figure(loadable ? ICO_SUCCESS : ICO_ERROR);</span>
+<span class="fc" id="L367">        sink.tableCell_();</span>
+
+<span class="fc" id="L369">        sink.tableCell();</span>
+<span class="pc bpc" id="L370" title="1 of 2 branches missed.">        figure(extend ? ICO_SUCCESS : ICO_ERROR);</span>
+<span class="fc" id="L371">        sink.tableCell_();</span>
+
+<span class="fc" id="L373">        tableCell(className);</span>
+
+<span class="fc" id="L375">        sink.tableRow_();</span>
+
+<span class="pc bpc" id="L377" title="1 of 2 branches missed.">        if (tag.getTeiClass() != null) {</span>
+<span class="fc" id="L378">            checkTeiClass(tag.getTeiClass());</span>
+        }
+
+<span class="fc" id="L381">        endTable();</span>
+
+<span class="fc" id="L383">        TagAttribute[] attributes = tag.getAttributes();</span>
+<span class="pc bpc" id="L384" title="3 of 4 branches missed.">        if (tagObject != null &amp;&amp; attributes.length &gt; 0) {</span>
+
+<span class="nc" id="L386">            startTable();</span>
+<span class="nc" id="L387">            tableHeader(new String[]{</span>
+                StringUtils.EMPTY,
+<span class="nc" id="L389">                getMessageString(&quot;Validate.header.attributename&quot;),</span>
+<span class="nc" id="L390">                getMessageString(&quot;Validate.header.tlddeclares&quot;),</span>
+<span class="nc" id="L391">                getMessageString(&quot;Validate.header.tagdeclares&quot;)</span>
+            });
+
+<span class="nc bnc" id="L394" title="All 2 branches missed.">            for (TagAttribute attribute : attributes) {</span>
+<span class="nc" id="L395">                checkAttribute(tagObject, attribute);</span>
+            }
+
+<span class="nc" id="L398">            endTable();</span>
+        }
+<span class="fc" id="L400">        endSection();</span>
+<span class="fc" id="L401">    }</span>
+
+    /**
+     * Check a declared TagExtraInfo class.
+     *
+     * @param className TEI class name
+     */
+    private void checkTeiClass(String className) {
+
+<span class="fc" id="L410">        boolean found = true;</span>
+<span class="fc" id="L411">        boolean loadable = true;</span>
+        boolean extend;
+
+        Class&lt;?&gt; teiClass;
+        try {
+<span class="nc" id="L416">            teiClass = Class.forName(className, true, this.projectClassLoader);</span>
+
+<span class="nc" id="L418">            extend = jspCheck.check(JspClass.TAG_EXTRA_INFO, teiClass);</span>
+
+            try {
+<span class="nc" id="L421">                teiClass.getDeclaredConstructor().newInstance();</span>
+<span class="nc" id="L422">            } catch (IllegalAccessException | IllegalArgumentException | InstantiationException</span>
+                    | NoSuchMethodException | SecurityException | InvocationTargetException e) {
+<span class="nc" id="L424">                loadable = false;</span>
+<span class="nc" id="L425">            }</span>
+<span class="fc" id="L426">        } catch (ClassNotFoundException | NoClassDefFoundError e) {</span>
+<span class="fc" id="L427">            found = false;</span>
+<span class="fc" id="L428">            loadable = false;</span>
+<span class="fc" id="L429">            extend = false;</span>
+<span class="nc" id="L430">        }</span>
+
+<span class="fc" id="L432">        sink.tableRow();</span>
+
+<span class="fc" id="L434">        sink.tableCell();</span>
+<span class="pc bpc" id="L435" title="1 of 2 branches missed.">        figure(found ? ICO_SUCCESS : ICO_ERROR);</span>
+<span class="fc" id="L436">        sink.tableCell_();</span>
+
+<span class="fc" id="L438">        sink.tableCell();</span>
+<span class="pc bpc" id="L439" title="1 of 2 branches missed.">        figure(loadable ? ICO_SUCCESS : ICO_ERROR);</span>
+<span class="fc" id="L440">        sink.tableCell_();</span>
+
+<span class="fc" id="L442">        sink.tableCell();</span>
+<span class="pc bpc" id="L443" title="1 of 2 branches missed.">        figure(extend ? ICO_SUCCESS : ICO_ERROR);</span>
+<span class="fc" id="L444">        sink.tableCell_();</span>
+
+<span class="fc" id="L446">        sink.tableCell();</span>
+<span class="fc" id="L447">        sink.text(className);</span>
+<span class="fc" id="L448">        sink.tableCell_();</span>
+
+<span class="fc" id="L450">        sink.tableRow_();</span>
+<span class="fc" id="L451">    }</span>
+
+    /**
+     * Checks a single attribute and returns validation results.
+     *
+     * @param tag       tag handler instance
+     * @param attribute TagAttribute
+     */
+    private void checkAttribute(Object tag, TagAttribute attribute) {
+
+<span class="nc" id="L461">        String tldType = attribute.getType();</span>
+<span class="nc" id="L462">        String tldName = attribute.getName();</span>
+<span class="nc" id="L463">        Class&lt;?&gt; tagType = null;</span>
+<span class="nc" id="L464">        String tagTypeName = null;</span>
+
+<span class="nc" id="L466">        List&lt;ValidationError&gt; validationErrors = new ArrayList&lt;&gt;(3);</span>
+
+<span class="nc bnc" id="L468" title="All 2 branches missed.">        if (!PropertyUtils.isWriteable(tag, tldName)) {</span>
+<span class="nc" id="L469">            validationErrors.add(new ValidationError(ValidationError.LEVEL_ERROR,</span>
+<span class="nc" id="L470">                    getMessageString(&quot;Validate.error.setternotfound&quot;)));</span>
+        }
+
+        // don't check if setter is missing
+<span class="nc bnc" id="L474" title="All 2 branches missed.">        if (validationErrors.isEmpty()) {</span>
+
+            try {
+<span class="nc" id="L477">                tagType = PropertyUtils.getPropertyType(tag, tldName);</span>
+<span class="nc" id="L478">            } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {</span>
+                // should never happen, since we already checked the writable property
+<span class="nc" id="L480">                log.warn(e);</span>
+<span class="nc" id="L481">            }</span>
+<span class="nc bnc" id="L482" title="All 2 branches missed.">            tagTypeName = tagType == null ? StringUtils.EMPTY : tagType.getName();</span>
+
+<span class="nc bnc" id="L484" title="All 4 branches missed.">            if (tldType != null &amp;&amp; tagType != null) {</span>
+<span class="nc" id="L485">                Class&lt;?&gt; tldTypeClass = getClassFromName(tldType);</span>
+
+<span class="nc bnc" id="L487" title="All 2 branches missed.">                if (!tagType.isAssignableFrom(tldTypeClass)) {</span>
+
+<span class="nc" id="L489">                    validationErrors.add(new ValidationError(ValidationError.LEVEL_ERROR,</span>
+<span class="nc" id="L490">                            MessageFormat.format(</span>
+<span class="nc" id="L491">                                    getMessageString(&quot;Validate.error.attributetypemismatch&quot;),</span>
+<span class="nc" id="L492">                                    tldType, tagType.getName())));</span>
+                }
+            }
+        }
+
+        // don't check if we already know type is different
+<span class="nc bnc" id="L498" title="All 2 branches missed.">        if (validationErrors.isEmpty()) {</span>
+
+<span class="nc bnc" id="L500" title="All 6 branches missed.">            if (tldType != null &amp;&amp; tagType != null &amp;&amp; !tldType.equals(tagType.getName())) {</span>
+<span class="nc" id="L501">                validationErrors.add(new ValidationError(ValidationError.LEVEL_WARNING,</span>
+<span class="nc" id="L502">                        MessageFormat.format(</span>
+<span class="nc" id="L503">                                getMessageString(&quot;Validate.error.attributetypeinexactmatch&quot;),</span>
+<span class="nc" id="L504">                                tldType, tagType.getName())));</span>
+<span class="nc bnc" id="L505" title="All 4 branches missed.">            } else if (tldType == null &amp;&amp; !String.class.equals(tagType)) {</span>
+<span class="nc" id="L506">                validationErrors.add(new ValidationError(ValidationError.LEVEL_INFO,</span>
+<span class="nc" id="L507">                        getMessageString(&quot;Validate.error.attributetype&quot;)));</span>
+            }
+        }
+
+<span class="nc" id="L511">        sink.tableRow();</span>
+
+<span class="nc" id="L513">        sink.tableCell();</span>
+
+<span class="nc" id="L515">        boolean errors = false;</span>
+<span class="nc" id="L516">        boolean warnings = false;</span>
+<span class="nc" id="L517">        boolean infos = false;</span>
+<span class="nc bnc" id="L518" title="All 2 branches missed.">        for (ValidationError error : validationErrors) {</span>
+<span class="nc bnc" id="L519" title="All 4 branches missed.">            switch (error.getLevel()) {</span>
+                case ValidationError.LEVEL_ERROR:
+<span class="nc" id="L521">                    errors = true;</span>
+<span class="nc" id="L522">                    break;</span>
+                case ValidationError.LEVEL_WARNING:
+<span class="nc" id="L524">                    warnings = true;</span>
+<span class="nc" id="L525">                    break;</span>
+                case ValidationError.LEVEL_INFO:
+<span class="nc" id="L527">                    infos = true;</span>
+<span class="nc" id="L528">                    break;</span>
+                default:
+                    break;
+            }
+<span class="nc" id="L532">        }</span>
+
+        final int figure;
+<span class="nc bnc" id="L535" title="All 2 branches missed.">        if (errors) {</span>
+<span class="nc" id="L536">            figure = ICO_ERROR;</span>
+<span class="nc bnc" id="L537" title="All 2 branches missed.">        } else if (warnings) {</span>
+<span class="nc" id="L538">            figure = ICO_WARNING;</span>
+<span class="nc bnc" id="L539" title="All 2 branches missed.">        } else if (infos) {</span>
+<span class="nc" id="L540">            figure = ICO_INFO;</span>
+        } else {
+<span class="nc" id="L542">            figure = ICO_SUCCESS;</span>
+        }
+
+<span class="nc" id="L545">        figure(figure);</span>
+<span class="nc" id="L546">        sink.tableCell_();</span>
+
+<span class="nc" id="L548">        sink.tableCell();</span>
+<span class="nc" id="L549">        sink.text(tldName);</span>
+
+<span class="nc bnc" id="L551" title="All 2 branches missed.">        for (ValidationError error : validationErrors) {</span>
+<span class="nc" id="L552">            sink.lineBreak();</span>
+<span class="nc bnc" id="L553" title="All 2 branches missed.">            if (error.getLevel() == ValidationError.LEVEL_ERROR) {</span>
+<span class="nc" id="L554">                sink.bold();</span>
+            }
+<span class="nc" id="L556">            sink.text(error.getText());</span>
+<span class="nc bnc" id="L557" title="All 2 branches missed.">            if (error.getLevel() == ValidationError.LEVEL_ERROR) {</span>
+<span class="nc" id="L558">                sink.bold_();</span>
+
+            }
+<span class="nc" id="L561">        }</span>
+
+<span class="nc" id="L563">        sink.tableCell_();</span>
+
+<span class="nc" id="L565">        sink.tableCell();</span>
+<span class="nc bnc" id="L566" title="All 2 branches missed.">        if (tldType != null) {</span>
+<span class="nc" id="L567">            sink.text(StringUtils.substringAfter(tldType, &quot;java.lang.&quot;));</span>
+        }
+<span class="nc" id="L569">        sink.tableCell_();</span>
+
+<span class="nc" id="L571">        tableCell(StringUtils.substringAfter(tagTypeName, &quot;java.lang.&quot;));</span>
+
+<span class="nc" id="L573">        sink.tableRow_();</span>
+
+<span class="nc" id="L575">    }</span>
+
+    private void figure(int type) {
+        String text;
+        String src;
+
+<span class="pc bpc" id="L581" title="3 of 4 branches missed.">        switch (type) {</span>
+            case ICO_ERROR:
+<span class="fc" id="L583">                text = getMessageString(&quot;Validate.level.error&quot;);</span>
+<span class="fc" id="L584">                src = IMAGE_ERROR_SRC;</span>
+<span class="fc" id="L585">                break;</span>
+            case ICO_WARNING:
+<span class="nc" id="L587">                text = getMessageString(&quot;Validate.level.warning&quot;);</span>
+<span class="nc" id="L588">                src = IMAGE_WARNING_SRC;</span>
+<span class="nc" id="L589">                break;</span>
+            case ICO_INFO:
+<span class="nc" id="L591">                text = getMessageString(&quot;Validate.level.info&quot;);</span>
+<span class="nc" id="L592">                src = IMAGE_INFO_SRC;</span>
+<span class="nc" id="L593">                break;</span>
+            default:
+<span class="nc" id="L595">                text = getMessageString(&quot;Validate.level.success&quot;);</span>
+<span class="nc" id="L596">                src = IMAGE_SUCCESS_SRC;</span>
+                break;
+        }
+
+<span class="fc" id="L600">        sink.figure();</span>
+<span class="fc" id="L601">        sink.figureGraphics(src);</span>
+<span class="fc" id="L602">        sink.figureCaption();</span>
+<span class="fc" id="L603">        sink.text(text);</span>
+<span class="fc" id="L604">        sink.figureCaption_();</span>
+<span class="fc" id="L605">        sink.figure_();</span>
+<span class="fc" id="L606">    }</span>
+
+    /**
+     * Returns a class from its name, handling primitives.
+     *
+     * @param className clss name
+     *
+     * @return Class istantiated using Class.forName or the matching primitive.
+     */
+    private Class&lt;?&gt; getClassFromName(String className) {
+
+<span class="nc" id="L617">        Class&lt;?&gt; tldTypeClass = tryGettingPrimitiveClass(className);</span>
+
+<span class="nc bnc" id="L619" title="All 2 branches missed.">        if (tldTypeClass == null) {</span>
+            // not a primitive type
+            try {
+<span class="nc bnc" id="L622" title="All 2 branches missed.">                if (isArrayClassName(className)) {</span>
+<span class="nc" id="L623">                    tldTypeClass = getArrayClass(className);</span>
+                } else {
+<span class="nc" id="L625">                    tldTypeClass = Class.forName(className, true, this.projectClassLoader);</span>
+                }
+<span class="nc" id="L627">            } catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L628">                log.error(MessageFormat.format(</span>
+<span class="nc" id="L629">                        Messages.getString(&quot;Validate.error.unabletofindclass&quot;), className));</span>
+<span class="nc" id="L630">            }</span>
+        }
+<span class="nc" id="L632">        return tldTypeClass;</span>
+    }
+
+    private Class&lt;?&gt; tryGettingPrimitiveClass(String className) {
+<span class="nc bnc" id="L636" title="All 2 branches missed.">        if (className == null) {</span>
+<span class="nc" id="L637">            return null;</span>
+        }
+
+<span class="nc bnc" id="L640" title="All 9 branches missed.">        switch (className) {</span>
+            case &quot;byte&quot;:
+<span class="nc" id="L642">                return byte.class;</span>
+            case &quot;short&quot;:
+<span class="nc" id="L644">                return int.class;</span>
+            case &quot;int&quot;:
+<span class="nc" id="L646">                return int.class;</span>
+            case &quot;long&quot;:
+<span class="nc" id="L648">                return long.class;</span>
+            case &quot;float&quot;:
+<span class="nc" id="L650">                return double.class;</span>
+            case &quot;double&quot;:
+<span class="nc" id="L652">                return double.class;</span>
+            case &quot;boolean&quot;:
+<span class="nc" id="L654">                return boolean.class;</span>
+            case &quot;char&quot;:
+<span class="nc" id="L656">                return char.class;</span>
+            default:
+<span class="nc" id="L658">                return null;</span>
+        }
+    }
+
+    /**
+     * Tests if the given {@code className} as an array.
+     *
+     * @param className the className to test
+     *
+     * @return {@code true} if the given {@code className} as an array
+     */
+    private boolean isArrayClassName(String className) {
+<span class="nc" id="L670">        return className.endsWith(&quot;[]&quot;);</span>
+    }
+
+    /**
+     * Gets the class of an array with the elements of {@code className}.
+     *
+     * @param className elements-class of the array
+     *
+     * @return the array-class
+     *
+     * @throws ClassNotFoundException if the class is not found
+     */
+    private Class&lt;?&gt; getArrayClass(String className) throws ClassNotFoundException {
+<span class="nc" id="L683">        String elementClassName = Strings.CS.replace(className, &quot;[]&quot;, &quot;&quot;);</span>
+<span class="nc" id="L684">        Class&lt;?&gt; elementClass = tryGettingPrimitiveClass(elementClassName);</span>
+<span class="nc bnc" id="L685" title="All 2 branches missed.">        if (elementClass == null) {</span>
+<span class="nc" id="L686">            elementClass = Class.forName(elementClassName);</span>
+        }
+<span class="nc" id="L688">        return Array.newInstance(elementClass, 0).getClass();</span>
+    }
+
+    static class ValidationError {
+
+        /**
+         * Level of validation is information.
+         */
+        public static final int LEVEL_INFO = 1;
+
+        /**
+         * Level of validation is warning.
+         */
+        public static final int LEVEL_WARNING = 2;
+
+        /**
+         * Level of validation is error.
+         */
+        public static final int LEVEL_ERROR = 3;
+
+        /**
+         * The level of the validation.
+         */
+        private int level;
+
+        /**
+         * The text of the validation.
+         */
+        private String text;
+
+        /**
+         * The class-constructor.
+         *
+         * @param level the level of the validation
+         * @param text  the text of the validation
+         */
+<span class="nc" id="L724">        public ValidationError(int level, String text) {</span>
+<span class="nc" id="L725">            this.level = level;</span>
+<span class="nc" id="L726">            this.text = text;</span>
+<span class="nc" id="L727">        }</span>
+
+        /**
+         * Getter for {@code level}.
+         *
+         * @return Returns the level.
+         */
+        public int getLevel() {
+<span class="nc" id="L735">            return this.level;</span>
+        }
+
+        /**
+         * Setter for {@code level}.
+         *
+         * @param level The level to set.
+         */
+        public void setLevel(int level) {
+<span class="nc" id="L744">            this.level = level;</span>
+<span class="nc" id="L745">        }</span>
+
+        /**
+         * Getter for {@code text}.
+         *
+         * @return Returns the text.
+         */
+        public String getText() {
+<span class="nc" id="L753">            return this.text;</span>
+        }
+
+        /**
+         * Setter for {@code text}.
+         *
+         * @param text The text to set.
+         */
+        public void setText(String text) {
+<span class="nc" id="L762">            this.text = text;</span>
+<span class="nc" id="L763">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

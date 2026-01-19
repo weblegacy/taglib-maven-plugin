@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TldGenerateMojo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Taglib Plugin</a> &gt; <a href="index.source.html" class="el_package">io.github.weblegacy.maven.plugin.taglib</a> &gt; <span class="el_source">TldGenerateMojo.java</span></div><h1>TldGenerateMojo.java</h1><pre class="source lang-java linenums">/*
+ * The MIT License
+ * Copyright © 2004-2014 Fabrizio Giustina
+ * Copyright © 2022-2026 Web-Legacy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+package io.github.weblegacy.maven.plugin.taglib;
+
+import io.github.weblegacy.maven.plugin.taglib.util.XmlHelper;
+import io.github.weblegacy.tlddoc.tagfileparser.Attribute;
+import io.github.weblegacy.tlddoc.tagfileparser.Directive;
+import io.github.weblegacy.tlddoc.tagfileparser.javacc.ParseException;
+import io.github.weblegacy.tlddoc.tagfileparser.javacc.TagFile;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.xml.parsers.DocumentBuilder;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.codehaus.plexus.util.FileUtils;
+import org.jdom2.input.DOMBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+/**
+ * Generates tld files from directories of jsp 2.0 tag files.
+ *
+ * @author Fabrizio Giustina
+ */
+@Mojo(name = &quot;tldgenerate&quot;, defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
+<span class="fc" id="L68">public class TldGenerateMojo extends AbstractMojo {</span>
+
+    /**
+     * Directory containing tag files. Subdirectories are also processed.
+     */
+    @Parameter(defaultValue = &quot;src/main/resources/META-INF/tags/&quot;)
+    private File tagDir;
+
+    /**
+     * Output dir for tld files.
+     */
+    @Parameter(defaultValue = &quot;${project.build.outputDirectory}/META-INF&quot;, required = true)
+    private File outputDir;
+
+    /**
+     * Version added to tld files, defaults to project version.
+     */
+    @Parameter(property = &quot;project.version&quot;, required = true)
+    private String version;
+
+    /**
+     * Detailed configuration for taglibs for tld generation. Starting with version 2.4 you can
+     * configure multiple taglibs with this attribute, and for each taglib you can add both tagfiles
+     * dir than classes with EL functions (note that EL function support is preliminary, the
+     * resulting tld does not include anything in the &quot;description&quot; attribute (that would require
+     * parsing javadocs from sources.
+     *
+     * &lt;pre&gt;
+     *    &amp;lt;taglibs&gt;
+     *      &amp;lt;taglib&gt;
+     *        &amp;lt;description&gt;A test tld that contains functions&amp;lt;/description&gt;
+     *        &amp;lt;shortName&gt;test&amp;lt;/shortName&gt;
+     *        &amp;lt;uri&gt;testuri&amp;lt;/uri&gt;
+     *        &amp;lt;outputname&gt;testtaglib&amp;lt;/outputname&gt;
+     *        &amp;lt;functionClasses&gt;
+     *          &amp;lt;functionClass&gt;org.apache.commons.lang.StringUtils&amp;lt;/functionClass&gt;
+     *        &amp;lt;/functionClasses&gt;
+     *        &amp;lt;tagdir&gt;src/tagfiles&amp;lt;/tagdir&gt;
+     *      &amp;lt;/taglib&gt;
+     *    &amp;lt;/taglibs&gt;
+     * &lt;/pre&gt;
+     */
+    @Parameter
+    private List&lt;Taglib&gt; taglibs;
+
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+<span class="fc" id="L115">        getLog().debug(MessageFormat.format(Messages.getString(&quot;Taglib.generating.tld&quot;),</span>
+<span class="fc" id="L116">                tagDir.getAbsolutePath()));</span>
+
+        try {
+<span class="fc" id="L119">            generateTlds();</span>
+<span class="nc" id="L120">        } catch (IOException e) {</span>
+<span class="nc" id="L121">            throw new MojoExecutionException(e.getMessage(), e);</span>
+<span class="fc" id="L122">        }</span>
+
+<span class="fc" id="L124">    }</span>
+
+    /**
+     * Generate the tlds.
+     *
+     * @throws MojoExecutionException if an error occurs during execution
+     * @throws IOException            if an I/O error occurs
+     */
+    private void generateTlds() throws IOException, MojoExecutionException {
+<span class="fc" id="L133">        List&lt;Taglib&gt; taglibsList = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        if (taglibs != null) {</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">            for (Taglib taglib : taglibs) {</span>
+                // a drink to get the old-style embedding tests work,
+                // I should migrate to the new IT test infrastructure
+<span class="fc" id="L139">                Taglib tlib = new Taglib();</span>
+                try {
+<span class="fc" id="L141">                    PropertyUtils.copyProperties(tlib, taglib);</span>
+<span class="nc" id="L142">                } catch (IllegalAccessException | NoSuchMethodException</span>
+                        | InvocationTargetException e) {
+<span class="nc" id="L144">                    throw new MojoExecutionException(e.getMessage(), e);</span>
+<span class="fc" id="L145">                }</span>
+<span class="fc" id="L146">                taglibsList.add(tlib);</span>
+<span class="fc" id="L147">            }</span>
+        }
+
+        // old (pre 2.4) behavior, create taglib configurations from dir
+<span class="pc bpc" id="L151" title="1 of 4 branches missed.">        if (taglibsList.isEmpty() &amp;&amp; tagDir.isDirectory()) {</span>
+            // handle tag files. Add any directory containing .tag or .tagx files
+<span class="fc" id="L153">            List&lt;File&gt; tags = FileUtils.getFiles(tagDir, &quot;**/*.tag&quot;, null);</span>
+<span class="fc" id="L154">            tags.addAll(FileUtils.getFiles(tagDir, &quot;**/*.tagx&quot;, null));</span>
+
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">            if (!tags.isEmpty()) {</span>
+<span class="fc" id="L157">                Set&lt;File&gt; directories = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">                for (File tag : tags) {</span>
+<span class="fc" id="L159">                    directories.add(tag.getParentFile());</span>
+<span class="fc" id="L160">                }</span>
+
+<span class="fc bfc" id="L162" title="All 2 branches covered.">                for (File dir : directories) {</span>
+<span class="fc" id="L163">                    Taglib tlib = new Taglib();</span>
+<span class="fc" id="L164">                    tlib.setTagdir(dir);</span>
+<span class="fc" id="L165">                    tlib.setShortName(dir.getName());</span>
+<span class="fc" id="L166">                    tlib.setOutputname(dir.getName() + &quot;.tld&quot;);</span>
+<span class="fc" id="L167">                    tlib.setUri(dir.getName());</span>
+<span class="fc" id="L168">                    tlib.setShortName(&quot;Tag library for tag file directory &quot; + dir.getName());</span>
+<span class="fc" id="L169">                    taglibsList.add(tlib);</span>
+<span class="fc" id="L170">                }</span>
+<span class="fc" id="L171">            } else {</span>
+<span class="nc" id="L172">                getLog().warn(MessageFormat.format(</span>
+<span class="nc" id="L173">                        Messages.getString(&quot;Taglib.generating.notfound&quot;),</span>
+<span class="nc" id="L174">                        tagDir.getAbsolutePath()));</span>
+            }
+        }
+
+        try {
+<span class="fc bfc" id="L179" title="All 2 branches covered.">            for (Taglib taglib : taglibsList) {</span>
+<span class="fc" id="L180">                doTaglib(taglib);</span>
+<span class="fc" id="L181">            }</span>
+<span class="nc" id="L182">        } catch (IOException | MojoExecutionException e) {</span>
+<span class="nc" id="L183">            throw new MojoExecutionException(e.getMessage(), e);</span>
+<span class="fc" id="L184">        }</span>
+<span class="fc" id="L185">    }</span>
+
+    /**
+     * Generate tld-file from the taglib.
+     *
+     * @param taglib the taglib
+     *
+     * @throws MojoExecutionException if an error occurs during execution
+     * @throws IOException            if an I/O error occurs
+     */
+    private void doTaglib(Taglib taglib) throws MojoExecutionException, IOException {
+<span class="fc" id="L196">        Document doc = getTldDocument(taglib, XmlHelper.getDocumentBuilder());</span>
+
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">        if (taglib.getShortName() == null) {</span>
+<span class="nc" id="L199">            throw new MojoExecutionException(&quot;Missing \&quot;shortName\&quot; parameter for taglib &quot;</span>
+                    + taglib);
+        }
+
+<span class="fc" id="L203">        String tldName = taglib.getOutputname();</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">        if (tldName == null) {</span>
+<span class="nc" id="L205">            tldName = taglib.getShortName() + &quot;.tld&quot;;</span>
+        }
+<span class="fc bfc" id="L207" title="All 2 branches covered.">        if (!tldName.endsWith(&quot;.tld&quot;)) {</span>
+<span class="fc" id="L208">            tldName = tldName + &quot;.tld&quot;;</span>
+        }
+
+<span class="fc" id="L211">        File outputFile = new File(outputDir, tldName);</span>
+<span class="pc bpc" id="L212" title="3 of 4 branches missed.">        if (!(outputDir.mkdirs() || outputDir.isDirectory())) {</span>
+<span class="nc" id="L213">            throw new IOException(&quot;Unable to create output directory &quot;</span>
+<span class="nc" id="L214">                    + outputDir.getAbsolutePath());</span>
+        }
+
+<span class="fc" id="L217">        getLog().info(MessageFormat.format(Messages.getString(&quot;Taglib.generating.file&quot;),</span>
+<span class="fc" id="L218">                tldName, taglib.getShortName()));</span>
+
+<span class="fc" id="L220">        try (FileOutputStream fos = new FileOutputStream(outputFile)) {</span>
+<span class="fc" id="L221">            XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());</span>
+<span class="fc" id="L222">            outputter.output(new DOMBuilder().build(doc), fos);</span>
+        }
+<span class="fc" id="L224">    }</span>
+
+    /**
+     * Read whole taglib-files an generate a tld-xml.
+     *
+     * @param taglib          the taglib
+     * @param documentBuilder DocumentBuilder instance
+     *
+     * @return generated tld-xml
+     */
+    protected Document getTldDocument(Taglib taglib, DocumentBuilder documentBuilder) {
+<span class="fc" id="L235">        Document result = documentBuilder.newDocument();</span>
+
+<span class="fc" id="L237">        Element taglibElement = createRootTaglibNode(result, taglib.getDescription(),</span>
+<span class="fc" id="L238">                taglib.getShortName(), taglib.getUri());</span>
+
+<span class="pc bpc" id="L240" title="1 of 4 branches missed.">        if (taglib.getTagdir() != null &amp;&amp; taglib.getTagdir().isDirectory()) {</span>
+<span class="fc" id="L241">            String path = taglib.getTagdir().getAbsolutePath().replace(File.separatorChar, '/');</span>
+<span class="fc" id="L242">            int index = path.indexOf(&quot;/META-INF/&quot;);</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">            if (index != -1) {</span>
+<span class="fc" id="L244">                path = path.substring(index);</span>
+            } else {
+<span class="nc" id="L246">                path = &quot;unknown&quot;;</span>
+            }
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">            if (!path.endsWith(&quot;/&quot;)) {</span>
+<span class="fc" id="L249">                path += &quot;/&quot;;</span>
+            }
+
+<span class="fc" id="L252">            File[] files = taglib.getTagdir().listFiles();</span>
+<span class="pc bpc" id="L253" title="1 of 2 branches missed.">            if (files == null) {</span>
+<span class="nc" id="L254">                files = new File[0];</span>
+            }
+<span class="fc bfc" id="L256" title="All 2 branches covered.">            for (File tag : files) {</span>
+<span class="pc bpc" id="L257" title="1 of 2 branches missed.">                if (!tag.isDirectory()</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">                        &amp;&amp; (tag.getName().toLowerCase().endsWith(&quot;.tag&quot;)</span>
+<span class="nc bnc" id="L259" title="All 2 branches missed.">                        || tag.getName().toLowerCase().endsWith(&quot;.tagx&quot;))) {</span>
+
+<span class="fc" id="L261">                    String tagName = tag.getName().substring(0, tag.getName().lastIndexOf('.'));</span>
+<span class="fc" id="L262">                    String tagPath = path + tag.getName();</span>
+
+<span class="fc" id="L264">                    Element tagFileElement = result.createElement(&quot;tag-file&quot;);</span>
+<span class="fc" id="L265">                    Element nameElement = result.createElement(&quot;name&quot;);</span>
+<span class="fc" id="L266">                    nameElement.appendChild(result.createTextNode(tagName));</span>
+<span class="fc" id="L267">                    tagFileElement.appendChild(nameElement);</span>
+<span class="fc" id="L268">                    Element pathElement = result.createElement(&quot;path&quot;);</span>
+<span class="fc" id="L269">                    pathElement.appendChild(result.createTextNode(tagPath));</span>
+<span class="fc" id="L270">                    tagFileElement.appendChild(pathElement);</span>
+<span class="fc" id="L271">                    taglibElement.appendChild(tagFileElement);</span>
+
+                    // tag-file Subelements
+                    // * description  (optional) A description of the tag.
+                    // * display-name (optional) Name intended to be displayed by tools.
+                    // * icon         (optional) Icon that can be used by tools.
+                    // * name                    The unique tag name.
+                    // * path                    Where to find the tag file implementing this tag,
+                    //                           relative to the root of the web application or the
+                    //                           root of the JAR file for a tag library packaged in
+                    //                           a JAR. This must begin with /WEB-INF/tags/ if the
+                    //                           tag file resides in the WAR, or /META-INF/tags/ if
+                    //                           the tag file resides in a JAR.
+                    // example        (optional) Informal description of an example use of the tag.
+                    // tag-extension  (optional) Extensions that provide extra information about the
+                    //                           tag for tools.
+<span class="fc" id="L287">                    try (InputStream is = new FileInputStream(tag)) {</span>
+<span class="fc" id="L288">                        TagFile tagFile = TagFile.parse(is);</span>
+
+<span class="fc bfc" id="L290" title="All 2 branches covered.">                        for (Directive directive : tagFile.getDirectives()) {</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">                            if (&quot;tag&quot;.equals(directive.getDirectiveName())) {</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">                                for (Attribute attribute : directive.getAttributes()) {</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">                                    if (&quot;description&quot;.equals(attribute.getName())</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">                                            || &quot;display-name&quot;.equals(attribute.getName())</span>
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">                                            || &quot;example&quot;.equals(attribute.getName())) {</span>
+
+<span class="fc" id="L297">                                        Element element = result.createElement(attribute.getName());</span>
+<span class="fc" id="L298">                                        element.appendChild(</span>
+<span class="fc" id="L299">                                                result.createTextNode(attribute.getValue()));</span>
+<span class="fc" id="L300">                                        tagFileElement.appendChild(element);</span>
+                                    }
+<span class="fc" id="L302">                                }</span>
+                            }
+<span class="fc" id="L304">                        }</span>
+<span class="nc" id="L305">                    } catch (IOException | ParseException e) {</span>
+<span class="nc" id="L306">                        getLog().error(e);</span>
+<span class="fc" id="L307">                    }</span>
+                }
+            }
+        }
+
+<span class="fc" id="L312">        Map&lt;String, Integer&gt; duplicateFunctions = new HashMap&lt;&gt;();</span>
+
+<span class="fc bfc" id="L314" title="All 2 branches covered.">        if (taglib.getFunctionClasses() != null) {</span>
+<span class="fc bfc" id="L315" title="All 2 branches covered.">            for (String functionClassString : taglib.getFunctionClasses()) {</span>
+                Class&lt;?&gt; functionClass;
+                try {
+<span class="fc" id="L318">                    functionClass = Class.forName(functionClassString);</span>
+<span class="nc" id="L319">                } catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L320">                    getLog().error(</span>
+                            &quot;Unable to load function class &quot;
+                            + functionClassString
+                            + &quot;: &quot;
+<span class="nc" id="L324">                            + e.getClass().getName()</span>
+                            + &quot; &quot;
+<span class="nc" id="L326">                            + e.getMessage(),</span>
+                            e);
+<span class="nc" id="L328">                    continue;</span>
+<span class="fc" id="L329">                }</span>
+<span class="fc" id="L330">                Method[] declaredMethods = functionClass.getDeclaredMethods();</span>
+
+<span class="fc bfc" id="L332" title="All 2 branches covered.">                for (Method method : declaredMethods) {</span>
+<span class="pc bpc" id="L333" title="1 of 2 branches missed.">                    if (!Modifier.isStatic(method.getModifiers())</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">                            || !Modifier.isPublic(method.getModifiers())) {</span>
+                        // not a public static method
+<span class="fc" id="L336">                        continue;</span>
+                    }
+
+<span class="fc" id="L339">                    Element tagFileElement = result.createElement(&quot;function&quot;);</span>
+
+<span class="fc" id="L341">                    String functionName = method.getName();</span>
+
+<span class="fc bfc" id="L343" title="All 2 branches covered.">                    if (duplicateFunctions.containsKey(functionName)) {</span>
+<span class="fc" id="L344">                        int currentNum = duplicateFunctions.get(functionName);</span>
+<span class="fc" id="L345">                        duplicateFunctions.put(functionName, currentNum + 1);</span>
+<span class="fc" id="L346">                        functionName = functionName + currentNum;</span>
+<span class="fc" id="L347">                    } else {</span>
+<span class="fc" id="L348">                        duplicateFunctions.put(functionName, 1);</span>
+                    }
+
+<span class="fc" id="L351">                    Element nameElement = result.createElement(&quot;name&quot;);</span>
+<span class="fc" id="L352">                    nameElement.appendChild(result.createTextNode(functionName));</span>
+<span class="fc" id="L353">                    tagFileElement.appendChild(nameElement);</span>
+
+<span class="fc" id="L355">                    Element classElement = result.createElement(&quot;function-class&quot;);</span>
+<span class="fc" id="L356">                    classElement.appendChild(result.createTextNode(</span>
+<span class="fc" id="L357">                            method.getDeclaringClass().getName()));</span>
+<span class="fc" id="L358">                    tagFileElement.appendChild(classElement);</span>
+
+<span class="fc" id="L360">                    StringBuilder parameterTypesString = new StringBuilder();</span>
+<span class="fc" id="L361">                    Class&lt;?&gt;[] parameterTypes = method.getParameterTypes();</span>
+
+<span class="fc bfc" id="L363" title="All 2 branches covered.">                    for (int p = 0; p &lt; parameterTypes.length; p++) {</span>
+<span class="fc" id="L364">                        Class&lt;?&gt; param = parameterTypes[p];</span>
+<span class="fc" id="L365">                        parameterTypesString.append(nonPrimitiveName(param.getCanonicalName()));</span>
+<span class="fc bfc" id="L366" title="All 2 branches covered.">                        if (parameterTypes.length - 1 &gt; p) {</span>
+<span class="fc" id="L367">                            parameterTypesString.append(&quot;, &quot;);</span>
+                        }
+                    }
+
+<span class="fc" id="L371">                    Element signatureElement = result.createElement(&quot;function-signature&quot;);</span>
+<span class="fc" id="L372">                    signatureElement.appendChild(result.createTextNode(nonPrimitiveName(method</span>
+<span class="fc" id="L373">                            .getReturnType()</span>
+<span class="fc" id="L374">                            .getCanonicalName())</span>
+                            + &quot; &quot;
+<span class="fc" id="L376">                            + method.getName()</span>
+                            + &quot;(&quot;
+<span class="fc" id="L378">                            + parameterTypesString.toString()</span>
+                            + &quot;)&quot;));
+<span class="fc" id="L380">                    tagFileElement.appendChild(signatureElement);</span>
+
+<span class="fc" id="L382">                    taglibElement.appendChild(tagFileElement);</span>
+
+                }
+
+            }
+        }
+
+<span class="fc" id="L389">        return result;</span>
+    }
+
+    private String nonPrimitiveName(String string) {
+<span class="pc bpc" id="L393" title="1 of 2 branches missed.">        if (string == null) {</span>
+<span class="nc" id="L394">            return null;</span>
+        }
+
+<span class="pc bpc" id="L397" title="1 of 6 branches missed.">        switch (string) {</span>
+            case &quot;int&quot;:
+<span class="fc" id="L399">                return Integer.class.getName();</span>
+            case &quot;boolean&quot;:
+<span class="fc" id="L401">                return Boolean.class.getName();</span>
+            case &quot;double&quot;:
+<span class="fc" id="L403">                return Double.class.getName();</span>
+            case &quot;long&quot;:
+<span class="nc" id="L405">                return Long.class.getName();</span>
+            case &quot;char&quot;:
+<span class="fc" id="L407">                return Character.class.getName();</span>
+            default:
+<span class="fc" id="L409">                return string;</span>
+        }
+    }
+
+    /**
+     * Creates the root-element of an empty tld-xml.
+     *
+     * @param result      resulting tld-xml
+     * @param description description of the taglib
+     * @param shortName   short-name of the taglib
+     * @param uri         uri of the taglib
+     *
+     * @return the root-element
+     */
+    protected Element createRootTaglibNode(Document result, String description, String shortName,
+            String uri) {
+
+<span class="fc" id="L426">        Element taglibElement = result.createElementNS(</span>
+                &quot;http://java.sun.com/xml/ns/javaee&quot;, &quot;taglib&quot;);
+<span class="fc" id="L428">        taglibElement.setAttributeNS(&quot;http://www.w3.org/2000/xmlns/&quot;, &quot;xmlns&quot;,</span>
+                &quot;http://java.sun.com/xml/ns/javaee&quot;);
+<span class="fc" id="L430">        taglibElement.setAttributeNS(&quot;http://www.w3.org/2000/xmlns/&quot;, &quot;xmlns:xsi&quot;,</span>
+                &quot;http://www.w3.org/2001/XMLSchema-instance&quot;);
+<span class="fc" id="L432">        taglibElement.setAttributeNS(&quot;http://www.w3.org/2001/XMLSchema-instance&quot;,</span>
+                &quot;xsi:schemaLocation&quot;, &quot;http://java.sun.com/xml/ns/javaee &quot;
+                + &quot;http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd&quot;);
+<span class="fc" id="L435">        taglibElement.setAttribute(&quot;version&quot;, &quot;2.1&quot;);</span>
+<span class="fc" id="L436">        result.appendChild(taglibElement);</span>
+
+<span class="fc" id="L438">        Element descriptionElement = result.createElement(&quot;description&quot;);</span>
+<span class="fc" id="L439">        descriptionElement.appendChild(result.createTextNode(description));</span>
+<span class="fc" id="L440">        taglibElement.appendChild(descriptionElement);</span>
+
+<span class="fc" id="L442">        Element tlibVersionElement = result.createElement(&quot;tlib-version&quot;);</span>
+<span class="fc" id="L443">        tlibVersionElement.appendChild(result.createTextNode(version));</span>
+<span class="fc" id="L444">        taglibElement.appendChild(tlibVersionElement);</span>
+
+<span class="fc" id="L446">        Element shortNameElement = result.createElement(&quot;short-name&quot;);</span>
+<span class="fc" id="L447">        shortNameElement.appendChild(result.createTextNode(shortName));</span>
+<span class="fc" id="L448">        taglibElement.appendChild(shortNameElement);</span>
+
+<span class="fc" id="L450">        Element uriElement = result.createElement(&quot;uri&quot;);</span>
+<span class="fc" id="L451">        uriElement.appendChild(result.createTextNode(uri));</span>
+<span class="fc" id="L452">        taglibElement.appendChild(uriElement);</span>
+
+<span class="fc" id="L454">        return taglibElement;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

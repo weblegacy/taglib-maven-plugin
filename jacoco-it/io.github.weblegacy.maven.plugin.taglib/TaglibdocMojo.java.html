@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TaglibdocMojo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Taglib Plugin</a> &gt; <a href="index.source.html" class="el_package">io.github.weblegacy.maven.plugin.taglib</a> &gt; <span class="el_source">TaglibdocMojo.java</span></div><h1>TaglibdocMojo.java</h1><pre class="source lang-java linenums">/*
+ * The MIT License
+ * Copyright © 2004-2014 Fabrizio Giustina
+ * Copyright © 2022-2026 Web-Legacy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+package io.github.weblegacy.maven.plugin.taglib;
+
+import io.github.weblegacy.tlddoc.main.GeneratorException;
+import io.github.weblegacy.tlddoc.main.TldDocGenerator;
+import java.io.File;
+import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.reporting.MavenReportException;
+import org.codehaus.plexus.util.FileUtils;
+
+/**
+ * Generates taglibdoc documentation.
+ *
+ * @author Fabrizio Giustina
+ */
+@Mojo(name = &quot;taglibdoc&quot;)
+<span class="fc" id="L48">public class TaglibdocMojo extends AbstractReportMojo {</span>
+
+    /**
+     * The title for tlddoc generated documentation.
+     */
+    @Parameter(defaultValue = &quot;${project.name} Tag library documentation&quot;)
+    private String title;
+
+    /**
+     * The TldDoc output dir.
+     */
+    @Parameter(defaultValue = &quot;${project.reporting.outputDirectory}/tlddoc&quot;)
+    private File tldDocDir;
+
+    /**
+     * Directory containing tld or tag files. Subdirectories are also processed, unless the
+     * {@code dontRecurseIntoSubdirs} parameter is set.
+     */
+    @Parameter(alias = &quot;taglib.src.dir&quot;, defaultValue = &quot;src/main/resources/META-INF&quot;)
+    protected File srcDir;
+
+    /**
+     * Directory containing custom xsl files (equivalent to the &quot;-xslt&quot; parameter to tlddoc).
+     */
+    @Parameter
+    private File xsltDir;
+
+    @Override
+    protected void executeReport(Locale locale) throws MavenReportException {
+        try {
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">            if (!srcDir.isDirectory()) {</span>
+<span class="nc" id="L79">                throw new MojoExecutionException(MessageFormat.format(</span>
+<span class="nc" id="L80">                        Messages.getString(&quot;Taglib.notadir&quot;), srcDir.getAbsolutePath()));</span>
+            }
+
+<span class="fc" id="L83">            getLog().debug(MessageFormat.format(</span>
+<span class="fc" id="L84">                    Messages.getString(&quot;Taglib.generating.tlddoc&quot;), srcDir.getAbsolutePath()));</span>
+
+<span class="fc" id="L86">            TldDocGenerator generator = new TldDocGenerator();</span>
+<span class="fc" id="L87">            generator.setOutputDirectory(tldDocDir.toPath());</span>
+<span class="fc" id="L88">            generator.setQuiet(true);</span>
+<span class="fc" id="L89">            generator.setWindowTitle(this.title);</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">            if (xsltDir != null) {</span>
+<span class="nc" id="L91">                generator.setXsltDirectory(xsltDir.toPath());</span>
+            }
+
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">            final String searchprefix = dontRecurseIntoSubdirs ? &quot;&quot; : &quot;**/&quot;;</span>
+
+            try {
+                // handle tlds
+<span class="fc" id="L98">                List&lt;File&gt; tlds = FileUtils.getFiles(srcDir, searchprefix + &quot;*.tld&quot;, null);</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">                for (File tld : tlds) {</span>
+<span class="fc" id="L100">                    generator.addTld(tld.toPath());</span>
+<span class="fc" id="L101">                }</span>
+
+                // handle tag files. Add any directory containing .tag or .tagx files
+<span class="fc" id="L104">                List&lt;File&gt; tags = FileUtils.getFiles(srcDir, searchprefix + &quot;*.tag&quot;, null);</span>
+<span class="fc" id="L105">                tags.addAll(FileUtils.getFiles(srcDir, searchprefix + &quot;*.tagx&quot;, null));</span>
+
+<span class="fc bfc" id="L107" title="All 2 branches covered.">                if (!tags.isEmpty()) {</span>
+<span class="fc" id="L108">                    Set&lt;File&gt; directories = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">                    for (File tag : tags) {</span>
+<span class="fc" id="L110">                        directories.add(tag.getParentFile());</span>
+<span class="fc" id="L111">                    }</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">                    for (File directory : directories) {</span>
+<span class="fc" id="L113">                        generator.addTagDir(directory.toPath());</span>
+<span class="fc" id="L114">                    }</span>
+                }
+<span class="nc" id="L116">            } catch (IOException e) {</span>
+<span class="nc" id="L117">                throw new MojoExecutionException(e.getMessage(), e);</span>
+<span class="fc" id="L118">            }</span>
+
+            try {
+<span class="fc" id="L121">                generator.generate();</span>
+<span class="nc" id="L122">            } catch (GeneratorException e) {</span>
+<span class="nc" id="L123">                getLog().error(MessageFormat.format(Messages.getString(&quot;Taglib.exception&quot;),</span>
+<span class="nc" id="L124">                        e.getClass(), e.getMessage()), e);</span>
+<span class="fc" id="L125">            }</span>
+<span class="nc" id="L126">        } catch (MojoExecutionException e) {</span>
+<span class="nc" id="L127">            throw new MavenReportException(e.getMessage(), e);</span>
+<span class="fc" id="L128">        }</span>
+<span class="fc" id="L129">    }</span>
+
+    @Override
+    @Deprecated
+    public String getOutputName() {
+<span class="fc" id="L134">        return &quot;tlddoc/index&quot;;</span>
+    }
+
+    @Override
+    public String getName(Locale locale) {
+<span class="fc" id="L139">        return Messages.getString(locale, &quot;Taglibdoc.name&quot;);</span>
+    }
+
+    @Override
+    public String getDescription(Locale locale) {
+<span class="fc" id="L144">        return Messages.getString(locale, &quot;Taglibdoc.description&quot;);</span>
+    }
+
+    @Override
+    public boolean isExternalReport() {
+<span class="fc" id="L149">        return true;</span>
+    }
+
+    @Override
+    public boolean canGenerateReport() {
+<span class="fc" id="L154">        return hasFiles(srcDir, &quot;tld&quot;, &quot;tag&quot;, &quot;tagx&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

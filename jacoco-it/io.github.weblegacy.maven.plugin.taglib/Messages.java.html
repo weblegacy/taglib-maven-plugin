@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Messages.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Taglib Plugin</a> &gt; <a href="index.source.html" class="el_package">io.github.weblegacy.maven.plugin.taglib</a> &gt; <span class="el_source">Messages.java</span></div><h1>Messages.java</h1><pre class="source lang-java linenums">/*
+ * The MIT License
+ * Copyright © 2004-2014 Fabrizio Giustina
+ * Copyright © 2022-2026 Web-Legacy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+package io.github.weblegacy.maven.plugin.taglib;
+
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ * Classes to manage the i18n-messages.
+ *
+ * @author Fabrizio Giustina
+ */
+public class Messages {
+
+    /**
+     * The name of the resource-bundle.
+     */
+    private static final String BUNDLE_NAME = &quot;m2-taglib&quot;;
+
+    /**
+     * The resource-bundle with all locals.
+     */
+<span class="fc" id="L47">    private static final ConcurrentHashMap&lt;String, ResourceBundle&gt; RESOURCE_BUNDLES</span>
+            = new ConcurrentHashMap&lt;&gt;();
+
+    /**
+     * The resource-bundle with default-locale.
+     */
+    private static final ResourceBundle DFLT_RESOURCE_BUNDLE;
+
+    static {
+<span class="fc" id="L56">        DFLT_RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);</span>
+<span class="fc" id="L57">        RESOURCE_BUNDLES.put(DFLT_RESOURCE_BUNDLE.getLocale().toString(), DFLT_RESOURCE_BUNDLE);</span>
+<span class="fc" id="L58">    }</span>
+
+    /**
+     * Privat class-constructor.
+     */
+    private Messages() {
+    }
+
+    /**
+     * Gets a string for the given key from the resource bundle with the default-locale.
+     *
+     * @param key the key for the desired string
+     *
+     * @exception NullPointerException if {@code key} is {@code null}
+     * @exception ClassCastException   if the object found for the given key is not a string
+     *
+     * @return the string for the given key with the default-locale
+     */
+    public static String getString(String key) {
+<span class="fc" id="L77">        return getString(DFLT_RESOURCE_BUNDLE, key);</span>
+    }
+
+    /**
+     * Gets a string for the given key from the resource bundle with the given locale. If the locale
+     * is {@code null}, then the default-locale is used.
+     *
+     * @param locale the resource-bundle with the wanted locale
+     * @param key    the key for the desired string
+     *
+     * @exception NullPointerException if {@code key} is {@code null}
+     * @exception ClassCastException   if the object found for the given key is not a string
+     *
+     * @return the string for the given key with the given locale
+     */
+    public static String getString(Locale locale, String key) {
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">        final ResourceBundle resourceBundle = locale == null</span>
+<span class="nc" id="L94">                ? DFLT_RESOURCE_BUNDLE</span>
+<span class="fc" id="L95">                : RESOURCE_BUNDLES.computeIfAbsent(locale.toString(),</span>
+<span class="nc" id="L96">                        k -&gt; ResourceBundle.getBundle(BUNDLE_NAME, locale));</span>
+<span class="fc" id="L97">        return getString(resourceBundle, key);</span>
+    }
+
+    /**
+     * Gets a string for the given key from the given resource bundle.
+     *
+     * @param resourceBundle the resource-bundle with the wanted locale
+     * @param key            the key for the desired string
+     *
+     * @exception NullPointerException if {@code key} is {@code null}
+     * @exception ClassCastException   if the object found for the given key is not a string
+     *
+     * @return the string for the given key
+     */
+    private static String getString(ResourceBundle resourceBundle, String key) {
+        try {
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">            return resourceBundle == null</span>
+<span class="nc" id="L114">                    ? '!' + key + '!'</span>
+<span class="fc" id="L115">                    : resourceBundle.getString(key);</span>
+<span class="nc" id="L116">        } catch (MissingResourceException e) {</span>
+<span class="nc" id="L117">            return '!' + key + '!';</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

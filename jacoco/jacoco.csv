@@ -1,0 +1,27 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,ValidateRenderer,691,429,95,20,174,114,66,14,7,10
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,TagreferenceMojo,8,27,0,0,2,6,2,4,2,4
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,AbstractReportMojoEx,63,84,3,5,12,19,3,4,0,3
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,Messages,13,39,2,2,5,10,3,4,1,4
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,TagreferenceRenderer,262,763,39,51,66,174,38,17,3,7
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,ValidateRenderer.ValidationError,23,0,0,0,10,0,5,0,5,0
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,AbstractMavenTaglibReportRenderer,0,12,0,0,0,4,0,2,0,2
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,Taglib,31,45,0,0,8,19,1,13,1,13
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,AbstractReportMojo,16,35,4,4,5,6,4,2,0,2
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,TaglibdocJar,88,0,8,0,25,0,7,0,3,0
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,ValidateMojo,24,77,0,2,6,16,2,7,2,6
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,TldGenerateMojo,95,714,19,61,25,158,17,32,0,7
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,TaglibdocMojo,66,150,3,11,12,32,5,9,2,5
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib.util,JspClass,0,52,0,0,0,12,0,4,0,4
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib.util,JspCheck,85,111,16,6,15,23,10,5,1,3
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib.util,XmlHelper,19,46,0,2,4,13,2,3,2,2
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib.util,JspNamespace,0,29,0,0,0,7,0,3,0,3
+Maven Taglib Plugin,io.github.weblegacy.taglib_maven_plugin,HelpMojo,773,0,112,0,156,0,72,0,16,0
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib.checker,TagAttribute,75,57,6,0,23,22,7,13,4,13
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib.checker,TagFile,39,32,4,2,12,11,5,4,3,3
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib.checker,Tag,73,67,5,1,21,24,6,12,3,12
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib.checker,Tld,15,66,0,0,4,28,1,19,1,19
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib.checker,TagVariable,84,65,6,0,25,24,6,14,3,14
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib.checker,TldParser,84,485,24,59,25,124,22,45,1,10
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib.checker,ElFunction,103,0,6,0,33,0,13,0,10,0
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib.checker,TldItem,56,56,7,3,18,20,6,11,2,10

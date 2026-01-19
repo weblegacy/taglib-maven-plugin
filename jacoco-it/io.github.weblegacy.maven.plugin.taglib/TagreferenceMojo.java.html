@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TagreferenceMojo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Taglib Plugin</a> &gt; <a href="index.source.html" class="el_package">io.github.weblegacy.maven.plugin.taglib</a> &gt; <span class="el_source">TagreferenceMojo.java</span></div><h1>TagreferenceMojo.java</h1><pre class="source lang-java linenums">/*
+ * The MIT License
+ * Copyright © 2004-2014 Fabrizio Giustina
+ * Copyright © 2022-2026 Web-Legacy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+package io.github.weblegacy.maven.plugin.taglib;
+
+import io.github.weblegacy.maven.plugin.taglib.checker.Tld;
+import java.util.List;
+import java.util.Locale;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.reporting.MavenReportException;
+
+/**
+ * Generates a tag reference xdoc that can be integrated in a maven generated site.
+ *
+ * @author Fabrizio Giustina
+ */
+@Mojo(name = &quot;tagreference&quot;)
+<span class="fc" id="L40">public class TagreferenceMojo extends AbstractReportMojoEx {</span>
+
+    /**
+     * Whether to parse html in the description of tld info, tags and attributes. The default value
+     * is false.
+     */
+    @Parameter(defaultValue = &quot;false&quot;)
+    private boolean parseHtml;
+
+    @Override
+    @Deprecated
+    public String getOutputName() {
+<span class="fc" id="L52">        return &quot;tagreference&quot;;</span>
+    }
+
+    @Override
+    public String getName(Locale locale) {
+<span class="fc" id="L57">        return Messages.getString(locale, &quot;Tagreference.name&quot;);</span>
+    }
+
+    @Override
+    public String getDescription(Locale locale) {
+<span class="fc" id="L62">        return Messages.getString(locale, &quot;Tagreference.description&quot;);</span>
+    }
+
+    @Override
+    protected void executeReport(Locale locale) throws MavenReportException {
+<span class="fc" id="L67">        final List&lt;Tld&gt; tldList = loadTldFiles();</span>
+
+<span class="fc" id="L69">        new TagreferenceRenderer(getSink(), locale, tldList.toArray(Tld[]::new), parseHtml,</span>
+<span class="fc" id="L70">                getLog()).render();</span>
+<span class="fc" id="L71">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

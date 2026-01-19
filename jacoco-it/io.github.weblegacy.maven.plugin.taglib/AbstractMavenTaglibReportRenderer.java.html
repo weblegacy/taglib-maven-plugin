@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractMavenTaglibReportRenderer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Taglib Plugin</a> &gt; <a href="index.source.html" class="el_package">io.github.weblegacy.maven.plugin.taglib</a> &gt; <span class="el_source">AbstractMavenTaglibReportRenderer.java</span></div><h1>AbstractMavenTaglibReportRenderer.java</h1><pre class="source lang-java linenums">/*
+ * The MIT License
+ * Copyright © 2004-2014 Fabrizio Giustina
+ * Copyright © 2022-2026 Web-Legacy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+package io.github.weblegacy.maven.plugin.taglib;
+
+import java.util.Locale;
+import org.apache.maven.doxia.sink.Sink;
+import org.apache.maven.reporting.AbstractMavenReportRenderer;
+
+/**
+ * An abstract class to manage report generation of this plugin.
+ *
+ * @author ste-gr
+ */
+public abstract class AbstractMavenTaglibReportRenderer extends AbstractMavenReportRenderer {
+
+    /**
+     * The defined locale for the messages.
+     */
+    private final Locale locale;
+
+    /**
+     * The class-constructor.
+     *
+     * @param sink   the sink to use.
+     * @param locale the wanted locale to return the report's description, could be {@code null}.
+     */
+    protected AbstractMavenTaglibReportRenderer(Sink sink, Locale locale) {
+<span class="fc" id="L50">        super(sink);</span>
+<span class="fc" id="L51">        this.locale = locale;</span>
+<span class="fc" id="L52">    }</span>
+
+    /**
+     * Gets a string for the given key from the resource bundle with the defined locale. If the
+     * locale is {@code null}, then the default-locale is used.
+     *
+     * @param key the key for the desired string
+     *
+     * @exception NullPointerException if {@code key} is {@code null}
+     * @exception ClassCastException   if the object found for the given key is not a string
+     *
+     * @return the string for the given key with the defined locale
+     */
+    protected String getMessageString(String key) {
+<span class="fc" id="L66">        return Messages.getString(locale, key);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

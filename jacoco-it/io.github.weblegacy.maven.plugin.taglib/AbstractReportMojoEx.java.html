@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractReportMojoEx.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Taglib Plugin</a> &gt; <a href="index.source.html" class="el_package">io.github.weblegacy.maven.plugin.taglib</a> &gt; <span class="el_source">AbstractReportMojoEx.java</span></div><h1>AbstractReportMojoEx.java</h1><pre class="source lang-java linenums">/*
+ * The MIT License
+ * Copyright © 2004-2014 Fabrizio Giustina
+ * Copyright © 2022-2026 Web-Legacy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+package io.github.weblegacy.maven.plugin.taglib;
+
+import io.github.weblegacy.maven.plugin.taglib.checker.Tld;
+import io.github.weblegacy.maven.plugin.taglib.checker.TldParser;
+import io.github.weblegacy.maven.plugin.taglib.util.XmlHelper;
+import java.io.File;
+import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.parsers.DocumentBuilder;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.reporting.MavenReportException;
+import org.codehaus.plexus.util.FileUtils;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+/**
+ * An extended abstract class for the {@code Mojo}s of this plugin.
+ *
+ * @author ste-gr
+ */
+<span class="fc" id="L48">public abstract class AbstractReportMojoEx extends AbstractReportMojo {</span>
+
+    /**
+     * Directory containing tld files. Subdirectories are also processed, unless the
+     * {@code dontRecurseIntoSubdirs} parameter is set.
+     */
+    @Parameter(alias = &quot;taglib.src.dir&quot;, defaultValue = &quot;src/main/resources/META-INF&quot;)
+    protected File srcDir;
+
+    /**
+     * Loads all tld files from the {@code srcDir}.
+     *
+     * @return all loaded tld files
+     *
+     * @throws MavenReportException if an error occurs during execution
+     */
+    protected List&lt;Tld&gt; loadTldFiles() throws MavenReportException {
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">        if (!srcDir.isDirectory()) {</span>
+<span class="nc" id="L66">            throw new MavenReportException(MessageFormat.format(</span>
+<span class="nc" id="L67">                    Messages.getString(&quot;Taglib.notadir&quot;), srcDir.getAbsolutePath()));</span>
+        }
+
+<span class="fc" id="L70">        getLog().debug(MessageFormat.format(</span>
+<span class="fc" id="L71">                Messages.getString(&quot;Taglib.validating&quot;), srcDir.getAbsolutePath()));</span>
+
+        final DocumentBuilder builder;
+        try {
+<span class="fc" id="L75">            builder = XmlHelper.getDocumentBuilder();</span>
+<span class="nc" id="L76">        } catch (MojoExecutionException e) {</span>
+<span class="nc" id="L77">            throw new MavenReportException(e.getMessage(), e);</span>
+<span class="fc" id="L78">        }</span>
+
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">        final String searchprefix = dontRecurseIntoSubdirs ? &quot;&quot; : &quot;**/&quot;;</span>
+
+        final List&lt;File&gt; tlds;
+        try {
+<span class="fc" id="L84">            tlds = FileUtils.getFiles(srcDir, searchprefix + &quot;*.tld&quot;, null);</span>
+<span class="nc" id="L85">        } catch (IOException e) {</span>
+<span class="nc" id="L86">            throw new MavenReportException(e.getMessage(), e);</span>
+<span class="fc" id="L87">        }</span>
+
+<span class="fc" id="L89">        final List&lt;Tld&gt; tldList = new ArrayList&lt;&gt;(tlds.size());</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        for (File current : tlds) {</span>
+            final Document tldDoc;
+            try {
+<span class="fc" id="L93">                tldDoc = builder.parse(current);</span>
+<span class="nc" id="L94">            } catch (IOException | SAXException e) {</span>
+<span class="nc" id="L95">                throw new MavenReportException(MessageFormat.format(</span>
+<span class="nc" id="L96">                        Messages.getString(&quot;Taglib.errorwhileparsing&quot;),</span>
+<span class="nc" id="L97">                        current.getAbsolutePath()), e);</span>
+<span class="fc" id="L98">            }</span>
+
+<span class="fc" id="L100">            final Tld tld = TldParser.parse(tldDoc, current.getName());</span>
+<span class="fc" id="L101">            tldList.add(tld);</span>
+<span class="fc" id="L102">        }</span>
+
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        if (tldList.isEmpty()) {</span>
+<span class="nc" id="L105">            getLog().info(MessageFormat.format(</span>
+<span class="nc" id="L106">                    Messages.getString(&quot;Taglib.notldfound&quot;), srcDir.getAbsolutePath()));</span>
+        }
+
+<span class="fc" id="L109">        return tldList;</span>
+    }
+
+    @Override
+    public boolean canGenerateReport() {
+<span class="fc" id="L114">        return hasFiles(srcDir, &quot;tld&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

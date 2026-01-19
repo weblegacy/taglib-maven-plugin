@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TagreferenceRenderer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Taglib Plugin</a> &gt; <a href="index.source.html" class="el_package">io.github.weblegacy.maven.plugin.taglib</a> &gt; <span class="el_source">TagreferenceRenderer.java</span></div><h1>TagreferenceRenderer.java</h1><pre class="source lang-java linenums">/*
+ * The MIT License
+ * Copyright © 2004-2014 Fabrizio Giustina
+ * Copyright © 2022-2026 Web-Legacy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+package io.github.weblegacy.maven.plugin.taglib;
+
+import io.github.weblegacy.maven.plugin.taglib.checker.ElFunction;
+import io.github.weblegacy.maven.plugin.taglib.checker.Tag;
+import io.github.weblegacy.maven.plugin.taglib.checker.TagAttribute;
+import io.github.weblegacy.maven.plugin.taglib.checker.TagFile;
+import io.github.weblegacy.maven.plugin.taglib.checker.TagVariable;
+import io.github.weblegacy.maven.plugin.taglib.checker.Tld;
+import io.github.weblegacy.maven.plugin.taglib.checker.TldItem;
+import java.io.StringReader;
+import java.text.MessageFormat;
+import java.util.Locale;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.maven.doxia.module.xhtml5.Xhtml5Parser;
+import org.apache.maven.doxia.parser.ParseException;
+import org.apache.maven.doxia.sink.Sink;
+import org.apache.maven.doxia.util.HtmlTools;
+import org.apache.maven.plugin.logging.Log;
+
+/**
+ * Generates a tag reference xdoc that can be integrated in a maven generated site.
+ *
+ * @author Fabrizio Giustina
+ */
+public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer {
+
+    /**
+     * Constant for opening HTML-DIV-Tag.
+     */
+    private static final String OPEN_DIV = &quot;&lt;div&gt;&quot;;
+
+    /**
+     * Constant for closing HTML-DIV-Tag.
+     */
+    private static final String CLOSE_DIV = &quot;&lt;/div&gt;&quot;;
+
+    /**
+     * The list of Tld to check.
+     */
+    private final Tld[] tlds;
+
+    /**
+     * {@code True} to parse html in the description of tld info, tags and attributes.
+     */
+    private final boolean parseHtml;
+
+    /**
+     * The logger that has been injected into this mojo.
+     */
+    private final Log log;
+
+    /**
+     * The class-constructor.
+     *
+     * @param sink      the sink to use.
+     * @param locale    the wanted locale to return the report's description, could be {@code null}.
+     * @param tlds      list of TLDs to check.
+     * @param parseHtml {@code true} to parse html in the description of tld info, tags and
+     *                  attributes.
+     * @param log       the logger that has been injected into this mojo.
+     */
+    public TagreferenceRenderer(Sink sink, Locale locale, Tld[] tlds, boolean parseHtml, Log log) {
+<span class="fc" id="L87">        super(sink, locale);</span>
+
+<span class="fc" id="L89">        this.tlds = tlds;</span>
+<span class="fc" id="L90">        this.parseHtml = parseHtml;</span>
+<span class="fc" id="L91">        this.log = log;</span>
+<span class="fc" id="L92">    }</span>
+
+    @Override
+    public String getTitle() {
+<span class="fc" id="L96">        return getMessageString(&quot;Tagreference.title&quot;);</span>
+    }
+
+    @Override
+    protected void renderBody() {
+<span class="fc" id="L101">        sink.body();</span>
+
+<span class="fc" id="L103">        startSection(getMessageString(&quot;Tagreference.h1&quot;));</span>
+<span class="fc" id="L104">        paragraph(getMessageString(&quot;Tagreference.intro&quot;));</span>
+
+<span class="fc" id="L106">        sink.list();</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        for (Tld tld : tlds) {</span>
+<span class="fc" id="L108">            log.debug(&quot;Rendering &quot; + tld.getFilename());</span>
+<span class="fc" id="L109">            sink.listItem();</span>
+<span class="fc" id="L110">            sink.link('#' + tld.getFilename());</span>
+<span class="fc" id="L111">            sink.text(MessageFormat.format(getMessageString(&quot;Tagreference.listitem.tld&quot;),</span>
+<span class="fc" id="L112">                    StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname()),</span>
+<span class="fc" id="L113">                    tld.getFilename()));</span>
+<span class="fc" id="L114">            sink.link_();</span>
+<span class="fc" id="L115">            sink.text(getMessageString(&quot;Tagreference.listitem.uri&quot;) + tld.getUri());</span>
+<span class="fc" id="L116">            sink.listItem_();</span>
+        }
+<span class="fc" id="L118">        sink.list_();</span>
+
+<span class="fc" id="L120">        endSection();</span>
+
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        for (Tld tld : tlds) {</span>
+<span class="fc" id="L123">            doTld(tld);</span>
+<span class="fc" id="L124">            sink.pageBreak();</span>
+        }
+
+<span class="fc" id="L127">        sink.body_();</span>
+<span class="fc" id="L128">    }</span>
+
+    /**
+     * Remove any html-tags.
+     *
+     * @param html the html-text
+     *
+     * @return text without html-tags
+     */
+    private String stripTags(String html) {
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">        if (html == null) {</span>
+<span class="nc" id="L139">            return StringUtils.EMPTY;</span>
+        }
+<span class="fc" id="L141">        return html.replaceAll(&quot;\\&lt;.*?\\&gt;&quot;, StringUtils.EMPTY);</span>
+    }
+
+    /**
+     * Generate report for one tld.
+     *
+     * @param tld Tld
+     */
+    private void doTld(Tld tld) {
+        // new section for each tld
+<span class="fc" id="L151">        sink.anchor(tld.getFilename());</span>
+<span class="fc" id="L152">        sink.anchor_();</span>
+
+<span class="fc" id="L154">        startSection(StringUtils.defaultIfEmpty(tld.getName(),</span>
+<span class="fc" id="L155">                tld.getShortname()) + &quot; - &quot;</span>
+<span class="fc" id="L156">                + MessageFormat.format(getMessageString(&quot;Tagreference.tldversion&quot;),</span>
+<span class="fc" id="L157">                        tld.getTlibversion()));</span>
+
+<span class="fc" id="L159">        sink.paragraph();</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">        if (parseHtml) {</span>
+<span class="nc" id="L161">            parseHtml(tld.getInfo());</span>
+        } else {
+<span class="fc" id="L163">            sink.text(tld.getInfo());</span>
+        }
+<span class="fc" id="L165">        sink.paragraph_();</span>
+
+<span class="fc" id="L167">        sink.paragraph();</span>
+<span class="fc" id="L168">        sink.bold();</span>
+<span class="fc" id="L169">        sink.text(&quot;Namespace definition:&quot;);</span>
+<span class="fc" id="L170">        sink.bold_();</span>
+<span class="fc" id="L171">        sink.text(&quot; xmlns:&quot;);</span>
+<span class="fc" id="L172">        sink.text(tld.getShortname());</span>
+<span class="fc" id="L173">        sink.text(&quot;=\&quot;&quot;);</span>
+<span class="fc" id="L174">        sink.text(tld.getUri());</span>
+<span class="fc" id="L175">        sink.text(&quot;\&quot;&quot;);</span>
+<span class="fc" id="L176">        sink.paragraph_();</span>
+
+<span class="fc" id="L178">        TldItem[] tags = tld.getTags();</span>
+<span class="fc" id="L179">        ElFunction[] functions = tld.getFunctions();</span>
+<span class="fc" id="L180">        TagFile[] tagfiles = tld.getTagfiles();</span>
+
+<span class="fc" id="L182">        printList(tld, tags, &quot;Tags&quot;);</span>
+<span class="fc" id="L183">        printList(tld, functions, &quot;EL Functions&quot;);</span>
+<span class="fc" id="L184">        printList(tld, tagfiles, &quot;Tagfiles&quot;);</span>
+
+<span class="fc" id="L186">        sink.paragraph();</span>
+<span class="fc" id="L187">        sink.text(getMessageString(&quot;Tagreference.intro.required&quot;) + ' ');</span>
+<span class="fc" id="L188">        sink.bold();</span>
+<span class="fc" id="L189">        sink.text(getMessageString(&quot;Tagreference.required.marker&quot;));</span>
+<span class="fc" id="L190">        sink.bold_();</span>
+<span class="fc" id="L191">        sink.paragraph_();</span>
+
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">        if (tags != null) {</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">            for (TldItem tag : tags) {</span>
+<span class="fc" id="L195">                doTag(tld.getShortname(), (Tag) tag);</span>
+            }
+        }
+
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">        if (functions != null) {</span>
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">            for (ElFunction function : functions) {</span>
+<span class="nc" id="L201">                doFunction(tld.getShortname(), function);</span>
+            }
+        }
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">        if (tagfiles != null) {</span>
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">            for (TagFile tagfile : tagfiles) {</span>
+<span class="nc" id="L206">                doTagFile(tld.getShortname(), tagfile);</span>
+            }
+        }
+
+<span class="fc" id="L210">        endSection();</span>
+<span class="fc" id="L211">    }</span>
+
+    /**
+     * Generate report-part for a function.
+     *
+     * @param prefix the prefix of the function
+     * @param tag    the function itself
+     */
+    private void doFunction(String prefix, ElFunction tag) {
+
+<span class="nc" id="L221">        sink.anchor(prefix + &quot;:&quot; + tag.getName());</span>
+<span class="nc" id="L222">        sink.anchor_();</span>
+
+        // new subsection for each tag
+<span class="nc" id="L225">        startSection(prefix + &quot;:&quot; + tag.getName() + &quot;(&quot; + tag.getParameters() + &quot;)&quot;);</span>
+
+<span class="nc" id="L227">        sink.paragraph();</span>
+<span class="nc" id="L228">        sink.bold();</span>
+<span class="nc" id="L229">        sink.text(&quot;Function class: &quot;);</span>
+<span class="nc" id="L230">        sink.bold_();</span>
+<span class="nc" id="L231">        sink.text(tag.getFunctionClass());</span>
+<span class="nc" id="L232">        sink.paragraph_();</span>
+<span class="nc" id="L233">        sink.paragraph();</span>
+<span class="nc" id="L234">        sink.bold();</span>
+<span class="nc" id="L235">        sink.text(&quot;Function signature: &quot;);</span>
+<span class="nc" id="L236">        sink.bold_();</span>
+<span class="nc" id="L237">        sink.text(tag.getFunctionSignature());</span>
+<span class="nc" id="L238">        sink.paragraph_();</span>
+
+<span class="nc bnc" id="L240" title="All 2 branches missed.">        if (parseHtml) {</span>
+<span class="nc" id="L241">            parseHtml(tag.getDescription());</span>
+        } else {
+<span class="nc" id="L243">            sink.paragraph();</span>
+<span class="nc" id="L244">            sink.text(tag.getDescription());</span>
+<span class="nc" id="L245">            sink.paragraph_();</span>
+        }
+
+<span class="nc bnc" id="L248" title="All 2 branches missed.">        if (StringUtils.isNotEmpty(tag.getExample())) {</span>
+<span class="nc" id="L249">            startSection(getMessageString(&quot;Tagreference.example&quot;));</span>
+<span class="nc" id="L250">            verbatimText(tag.getExample());</span>
+<span class="nc" id="L251">            endSection();</span>
+        }
+
+<span class="nc" id="L254">        endSection();</span>
+<span class="nc" id="L255">    }</span>
+
+    /**
+     * Generate a list-report of all tags of a tld.
+     *
+     * @param tld   the tld
+     * @param tags  the items of the tld
+     * @param intro intro-text for the report
+     */
+    private void printList(Tld tld, TldItem[] tags, String intro) {
+<span class="pc bpc" id="L265" title="1 of 4 branches missed.">        if (tags != null &amp;&amp; tags.length &gt; 0) {</span>
+
+<span class="fc" id="L267">            sink.paragraph();</span>
+<span class="fc" id="L268">            sink.bold();</span>
+<span class="fc" id="L269">            sink.text(intro);</span>
+<span class="fc" id="L270">            sink.bold_();</span>
+<span class="fc" id="L271">            sink.paragraph_();</span>
+
+<span class="fc" id="L273">            sink.list();</span>
+
+<span class="fc bfc" id="L275" title="All 2 branches covered.">            for (TldItem tag : tags) {</span>
+<span class="fc" id="L276">                sink.listItem();</span>
+
+<span class="fc" id="L278">                sink.link(&quot;#&quot; + tld.getShortname() + &quot;:&quot; + tag.getName());</span>
+<span class="pc bpc" id="L279" title="1 of 2 branches missed.">                if (tag.isDeprecated()) {</span>
+<span class="nc" id="L280">                    sink.italic();</span>
+                }
+<span class="fc" id="L282">                sink.text(tag.getName());</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">                if (tag instanceof ElFunction) {</span>
+<span class="nc" id="L284">                    sink.text(&quot;()&quot;);</span>
+                }
+
+<span class="pc bpc" id="L287" title="1 of 2 branches missed.">                if (tag.isDeprecated()) {</span>
+<span class="nc" id="L288">                    sink.italic_();</span>
+                }
+<span class="fc" id="L290">                sink.link_();</span>
+
+<span class="fc" id="L292">                sink.text(&quot; &quot;);</span>
+
+<span class="fc" id="L294">                String cleanedDescription = stripTags(</span>
+<span class="fc" id="L295">                        StringUtils.substringBefore(tag.getDescription(), &quot;.&quot;)) + '.';</span>
+
+<span class="pc bpc" id="L297" title="1 of 2 branches missed.">                if (parseHtml) {</span>
+<span class="nc" id="L298">                    cleanedDescription = HtmlTools.unescapeHTML(cleanedDescription);</span>
+                }
+<span class="fc" id="L300">                sink.text(cleanedDescription);</span>
+
+<span class="fc" id="L302">                sink.listItem_();</span>
+            }
+
+<span class="fc" id="L305">            sink.list_();</span>
+        }
+<span class="fc" id="L307">    }</span>
+
+    /**
+     * Checks a single tag and returns validation results.
+     *
+     * @param prefix the prefix of the tag
+     * @param tag    Tag
+     */
+    private void doTag(String prefix, Tag tag) {
+<span class="fc" id="L316">        sink.anchor(prefix + &quot;:&quot; + tag.getName());</span>
+<span class="fc" id="L317">        sink.anchor_();</span>
+
+        // new subsection for each tag
+<span class="fc" id="L320">        startSection(&quot;&lt;&quot; + prefix + &quot;:&quot; + tag.getName() + &quot;&gt;&quot;);</span>
+<span class="pc bpc" id="L321" title="1 of 2 branches missed.">        if (parseHtml) {</span>
+<span class="nc" id="L322">            parseHtml(tag.getDescription());</span>
+        } else {
+<span class="fc" id="L324">            sink.paragraph();</span>
+<span class="fc" id="L325">            sink.text(tag.getDescription());</span>
+<span class="fc" id="L326">            sink.paragraph_();</span>
+        }
+
+<span class="fc" id="L329">        sink.paragraph();</span>
+<span class="fc" id="L330">        sink.text(getMessageString(&quot;Tagreference.cancontain&quot;) + ' ');</span>
+<span class="fc" id="L331">        sink.text(tag.getBodycontent());</span>
+<span class="fc" id="L332">        sink.paragraph_();</span>
+
+<span class="pc bpc" id="L334" title="1 of 2 branches missed.">        if (StringUtils.isNotEmpty(tag.getExample())) {</span>
+<span class="fc" id="L335">            startSection(getMessageString(&quot;Tagreference.example&quot;));</span>
+<span class="fc" id="L336">            verbatimText(tag.getExample());</span>
+<span class="fc" id="L337">            endSection();</span>
+        }
+
+        // variables
+        // attributes
+<span class="fc" id="L342">        TagAttribute[] attributes = tag.getAttributes();</span>
+
+<span class="pc bpc" id="L344" title="2 of 4 branches missed.">        if (attributes != null &amp;&amp; attributes.length &gt; 0) {</span>
+<span class="fc" id="L345">            startSection(getMessageString(&quot;Tagreference.attributes&quot;));</span>
+
+<span class="fc" id="L347">            startTable();</span>
+<span class="fc" id="L348">            tableHeader(new String[]{</span>
+<span class="fc" id="L349">                getMessageString(&quot;Tagreference.attribute.name&quot;),</span>
+<span class="fc" id="L350">                getMessageString(&quot;Tagreference.attribute.description&quot;),</span>
+<span class="fc" id="L351">                getMessageString(&quot;Tagreference.attribute.type&quot;)</span>
+            });
+
+<span class="fc bfc" id="L354" title="All 2 branches covered.">            for (TagAttribute attribute : attributes) {</span>
+<span class="fc" id="L355">                sink.tableRow();</span>
+
+<span class="fc" id="L357">                sink.tableCell();</span>
+<span class="pc bpc" id="L358" title="1 of 2 branches missed.">                if (attribute.isDeprecated()) {</span>
+<span class="nc" id="L359">                    sink.italic();</span>
+                }
+<span class="fc bfc" id="L361" title="All 2 branches covered.">                if (attribute.isRequired()) {</span>
+<span class="fc" id="L362">                    sink.bold();</span>
+                }
+<span class="fc" id="L364">                sink.text(attribute.getName());</span>
+<span class="fc bfc" id="L365" title="All 2 branches covered.">                if (attribute.isRequired()) {</span>
+<span class="fc" id="L366">                    sink.text(getMessageString(&quot;Tagreference.required.marker&quot;));</span>
+<span class="fc" id="L367">                    sink.bold_();</span>
+                }
+<span class="pc bpc" id="L369" title="1 of 2 branches missed.">                if (attribute.isDeprecated()) {</span>
+<span class="nc" id="L370">                    sink.italic_();</span>
+                }
+<span class="fc" id="L372">                sink.tableCell_();</span>
+
+<span class="fc" id="L374">                sink.tableCell();</span>
+<span class="pc bpc" id="L375" title="2 of 4 branches missed.">                if (attribute.isDeprecated() || StringUtils.isBlank(attribute.getDescription())) {</span>
+<span class="nc" id="L376">                    sink.italic();</span>
+                }
+
+<span class="pc bpc" id="L379" title="1 of 2 branches missed.">                if (StringUtils.isBlank(attribute.getDescription())) {</span>
+<span class="nc" id="L380">                    sink.text(getMessageString(&quot;Tagreference.required.marker&quot;));</span>
+<span class="pc bpc" id="L381" title="1 of 2 branches missed.">                } else if (parseHtml) {</span>
+<span class="nc" id="L382">                    parseHtml(attribute.getDescription());</span>
+                } else {
+<span class="fc" id="L384">                    sink.text(attribute.getDescription());</span>
+                }
+<span class="pc bpc" id="L386" title="2 of 4 branches missed.">                if (attribute.isDeprecated() || StringUtils.isBlank(attribute.getDescription())) {</span>
+<span class="nc" id="L387">                    sink.italic_();</span>
+                }
+<span class="fc" id="L389">                sink.tableCell_();</span>
+
+<span class="fc" id="L391">                tableCell(StringUtils.defaultIfEmpty(</span>
+<span class="fc" id="L392">                        StringUtils.substringBefore(attribute.getType(), &quot;java.lang.&quot;), &quot;String&quot;));</span>
+
+<span class="fc" id="L394">                sink.tableRow_();</span>
+
+            }
+
+<span class="fc" id="L398">            endTable();</span>
+
+<span class="fc" id="L400">            endSection();</span>
+        } else {
+<span class="nc" id="L402">            paragraph(getMessageString(&quot;Tagreference.noattributes&quot;));</span>
+        }
+
+        // attributes
+<span class="fc" id="L406">        TagVariable[] variables = tag.getVariables();</span>
+
+<span class="pc bpc" id="L408" title="2 of 4 branches missed.">        if (variables != null &amp;&amp; variables.length &gt; 0) {</span>
+<span class="fc" id="L409">            startSection(getMessageString(&quot;Tagreference.variables&quot;));</span>
+
+<span class="fc" id="L411">            startTable();</span>
+<span class="fc" id="L412">            tableHeader(new String[]{</span>
+<span class="fc" id="L413">                getMessageString(&quot;Tagreference.variable.name&quot;),</span>
+<span class="fc" id="L414">                getMessageString(&quot;Tagreference.variable.type&quot;),</span>
+<span class="fc" id="L415">                getMessageString(&quot;Tagreference.variable.scope&quot;),</span>
+<span class="fc" id="L416">                getMessageString(&quot;Tagreference.variable.description&quot;)</span>
+            });
+
+<span class="fc bfc" id="L419" title="All 2 branches covered.">            for (TagVariable variable : variables) {</span>
+<span class="fc" id="L420">                sink.tableRow();</span>
+
+<span class="fc" id="L422">                sink.tableCell();</span>
+<span class="pc bpc" id="L423" title="1 of 2 branches missed.">                if (variable.isDeprecated()) {</span>
+<span class="nc" id="L424">                    sink.italic();</span>
+                }
+
+<span class="fc bfc" id="L427" title="All 2 branches covered.">                if (variable.getNameGiven() != null) {</span>
+<span class="fc" id="L428">                    sink.text(variable.getNameGiven());</span>
+<span class="fc" id="L429">                    sink.text(getMessageString(&quot;Tagreference.variable.constant&quot;));</span>
+                } else {
+<span class="fc" id="L431">                    sink.text(getMessageString(&quot;Tagreference.variable.specifiedvia&quot;) + ' ');</span>
+<span class="fc" id="L432">                    sink.text(variable.getNameFromAttribute());</span>
+                }
+
+<span class="pc bpc" id="L435" title="1 of 2 branches missed.">                if (variable.isDeprecated()) {</span>
+<span class="nc" id="L436">                    sink.italic_();</span>
+                }
+<span class="fc" id="L438">                sink.tableCell_();</span>
+
+<span class="fc" id="L440">                tableCell(StringUtils.defaultIfEmpty(</span>
+<span class="fc" id="L441">                        StringUtils.substringBefore(variable.getType(), &quot;java.lang.&quot;), &quot;String&quot;));</span>
+
+<span class="fc" id="L443">                tableCell(variable.getScope());</span>
+
+<span class="fc" id="L445">                sink.tableCell();</span>
+<span class="pc bpc" id="L446" title="1 of 2 branches missed.">                if (variable.isDeprecated()) {</span>
+<span class="nc" id="L447">                    sink.italic();</span>
+                }
+<span class="pc bpc" id="L449" title="1 of 2 branches missed.">                if (parseHtml) {</span>
+<span class="nc" id="L450">                    parseHtml(variable.getDescription());</span>
+                } else {
+<span class="fc" id="L452">                    sink.text(variable.getDescription());</span>
+                }
+<span class="pc bpc" id="L454" title="1 of 2 branches missed.">                if (variable.isDeprecated()) {</span>
+<span class="nc" id="L455">                    sink.italic_();</span>
+                }
+<span class="fc" id="L457">                sink.tableCell_();</span>
+
+<span class="fc" id="L459">                sink.tableRow_();</span>
+
+            }
+
+<span class="fc" id="L463">            endTable();</span>
+
+<span class="fc" id="L465">            endSection();</span>
+        }
+
+<span class="fc" id="L468">        endSection();</span>
+
+<span class="fc" id="L470">    }</span>
+
+    /**
+     * Checks a single tag and returns validation results.
+     *
+     * @param prefix the prefix of the function
+     * @param tag    Tag
+     */
+    private void doTagFile(String prefix, TagFile tag) {
+<span class="nc" id="L479">        sink.anchor(prefix + &quot;:&quot; + tag.getName());</span>
+<span class="nc" id="L480">        sink.anchor_();</span>
+
+        // new subsection for each tag
+<span class="nc" id="L483">        startSection(&quot;&lt;&quot; + prefix + &quot;:&quot; + tag.getName() + &quot;&gt;&quot;);</span>
+<span class="nc bnc" id="L484" title="All 2 branches missed.">        if (parseHtml) {</span>
+<span class="nc" id="L485">            parseHtml(tag.getDescription());</span>
+        } else {
+<span class="nc" id="L487">            sink.paragraph();</span>
+<span class="nc" id="L488">            sink.text(tag.getDescription());</span>
+<span class="nc" id="L489">            sink.paragraph_();</span>
+        }
+
+<span class="nc bnc" id="L492" title="All 2 branches missed.">        if (StringUtils.isNotEmpty(tag.getExample())) {</span>
+<span class="nc" id="L493">            startSection(getMessageString(&quot;Tagreference.example&quot;));</span>
+<span class="nc" id="L494">            verbatimText(tag.getExample());</span>
+<span class="nc" id="L495">            endSection();</span>
+        }
+
+<span class="nc" id="L498">        endSection();</span>
+
+<span class="nc" id="L500">    }</span>
+
+    /**
+     * Writes the description to the report and checks for valid html-code.
+     *
+     * @param description the description
+     */
+    private void parseHtml(String description) {
+        try {
+<span class="nc" id="L509">            new Xhtml5Parser().parse(new StringReader(OPEN_DIV + description + CLOSE_DIV), sink);</span>
+<span class="nc" id="L510">        } catch (ParseException e) {</span>
+<span class="nc" id="L511">            log.error(description, e);</span>
+<span class="nc" id="L512">        }</span>
+<span class="nc" id="L513">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XmlHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Taglib Plugin</a> &gt; <a href="index.source.html" class="el_package">io.github.weblegacy.maven.plugin.taglib.util</a> &gt; <span class="el_source">XmlHelper.java</span></div><h1>XmlHelper.java</h1><pre class="source lang-java linenums">/*
+ * The MIT License
+ * Copyright © 2004-2014 Fabrizio Giustina
+ * Copyright © 2022-2026 Web-Legacy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+package io.github.weblegacy.maven.plugin.taglib.util;
+
+import java.io.CharArrayReader;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.FactoryConfigurationError;
+import javax.xml.parsers.ParserConfigurationException;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+/**
+ * Utilities for xml-processing.
+ *
+ * @author fgiust
+ */
+<span class="nc" id="L43">public class XmlHelper {</span>
+
+    /**
+     * Returns a DocumentBuilder instance.
+     *
+     * @return DocumentBuilder instance
+     *
+     * @throws MojoExecutionException in case of an XML-Parser-Error
+     */
+    public static DocumentBuilder getDocumentBuilder()
+            throws MojoExecutionException {
+        DocumentBuilder builder;
+        DocumentBuilderFactory factory;
+        try {
+<span class="fc" id="L57">            builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();</span>
+<span class="fc" id="L58">            factory = DocumentBuilderFactory.newInstance();</span>
+<span class="fc" id="L59">            factory.setValidating(false);</span>
+<span class="fc" id="L60">            factory.setNamespaceAware(false);</span>
+<span class="fc" id="L61">            factory.setExpandEntityReferences(false);</span>
+<span class="fc" id="L62">            builder.setEntityResolver((publicId, systemId)</span>
+<span class="nc" id="L63">                    -&gt; new InputSource(new CharArrayReader(new char[0])));</span>
+
+<span class="fc" id="L65">            return builder;</span>
+<span class="nc" id="L66">        } catch (FactoryConfigurationError | ParserConfigurationException e) {</span>
+<span class="nc" id="L67">            throw new MojoExecutionException(&quot;Unable to obtain a new xml parser&quot;, e);</span>
+        }
+    }
+
+    /**
+     * Get Node text content.
+     *
+     * @param baseNode The node.
+     *
+     * @return The text content of the node.
+     *
+     * @throws org.w3c.dom.DOMException Any DOM exceptions.
+     */
+    public static String getTextContent(Node baseNode) throws DOMException {
+<span class="fc" id="L81">        StringBuilder buf = new StringBuilder();</span>
+
+<span class="fc" id="L83">        NodeList nodeList = baseNode.getChildNodes();</span>
+
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        for (int j = 0; j &lt; nodeList.getLength(); j++) {</span>
+<span class="fc" id="L86">            Node k = nodeList.item(j);</span>
+<span class="fc" id="L87">            buf.append(k.getNodeValue());</span>
+            // getTextContent( k );
+        }
+
+<span class="fc" id="L91">        return buf.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

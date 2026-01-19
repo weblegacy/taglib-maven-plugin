@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TldParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Taglib Plugin</a> &gt; <a href="index.source.html" class="el_package">io.github.weblegacy.maven.plugin.taglib.checker</a> &gt; <span class="el_source">TldParser.java</span></div><h1>TldParser.java</h1><pre class="source lang-java linenums">/*
+ * The MIT License
+ * Copyright © 2004-2014 Fabrizio Giustina
+ * Copyright © 2022-2026 Web-Legacy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+package io.github.weblegacy.maven.plugin.taglib.checker;
+
+import io.github.weblegacy.maven.plugin.taglib.util.XmlHelper;
+import java.util.Set;
+import java.util.TreeSet;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+/**
+ * Reads a tld file and generates a Tld object. This &quot;manual&quot; parser takes in account different
+ * versions of the tlds
+ *
+ * @author Fabrizio Giustina
+ */
+public final class TldParser {
+
+    /**
+     * Don't instantiate.
+     */
+    private TldParser() {
+        // unused
+    }
+
+    /**
+     * Parse a Tld object from a document.
+     *
+     * @param tldDoc  Document for the parsed tld
+     * @param tldName of the tld file
+     *
+     * @return Tld instance
+     */
+    public static Tld parse(Document tldDoc, String tldName) {
+
+<span class="fc" id="L61">        Tld tld = new Tld();</span>
+<span class="fc" id="L62">        tld.setFilename(tldName);</span>
+<span class="fc" id="L63">        Set&lt;Tag&gt; tags = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L64">        Set&lt;ElFunction&gt; functions = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L65">        Set&lt;TagFile&gt; tagfiles = new TreeSet&lt;&gt;();</span>
+
+<span class="fc" id="L67">        NodeList tagList = tldDoc.getElementsByTagName(&quot;taglib&quot;).item(0).getChildNodes();</span>
+
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        for (int i = 0; i &lt; tagList.getLength(); i++) {</span>
+<span class="fc" id="L70">            Node tagNode = tagList.item(i);</span>
+
+<span class="pc bpc" id="L72" title="2 of 4 branches missed.">            if (tagNode != null &amp;&amp; tagNode.getNodeName() != null) {</span>
+<span class="fc bfc" id="L73" title="All 9 branches covered.">                switch (tagNode.getNodeName()) {</span>
+                    case &quot;shortname&quot;:
+                    case &quot;short-name&quot;:
+                    {
+<span class="fc" id="L77">                        Node child = tagNode.getFirstChild();</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">                        if (child != null) {</span>
+<span class="fc" id="L79">                            tld.setShortname(child.getNodeValue());</span>
+                        }
+                        break;
+                    }
+                    case &quot;display-name&quot;:
+                    {
+<span class="fc" id="L85">                        Node child = tagNode.getFirstChild();</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">                        if (child != null) {</span>
+<span class="fc" id="L87">                            tld.setName(child.getNodeValue());</span>
+                        }
+                        break;
+                    }
+                    case &quot;info&quot;:
+                    case &quot;description&quot;:
+<span class="fc" id="L93">                        tld.setInfo(XmlHelper.getTextContent(tagNode));</span>
+<span class="fc" id="L94">                        break;</span>
+                    case &quot;tlib-version&quot;:
+                    case &quot;tlibversion&quot;:
+                    {
+<span class="fc" id="L98">                        Node child = tagNode.getFirstChild();</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">                        if (child != null) {</span>
+<span class="fc" id="L100">                            tld.setTlibversion(child.getNodeValue());</span>
+                        }
+                        break;
+                    }
+                    case &quot;uri&quot;:
+                    {
+<span class="fc" id="L106">                        Node child = tagNode.getFirstChild();</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">                        if (child != null) {</span>
+<span class="fc" id="L108">                            tld.setUri(child.getNodeValue());</span>
+                        }
+                        break;
+                    }
+                    case &quot;tag&quot;:
+                    {
+<span class="fc" id="L114">                        Tag tag = parseTag(tagNode);</span>
+<span class="fc" id="L115">                        tags.add(tag);</span>
+<span class="fc" id="L116">                        break;</span>
+                    }
+                    case &quot;function&quot;:
+                    {
+<span class="fc" id="L120">                        ElFunction tag = parseFunction(tagNode);</span>
+<span class="fc" id="L121">                        functions.add(tag);</span>
+<span class="fc" id="L122">                        break;</span>
+                    }
+                    case &quot;tag-file&quot;:
+                    {
+<span class="fc" id="L126">                        TagFile tag = parseTagFile(tagNode);</span>
+<span class="fc" id="L127">                        tagfiles.add(tag);</span>
+<span class="fc" id="L128">                        break;</span>
+                    }
+                    default:
+                        break;
+                }
+            }
+
+<span class="fc" id="L135">            tld.setTags(tags.toArray(Tag[]::new));</span>
+<span class="fc" id="L136">            tld.setFunctions(functions.toArray(ElFunction[]::new));</span>
+<span class="fc" id="L137">            tld.setTagfiles(tagfiles.toArray(TagFile[]::new));</span>
+        }
+
+<span class="fc" id="L140">        return tld;</span>
+    }
+
+    /**
+     * Parse a {@code tag-file} element.
+     *
+     * @param tagNode Node
+     *
+     * @return a Tag-File instance
+     */
+    private static TagFile parseTagFile(Node tagNode) {
+<span class="fc" id="L151">        TagFile tag = new TagFile();</span>
+
+<span class="fc" id="L153">        NodeList tagAttributes = tagNode.getChildNodes();</span>
+
+<span class="fc bfc" id="L155" title="All 2 branches covered.">        for (int k = 0; k &lt; tagAttributes.getLength(); k++) {</span>
+<span class="fc" id="L156">            Node tagAttribute = tagAttributes.item(k);</span>
+<span class="fc" id="L157">            String nodeName = tagAttribute.getNodeName();</span>
+
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">            if (nodeName != null) {</span>
+<span class="fc bfc" id="L160" title="All 5 branches covered.">                switch (nodeName) {</span>
+                    case &quot;name&quot;:
+                        // tag class name
+<span class="fc" id="L163">                        tag.setName(tagAttribute.getFirstChild().getNodeValue());</span>
+<span class="fc" id="L164">                        break;</span>
+                    case &quot;description&quot;:
+<span class="fc" id="L166">                        tag.setDescription(XmlHelper.getTextContent(tagAttribute));</span>
+<span class="fc" id="L167">                        break;</span>
+                    case &quot;path&quot;:
+<span class="fc" id="L169">                        tag.setPath(tagAttribute.getFirstChild().getNodeValue());</span>
+<span class="fc" id="L170">                        break;</span>
+                    case &quot;example&quot;:
+<span class="fc" id="L172">                        tag.setExample(XmlHelper.getTextContent(tagAttribute));</span>
+<span class="fc" id="L173">                        break;</span>
+                    default:
+                        break;
+                }
+            }
+        }
+
+<span class="fc" id="L180">        tag.setDeprecated(Strings.CS.contains(tag.getDescription(), &quot;@deprecated&quot;));</span>
+
+<span class="fc" id="L182">        return tag;</span>
+    }
+
+    /**
+     * Parse a {@code function} element.
+     *
+     * @param tagNode Node
+     *
+     * @return a ElFunction instance
+     */
+    private static ElFunction parseFunction(Node tagNode) {
+<span class="fc" id="L193">        ElFunction tag = new ElFunction();</span>
+<span class="fc" id="L194">        NodeList tagAttributes = tagNode.getChildNodes();</span>
+
+<span class="fc bfc" id="L196" title="All 2 branches covered.">        for (int k = 0; k &lt; tagAttributes.getLength(); k++) {</span>
+<span class="fc" id="L197">            Node tagAttribute = tagAttributes.item(k);</span>
+<span class="fc" id="L198">            String nodeName = tagAttribute.getNodeName();</span>
+
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">            if (nodeName != null) {</span>
+<span class="pc bpc" id="L201" title="2 of 6 branches missed.">                switch (nodeName) {</span>
+                    case &quot;name&quot;:
+<span class="fc" id="L203">                        tag.setName(tagAttribute.getFirstChild().getNodeValue());</span>
+<span class="fc" id="L204">                        break;</span>
+                    case &quot;description&quot;:
+<span class="nc" id="L206">                        tag.setDescription(XmlHelper.getTextContent(tagAttribute));</span>
+<span class="nc" id="L207">                        break;</span>
+                    case &quot;example&quot;:
+<span class="nc" id="L209">                        tag.setExample(XmlHelper.getTextContent(tagAttribute));</span>
+<span class="nc" id="L210">                        break;</span>
+                    case &quot;function-class&quot;:
+<span class="fc" id="L212">                        tag.setFunctionClass(</span>
+<span class="fc" id="L213">                                StringUtils.trim(XmlHelper.getTextContent(tagAttribute)));</span>
+<span class="fc" id="L214">                        break;</span>
+                    case &quot;function-signature&quot;:
+<span class="fc" id="L216">                        String signature = XmlHelper.getTextContent(tagAttribute);</span>
+<span class="fc" id="L217">                        tag.setFunctionSignature(signature);</span>
+<span class="fc" id="L218">                        tag.setParameters(StringUtils.substringBetween(signature, &quot;(&quot;, &quot;)&quot;));</span>
+<span class="fc" id="L219">                        break;</span>
+                    default:
+                        break;
+                }
+            }
+        }
+
+<span class="fc" id="L226">        tag.setDeprecated(Strings.CS.contains(tag.getDescription(), &quot;@deprecated&quot;));</span>
+
+<span class="fc" id="L228">        return tag;</span>
+    }
+
+    /**
+     * Parse a {@code tag} element.
+     *
+     * @param tagNode Node
+     *
+     * @return a Tag instance
+     */
+    private static Tag parseTag(Node tagNode) {
+<span class="fc" id="L239">        Tag tag = new Tag();</span>
+<span class="fc" id="L240">        Set&lt;TagAttribute&gt; attributes = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L241">        Set&lt;TagVariable&gt; variables = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L242">        NodeList tagAttributes = tagNode.getChildNodes();</span>
+
+<span class="fc bfc" id="L244" title="All 2 branches covered.">        for (int k = 0; k &lt; tagAttributes.getLength(); k++) {</span>
+<span class="fc" id="L245">            Node tagAttribute = tagAttributes.item(k);</span>
+<span class="fc" id="L246">            String nodeName = tagAttribute.getNodeName();</span>
+
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">            if (nodeName != null) {</span>
+<span class="fc bfc" id="L249" title="All 9 branches covered.">                switch (nodeName) {</span>
+                    case &quot;name&quot;:
+                        // tag class name
+<span class="fc" id="L252">                        tag.setName(tagAttribute.getFirstChild().getNodeValue());</span>
+<span class="fc" id="L253">                        break;</span>
+                    case &quot;description&quot;:
+                    case &quot;info&quot;:
+<span class="fc" id="L256">                        tag.setDescription(XmlHelper.getTextContent(tagAttribute));</span>
+<span class="fc" id="L257">                        break;</span>
+                    case &quot;tag-class&quot;:
+                    case &quot;tagclass&quot;:
+<span class="fc" id="L260">                        tag.setTagClass(StringUtils.trim(</span>
+<span class="fc" id="L261">                                tagAttribute.getFirstChild().getNodeValue()));</span>
+<span class="fc" id="L262">                        break;</span>
+                    case &quot;body-content&quot;:
+                    case &quot;bodycontent&quot;:
+<span class="fc" id="L265">                        tag.setBodycontent(tagAttribute.getFirstChild().getNodeValue());</span>
+<span class="fc" id="L266">                        break;</span>
+                    case &quot;example&quot;:
+<span class="fc" id="L268">                        tag.setExample(XmlHelper.getTextContent(tagAttribute));</span>
+<span class="fc" id="L269">                        break;</span>
+                    case &quot;tei-class&quot;:
+                    case &quot;teiclass&quot;:
+                        // tei class name
+<span class="fc" id="L273">                        tag.setTeiClass(StringUtils.trim(</span>
+<span class="fc" id="L274">                                tagAttribute.getFirstChild().getNodeValue()));</span>
+<span class="fc" id="L275">                        break;</span>
+                    case &quot;attribute&quot;:
+<span class="fc" id="L277">                        TagAttribute attribute = parseTagAttribute(tagAttribute);</span>
+<span class="fc" id="L278">                        attributes.add(attribute);</span>
+<span class="fc" id="L279">                        break;</span>
+                    case &quot;variable&quot;:
+<span class="fc" id="L281">                        TagVariable variable = parseTagVariable(tagAttribute);</span>
+<span class="fc" id="L282">                        variables.add(variable);</span>
+<span class="fc" id="L283">                        break;</span>
+                    default:
+                        break;
+                }
+            }
+<span class="fc" id="L288">            tag.setAttributes(attributes.toArray(TagAttribute[]::new));</span>
+<span class="fc" id="L289">            tag.setVariables(variables.toArray(TagVariable[]::new));</span>
+        }
+
+<span class="fc" id="L292">        tag.setDeprecated(Strings.CS.contains(tag.getDescription(), &quot;@deprecated&quot;));</span>
+
+<span class="fc" id="L294">        return tag;</span>
+    }
+
+    /**
+     * Parse an {@code attribute} element.
+     *
+     * @param tagAttribute Node
+     *
+     * @return TagAttribute instance
+     */
+    private static TagAttribute parseTagAttribute(Node tagAttribute) {
+<span class="fc" id="L305">        TagAttribute attribute = new TagAttribute();</span>
+
+<span class="fc" id="L307">        NodeList attributeParams = tagAttribute.getChildNodes();</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">        for (int z = 0; z &lt; attributeParams.getLength(); z++) {</span>
+<span class="fc" id="L309">            Node param = attributeParams.item(z);</span>
+<span class="pc bpc" id="L310" title="1 of 4 branches missed.">            if (param.getNodeType() != Node.TEXT_NODE &amp;&amp; param.hasChildNodes()</span>
+<span class="pc bpc" id="L311" title="1 of 2 branches missed.">                    &amp;&amp; param.getNodeName() != null) {</span>
+
+<span class="pc bpc" id="L313" title="1 of 6 branches missed.">                switch (param.getNodeName()) {</span>
+                    case &quot;name&quot;:
+<span class="fc" id="L315">                        attribute.setName(param.getFirstChild().getNodeValue());</span>
+<span class="fc" id="L316">                        break;</span>
+                    case &quot;type&quot;:
+<span class="fc" id="L318">                        attribute.setType(StringUtils.trim(param.getFirstChild().getNodeValue()));</span>
+<span class="fc" id="L319">                        break;</span>
+                    case &quot;description&quot;:
+<span class="fc" id="L321">                        attribute.setDescription(XmlHelper.getTextContent(param));</span>
+<span class="fc" id="L322">                        break;</span>
+                    case &quot;required&quot;:
+<span class="fc" id="L324">                        attribute.setRequired(Strings.CS.contains(StringUtils.lowerCase(</span>
+<span class="fc" id="L325">                                param.getFirstChild().getNodeValue()), &quot;true&quot;));</span>
+<span class="fc" id="L326">                        break;</span>
+                    case &quot;rtexprvalue&quot;:
+<span class="fc" id="L328">                        attribute.setRtexprvalue(Strings.CS.contains(StringUtils.lowerCase(</span>
+<span class="fc" id="L329">                                param.getFirstChild().getNodeValue()), &quot;true&quot;));</span>
+<span class="fc" id="L330">                        break;</span>
+                    default:
+                        break;
+                }
+            }
+        }
+
+<span class="fc" id="L337">        attribute.setDeprecated(Strings.CS.contains(attribute.getDescription(), &quot;@deprecated&quot;));</span>
+
+<span class="fc" id="L339">        return attribute;</span>
+    }
+
+    /**
+     * Parse an {@code attribute} element.
+     *
+     * @param node Node
+     *
+     * @return TagAttribute instance
+     */
+    private static TagVariable parseTagVariable(Node node) {
+<span class="fc" id="L350">        TagVariable variable = new TagVariable();</span>
+
+<span class="fc" id="L352">        NodeList attributeParams = node.getChildNodes();</span>
+<span class="fc bfc" id="L353" title="All 2 branches covered.">        for (int z = 0; z &lt; attributeParams.getLength(); z++) {</span>
+<span class="fc" id="L354">            Node param = attributeParams.item(z);</span>
+<span class="pc bpc" id="L355" title="1 of 4 branches missed.">            if (param.getNodeType() != Node.TEXT_NODE &amp;&amp; param.hasChildNodes()</span>
+<span class="pc bpc" id="L356" title="1 of 2 branches missed.">                    &amp;&amp; param.getNodeName() != null) {</span>
+
+<span class="fc bfc" id="L358" title="All 6 branches covered.">                switch (param.getNodeName()) {</span>
+                    case &quot;name-given&quot;:
+<span class="fc" id="L360">                        variable.setNameGiven(param.getFirstChild().getNodeValue());</span>
+<span class="fc" id="L361">                        break;</span>
+                    case &quot;name-from-attribute&quot;:
+<span class="fc" id="L363">                        variable.setNameFromAttribute(param.getFirstChild().getNodeValue());</span>
+<span class="fc" id="L364">                        break;</span>
+                    case &quot;variable-class&quot;:
+<span class="fc" id="L366">                        variable.setType(param.getFirstChild().getNodeValue());</span>
+<span class="fc" id="L367">                        break;</span>
+                    case &quot;scope&quot;:
+<span class="fc" id="L369">                        variable.setScope(param.getFirstChild().getNodeValue());</span>
+<span class="fc" id="L370">                        break;</span>
+                    case &quot;description&quot;:
+                    case &quot;info&quot;:
+<span class="fc" id="L373">                        variable.setDescription(XmlHelper.getTextContent(param));</span>
+<span class="fc" id="L374">                        break;</span>
+                    default:
+                        break;
+                }
+            }
+        }
+
+<span class="fc" id="L381">        variable.setDeprecated(Strings.CS.contains(variable.getDescription(), &quot;@deprecated&quot;));</span>
+
+<span class="fc" id="L383">        return variable;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

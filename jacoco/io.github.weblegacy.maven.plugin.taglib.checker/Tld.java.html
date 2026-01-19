@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Tld.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Taglib Plugin</a> &gt; <a href="index.source.html" class="el_package">io.github.weblegacy.maven.plugin.taglib.checker</a> &gt; <span class="el_source">Tld.java</span></div><h1>Tld.java</h1><pre class="source lang-java linenums">/*
+ * The MIT License
+ * Copyright © 2004-2014 Fabrizio Giustina
+ * Copyright © 2022-2026 Web-Legacy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+package io.github.weblegacy.maven.plugin.taglib.checker;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+/**
+ * Contains information about a single tag library.
+ *
+ * @author Fabrizio Giustina
+ */
+<span class="fc" id="L35">public class Tld {</span>
+
+    /**
+     * The tag library shortname.
+     */
+    private String name;
+
+    /**
+     * The tag library shortname.
+     */
+    private String shortname;
+
+    /**
+     * The tld file name.
+     */
+    private String filename;
+
+    /**
+     * The tlibversion.
+     */
+    private String tlibversion;
+
+    /**
+     * The taglib uri.
+     */
+    private String uri;
+
+    /**
+     * The info/description.
+     */
+    private String info;
+
+    /**
+     * List of tags.
+     */
+    private Tag[] tags;
+
+    /**
+     * List of tagfiles.
+     */
+    private TagFile[] tagfiles;
+
+    /**
+     * List of EL Functions.
+     */
+    private ElFunction[] functions;
+
+    /**
+     * Gets the filename.
+     *
+     * @return Returns the filename.
+     */
+    public String getFilename() {
+<span class="fc" id="L88">        return this.filename;</span>
+    }
+
+    /**
+     * Sets the filename.
+     *
+     * @param file The filename to set.
+     */
+    public void setFilename(String file) {
+<span class="fc" id="L97">        this.filename = file;</span>
+<span class="fc" id="L98">    }</span>
+
+    /**
+     * Returns the shortname for this library.
+     *
+     * @return shortname for this tag library
+     */
+    public String getName() {
+<span class="fc" id="L106">        return this.name;</span>
+    }
+
+    /**
+     * Sets the shortname for this library.
+     *
+     * @param tagLibName shortname for this tag library.
+     */
+    public void setName(String tagLibName) {
+<span class="fc" id="L115">        this.name = tagLibName;</span>
+<span class="fc" id="L116">    }</span>
+
+    /**
+     * Returnss the list of tags in this tag library.
+     *
+     * @return list of tags in this tag library
+     */
+    public Tag[] getTags() {
+<span class="fc" id="L124">        return this.tags;</span>
+    }
+
+    /**
+     * Getter for {@code uri}.
+     *
+     * @return Returns the uri.
+     */
+    public String getUri() {
+<span class="fc" id="L133">        return this.uri;</span>
+    }
+
+    /**
+     * Setter for {@code uri}.
+     *
+     * @param uri The uri to set.
+     */
+    public void setUri(String uri) {
+<span class="fc" id="L142">        this.uri = uri;</span>
+<span class="fc" id="L143">    }</span>
+
+    /**
+     * Sets the list of tags in this tag library.
+     *
+     * @param tagList list of tags in this tag library
+     */
+    public void setTags(Tag[] tagList) {
+<span class="fc" id="L151">        this.tags = tagList;</span>
+<span class="fc" id="L152">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L156">        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE)</span>
+<span class="nc" id="L157">                .append(&quot;name&quot;, this.name)</span>
+<span class="nc" id="L158">                .append(&quot;tags&quot;, this.tags)</span>
+<span class="nc" id="L159">                .toString();</span>
+    }
+
+    /**
+     * Getter for {@code shortname}.
+     *
+     * @return Returns the shortname.
+     */
+    public String getShortname() {
+<span class="fc" id="L168">        return this.shortname;</span>
+    }
+
+    /**
+     * Setter for {@code shortname}.
+     *
+     * @param shortname The shortname to set.
+     */
+    public void setShortname(String shortname) {
+<span class="fc" id="L177">        this.shortname = shortname;</span>
+<span class="fc" id="L178">    }</span>
+
+    /**
+     * Getter for {@code info}.
+     *
+     * @return Returns the info.
+     */
+    public String getInfo() {
+<span class="fc" id="L186">        return this.info;</span>
+    }
+
+    /**
+     * Setter for {@code info}.
+     *
+     * @param info The info to set.
+     */
+    public void setInfo(String info) {
+<span class="fc" id="L195">        this.info = info;</span>
+<span class="fc" id="L196">    }</span>
+
+    /**
+     * Getter for {@code tlibversion}.
+     *
+     * @return Returns the tlibversion.
+     */
+    public String getTlibversion() {
+<span class="fc" id="L204">        return this.tlibversion;</span>
+    }
+
+    /**
+     * Setter for {@code tlibversion}.
+     *
+     * @param tlibversion The tlibversion to set.
+     */
+    public void setTlibversion(String tlibversion) {
+<span class="fc" id="L213">        this.tlibversion = tlibversion;</span>
+<span class="fc" id="L214">    }</span>
+
+    /**
+     * Returns the functions.
+     *
+     * @return the functions
+     */
+    public ElFunction[] getFunctions() {
+<span class="fc" id="L222">        return functions;</span>
+    }
+
+    /**
+     * Sets the functions.
+     *
+     * @param functions the functions to set
+     */
+    public void setFunctions(ElFunction[] functions) {
+<span class="fc" id="L231">        this.functions = functions;</span>
+<span class="fc" id="L232">    }</span>
+
+    /**
+     * Returns the tagfiles.
+     *
+     * @return the tagfiles
+     */
+    public TagFile[] getTagfiles() {
+<span class="fc" id="L240">        return tagfiles;</span>
+    }
+
+    /**
+     * Sets the tagfiles.
+     *
+     * @param tagfiles the tagfiles to set
+     */
+    public void setTagfiles(TagFile[] tagfiles) {
+<span class="fc" id="L249">        this.tagfiles = tagfiles;</span>
+<span class="fc" id="L250">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

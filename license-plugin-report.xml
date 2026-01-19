@@ -1,26 +1,66 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<licensePluginReport goal="FORMAT" timestamp="1658261330061">
-    <module artifactId="taglib-maven-plugin" groupId="io.github.weblegacy" version="2.6"/>
+<licensePluginReport goal="FORMAT" timestamp="1768798723954">
+    <module artifactId="taglib-maven-plugin" groupId="io.github.weblegacy" version="3.0.0-SNAPSHOT"/>
     <files>
-        <file path="src/main/java/net/sf/maventaglib/AbstractMavenTaglibReportRenderer.java" result="NOOP"/>
-        <file path="src/main/java/net/sf/maventaglib/Messages.java" result="NOOP"/>
-        <file path="src/main/java/net/sf/maventaglib/Taglib.java" result="NOOP"/>
-        <file path="src/main/java/net/sf/maventaglib/TaglibdocJar.java" result="NOOP"/>
-        <file path="src/main/java/net/sf/maventaglib/TaglibdocMojo.java" result="NOOP"/>
-        <file path="src/main/java/net/sf/maventaglib/TagreferenceMojo.java" result="NOOP"/>
-        <file path="src/main/java/net/sf/maventaglib/TagreferenceRenderer.java" result="NOOP"/>
-        <file path="src/main/java/net/sf/maventaglib/TldGenerateMojo.java" result="NOOP"/>
-        <file path="src/main/java/net/sf/maventaglib/ValidateMojo.java" result="NOOP"/>
-        <file path="src/main/java/net/sf/maventaglib/ValidateRenderer.java" result="NOOP"/>
-        <file path="src/main/java/net/sf/maventaglib/checker/ELFunction.java" result="NOOP"/>
-        <file path="src/main/java/net/sf/maventaglib/checker/Tag.java" result="NOOP"/>
-        <file path="src/main/java/net/sf/maventaglib/checker/TagAttribute.java" result="NOOP"/>
-        <file path="src/main/java/net/sf/maventaglib/checker/TagFile.java" result="NOOP"/>
-        <file path="src/main/java/net/sf/maventaglib/checker/TagVariable.java" result="NOOP"/>
-        <file path="src/main/java/net/sf/maventaglib/checker/Tld.java" result="NOOP"/>
-        <file path="src/main/java/net/sf/maventaglib/checker/TldItem.java" result="NOOP"/>
-        <file path="src/main/java/net/sf/maventaglib/checker/TldParser.java" result="NOOP"/>
-        <file path="src/main/java/net/sf/maventaglib/util/XmlHelper.java" result="NOOP"/>
+        <file path="pom.xml" result="NOOP"/>
+        <file path="src/changes/changes.xml" result="NOOP"/>
+        <file path="src/it/project1/invoker.properties" result="NOOP"/>
+        <file path="src/it/project1/pom.xml" result="NOOP"/>
+        <file path="src/it/project1/src/main/resources/META-INF/tld12.tld" result="NOOP"/>
+        <file path="src/it/project1/src/site/site.xml" result="NOOP"/>
+        <file path="src/it/project1/verify.groovy" result="NOOP"/>
+        <file path="src/it/project2/invoker.properties" result="NOOP"/>
+        <file path="src/it/project2/pom.xml" result="NOOP"/>
+        <file path="src/it/project2/src/main/resources/META-INF/project2.tld" result="NOOP"/>
+        <file path="src/it/project2/src/main/resources/META-INF/tags/testtag/ul.tag" result="NOOP"/>
+        <file path="src/it/project2/src/main/resources/META-INF/tags/testtag/url.tag" result="NOOP"/>
+        <file path="src/it/project2/src/site/site.xml" result="NOOP"/>
+        <file path="src/it/project2/verify.groovy" result="NOOP"/>
+        <file path="src/it/project3/invoker.properties" result="NOOP"/>
+        <file path="src/it/project3/pom.xml" result="NOOP"/>
+        <file path="src/it/project3/verify.groovy" result="NOOP"/>
+        <file path="src/it/settings.xml" result="NOOP"/>
+        <file path="src/license/headerStyles.xml" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/AbstractMavenTaglibReportRenderer.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/AbstractReportMojo.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/AbstractReportMojoEx.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/Messages.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/Taglib.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/TaglibdocJar.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/TaglibdocMojo.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/TagreferenceMojo.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/TagreferenceRenderer.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/TldGenerateMojo.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/ValidateMojo.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/ValidateRenderer.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/checker/ElFunction.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/checker/Tag.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/checker/TagAttribute.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/checker/TagFile.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/checker/TagVariable.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/checker/Tld.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/checker/TldItem.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/checker/TldParser.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/util/JspCheck.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/util/JspClass.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/util/JspNamespace.java" result="NOOP"/>
+        <file path="src/main/java/io/github/weblegacy/maven/plugin/taglib/util/XmlHelper.java" result="NOOP"/>
         <file path="src/main/resources/m2-taglib.properties" result="NOOP"/>
+        <file path="src/site/fml/faq.fml" result="NOOP"/>
+        <file path="src/site/markdown/index.md.vm" result="NOOP"/>
+        <file path="src/site/markdown/usage.md.vm" result="NOOP"/>
+        <file path="src/site/site.xml" result="NOOP"/>
+        <file path="src/test/java/io/github/weblegacy/maven/plugin/taglib/TaglibPluginTestBase.java" result="NOOP"/>
+        <file path="src/test/java/io/github/weblegacy/maven/plugin/taglib/TaglibdocMojoTest.java" result="NOOP"/>
+        <file path="src/test/java/io/github/weblegacy/maven/plugin/taglib/TagreferenceMojoTest.java" result="NOOP"/>
+        <file path="src/test/java/io/github/weblegacy/maven/plugin/taglib/TldGenerateMojoTest.java" result="NOOP"/>
+        <file path="src/test/java/io/github/weblegacy/maven/plugin/taglib/ValidateMojoTest.java" result="NOOP"/>
+        <file path="src/test/resources/project1/pom.xml" result="NOOP"/>
+        <file path="src/test/resources/project1/src/main/resources/META-INF/tld12.tld" result="NOOP"/>
+        <file path="src/test/resources/project2/pom.xml" result="NOOP"/>
+        <file path="src/test/resources/project2/src/main/resources/META-INF/project2.tld" result="NOOP"/>
+        <file path="src/test/resources/project2/src/main/resources/META-INF/tags/testtag/ul.tag" result="NOOP"/>
+        <file path="src/test/resources/project2/src/main/resources/META-INF/tags/testtag/url.tag" result="NOOP"/>
+        <file path="src/test/resources/project3/pom.xml" result="NOOP"/>
     </files>
 </licensePluginReport>

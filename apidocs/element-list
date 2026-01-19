@@ -1,0 +1,4 @@
+io.github.weblegacy.maven.plugin.taglib
+io.github.weblegacy.maven.plugin.taglib.checker
+io.github.weblegacy.maven.plugin.taglib.util
+io.github.weblegacy.taglib_maven_plugin
