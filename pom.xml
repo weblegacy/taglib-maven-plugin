@@ -57,7 +57,7 @@
   </organization>
 
   <scm>
-    <connection>scm:git:https://github.com/weblegacy/taglib-maven-plugin.git</connection>
+    <connection>scm:git:git@github.com/weblegacy/taglib-maven-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:weblegacy/taglib-maven-plugin.git</developerConnection>
     <url>https://github.com/weblegacy/taglib-maven-plugin</url>
   </scm>
@@ -1080,7 +1080,7 @@
     </repository>
     <site>
       <id>github</id>
-      <url>scm:git:git@github.com:weblegacy/taglib-maven-plugin</url>
+      <url>scm:git:https://github.com/weblegacy/taglib-maven-plugin</url>
     </site>
     <downloadUrl>https://github.com/weblegacy/taglib-maven-plugin/releases</downloadUrl>
   </distributionManagement>

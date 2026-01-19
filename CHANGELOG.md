@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Correct scm-url in POM
 * Correct plugin-name in message-text
 * Rename package `net.sf.maventaglib` to `io.github.weblegacy.maven.plugin.taglib`
 * Various adjustments due to dependency upgrades
