@@ -119,7 +119,7 @@
     <junitVersion>6.0.2</junitVersion>
     <mavenPluginTestingHarnessVersion>3.5.1</mavenPluginTestingHarnessVersion>
     <mavenReportingVersion>4.0.0</mavenReportingVersion>
-    <mavenResolverVersion>1.4.2</mavenResolverVersion>
+    <mavenResolverVersion>1.9.25</mavenResolverVersion>
     <doxiaVersion>2.0.0</doxiaVersion>
     <sisuVersion>0.3.4</sisuVersion>
     <javaxServletJspApiVersion>2.3.3</javaxServletJspApiVersion>
@@ -900,6 +900,18 @@
     <dependency>
       <groupId>org.apache.maven.resolver</groupId>
       <artifactId>maven-resolver-api</artifactId>
+      <version>${mavenResolverVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.resolver</groupId>
+      <artifactId>maven-resolver-spi</artifactId>
+      <version>${mavenResolverVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.resolver</groupId>
+      <artifactId>maven-resolver-util</artifactId>
       <version>${mavenResolverVersion}</version>
       <scope>test</scope>
     </dependency>
