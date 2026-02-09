@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Add `central-publishing-maven-plugin`
 * Bump `org.eclipse.sisu.plexus` from 0.3.4 to 1.0.0 and add `org.eclipse.sisu.inject`
 * Bump `maven-resolver*` from 1.4.2 to 1.9.25 and add missing resolver-dependencies
 * Bump `maven-plugin-testing-harness` from 3.5.0 to 3.5.1
