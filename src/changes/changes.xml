@@ -34,6 +34,7 @@
     </properties>
     <body>
         <release version="3.0.0-SNAPSHOT" date="YYYY-MM-DD" description="Jakarta EE 9+, JDK 11, JPMS">
+            <action type="update" dev="ste-gr">Bump &quot;org.eclipse.sisu.plexus&quot; from 0.3.4 to 1.0.0 and add &quot;org.eclipse.sisu.inject&quot;</action>
             <action type="update" dev="ste-gr">Bump &quot;maven-resolver*&quot; from 1.4.2 to 1.9.25 and add missing resolver-dependencies</action>
             <action type="update" dev="ste-gr">Bump &quot;maven-plugin-testing-harness&quot; from 3.5.0 to 3.5.1</action>
             <action type="update" dev="ste-gr">Bump &quot;maven-dependency-plugin&quot; from 3.9.0 to 3.10.0</action>

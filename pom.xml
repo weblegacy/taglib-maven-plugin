@@ -121,7 +121,7 @@
     <mavenReportingVersion>4.0.0</mavenReportingVersion>
     <mavenResolverVersion>1.9.25</mavenResolverVersion>
     <doxiaVersion>2.0.0</doxiaVersion>
-    <sisuVersion>0.3.4</sisuVersion>
+    <sisuVersion>1.0.0</sisuVersion>
     <javaxServletJspApiVersion>2.3.3</javaxServletJspApiVersion>
     <jakartaServletJspApiVersion>4.0.0</jakartaServletJspApiVersion>
     <commonsLang3Version>3.20.0</commonsLang3Version>
@@ -889,6 +889,12 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <version>${slf4jVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.sisu</groupId>
+      <artifactId>org.eclipse.sisu.inject</artifactId>
+      <version>${sisuVersion}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
