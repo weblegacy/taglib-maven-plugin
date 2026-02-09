@@ -2,6 +2,7 @@
 
 ## 3.0.0 / YYYY-MM-DD
 
+* Bump `checkstyle` from 13.0.0 to 13.2.0 and update `checkstyle.xml`
 * Bump `versions-maven-plugin` from 2.20.1 to 2.21.0
 * Correct scm-url in POM
 * Correct plugin-name in message-text
