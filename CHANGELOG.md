@@ -28,7 +28,7 @@
 * Bump `junit` from 4.13.2 to 6.0.2 and adapt junit-tests
 * Bump `maven-plugin-testing-harness` from 3.3.0 to 3.5.0
 * Set minimum MAVEN-Plugin-Version from 3.8.1 to 3.6.3
-* Downgrad `maven-resolver`-dependencies from 1.6.2 to 1.4.2
+* Downgrade `maven-resolver`-dependencies from 1.6.2 to 1.4.2
 * Bump `plexus-utils` from 4.0.0 to 4.0.2
 * Bump `plexus-archiver` from 4.9.1 to 4.11.0
 * Bump `commons-lang3` from 3.14.0 to 3.20.0
@@ -82,14 +82,14 @@
 * Bump `maven-site-plugin` from 3.12.1 to 3.21.0
 * Bump `maven-changes-plugin` from 2.12.1 to 3.0.0-M3 with adaptations
 * Resolve checkstyle-messages
-* New version of `checksytle.xml`
+* New version of `checkstyle.xml`
 * Bump `checkstyle` from 10.13.0 to 12.3.0
 * Bump `maven-checkstyle-plugin` from 3.3.1 to 3.6.0
 * Use JDK11-toArray
 * Update Copyright to 2025
 * Bump `tlddoc` from 1.4 to 2.0.0-SNAPSHOT
 * Change minimum Java-Version to JDK11
-* Tipfix message
+* Typo fix message
 * Resolve all CPD and PMD messages
 * Reformat sources and resolve all checkstyle messages
 * Rewrite and reformat testcases
@@ -116,11 +116,11 @@
 * Add missing `maven-plugin-report-plugin`
 * Bump `maven-plugin-annotations` from 3.6.4 to 3.11.0
 * Downgrade `maven-reporting`-plugins from 4.0.0-M1 to 3.2.0 / 3.1.1
-* Downgrade `doxia`-plguins from 2.0.0-M3 to 1.12.0
+* Downgrade `doxia`-plugins from 2.0.0-M3 to 1.12.0
 * Set minimum MAVEN-Plugin-Version from 3.8.6 to 3.2.5
 * Add plugin `maven-model`
 * Remove unused dependency `servlet-api`
-* Move `maven-assembly-plug`-configuration from `pluginManagement` to `plugin`
+* Move `maven-assembly-plugin`-configuration from `pluginManagement` to `plugin`
 * Bump `maven-gpg-plugin` from 3.0.1 to 3.1.0
 * Set minimum MAVEN-Version from 3.5.4 to 3.6.3
 * Bump `maven-fluido-skin` from 1.11.0 to 1.12.0
