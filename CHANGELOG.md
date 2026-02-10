@@ -2,7 +2,7 @@
 
 ## 3.1.0 / YYYY-MM-DD
 
-* Set minimum MAVEN-Version from 3.6.3 to 3.9.0
+* Set minimum Maven version from 3.6.3 to 3.9.0
 * Set version to 3.1.0-SNAPSHOT
 
 ## 3.0.0 / 2026-02-10
@@ -27,7 +27,7 @@
 * Add `junit`-test for validate-mojo
 * Bump `junit` from 4.13.2 to 6.0.2 and adapt junit-tests
 * Bump `maven-plugin-testing-harness` from 3.3.0 to 3.5.0
-* Set minimum MAVEN-Plugin-Version from 3.8.1 to 3.6.3
+* Set minimum Maven plugin version from 3.8.1 to 3.6.3
 * Downgrade `maven-resolver`-dependencies from 1.6.2 to 1.4.2
 * Bump `plexus-utils` from 4.0.0 to 4.0.2
 * Bump `plexus-archiver` from 4.9.1 to 4.11.0
@@ -96,7 +96,7 @@
 * Use own `checkstyle.xml` (from tlddoc)
 * Add missing `maven-resolver-api`
 * Rename POM-property `encoding` to `sourceEncoding`
-* Set minimum MAVEN-Plugin-Version from 3.2.5 to 3.8.1
+* Set minimum Maven plugin version from 3.2.5 to 3.8.1
 * Correct testcases because downgraded `doxia`- and `maven-reporting`-versions
 * Replace `commons-logging` with `jcl-over-slf4j`
 * Set version of `commons-digester` to 2.1
@@ -117,12 +117,12 @@
 * Bump `maven-plugin-annotations` from 3.6.4 to 3.11.0
 * Downgrade `maven-reporting`-plugins from 4.0.0-M1 to 3.2.0 / 3.1.1
 * Downgrade `doxia`-plugins from 2.0.0-M3 to 1.12.0
-* Set minimum MAVEN-Plugin-Version from 3.8.6 to 3.2.5
+* Set minimum Maven plugin version from 3.8.6 to 3.2.5
 * Add plugin `maven-model`
 * Remove unused dependency `servlet-api`
 * Move `maven-assembly-plugin`-configuration from `pluginManagement` to `plugin`
 * Bump `maven-gpg-plugin` from 3.0.1 to 3.1.0
-* Set minimum MAVEN-Version from 3.5.4 to 3.6.3
+* Set minimum Maven version from 3.5.4 to 3.6.3
 * Bump `maven-fluido-skin` from 1.11.0 to 1.12.0
 * Bump `build-helper-maven-plugin` from 3.3.0 to 3.5.0
 * Bump `license-maven-plugin` from 4.2.rc3 to 4.3
