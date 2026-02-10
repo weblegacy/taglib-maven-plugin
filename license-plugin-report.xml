@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<licensePluginReport goal="FORMAT" timestamp="1768798723954">
-    <module artifactId="taglib-maven-plugin" groupId="io.github.weblegacy" version="3.0.0-SNAPSHOT"/>
+<licensePluginReport goal="FORMAT" timestamp="1770681737238">
+    <module artifactId="taglib-maven-plugin" groupId="io.github.weblegacy" version="3.0.0"/>
     <files>
         <file path="pom.xml" result="NOOP"/>
         <file path="src/changes/changes.xml" result="NOOP"/>
