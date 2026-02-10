@@ -111,7 +111,7 @@
 * Add missing `maven-plugin-report-plugin`
 * Bump `maven-plugin-annotations` from 3.6.4 to 3.11.0
 * Downgrade `maven-reporting`-plugins from 4.0.0-M1 to 3.2.0 / 3.1.1
-* Downgrade `doxia`-plguins from 2.0.0-M3 to 1.12.0
+* Downgrade `doxia`-plugins from 2.0.0-M3 to 1.12.0
 * Set minimum MAVEN-Plugin-Version from 3.8.6 to 3.2.5
 * Add plugin `maven-model`
 * Remove unused dependency `servlet-api`
