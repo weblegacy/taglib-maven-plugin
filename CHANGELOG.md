@@ -84,7 +84,7 @@
 * Update Copyright to 2025
 * Bump `tlddoc` from 1.4 to 2.0.0-SNAPSHOT
 * Change minimum Java-Version to JDK11
-* Tipfix message
+* Typo fix message
 * Resolve all CPD and PMD messages
 * Reformat sources and resolve all checkstyle messages
 * Rewrite and reformat testcases
