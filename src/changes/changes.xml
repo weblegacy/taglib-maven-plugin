@@ -33,6 +33,9 @@
         <author email="stefan.graff@gmx.at">Stefan Graff</author>
     </properties>
     <body>
+        <release version="3.1.0-SNAPSHOT" date="YYYY-MM-DD" description="">
+            <action type="update" dev="ste-gr">Set version to 3.1.0-SNAPSHOT</action>
+        </release>
         <release version="3.0.0" date="2026-02-10" description="Jakarta EE 9+, JDK 11, JPMS">
             <action type="update" dev="ste-gr">Bump &quot;tlddoc&quot; from 2.0.0-SNAPHSOT to 2.0.0</action>
             <action type="add" dev="ste-gr">Add &quot;central-publishing-maven-plugin&quot;</action>

@@ -1,5 +1,9 @@
 # Change-Log
 
+## 3.1.0 / YYYY-MM-DD
+
+* Set version to 3.1.0-SNAPSHOT
+
 ## 3.0.0 / 2026-02-10
 
 * Set Version to 3.0.0
