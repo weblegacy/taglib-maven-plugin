@@ -1,7 +1,8 @@
 # Change-Log
 
-## 3.0.0 / YYYY-MM-DD
+## 3.0.0 / 2026-02-10
 
+* Set Version to 3.0.0
 * Bump `tlddoc` from 2.0.0-SNAPSHOT to 2.0.0
 * Add `central-publishing-maven-plugin`
 * Bump `org.eclipse.sisu.plexus` from 0.3.4 to 1.0.0 and add `org.eclipse.sisu.inject`
