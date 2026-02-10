@@ -27,7 +27,7 @@
 * Add `junit`-test for validate-mojo
 * Bump `junit` from 4.13.2 to 6.0.2 and adapt junit-tests
 * Bump `maven-plugin-testing-harness` from 3.3.0 to 3.5.0
-* Set minimum MAVEN-Plugin-Version from 3.8.1 to 3.6.3
+* Set minimum Maven plugin version from 3.8.1 to 3.6.3
 * Downgrade `maven-resolver`-dependencies from 1.6.2 to 1.4.2
 * Bump `plexus-utils` from 4.0.0 to 4.0.2
 * Bump `plexus-archiver` from 4.9.1 to 4.11.0
