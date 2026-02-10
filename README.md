@@ -12,7 +12,7 @@ For documentation see [https://weblegacy.github.io/taglib-maven-plugin](https://
 
 ### Prerequesits
 
-* Apache Maven 3.6.3\+
+* Apache Maven 3.9.0\+
 * JDK 11\+
 
 ### MAVEN-Profiles

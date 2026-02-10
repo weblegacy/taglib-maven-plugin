@@ -2,6 +2,7 @@
 
 ## 3.1.0 / YYYY-MM-DD
 
+* Set minimum MAVEN-Version from 3.6.3 to 3.9.0
 * Set version to 3.1.0-SNAPSHOT
 
 ## 3.0.0 / 2026-02-10
