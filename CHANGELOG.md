@@ -115,7 +115,7 @@
 * Set minimum MAVEN-Plugin-Version from 3.8.6 to 3.2.5
 * Add plugin `maven-model`
 * Remove unused dependency `servlet-api`
-* Move `maven-assembly-plug`-configuration from `pluginManagement` to `plugin`
+* Move `maven-assembly-plugin`-configuration from `pluginManagement` to `plugin`
 * Bump `maven-gpg-plugin` from 3.0.1 to 3.1.0
 * Set minimum MAVEN-Version from 3.5.4 to 3.6.3
 * Bump `maven-fluido-skin` from 1.11.0 to 1.12.0
