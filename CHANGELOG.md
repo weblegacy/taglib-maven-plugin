@@ -2,6 +2,8 @@
 
 ## 3.1.0 / YYYY-MM-DD
 
+* Bump `checkstyle` from 13.2.0 to 13.5.0 and update `checkstyle.xml`
+* Bump `plexus-utils` from 4.0.2 to 4.0.3
 * Set minimum Maven version from 3.6.3 to 3.9.0
 * Set version to 3.1.0-SNAPSHOT
 
