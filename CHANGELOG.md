@@ -1,7 +1,8 @@
 # Change-Log
 
-## 3.1.0 / YYYY-MM-DD
+## 3.0.1 / 2026-06-02
 
+* Set version to 3.0.1
 * Resolve new CheckStyles
 * Encode IDs in HTML-Links
 * Bump `maven-resolver*` from 1.9.25 to 1.9.27

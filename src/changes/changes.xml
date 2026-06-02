@@ -33,7 +33,8 @@
         <author email="stefan.graff@gmx.at">Stefan Graff</author>
     </properties>
     <body>
-        <release version="3.1.0-SNAPSHOT" date="YYYY-MM-DD" description="">
+        <release version="3.0.1" date="2026-06-02" description="Correct HTML-Links">
+            <action type="update" dev="ste-gr">Set version to 3.0.1</action>
             <action type="fix" dev="ste-gr">Resolve new CheckStyles</action>
             <action type="fix" dev="ste-gr">Encode IDs in HTML-Links</action>
             <action type="update" dev="ste-gr">Bump &quot;maven-resolver*&quot; from 1.9.25 to 1.9.27</action>
