@@ -2,6 +2,7 @@
 
 ## 3.1.0 / YYYY-MM-DD
 
+* Bump `maven-surefire-[report-]plugin` from 3.5.4 to 3.5.6
 * Bump `maven-site-plugin` from 3.21.0 to 3.22.0
 * Bump `maven-resources-plugin` from 3.4.0 to 3.5.0
 * Bump `maven-invoker-plugin` from 3.9.1 to 3.10.1
