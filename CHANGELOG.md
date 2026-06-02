@@ -2,6 +2,7 @@
 
 ## 3.1.0 / YYYY-MM-DD
 
+* Bump `maven-dependency-plugin` from 3.10.0 to 3.11.0
 * Bump `checkstyle` from 13.2.0 to 13.5.0 and update `checkstyle.xml`
 * Bump `plexus-utils` from 4.0.2 to 4.0.3
 * Set minimum Maven version from 3.6.3 to 3.9.0
