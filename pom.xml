@@ -110,7 +110,7 @@
     <javaVersion>11</javaVersion>
     <dependencyVersion>3.11.0</dependencyVersion>
     <enforcerVersion>3.6.3</enforcerVersion>
-    <siteVersion>3.21.0</siteVersion>
+    <siteVersion>3.22.0</siteVersion>
     <fludioVersion>2.1.0</fludioVersion>
     <mavenPluginVersion>${mavenVersion}</mavenPluginVersion>
     <mavenPluginToolsVersion>3.15.2</mavenPluginToolsVersion>
