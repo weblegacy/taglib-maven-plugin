@@ -2,6 +2,7 @@
 
 ## 3.1.0 / YYYY-MM-DD
 
+* Bump `maven-resources-plugin` from 3.4.0 to 3.5.0
 * Bump `maven-invoker-plugin` from 3.9.1 to 3.10.1
 * Bump `maven-enforcer-plugin` from 3.6.2 to 3.6.3
 * Bump `maven-dependency-plugin` from 3.10.0 to 3.11.0

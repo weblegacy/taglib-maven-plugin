@@ -34,6 +34,7 @@
     </properties>
     <body>
         <release version="3.1.0-SNAPSHOT" date="YYYY-MM-DD" description="">
+            <action type="update" dev="ste-gr">Bump &quot;maven-resources-plugin&quot; from 3.4.0 to 3.5.0</action>
             <action type="update" dev="ste-gr">Bump &quot;maven-invoker-plugin&quot; from 3.9.1 to 3.10.1</action>
             <action type="update" dev="ste-gr">Bump &quot;maven-enforcer-plugin&quot; from 3.6.2 to 3.6.3</action>
             <action type="update" dev="ste-gr">Bump &quot;maven-dependency-plugin&quot; from 3.10.0 to 3.11.0</action>
