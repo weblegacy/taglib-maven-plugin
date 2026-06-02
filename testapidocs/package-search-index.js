@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html","k":"18"},{"l":"io.github.weblegacy.maven.plugin.taglib"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"io.github.weblegacy.maven.plugin.taglib"}];updateSearchResults();

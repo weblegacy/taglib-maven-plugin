@@ -1,9 +1,9 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,ValidateRenderer,488,632,83,32,128,160,58,22,5,12
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,ValidateRenderer,488,633,83,32,128,160,58,22,5,12
 Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,TagreferenceMojo,0,35,0,0,0,8,0,6,0,6
 Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,AbstractReportMojoEx,63,84,3,5,12,19,3,4,0,3
 Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,Messages,13,39,2,2,5,10,3,4,1,4
-Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,TagreferenceRenderer,105,920,30,60,27,213,31,24,1,9
+Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,TagreferenceRenderer,105,923,30,60,27,213,31,24,1,9
 Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,ValidateRenderer.ValidationError,23,0,0,0,10,0,5,0,5,0
 Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,AbstractMavenTaglibReportRenderer,0,12,0,0,0,4,0,2,0,2
 Maven Taglib Plugin,io.github.weblegacy.maven.plugin.taglib,Taglib,0,76,0,0,0,27,0,14,0,14

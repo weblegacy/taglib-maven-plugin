@@ -59,8 +59,8 @@ import org.xml.sax.InputSource;
 <span class="fc" id="L59">            factory.setValidating(false);</span>
 <span class="fc" id="L60">            factory.setNamespaceAware(false);</span>
 <span class="fc" id="L61">            factory.setExpandEntityReferences(false);</span>
-<span class="fc" id="L62">            builder.setEntityResolver((publicId, systemId)</span>
-<span class="nc" id="L63">                    -&gt; new InputSource(new CharArrayReader(new char[0])));</span>
+<span class="fc" id="L62">            builder.setEntityResolver((publicId, systemId) -&gt;</span>
+<span class="nc" id="L63">                    new InputSource(new CharArrayReader(new char[0])));</span>
 
 <span class="fc" id="L65">            return builder;</span>
 <span class="nc" id="L66">        } catch (FactoryConfigurationError | ParserConfigurationException e) {</span>

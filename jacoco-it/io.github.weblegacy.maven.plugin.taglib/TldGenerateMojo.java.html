@@ -193,7 +193,7 @@ import org.w3c.dom.Element;
      * @throws IOException            if an I/O error occurs
      */
     private void doTaglib(Taglib taglib) throws MojoExecutionException, IOException {
-<span class="fc" id="L196">        Document doc = getTldDocument(taglib, XmlHelper.getDocumentBuilder());</span>
+<span class="fc" id="L196">        final Document doc = getTldDocument(taglib, XmlHelper.getDocumentBuilder());</span>
 
 <span class="pc bpc" id="L198" title="1 of 2 branches missed.">        if (taglib.getShortName() == null) {</span>
 <span class="nc" id="L199">            throw new MojoExecutionException(&quot;Missing \&quot;shortName\&quot; parameter for taglib &quot;</span>
