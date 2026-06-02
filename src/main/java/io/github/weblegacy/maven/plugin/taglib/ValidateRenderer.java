@@ -41,6 +41,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Strings;
 import org.apache.maven.doxia.sink.Sink;
+import org.apache.maven.doxia.util.DoxiaUtils;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.reporting.AbstractMavenReportRenderer;
 
@@ -160,7 +161,7 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer {
         for (Tld tld : tlds) {
 
             sink.listItem();
-            sink.link("#" + tld.getFilename());
+            sink.link("#" + DoxiaUtils.encodeId(tld.getFilename()));
             sink.text(MessageFormat.format(getMessageString("Validate.listitem.tld"),
                     StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname()),
                     tld.getFilename()));

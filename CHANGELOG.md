@@ -2,6 +2,7 @@
 
 ## 3.1.0 / YYYY-MM-DD
 
+* Encode IDs in HTML-Links
 * Bump `maven-resolver*` from 1.9.25 to 1.9.27
 * Bump `junit` from 6.0.2 to 6.1.0
 * Bump `spotbugs-maven-plugin` from 4.9.8.2 to 4.9.8.3

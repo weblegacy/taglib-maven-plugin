@@ -38,6 +38,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.doxia.module.xhtml5.Xhtml5Parser;
 import org.apache.maven.doxia.parser.ParseException;
 import org.apache.maven.doxia.sink.Sink;
+import org.apache.maven.doxia.util.DoxiaUtils;
 import org.apache.maven.doxia.util.HtmlTools;
 import org.apache.maven.plugin.logging.Log;
 
@@ -107,7 +108,7 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer {
         for (Tld tld : tlds) {
             log.debug("Rendering " + tld.getFilename());
             sink.listItem();
-            sink.link('#' + tld.getFilename());
+            sink.link('#' + DoxiaUtils.encodeId(tld.getFilename()));
             sink.text(MessageFormat.format(getMessageString("Tagreference.listitem.tld"),
                     StringUtils.defaultIfEmpty(tld.getName(), tld.getShortname()),
                     tld.getFilename()));
@@ -275,7 +276,7 @@ public class TagreferenceRenderer extends AbstractMavenTaglibReportRenderer {
             for (TldItem tag : tags) {
                 sink.listItem();
 
-                sink.link("#" + tld.getShortname() + ":" + tag.getName());
+                sink.link("#" + DoxiaUtils.encodeId(tld.getShortname() + ":" + tag.getName()));
                 if (tag.isDeprecated()) {
                     sink.italic();
                 }
