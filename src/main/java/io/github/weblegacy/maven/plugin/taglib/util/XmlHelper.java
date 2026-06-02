@@ -59,8 +59,8 @@ public class XmlHelper {
             factory.setValidating(false);
             factory.setNamespaceAware(false);
             factory.setExpandEntityReferences(false);
-            builder.setEntityResolver((publicId, systemId)
-                    -> new InputSource(new CharArrayReader(new char[0])));
+            builder.setEntityResolver((publicId, systemId) ->
+                    new InputSource(new CharArrayReader(new char[0])));
 
             return builder;
         } catch (FactoryConfigurationError | ParserConfigurationException e) {

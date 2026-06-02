@@ -193,7 +193,7 @@ public class TldGenerateMojo extends AbstractMojo {
      * @throws IOException            if an I/O error occurs
      */
     private void doTaglib(Taglib taglib) throws MojoExecutionException, IOException {
-        Document doc = getTldDocument(taglib, XmlHelper.getDocumentBuilder());
+        final Document doc = getTldDocument(taglib, XmlHelper.getDocumentBuilder());
 
         if (taglib.getShortName() == null) {
             throw new MojoExecutionException("Missing \"shortName\" parameter for taglib "

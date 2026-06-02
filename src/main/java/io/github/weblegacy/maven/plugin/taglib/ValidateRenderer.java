@@ -317,8 +317,6 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer {
         // new subsection for each tag
         startSection("<" + prefix + ":" + tag.getName() + ">");
 
-        String className = tag.getTagClass();
-
         startTable();
 
         tableHeader(new String[]{
@@ -335,6 +333,8 @@ public class ValidateRenderer extends AbstractMavenTaglibReportRenderer {
         Object tagObject = null;
         ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
         Thread.currentThread().setContextClassLoader(this.projectClassLoader);
+
+        final String className = tag.getTagClass();
 
         try {
             Class<?> tagClass = Class.forName(className, true, this.projectClassLoader);
