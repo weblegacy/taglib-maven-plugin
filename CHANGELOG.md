@@ -2,6 +2,7 @@
 
 ## 3.1.0 / YYYY-MM-DD
 
+* Bump `maven-resolver*` from 1.9.25 to 1.9.27
 * Bump `junit` from 6.0.2 to 6.1.0
 * Bump `spotbugs-maven-plugin` from 4.9.8.2 to 4.9.8.3
 * Bump `maven-surefire-[report-]plugin` from 3.5.4 to 3.5.6
