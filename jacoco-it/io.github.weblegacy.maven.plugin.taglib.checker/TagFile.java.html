@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TagFile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Taglib Plugin</a> &gt; <a href="index.source.html" class="el_package">io.github.weblegacy.maven.plugin.taglib.checker</a> &gt; <span class="el_source">TagFile.java</span></div><h1>TagFile.java</h1><pre class="source lang-java linenums">/*
+ * The MIT License
+ * Copyright © 2004-2014 Fabrizio Giustina
+ * Copyright © 2022-2026 Web-Legacy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+package io.github.weblegacy.maven.plugin.taglib.checker;
+
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+/**
+ * Contains information about a file.
+ *
+ * @author fgiust
+ */
+<span class="fc" id="L36">public class TagFile extends TldItem {</span>
+
+    /**
+     * The path.
+     */
+    private String path;
+
+    /**
+     * Returns the path.
+     *
+     * @return the path
+     */
+    public String getPath() {
+<span class="nc" id="L49">        return path;</span>
+    }
+
+    /**
+     * Sets the path.
+     *
+     * @param path the path to set
+     */
+    public void setPath(String path) {
+<span class="fc" id="L58">        this.path = path;</span>
+<span class="fc" id="L59">    }</span>
+
+    @Override
+    public int compareTo(TldItem object) {
+<span class="fc" id="L63">        int ret = super.compareTo(object);</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (ret != 0) {</span>
+<span class="fc" id="L65">            return ret;</span>
+        }
+
+<span class="fc" id="L68">        TagFile rhs = (TagFile) object;</span>
+<span class="fc" id="L69">        return new CompareToBuilder()</span>
+<span class="fc" id="L70">                .appendSuper(super.compareTo(object))</span>
+<span class="fc" id="L71">                .append(this.path, rhs.path)</span>
+<span class="fc" id="L72">                .toComparison();</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L77" title="All 4 branches missed.">        if (obj == null || !super.equals(obj)) {</span>
+<span class="nc" id="L78">            return false;</span>
+        }
+
+<span class="nc" id="L81">        TagFile rhs = (TagFile) obj;</span>
+<span class="nc" id="L82">        return new EqualsBuilder()</span>
+<span class="nc" id="L83">                .appendSuper(super.equals(obj))</span>
+<span class="nc" id="L84">                .append(this.path, rhs.path)</span>
+<span class="nc" id="L85">                .isEquals();</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L90">        return new HashCodeBuilder()</span>
+<span class="nc" id="L91">                .appendSuper(super.hashCode())</span>
+<span class="nc" id="L92">                .append(this.path)</span>
+<span class="nc" id="L93">                .toHashCode();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

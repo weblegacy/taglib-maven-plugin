@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TldItem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Taglib Plugin</a> &gt; <a href="index.source.html" class="el_package">io.github.weblegacy.maven.plugin.taglib.checker</a> &gt; <span class="el_source">TldItem.java</span></div><h1>TldItem.java</h1><pre class="source lang-java linenums">/*
+ * The MIT License
+ * Copyright © 2004-2014 Fabrizio Giustina
+ * Copyright © 2022-2026 Web-Legacy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+package io.github.weblegacy.maven.plugin.taglib.checker;
+
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+/**
+ * Java-Bean representing a tld item.
+ *
+ * @author fgiust
+ */
+<span class="fc" id="L36">public class TldItem implements Comparable&lt;TldItem&gt; {</span>
+
+    /**
+     * The name of the tld item.
+     */
+    private String name;
+
+    /**
+     * The description of the tld item.
+     */
+    private String description;
+
+    /**
+     * The example of the tld item.
+     */
+    private String example;
+
+    /**
+     * If the tld item is deprecated.
+     */
+    private boolean deprecated;
+
+    public String getName() {
+<span class="fc" id="L59">        return this.name;</span>
+    }
+
+    public void setName(String tagName) {
+<span class="fc" id="L63">        this.name = tagName;</span>
+<span class="fc" id="L64">    }</span>
+
+    public String getDescription() {
+<span class="fc" id="L67">        return this.description;</span>
+    }
+
+    public void setDescription(String description) {
+<span class="fc" id="L71">        this.description = description;</span>
+<span class="fc" id="L72">    }</span>
+
+    public String getExample() {
+<span class="fc" id="L75">        return this.example;</span>
+    }
+
+    public void setExample(String example) {
+<span class="fc" id="L79">        this.example = example;</span>
+<span class="fc" id="L80">    }</span>
+
+    public boolean isDeprecated() {
+<span class="fc" id="L83">        return this.deprecated;</span>
+    }
+
+    public void setDeprecated(boolean deprecated) {
+<span class="fc" id="L87">        this.deprecated = deprecated;</span>
+<span class="fc" id="L88">    }</span>
+
+    @Override
+    public int compareTo(TldItem object) {
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        if (object == this) {</span>
+<span class="fc" id="L93">            return 0;</span>
+        }
+
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">        if (object.getClass() != getClass()) {</span>
+<span class="nc" id="L97">            throw new ClassCastException(&quot;compareTo with different classes: &quot;</span>
+<span class="nc" id="L98">                    + this.getClass().getName()</span>
+                    + &quot; &lt;&gt; &quot;
+<span class="nc" id="L100">                    + object.getClass().getName());</span>
+        }
+
+<span class="fc" id="L103">        return new CompareToBuilder()</span>
+<span class="fc" id="L104">                .append(this.deprecated, object.deprecated)</span>
+<span class="fc" id="L105">                .append(this.name, object.name)</span>
+<span class="fc" id="L106">                .toComparison();</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L112">            return false;</span>
+        }
+
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        if (obj == this) {</span>
+<span class="nc" id="L116">            return true;</span>
+        }
+
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        if (obj.getClass() != getClass()) {</span>
+<span class="nc" id="L120">            return false;</span>
+        }
+
+<span class="nc" id="L123">        TldItem rhs = (TldItem) obj;</span>
+<span class="nc" id="L124">        return new EqualsBuilder()</span>
+<span class="nc" id="L125">                .append(this.deprecated, rhs.deprecated)</span>
+<span class="nc" id="L126">                .append(this.name, rhs.name)</span>
+<span class="nc" id="L127">                .isEquals();</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L132">        return new HashCodeBuilder()</span>
+<span class="nc" id="L133">                .append(this.deprecated)</span>
+<span class="nc" id="L134">                .append(this.name)</span>
+<span class="nc" id="L135">                .toHashCode();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

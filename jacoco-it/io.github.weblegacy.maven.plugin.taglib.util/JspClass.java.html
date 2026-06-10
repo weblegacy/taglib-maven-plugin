@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JspClass.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Taglib Plugin</a> &gt; <a href="index.source.html" class="el_package">io.github.weblegacy.maven.plugin.taglib.util</a> &gt; <span class="el_source">JspClass.java</span></div><h1>JspClass.java</h1><pre class="source lang-java linenums">/*
+ * The MIT License
+ * Copyright © 2004-2014 Fabrizio Giustina
+ * Copyright © 2022-2026 Web-Legacy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+package io.github.weblegacy.maven.plugin.taglib.util;
+
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.stream.Collectors;
+
+/**
+ * Name of all specific tag-classes for the JavaEE-/JakartaEE-Enviroment. It is specified without
+ * the prefix {@code javax} (till JavaEE 8} and {@code jakarta} (since JakarteEE 9).
+ *
+ * @author Stefan Graff
+ */
+<span class="fc" id="L37">public enum JspClass {</span>
+    /**
+     * Jsp-Class for {@code TagSupport}.
+     */
+<span class="fc" id="L41">    TAG_SUPPORT,</span>
+    /**
+     * Jsp-Class for {@code TagExtraInfo}.
+     */
+<span class="fc" id="L45">    TAG_EXTRA_INFO,</span>
+    /**
+     * Jsp-Class for {@code SimpleTag}.
+     */
+<span class="fc" id="L49">    SIMPLE_TAG;</span>
+
+    /**
+     * Jsp-Class-Name for this ENum.
+     */
+    private final String jspName;
+
+    /**
+     * Constructor for this ENum.
+     */
+<span class="fc" id="L59">    JspClass() {</span>
+        // Convert snake_case to CamelCase
+<span class="fc" id="L61">        this.jspName = Arrays.stream(name().toLowerCase(Locale.ROOT).split(&quot;_&quot;))</span>
+<span class="fc" id="L62">                .map(</span>
+<span class="fc" id="L63">                        s -&gt; Character.toUpperCase(s.charAt(0))</span>
+<span class="fc" id="L64">                        + s.substring(1))</span>
+<span class="fc" id="L65">                .collect(Collectors.joining());</span>
+<span class="fc" id="L66">    }</span>
+
+    /**
+     * Returns the Jsp-Class-Name for this ENum.
+     *
+     * @return the Jsp-Class-Name for this ENum
+     */
+    public String getJspName() {
+<span class="fc" id="L74">        return jspName;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

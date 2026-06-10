@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JspCheck.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Taglib Plugin</a> &gt; <a href="index.source.html" class="el_package">io.github.weblegacy.maven.plugin.taglib.util</a> &gt; <span class="el_source">JspCheck.java</span></div><h1>JspCheck.java</h1><pre class="source lang-java linenums">/*
+ * The MIT License
+ * Copyright © 2004-2014 Fabrizio Giustina
+ * Copyright © 2022-2026 Web-Legacy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+package io.github.weblegacy.maven.plugin.taglib.util;
+
+import io.github.weblegacy.maven.plugin.taglib.Messages;
+import java.util.Arrays;
+import org.apache.maven.plugin.logging.Log;
+
+/**
+ * Test and saves the spezific tag-classes for the JavaEE-/JakartaEE-Environment.
+ *
+ * @author Stefan Graff
+ */
+public class JspCheck {
+
+    /**
+     * All loaded tag-classes for all tag-classes in all JavaEE-/JakartaEE-Environments.
+     * &lt;ol&gt;
+     * &lt;li&gt;{@link JspClass}&lt;/li&gt;
+     * &lt;li&gt;{@link JspNamespace}&lt;/li&gt;
+     * &lt;/ol&gt;
+     */
+    private final Class&lt;?&gt;[][] clazzes;
+
+    /**
+     * Construct and initialize this class. It loads all tag-classes for all namespaces with the
+     * given classloader.
+     *
+     * @param log         for Logging
+     * @param classLoader the classloader which is used to load the tag-classes
+     */
+<span class="fc" id="L54">    public JspCheck(final Log log, final ClassLoader classLoader) {</span>
+<span class="fc" id="L55">        final JspNamespace[] jspNamespaces = JspNamespace.values();</span>
+<span class="fc" id="L56">        final JspClass[] jspClasses = JspClass.values();</span>
+
+<span class="fc" id="L58">        clazzes = new Class&lt;?&gt;[jspClasses.length][];</span>
+<span class="fc" id="L59">        Arrays.setAll(clazzes, x -&gt; new Class&lt;?&gt;[jspNamespaces.length]);</span>
+
+<span class="fc" id="L61">        boolean anyNamespaceLoaded = false;</span>
+
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        for (JspNamespace jspNamespace : jspNamespaces) {</span>
+<span class="fc" id="L64">            anyNamespaceLoaded |= loadClasses(log, classLoader, jspClasses, jspNamespace);</span>
+        }
+
+        // test if any classes are loaded
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (!anyNamespaceLoaded) {</span>
+<span class="fc" id="L69">            log.error(Messages.getString(&quot;Validate.error.unabletoload&quot;));</span>
+        }
+<span class="fc" id="L71">    }</span>
+
+    /**
+     * Load all tag-classes with the given classloader and namespace.
+     *
+     * @param log          for Logging
+     * @param classLoader  the classloader which is used to load the tag-classes
+     * @param jspClasses   Array with all JSP-Classes (@code JspClass.values()})
+     * @param jspNamespace the given namespace
+     *
+     * @return {@code true} when at least one class is loaded
+     */
+    private boolean loadClasses(final Log log, final ClassLoader classLoader,
+            final JspClass[] jspClasses, final JspNamespace jspNamespace) {
+
+<span class="fc" id="L86">        boolean namespaceLoaded = false;</span>
+
+<span class="fc" id="L88">        final StringBuilder sb = new StringBuilder(48);</span>
+<span class="fc" id="L89">        sb.append(jspNamespace.getJspName()).append(&quot;.servlet.jsp.tagext.&quot;);</span>
+<span class="fc" id="L90">        final int len = sb.length();</span>
+
+        // Test to load all classes.
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        for (JspClass jspClass : jspClasses) {</span>
+<span class="fc" id="L94">            sb.append(jspClass.getJspName());</span>
+
+            try {
+<span class="fc" id="L97">                clazzes[jspClass.ordinal()][jspNamespace.ordinal()]</span>
+<span class="fc" id="L98">                        = Class.forName(sb.toString(), true, classLoader);</span>
+<span class="fc" id="L99">                namespaceLoaded = true;</span>
+<span class="fc" id="L100">            } catch (ClassNotFoundException e) {</span>
+<span class="fc" id="L101">                log.debug(e);</span>
+<span class="fc" id="L102">            }</span>
+
+<span class="fc" id="L104">            sb.setLength(len);</span>
+        }
+
+        // Check if all classes loaded.
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        if (namespaceLoaded) {</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">            for (JspClass jspClass : jspClasses) {</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">                if (clazzes[jspClass.ordinal()][jspNamespace.ordinal()] == null) {</span>
+<span class="nc" id="L111">                    final String msg = Messages.getString(&quot;Validate.error.unabletoload.&quot;</span>
+<span class="nc" id="L112">                            + jspNamespace.getJspName() + '.' + jspClass.getJspName());</span>
+
+<span class="nc bnc" id="L114" title="All 4 branches missed.">                    if (jspClass == JspClass.SIMPLE_TAG &amp;&amp; jspNamespace == JspNamespace.JAVAX) {</span>
+<span class="nc" id="L115">                        log.info(msg);</span>
+                    } else {
+<span class="nc" id="L117">                        log.error(msg);</span>
+                    }
+                }
+            }
+        }
+
+<span class="fc" id="L123">        return namespaceLoaded;</span>
+    }
+
+    /**
+     * Checks if the specific class is assignable to the loaded classes.
+     *
+     * @param jspClass the specific class
+     * @param clazz    the test-class
+     *
+     * @return {@code true} specific class is assignable to the test-class
+     */
+    public boolean check(final JspClass jspClass, final Class&lt;?&gt; clazz) {
+<span class="nc" id="L135">        final Class&lt;?&gt;[] jspNamespaceClazzes = clazzes[jspClass.ordinal()];</span>
+
+<span class="nc bnc" id="L137" title="All 2 branches missed.">        for (Class&lt;?&gt; jspClazz : jspNamespaceClazzes) {</span>
+<span class="nc bnc" id="L138" title="All 4 branches missed.">            if (jspClazz != null &amp;&amp; jspClazz.isAssignableFrom(clazz)) {</span>
+<span class="nc" id="L139">                return true;</span>
+            }
+        }
+
+<span class="nc" id="L143">        return false;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

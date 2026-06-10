@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TagAttribute.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Taglib Plugin</a> &gt; <a href="index.source.html" class="el_package">io.github.weblegacy.maven.plugin.taglib.checker</a> &gt; <span class="el_source">TagAttribute.java</span></div><h1>TagAttribute.java</h1><pre class="source lang-java linenums">/*
+ * The MIT License
+ * Copyright © 2004-2014 Fabrizio Giustina
+ * Copyright © 2022-2026 Web-Legacy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+package io.github.weblegacy.maven.plugin.taglib.checker;
+
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+/**
+ * Java-Bean representing a tag attribute.
+ *
+ * @author Fabrizio Giustina
+ */
+<span class="fc" id="L38">public class TagAttribute</span>
+        implements Comparable&lt;TagAttribute&gt; {
+
+    /**
+     * The name of the attribute.
+     */
+    private String name;
+
+    /**
+     * The type of the attribute.
+     */
+    private String type;
+
+    /**
+     * The description of the attribute.
+     */
+    private String description;
+
+    /**
+     * If the attribute is required.
+     */
+    private boolean required;
+
+    /**
+     * If the attribute is deprecated.
+     */
+    private boolean deprecated;
+
+    /**
+     * If the attribute is a runtime-expression-value.
+     */
+    private boolean rtexprvalue;
+
+    public String getName() {
+<span class="fc" id="L72">        return this.name;</span>
+    }
+
+    public void setName(String attributeName) {
+<span class="fc" id="L76">        this.name = attributeName;</span>
+<span class="fc" id="L77">    }</span>
+
+    public String getType() {
+<span class="fc" id="L80">        return this.type;</span>
+    }
+
+    public void setType(String attributeType) {
+<span class="fc" id="L84">        this.type = attributeType;</span>
+<span class="fc" id="L85">    }</span>
+
+    public boolean isDeprecated() {
+<span class="fc" id="L88">        return this.deprecated;</span>
+    }
+
+    public void setDeprecated(boolean deprecated) {
+<span class="fc" id="L92">        this.deprecated = deprecated;</span>
+<span class="fc" id="L93">    }</span>
+
+    public String getDescription() {
+<span class="fc" id="L96">        return this.description;</span>
+    }
+
+    public void setDescription(String description) {
+<span class="fc" id="L100">        this.description = description;</span>
+<span class="fc" id="L101">    }</span>
+
+    public boolean isRequired() {
+<span class="fc" id="L104">        return this.required;</span>
+    }
+
+    public void setRequired(boolean required) {
+<span class="fc" id="L108">        this.required = required;</span>
+<span class="fc" id="L109">    }</span>
+
+    public boolean isRtexprvalue() {
+<span class="nc" id="L112">        return this.rtexprvalue;</span>
+    }
+
+    public void setRtexprvalue(boolean rtexprvalue) {
+<span class="fc" id="L116">        this.rtexprvalue = rtexprvalue;</span>
+<span class="fc" id="L117">    }</span>
+
+    @Override
+    public int compareTo(TagAttribute object) {
+<span class="fc" id="L121">        return new CompareToBuilder()</span>
+<span class="fc" id="L122">                .append(this.deprecated, object.deprecated)</span>
+<span class="fc" id="L123">                .append(this.name, object.name)</span>
+<span class="fc" id="L124">                .toComparison();</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L130">            return false;</span>
+        }
+
+<span class="nc bnc" id="L133" title="All 2 branches missed.">        if (obj == this) {</span>
+<span class="nc" id="L134">            return true;</span>
+        }
+
+<span class="nc bnc" id="L137" title="All 2 branches missed.">        if (obj.getClass() != getClass()) {</span>
+<span class="nc" id="L138">            return false;</span>
+        }
+
+<span class="nc" id="L141">        TagAttribute rhs = (TagAttribute) obj;</span>
+<span class="nc" id="L142">        return new EqualsBuilder()</span>
+<span class="nc" id="L143">                .append(this.deprecated, rhs.deprecated)</span>
+<span class="nc" id="L144">                .append(this.name, rhs.name)</span>
+<span class="nc" id="L145">                .isEquals();</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L150">        return new HashCodeBuilder()</span>
+<span class="nc" id="L151">                .append(this.deprecated)</span>
+<span class="nc" id="L152">                .append(this.name)</span>
+<span class="nc" id="L153">                .toHashCode();</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L158">        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)</span>
+<span class="nc" id="L159">                .append(&quot;name&quot;, this.name)</span>
+<span class="nc" id="L160">                .append(&quot;description&quot;, this.description)</span>
+<span class="nc" id="L161">                .append(&quot;deprecated&quot;, this.deprecated)</span>
+<span class="nc" id="L162">                .append(&quot;type&quot;, this.type)</span>
+<span class="nc" id="L163">                .append(&quot;required&quot;, this.required)</span>
+<span class="nc" id="L164">                .toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
